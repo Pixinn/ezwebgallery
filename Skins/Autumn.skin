@@ -1,0 +1,121 @@
+﻿<Skin release="129" name="Autumn">
+    <properties title-position="0"/>
+    <StyleSheet name="noname">
+        <Selection selector="#progressbar">
+            <background-color>#5f5950</background-color>
+            <border-color>#562e07</border-color>
+            <border-width>2px</border-width>
+            <color>#ebe7e3</color>
+            <Selection selector="div.progress">
+                <background-color>#f9ebd2</background-color>
+                <color>#2b251b</color>
+            </Selection>
+        </Selection>
+        <Selection selector="#progressbarWrapper">
+            <background-color>#d4bf9a</background-color>
+            <border-color>#632900</border-color>
+            <border-width>7px</border-width>
+            <color>#000000</color>
+            <font-family>Arial, Helvetica, "Liberation Sans", FreeSans, sans-serif</font-family>
+        </Selection>
+        <Selection selector="#screenIndex">
+            <background-color>#cfad76</background-color>
+            <background-image>url(../images/Leaves-Paper-Background.jpg)</background-image>
+        </Selection>
+        <Selection selector="#screenPhoto">
+            <background-color>#cfad76</background-color>
+            <background-image>url(../images/Leaves-Paper-Background.jpg)</background-image>
+        </Selection>
+        <Selection selector=".mainPhoto">
+            <border-color>#000000</border-color>
+            <border-width>3px</border-width>
+        </Selection>
+        <Selection selector=".photoButtonDisabled">
+            <border-color>#000000</border-color>
+            <border-width>1px</border-width>
+        </Selection>
+        <Selection selector=".photoButtonEnabled">
+            <border-color>#3d2b18</border-color>
+            <border-width>1px</border-width>
+        </Selection>
+        <Selection selector=".photoButtonEnabled:hover">
+            <border-color>#3d2b18</border-color>
+            <border-width>4px</border-width>
+            <margin>-3px</margin>
+        </Selection>
+        <Selection selector=".thumbBox">
+            <border-color>#211a14</border-color>
+            <border-width>1px</border-width>
+            <Selection selector="img">
+                <border-color>#271b1b</border-color>
+                <border-width>5px</border-width>
+            </Selection>
+            <Selection selector="img:hover">
+                <border-color>#ffffff</border-color>
+            </Selection>
+        </Selection>
+        <Selection selector=".thumbsWrapperContainer">
+            <background-color>#b4742e</background-color>
+            <background-image>url(../images/LeaveZoomed.jpg)</background-image>
+            <border-color>#514131</border-color>
+            <border-width>5px</border-width>
+        </Selection>
+        <Selection selector="div#cadrePhoto">
+            <background-color>#562e07</background-color>
+            <background-image>url(../images/WoodSeamless.jpg)</background-image>
+            <padding>20px</padding>
+        </Selection>
+        <Selection selector="div#indexTitle">
+            <background-color>#d4bf9a</background-color>
+            <background-image>url(../images/Parchemin-left.jpg)</background-image>
+            <border-color>#ffffff</border-color>
+            <border-left-width>0px</border-left-width>
+            <border-right-width>0px</border-right-width>
+            <color>#240000</color>
+            <display>block</display>
+            <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
+            <font-size>2.2em</font-size>
+            <line-height>0.9em</line-height>
+            <width>60px</width>
+        </Selection>
+        <Selection selector="div#photoLefter">
+            <background-color>transparent</background-color>
+            <width>100px</width>
+        </Selection>
+        <Selection selector="div#photoRighter">
+            <background-color>transparent</background-color>
+            <width>100px</width>
+        </Selection>
+        <Selection selector="div.photoCaption">
+            <color>#e3e3e3</color>
+            <font-family>Verdana, "DejaVu Sans", "Bitstream Vera Sans", Geneva, sans-serif</font-family>
+            <font-size>0.9em</font-size>
+            <font-weight>normal</font-weight>
+        </Selection>
+        <Selection selector="ul.indexNavigation">
+            <Selection selector="li">
+                <background-color>#b4997c</background-color>
+                <Selection selector="a">
+                    <color>#000000</color>
+                </Selection>
+            </Selection>
+            <Selection selector="li.navTabSelected">
+                <background-color>#563d23</background-color>
+                <border-color>#27190b</border-color>
+                <border-width>2px</border-width>
+                <Selection selector="a">
+                    <color>#f3f3f3</color>
+                </Selection>
+            </Selection>
+        </Selection>
+    </StyleSheet>
+    <Ressources>
+        <File id="IndexPage_BckgTexture">Leaves-Paper-Background.jpg</File>
+        <File id="Mosaic_BckgTexture">LeaveZoomed.jpg</File>
+        <File id="PhotoButtonNext">Drawn-arrow-right.png</File>
+        <File id="PhotoButtonPrevious">Drawn-arrow-left.png</File>
+        <File id="PhotoFraming_Texture">WoodSeamless.jpg</File>
+        <File id="PhotoPage_BckgTexture">Leaves-Paper-Background.jpg</File>
+        <File id="VTitle_BackgroundTexture">Parchemin-left.jpg</File>
+    </Ressources>
+</Skin>

@@ -1,0 +1,119 @@
+﻿<Skin release="129" name="Black Board">
+    <properties title-position="0"/>
+    <StyleSheet name="noname">
+        <Selection selector="#progressbar">
+            <background-color>#980000</background-color>
+            <border-color>#000000</border-color>
+            <border-width>2px</border-width>
+            <color>#fff1e2</color>
+            <Selection selector="div.progress">
+                <background-color>#57c611</background-color>
+                <color>#f3f3f3</color>
+            </Selection>
+        </Selection>
+        <Selection selector="#progressbarWrapper">
+            <background-color>#222226</background-color>
+            <border-color>#e3e3e3</border-color>
+            <border-width>4px</border-width>
+            <color>#ffffff</color>
+            <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
+        </Selection>
+        <Selection selector="#screenIndex">
+            <background-color>#171615</background-color>
+            <background-image>url(../images/Crayon_Dark.jpg)</background-image>
+        </Selection>
+        <Selection selector="#screenPhoto">
+            <background-color>#171615</background-color>
+            <background-image>url(../images/Crayon_Dark.jpg)</background-image>
+        </Selection>
+        <Selection selector=".mainPhoto">
+            <border-color>#000000</border-color>
+            <border-width>2px</border-width>
+        </Selection>
+        <Selection selector=".photoButtonDisabled">
+            <border-color>#000000</border-color>
+            <border-width>0px</border-width>
+        </Selection>
+        <Selection selector=".photoButtonEnabled">
+            <border-color>#000000</border-color>
+            <border-width>0px</border-width>
+        </Selection>
+        <Selection selector=".photoButtonEnabled:hover">
+            <border-color>#ffffff</border-color>
+            <border-width>3px</border-width>
+            <margin>-3px</margin>
+        </Selection>
+        <Selection selector=".thumbBox">
+            <border-color>#ffffff</border-color>
+            <border-width>1px</border-width>
+            <Selection selector="img">
+                <border-color>#000000</border-color>
+                <border-width>5px</border-width>
+            </Selection>
+            <Selection selector="img:hover">
+                <border-color>#ffffff</border-color>
+            </Selection>
+        </Selection>
+        <Selection selector=".thumbsWrapperContainer">
+            <background-color>#cac9c7</background-color>
+            <background-image>url(../images/Crayon.jpg)</background-image>
+            <border-color>#afaead</border-color>
+            <border-width>7px</border-width>
+        </Selection>
+        <Selection selector="div#cadrePhoto">
+            <background-color>#edeef0</background-color>
+            <background-image>url(../images/WhitePaper.jpg)</background-image>
+            <padding>6px</padding>
+        </Selection>
+        <Selection selector="div#indexTitle">
+            <background-color>transparent</background-color>
+            <border-color>#ffffff</border-color>
+            <border-left-width>0px</border-left-width>
+            <border-right-width>1px</border-right-width>
+            <color>#ffffff</color>
+            <display>none</display>
+            <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
+            <font-size>2.2em</font-size>
+            <line-height>0.9em</line-height>
+            <width>50px</width>
+        </Selection>
+        <Selection selector="div#photoLefter">
+            <background-color>transparent</background-color>
+            <width>80px</width>
+        </Selection>
+        <Selection selector="div#photoRighter">
+            <background-color>transparent</background-color>
+            <width>80px</width>
+        </Selection>
+        <Selection selector="div.photoCaption">
+            <color>#291d0e</color>
+            <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
+            <font-size>0.9em</font-size>
+            <font-weight>normal</font-weight>
+        </Selection>
+        <Selection selector="ul.indexNavigation">
+            <Selection selector="li">
+                <background-color>#afaead</background-color>
+                <Selection selector="a">
+                    <color>#000000</color>
+                </Selection>
+            </Selection>
+            <Selection selector="li.navTabSelected">
+                <background-color>#f5f5f5</background-color>
+                <border-color>#afaead</border-color>
+                <border-width>3px</border-width>
+                <Selection selector="a">
+                    <color>#000000</color>
+                </Selection>
+            </Selection>
+        </Selection>
+    </StyleSheet>
+    <Ressources>
+        <File id="IndexPage_BckgTexture">Crayon_Dark.jpg</File>
+        <File id="Mosaic_BckgTexture">Crayon.jpg</File>
+        <File id="PhotoButtonNext">RightArrow_craie.png</File>
+        <File id="PhotoButtonPrevious">LeftArrow_craie.png</File>
+        <File id="PhotoFraming_Texture">WhitePaper.jpg</File>
+        <File id="PhotoPage_BckgTexture">Crayon_Dark.jpg</File>
+    </Ressources>
+</Skin>

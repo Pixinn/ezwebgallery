@@ -1,0 +1,121 @@
+﻿<Skin release="129" name="Orient">
+    <properties title-position="0"/>
+    <StyleSheet name="noname">
+        <Selection selector="#progressbar">
+            <background-color>#980000</background-color>
+            <border-color>#000000</border-color>
+            <border-width>2px</border-width>
+            <color>#fff1e2</color>
+            <Selection selector="div.progress">
+                <background-color>#57c611</background-color>
+                <color>#f3f3f3</color>
+            </Selection>
+        </Selection>
+        <Selection selector="#progressbarWrapper">
+            <background-color>#222226</background-color>
+            <border-color>#e3e3e3</border-color>
+            <border-width>4px</border-width>
+            <color>#ffffff</color>
+            <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
+        </Selection>
+        <Selection selector="#screenIndex">
+            <background-color>#040d21</background-color>
+            <background-image>url(../images/Arabic_Background.jpg)</background-image>
+        </Selection>
+        <Selection selector="#screenPhoto">
+            <background-color>#07060e</background-color>
+            <background-image>url(../images/Arabic.jpg)</background-image>
+        </Selection>
+        <Selection selector=".mainPhoto">
+            <border-color>#3b0000</border-color>
+            <border-width>2px</border-width>
+        </Selection>
+        <Selection selector=".photoButtonDisabled">
+            <border-color>#000000</border-color>
+            <border-width>0px</border-width>
+        </Selection>
+        <Selection selector=".photoButtonEnabled">
+            <border-color>#000000</border-color>
+            <border-width>0px</border-width>
+        </Selection>
+        <Selection selector=".photoButtonEnabled:hover">
+            <border-color>#e6c05a</border-color>
+            <border-width>3px</border-width>
+            <margin>-3px</margin>
+        </Selection>
+        <Selection selector=".thumbBox">
+            <border-color>#07060e</border-color>
+            <border-width>1px</border-width>
+            <Selection selector="img">
+                <border-color>#6c6555</border-color>
+                <border-width>4px</border-width>
+            </Selection>
+            <Selection selector="img:hover">
+                <border-color>#c8b489</border-color>
+            </Selection>
+        </Selection>
+        <Selection selector=".thumbsWrapperContainer">
+            <background-color>#e0d7c3</background-color>
+            <background-image>url(../images/Parchemin+Calligraphy.jpg)</background-image>
+            <border-color>#553333</border-color>
+            <border-width>3px</border-width>
+        </Selection>
+        <Selection selector="div#cadrePhoto">
+            <background-color>#eadbb9</background-color>
+            <background-image>url(../images/Parchemin.jpg)</background-image>
+            <padding>6px</padding>
+        </Selection>
+        <Selection selector="div#indexTitle">
+            <background-color>#dde2e9</background-color>
+            <background-image>url(../images/StoneWall.jpg)</background-image>
+            <border-color>#00007f</border-color>
+            <border-left-width>0px</border-left-width>
+            <border-right-width>3px</border-right-width>
+            <color>#47476a</color>
+            <display>block</display>
+            <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
+            <font-size>2.7em</font-size>
+            <line-height>0.8em</line-height>
+            <width>50px</width>
+        </Selection>
+        <Selection selector="div#photoLefter">
+            <background-color>transparent</background-color>
+            <width>80px</width>
+        </Selection>
+        <Selection selector="div#photoRighter">
+            <background-color>transparent</background-color>
+            <width>80px</width>
+        </Selection>
+        <Selection selector="div.photoCaption">
+            <color>#4f3636</color>
+            <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
+            <font-size>0.8em</font-size>
+            <font-weight>normal</font-weight>
+        </Selection>
+        <Selection selector="ul.indexNavigation">
+            <Selection selector="li">
+                <background-color>#e1d7c3</background-color>
+                <Selection selector="a">
+                    <color>#000000</color>
+                </Selection>
+            </Selection>
+            <Selection selector="li.navTabSelected">
+                <background-color>#f9f3e6</background-color>
+                <border-color>#552d2d</border-color>
+                <border-width>2px</border-width>
+                <Selection selector="a">
+                    <color>#000000</color>
+                </Selection>
+            </Selection>
+        </Selection>
+    </StyleSheet>
+    <Ressources>
+        <File id="IndexPage_BckgTexture">Arabic_Background.jpg</File>
+        <File id="Mosaic_BckgTexture">Parchemin+Calligraphy.jpg</File>
+        <File id="PhotoButtonNext">Arabic_RightArrow.png</File>
+        <File id="PhotoButtonPrevious">Arabic_LeftArrow.png</File>
+        <File id="PhotoFraming_Texture">Parchemin.jpg</File>
+        <File id="PhotoPage_BckgTexture">Arabic.jpg</File>
+        <File id="VTitle_BackgroundTexture">StoneWall.jpg</File>
+    </Ressources>
+</Skin>

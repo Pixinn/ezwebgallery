@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ressources/ColorPicker_256.png</file>
+        <file>ressources/ImagePicker_256.png</file>
+    </qresource>
+</RCC>

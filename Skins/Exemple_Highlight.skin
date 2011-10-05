@@ -1,0 +1,118 @@
+﻿<Skin release="129" name="Exemple: Highlight">
+    <properties title-position="0"/>
+    <StyleSheet name="noname">
+        <Selection selector="#progressbar">
+            <background-color>#ffaa00</background-color>
+            <border-color>#00aaff</border-color>
+            <border-width>2px</border-width>
+            <color>#343332</color>
+            <Selection selector="div.progress">
+                <background-color>#55ff00</background-color>
+                <color>#ffffff</color>
+            </Selection>
+        </Selection>
+        <Selection selector="#progressbarWrapper">
+            <background-color>#ffff00</background-color>
+            <border-color>#ff0000</border-color>
+            <border-width>4px</border-width>
+            <color>#aa00ff</color>
+            <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
+        </Selection>
+        <Selection selector="#screenIndex">
+            <background-color>#000000</background-color>
+            <background-image>url(../images/)</background-image>
+        </Selection>
+        <Selection selector="#screenPhoto">
+            <background-color>#00aa7f</background-color>
+            <background-image>url(../images/)</background-image>
+        </Selection>
+        <Selection selector=".mainPhoto">
+            <border-color>#ff007f</border-color>
+            <border-width>5px</border-width>
+        </Selection>
+        <Selection selector=".photoButtonDisabled">
+            <border-color>#000000</border-color>
+            <border-width>3px</border-width>
+        </Selection>
+        <Selection selector=".photoButtonEnabled">
+            <border-color>#ffff00</border-color>
+            <border-width>3px</border-width>
+        </Selection>
+        <Selection selector=".photoButtonEnabled:hover">
+            <border-color>#ff0000</border-color>
+            <border-width>10px</border-width>
+            <margin>-7px</margin>
+        </Selection>
+        <Selection selector=".thumbBox">
+            <border-color>#ff0000</border-color>
+            <border-width>2px</border-width>
+            <Selection selector="img">
+                <border-color>#55aa00</border-color>
+                <border-width>5px</border-width>
+            </Selection>
+            <Selection selector="img:hover">
+                <border-color>#ff0000</border-color>
+            </Selection>
+        </Selection>
+        <Selection selector=".thumbsWrapperContainer">
+            <background-color>#5555ff</background-color>
+            <background-image>url(../images/)</background-image>
+            <border-color>#ffffff</border-color>
+            <border-width>5px</border-width>
+        </Selection>
+        <Selection selector="div#cadrePhoto">
+            <background-color>#0000ff</background-color>
+            <background-image>url(../images/)</background-image>
+            <padding>15px</padding>
+        </Selection>
+        <Selection selector="div#indexTitle">
+            <background-color>#00ff7f</background-color>
+            <background-image>url(../images/)</background-image>
+            <border-color>#ff0000</border-color>
+            <border-left-width>0px</border-left-width>
+            <border-right-width>4px</border-right-width>
+            <color>#000000</color>
+            <display>block</display>
+            <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
+            <font-size>2em</font-size>
+            <line-height>1em</line-height>
+            <width>50px</width>
+        </Selection>
+        <Selection selector="div#photoLefter">
+            <background-color>#000000</background-color>
+            <background-image>url(../images/)</background-image>
+            <width>100px</width>
+        </Selection>
+        <Selection selector="div#photoRighter">
+            <background-color>#000000</background-color>
+            <background-image>url(../images/)</background-image>
+            <width>100px</width>
+        </Selection>
+        <Selection selector="div.photoCaption">
+            <color>#cbffe0</color>
+            <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
+            <font-size>0.9em</font-size>
+            <font-weight>normal</font-weight>
+        </Selection>
+        <Selection selector="ul.indexNavigation">
+            <Selection selector="li">
+                <background-color>#ffffff</background-color>
+                <Selection selector="a">
+                    <color>#000000</color>
+                </Selection>
+            </Selection>
+            <Selection selector="li.navTabSelected">
+                <background-color>#ff55ff</background-color>
+                <border-color>#ffaa00</border-color>
+                <border-width>3px</border-width>
+                <Selection selector="a">
+                    <color>#00aa00</color>
+                </Selection>
+            </Selection>
+        </Selection>
+    </StyleSheet>
+    <Ressources>
+        <File id="PhotoButtonNext">arrows_right_dark.png</File>
+        <File id="PhotoButtonPrevious">arrows_left_dark.png</File>
+    </Ressources>
+</Skin>

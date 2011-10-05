@@ -1,0 +1,4 @@
+ImagePicker:
+http://www.iconspedia.com/icon/png-image-1267-.html
+ColorPicker:
+http://www.iconspedia.com/icon/color-picker-1548.html
