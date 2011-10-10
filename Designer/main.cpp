@@ -17,10 +17,6 @@
 */
 
 
-/*
-* This header is mandatory on all files of the project in order to track the global svn revision usin svnrev
-* $Id: main.cpp 133 2011-10-04 20:05:28Z xtof $
-*/
 
 #include <QObject>
 #include <QCoreApplication>

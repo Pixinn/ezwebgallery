@@ -231,11 +231,11 @@
     <ClCompile Include="ui\mainwin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CCaption.h" />
-    <CustomBuild Include="*.h*;*.c*;.\global\*.h*;.\global\*.c*;.\ui\*.c*;.\widgets\*.h*;.\widgets\*.c* ">
-      <Command>.\ressources\win32\svnrev.exe *.h* *.c* .\global\*.h* .\global\*.c* .\ui\*.h* .\ui\*.c* .\widgets\*.h* .\widgets\*.c* -o.\GeneratedFiles\$(ConfigurationName)\svnrev.h</Command>
-      <Outputs>.\GeneratedFiles\$(ConfigurationName)\svnrev.h</Outputs>
+    <CustomBuild Include="$(TargetDir)\$(TargetFileName)">
+      <Command>bzr version-info --custom --template="static const unsigned int BAZAAR_REVISION = 133 + {revno};" > bazaarrev.h</Command>
+      <Outputs>bazaarrev.h</Outputs>
     </CustomBuild>
+    <ClInclude Include="CCaption.h" />
     <CustomBuild Include="CCaptionManager.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);%(AdditionalInputs)</AdditionalInputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"   -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT  "-I." "-I." "-I.\global" "-I.\ui" "-I.\widgets" "-I$(MAGICK_HOME)\." "-I$(MAGICK_HOME)\Magick++\lib" "-I$(INHERIT)\." "-I$(QTDIR)\lib" "-I$(QTDIR)\mkspecs\win32-msvc2010" "-I$(QTDIR)\include" "-I$(QTDIR)\include\Qt" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtXml" "-I." "-I." "-I." "CCaptionManager.h" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"</Command>

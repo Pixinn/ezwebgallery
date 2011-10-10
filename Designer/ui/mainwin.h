@@ -16,10 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/*
-* This header is mandatory on all files of the project in order to track the global svn revision usin svnrev
-* $Id: mainwin.h 133 2011-10-04 20:05:28Z xtof $
-*/
+
 
 #ifndef MAINWIN_H
 #define MAINWIN_H

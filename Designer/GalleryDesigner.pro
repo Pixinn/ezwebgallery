@@ -12,14 +12,14 @@ OTHER_FILES += Makefile.Release \
 
 ### Prebuilding step on unix ###
 # L'equivalent windows est configure via les tape de precompilation du projet Visual
-unix {
+#unix {
         versiontarget.target = bazaarrev.h
         versiontarget.commands = $$system(bzr version-info --custom --template=\"static const unsigned int BAZAAR_REVISION = 133 + {revno};\" > bazaarrev.h)
         versiontarget.depends = FORCE
 
         PRE_TARGETDEPS += bazaarrev.h
         QMAKE_EXTRA_TARGETS += versiontarget
-}
+#}
 
 
     
