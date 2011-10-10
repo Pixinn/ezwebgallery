@@ -31,7 +31,7 @@
 #include <QTextStream>
 
 #include "CPlatform.h"
-#include "svnrev.h"  //Fichiers généré en précompilation par l'outil svnrev
+#include "bazaarrev.h"  //Fichiers généré en précompilation par l'outil svnrev
 
 /*************************** VARIABLES STATIQUES ****************/
 const QRegExp CPlatform::m_forbiddenCharacters = QRegExp("[ '<>.%/\\*|\"()&:?]"); //Les caractères interdits du filesystem
@@ -52,7 +52,7 @@ CPlatform::CPlatform()
 ***************************/
 QString CPlatform::revision()
 {
-	return QString(SVN_REVSTR);
+    return QString::number(BAZAAR_REVISION);
 }
 
 
@@ -104,14 +104,7 @@ QStringList CPlatform::languageList( )
 ***************************/
 int CPlatform::revisionInt()
 {
-    //Format svnversion: minVer:maxVer -> on ne veut que maxVer
-    QString revision = QString(SVN_REVSTR).remove("M"); //On enlève le M pour les versions en cours de dev...
-    if( revision.contains(QString(":")) ){
-        revision = revision.right( revision.size() - revision.indexOf(QString(":")) - 1);
-    }
-
-    return revision.toInt();
-
+    return BAZAAR_REVISION;
 }
 
 /**************************

@@ -11,29 +11,17 @@ OTHER_FILES += Makefile.Release \
     Makefile
 
 ### Prebuilding step on unix ###
-# L'quivalent windows est configur via les tape de prcompilation du projet Visual
+# L'equivalent windows est configure via les tape de precompilation du projet Visual
 unix {
-        versiontarget.target = svnrev.h
-        versiontarget.commands = $${PWD}/ressources/linux/svnrev $${PWD}/*.cpp  $${PWD}/*.h $${PWD}/ui/*.cpp $${PWD}/ui/*.h $${PWD}/global/*.cpp $${PWD}/global/*.h $${PWD}/widgets/*.cpp $${PWD}/widgets/*.h  -o$${PWD}/svnrev.h
+        versiontarget.target = bazaarrev.h
+        versiontarget.commands = $$system(bzr version-info --custom --template=\"static const unsigned int BAZAAR_REVISION = 133 + {revno};\" > bazaarrev.h)
         versiontarget.depends = FORCE
 
-        PRE_TARGETDEPS += svnrev.h
+        PRE_TARGETDEPS += bazaarrev.h
         QMAKE_EXTRA_TARGETS += versiontarget
 }
 
 
-#release {
-#    DESTDIR = Release/bin
-#    INCLUDEPATH += ./GeneratedFiles ./GeneratedFiles/Release ./
-#    MOC_DIR = ./GeneratedFiles/Release
-#    OBJECTS_DIR += Release
-#    }
-#debug {
-#    DESTDIR = Debug/bin
-#    INCLUDEPATH += ./GeneratedFiles ./GeneratedFiles/Debug ./
-#    MOC_DIR = ./GeneratedFiles/Debug
-#    OBJECTS_DIR += Debug
-#    }
     
 LIBS += -lMagick++ -lMagickCore -lMagickWand
 
