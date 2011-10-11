@@ -202,9 +202,9 @@ void MainWin::onForceStoppedFinished( QStringList errorMessages )
         delete alertBox;
     }
 
-    if(  m_stateButtonGenerate == stateCancel ) //Quand la boite d'erreur s'affiche, on peut entrer deux fois ici :(
+    if(  m_stateGeneration == eNotGenerating ) //Quand la boite d'erreur s'affiche, on peut entrer deux fois ici :(
     {
-        swapButtonGenerate( );
+        swapButtons( );
         m_ui->progressBar_Generation->setValue( 0 );
         m_ui->pushButton_Generation->setDisabled( false );
         m_ui->statusbar->showMessage( tr("Generation cancelled."), 7000 );
@@ -237,7 +237,7 @@ void MainWin::onGalleryGenerationFinished( /*bool success*/QList<CPhotoPropertie
         m_projectParameters.m_photosConfig.f_regeneration = false;
         m_projectParameters.m_thumbsConfig.f_regeneration = false;
 
-        swapButtonGenerate( ); //Bouton "cancel" redevient "generate"
+        swapButtons( ); //Bouton "cancel" redevient "generate" et réactivation des actions
         m_ui->statusbar->showMessage( tr("Generation successfully completed."), 7000 );
 
         //Ouverture de la galerie
@@ -267,7 +267,7 @@ MainWin::MainWin( QWidget *parent ) :
     m_lastSelectedDir = QDir::homePath();
     m_p_galleryGenerator = NULL;
     
-    m_stateButtonGenerate = stateGenerate;  
+    m_stateGeneration = eGenerating;  
     
     //Fenêtre de debug
     m_p_logDisplay = new QTextEdit( 0 );
@@ -935,8 +935,8 @@ void MainWin::generateGallery( )
             //GENERATION !
             if( m_projectParameters.m_photoPropertiesMap.size() != 0 )
             {
-                //Affichage bouton annulation
-                swapButtonGenerate( );
+                //Affichage bouton annulation et déscativation de certaines actions
+                swapButtons( );
 
                 //Génération
                 m_p_galleryGenerator->generateGallery(  m_projectParameters,
@@ -1093,15 +1093,19 @@ bool MainWin::checkForGeneration( QString &errorMsg )
 }
 
 
-void MainWin::swapButtonGenerate( )
+void MainWin::swapButtons( )
 {
-    if( m_stateButtonGenerate == stateCancel ) {
-        m_ui->pushButton_Generation->setText( tr("&Generate") );
-        m_stateButtonGenerate = stateGenerate;        
+    if( m_stateGeneration == eNotGenerating ) {
+        m_ui->pushButton_Generation->setText( tr("&Generate") );        
+        m_ui->action_NewSession->setEnabled( true );
+        m_ui->action_OpenSession->setEnabled( true );
+        m_stateGeneration = eGenerating;
     }
     else{
-        m_ui->pushButton_Generation->setText( tr("&Cancel") );
-        m_stateButtonGenerate = stateCancel;
+        m_ui->pushButton_Generation->setText( tr("&Cancel") );        
+        m_ui->action_NewSession->setEnabled( false );
+        m_ui->action_OpenSession->setEnabled( false );
+        m_stateGeneration = eNotGenerating;
     }
 }
 

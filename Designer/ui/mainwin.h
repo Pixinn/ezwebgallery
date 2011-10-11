@@ -79,10 +79,10 @@ private:
     void displayRecentFiles( ); //Affiche la liste des fichiers rcemments ouverts
     int displayUnsavedMsgBox( bool, bool ); //Affiche une message box indiquant que le projet et/ou la skin n'ont pas t savegards. Retourne le bouton appuy
     int displayMoreRecentMsgBox( ); //Affiche une alerte si on essaie d'ouvrir un projet gnr avec une version d'EZWG plus rcente
-    void swapButtonGenerate( ); //swap le bouton de gnration entre les tats Gnrer/Annuler
-    bool checkForGeneration( QString & );//Vrifie les paramtres fournis pour la gnration
-    QStringList checkPhotosInDir( const QStringList&, const QDir & ); //Vrifie la prsence des photos de la liste dans le rpertoire
-    bool checkCreateDir( QString & ); //Vrifie l'existance d'un rpertoire et propose sa cration via msgBox le cas chant
+    void swapButtons( ); //swap certains boutons pour cause de génération de galerie
+    bool checkForGeneration( QString & );//Vérifie les paramètres fournis pour la génération
+    QStringList checkPhotosInDir( const QStringList&, const QDir & ); //Vérifie la prsence des photos de la liste dans le répertoire
+    bool checkCreateDir( QString & ); //Vérifie l'existance d'un répertoire et propose sa création via msgBox le cas échant
 
 /********* SLOTS ********/
 public slots:
@@ -140,7 +140,7 @@ private:
     WinSkinDesigner* m_p_skinDesignerWindow;
     WinConfigure* m_p_configureWindow;
     QStringListModel m_photosListModel;
-    enum { stateCancel, stateGenerate } m_stateButtonGenerate;
+    enum { eGenerating, eNotGenerating } m_stateGeneration;
     QStringList m_debugMessages;
     QStringList m_recentSessions;           //Liste contenant les NBMAXRECENTFILES derniers fichiers projets ouverts
     QAction *m_recentSessionsActions[NBMAXRECENTFILES];
