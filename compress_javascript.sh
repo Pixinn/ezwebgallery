@@ -14,20 +14,20 @@ echo "##########################################################################
 echo ""
 
 
-export JS_PATH='./Web/ressources/javascript'
+export JS_PATH='./web/ressources/javascript'
 
 mkdir $JS_PATH/min-js/
 mkdir $JS_PATH/min-js/core
 
 
-yui-compressor --verbose --charset UTF-8 -o $JS_PATH/min-js/common-min.js  $JS_PATH/common.js
-yui-compressor --verbose --charset UTF-8 -o $JS_PATH/min-js/image-min.js   $JS_PATH/image.js
-yui-compressor --verbose --charset UTF-8 -o $JS_PATH/min-js/index-min.js   $JS_PATH/index.js
+yui-compressor --charset UTF-8 -o $JS_PATH/min-js/common-min.js  $JS_PATH/common.js
+yui-compressor --charset UTF-8 -o $JS_PATH/min-js/image-min.js   $JS_PATH/image.js
+yui-compressor --charset UTF-8 -o $JS_PATH/min-js/index-min.js   $JS_PATH/index.js
                                 
-yui-compressor --verbose --charset UTF-8 -o $JS_PATH/min-js/core/classDisplayManager-min.js    $JS_PATH/core/classDisplayManager.js
-yui-compressor --verbose --charset UTF-8 -o $JS_PATH/min-js/core/classFifo-min.js              $JS_PATH/core/classFifo.js
-yui-compressor --verbose --charset UTF-8 -o $JS_PATH/min-js/core/classHashTable-min.js         $JS_PATH/core/classHashTable.js
-yui-compressor --verbose --charset UTF-8 -o $JS_PATH/min-js/core/classObjetAjustable-min.js    $JS_PATH/core/classObjetAjustable.js
-yui-compressor --verbose --charset UTF-8 -o $JS_PATH/min-js/core/classTablePhoto-min.js        $JS_PATH/core/classTablePhoto.js
+yui-compressor --charset UTF-8 -o $JS_PATH/min-js/core/classDisplayManager-min.js    $JS_PATH/core/classDisplayManager.js
+yui-compressor --charset UTF-8 -o $JS_PATH/min-js/core/classFifo-min.js              $JS_PATH/core/classFifo.js
+yui-compressor --charset UTF-8 -o $JS_PATH/min-js/core/classHashTable-min.js         $JS_PATH/core/classHashTable.js
+yui-compressor --charset UTF-8 -o $JS_PATH/min-js/core/classObjetAjustable-min.js    $JS_PATH/core/classObjetAjustable.js
+yui-compressor --charset UTF-8 -o $JS_PATH/min-js/core/classTablePhoto-min.js        $JS_PATH/core/classTablePhoto.js
 
 echo "DONE."

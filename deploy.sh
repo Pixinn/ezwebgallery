@@ -20,7 +20,7 @@ echo "Usage: deploy BINARY_FOLDER DESTINATION_FOLDER."
 
 else
 
-qmake ./Designer/GalleryDesigner.pro
+qmake ./src/EZWebGallery.pro
 make -f Makefile.Release
 ./compress_javascript.sh
 ./create_release.sh $1 $2

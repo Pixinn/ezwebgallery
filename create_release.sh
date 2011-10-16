@@ -12,8 +12,8 @@ echo "# In order to create a release you need to set the folowing env variables"
 echo "# + QDTIR: path to Qt"
 echo "# + MAGICK_HOME: path to ImageMagick"
 echo "#"
-echo "# NOTE: you need to minimize some files located in ./Web/ressources/javascript/"
-echo "# and placethem in ./Web/ressources/javascript/"
+echo "# NOTE: you need to minimize some files located in ./web/ressources/javascript/"
+echo "# and placethem in ./web/ressources/javascript/"
 echo "# You can run compress_js.bat script for that purpose."
 echo "#"
 echo "###############################################################################"
@@ -21,6 +21,7 @@ echo " "
 
 else
 
+export BINARY_FILENAME='EZWebGallery'
 
 mkdir --parents $2
 
@@ -31,21 +32,20 @@ mkdir --parents $2/res/ressources/javascript/jquery/plugins
 mkdir --parents $2/res/ressources/javascript/tools
 mkdir --parents $2/res/ressources/javascript/core
 
-cp ./Web/index.html $2/res
-cp ./Web/ressources/php/*.php $2/res/ressources/php
-cp ./Web/ressources/images/*.* $2/res/ressources/images
-cp ./Web/ressources/images/smileys/*.* $2/res/ressources/images/smileys
-cp ./Web/ressources/css/*.css $2/res/ressources/css
-cp ./Web/ressources/javascript/jquery/*.js $2/res/ressources/javascript/jquery
-cp ./Web/ressources/javascript/jquery/plugins/*.js $2/res/ressources/javascript/jquery/plugins
-cp ./Web/ressources/javascript/tools/*.js $2/res/ressources/javascript/tools
-cp ./Web/ressources/javascript/min-js/*-min.js $2/res/ressources/javascript/
-cp ./Web/ressources/javascript/min-js/core/*-min.js $2/res/ressources/javascript/core
+cp ./web/index.html $2/res
+cp ./web/ressources/php/*.php $2/res/ressources/php
+cp ./web/ressources/images/*.* $2/res/ressources/images
+cp ./web/ressources/images/smileys/*.* $2/res/ressources/images/smileys
+cp ./web/ressources/css/*.css $2/res/ressources/css
+cp ./web/ressources/javascript/jquery/*.js $2/res/ressources/javascript/jquery
+cp ./web/ressources/javascript/jquery/plugins/*.js $2/res/ressources/javascript/jquery/plugins
+cp ./web/ressources/javascript/tools/*.js $2/res/ressources/javascript/tools
+cp ./web/ressources/javascript/min-js/*-min.js $2/res/ressources/javascript/
+cp ./web/ressources/javascript/min-js/core/*-min.js $2/res/ressources/javascript/core
 
-cp -R --parents ./Skins/* $2/ 
-mv $2/Skins $2/skins
+cp -R --parents ./skins/* $2/ 
 
-cp $1/GalleryDesigner $2
+cp $1/$BINARY_FILENAME $2
 
 cd $2
 echo "DONE!"
