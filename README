@@ -2,25 +2,25 @@
 Read the following for a better understanding on how to generate a release of
 EZWebGallery.
 
-* Two scripts are provided :
+* Two scripts are provided for windows and three for linux:
+
     0 - Linux only : set the execute permission of the two sh script files on.
     1 - compress_javascript will compress the javascript files using
         YUI_COMPRESSOR. The "web files" are nows ready to be included in a
-        release using the 2nd script.
+        release using the 2nd script. If you are using Ubuntu, YUI_COMPRESSOR
+        can be downloaded in the package "yui-compressor".
     2 - create_release builds the proper file structure into the target
         directory and copies to it the required files. Including the compressed
         js files generated using the 1st script.
+    3 - Linux only: deploy builds the release binary then run the two previous 
+        scripts, thus building from scratch a folder containing all the files
+        needed to deploy EZWebGallery.
 
-IMPORTANT NOTE: in order to run EZWebGallery, the directories "res" and "skins"
-have to be placed in the binary folder. Thus, YOU HAVE TO manually copy them
-before testing your builds.
+IMPORTANT NOTE:
+---------------
+In order to run EZWebGallery, the directories "res" and "skins"
+have to be placed alongside the binary. Thus, if you want to debug a binary,
+YOU HAVE TO manually copy them into the debug directory.
 
-The workflow would then be :
-1 - Build the release binary
-2 - Run "compress_javascript"
-3 - Run "create_release"
-4 - You can now properly run a release of EZWebGallery.
-5 - If you want to debug EZWebGallery, build the debug binary then copy the
-    folders "res" and "skin" in its folder.
 
 

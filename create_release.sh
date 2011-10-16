@@ -5,7 +5,7 @@ if [ $# -eq 0 ]; then
 echo " "
 echo "###############################################################################"
 echo "#"
-echo "# Usage: create_realease BINARY_FOLDER DESTINATION_FOLDER"
+echo "# Usage: create_release BINARY_FOLDER DESTINATION_FOLDER"
 echo "# This script copies all the necessary files to the provided DESTINATION_FOLDER"
 echo "#"
 echo "# In order to create a release you need to set the folowing env variables"

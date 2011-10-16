@@ -15,15 +15,7 @@ Prerequisites *
 Common to all platforms *
 *************************
 
-NOTE: in order to run EZWebGallery, the "res" and "skins" directories need to be placed in the binary folder. Thus, YOU HAVE TO manually copy them before testing your builds. Read the "ReadMe.txt" file of the parent folder for further details about generating these folders using the two provided scripts.
-
-* The project use "svnrev" to be aware of the *global* revion number. You have to add the Rev Date and Id to the svn:keywords property of each newly added file. svnrev is used as the first pre-building step.
-  Add the following lines at the beginning of each file :
-  
-        /*
-		* This header is mandatory on all files of the project in order to track the global svn revision usin svnrev
-		* $Id: ReadMe.txt 130 2011-09-25 22:24:43Z xtof $
-		*/
+NOTE: in order to run EZWebGallery, the "res" and "skins" directories need to be placed in the binary folder. Thus, YOU HAVE TO manually copy them before testing your builds. Read the "README" file of the parent folder for further details about generating these folders using the two provided scripts.
 			
 * If you want to see and use the custom widgets in Qt Designer:
     1 - Build the widgets with the project widgets/EzwWidgets.pro
@@ -38,8 +30,7 @@ Linux   *
 * You have to install the dev version of Qt and ImageMagick with these packages :
     libqt4-dev
     libmagick++-dev
-
-* You'll have to give "execute permission" to ressources/linux/svnrev
+    yui-compressor
 
 * If your editor has trouble displaying the accentuated characters, know that te files are encoded using the Windows-1252 (CP-1252) character encoding.
 
@@ -47,8 +38,6 @@ Linux   *
 *********
 MacOSX *
 *********
-
-* You'll have to give "execute permission" to ressources/linux/svnrev
 
 * If your editor has trouble displaying the accentuated characters, know that te files are encoded using the Windows-1252 (CP-1252) character encoding.
 

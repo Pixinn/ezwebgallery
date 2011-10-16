@@ -4,24 +4,37 @@
 #DEFINES += REVISION=\"$${VERSTR}\" # create a VER macro containing the version string
 
 
-CONFIG += link_prl
+CONFIG  += debug_and_release \
+#       += link_prl
+        
 QT += xml
-OTHER_FILES += Makefile.Release \
-    Makefile.Debug \
-    Makefile
 
-### Prebuilding step on unix ###
-# L'equivalent windows est configure via les tape de precompilation du projet Visual
-#unix {
+#OTHER_FILES += Makefile.Release \
+#    Makefile.Debug \
+#    Makefile
+
+### Prebuilding step on unix & macos ###
+# The windows equivalent is done via some custom prebuild step defined  in the vcxproj file.
+unix|macx {
         versiontarget.target = bazaarrev.h
         versiontarget.commands = $$system(bzr version-info --custom --template=\"static const unsigned int BAZAAR_REVISION = 133 + {revno};\" > bazaarrev.h)
         versiontarget.depends = FORCE
-
         PRE_TARGETDEPS += bazaarrev.h
         QMAKE_EXTRA_TARGETS += versiontarget
-#}
+}
 
-
+### Output ###
+Debug:DESTDIR =         $$PWD/build/debug
+Debug:DESTDIR =         $$PWD/build/release
+Debug:OBJECTS_DIR =     $$PWD/build/.obj
+Debug:MOC_DIR =         $$PWD/build/.moc
+Debug:RCC_DIR =         $$PWD/build/.rcc
+Debug:UI_DIR =          $$PWD/build/.ui
+Release:DESTDIR =       $$PWD/build/release
+Release:OBJECTS_DIR =   $$PWD/build/.obj
+Release:MOC_DIR =       $$PWD/build/.moc
+Release:RCC_DIR =       $$PWD/build/.rcc
+Release:UI_DIR =        $$PWD/build/.ui
     
 LIBS += -lMagick++ -lMagickCore -lMagickWand
 
@@ -31,6 +44,7 @@ INCLUDEPATH += ./widgets \
                ./ui \
                ./global
 unix:INCLUDEPATH += /usr/include/ImageMagick/
+macx:INCLUDEPATH += /usr/local/include/ImageMagick/
 
 DEPENDPATH += ./widgets
 
