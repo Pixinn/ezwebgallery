@@ -14,7 +14,7 @@ echo #
 echo ###############################################################################
 echo.
 
-SET JS_PATH=Web\ressources\javascript
+SET JS_PATH=web\ressources\javascript
 
 md %JS_PATH%\min-js\core
 
