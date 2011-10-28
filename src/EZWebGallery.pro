@@ -1,17 +1,8 @@
-# RECUPERATION REVISION - http://wiki.qtcentre.org/index.php?title=Version_numbering_using_QMake
-#VERSION = $$system(svnversion)
-#VERSTR = '\\"$${VERSION}\\"' # place quotes around the version string
-#DEFINES += REVISION=\"$${VERSTR}\" # create a VER macro containing the version string
-
 
 CONFIG  += debug_and_release \
 #       += link_prl
         
 QT += xml
-
-#OTHER_FILES += Makefile.Release \
-#    Makefile.Debug \
-#    Makefile
 
 ### Prebuilding step on unix & macos ###
 # The windows equivalent is done via some custom prebuild step defined  in the vcxproj file.
@@ -34,18 +25,18 @@ unix|macx {
 
 ### Output ###
 Debug {
-    DESTDIR =         $$PWD/build/debug
-    OBJECTS_DIR =     $$PWD/build/.obj
-    MOC_DIR =         $$PWD/build/.moc
-    RCC_DIR =         $$PWD/build/.rcc
-    UI_DIR =          $$PWD/build/.ui
+    DESTDIR =        $$PWD/../build/debug
+    OBJECTS_DIR =    $$PWD/../build/.obj
+    MOC_DIR =        $$PWD/../build/.moc
+    RCC_DIR =        $$PWD/../build/.rcc
+    UI_DIR =         $$PWD/../build/.ui
 }
 Release {
-    DESTDIR =       $$PWD/build/release
-    OBJECTS_DIR =   $$PWD/build/.obj
-    MOC_DIR =       $$PWD/build/.moc
-    RCC_DIR =       $$PWD/build/.rcc
-    UI_DIR =        $$PWD/build/.ui
+    DESTDIR =      $$PWD/../build/release
+    OBJECTS_DIR =  $$PWD/../build/.obj
+    MOC_DIR =      $$PWD/../build/.moc
+    RCC_DIR =      $$PWD/../build/.rcc
+    UI_DIR =       $$PWD/../build/.ui
 }
 
     
@@ -114,3 +105,11 @@ TRANSLATIONS += ressources/languages/GalleryDesigner_en.ts \
 
 RESOURCES = ressources/GalleryDesigner.qrc
 win32:RC_FILE = ressources/win32/GalleryDesigner.rc
+
+#POST BUILD STEPS : calling the deployment script
+unix|macx {
+    Debug: message( "Don\'t forget to copy the necessary ressource files into \"build/debug\" in order to debug. Use compress_javascript.sh and create_release.sh scripts." )
+    Release{ QMAKE_POST_LINK += $$PWD/../compress_javascript.sh $$PWD/../build/.min-js && \
+                                $$PWD/../create_release.sh $$DESTDIR/$$TARGET $$PWD/../build/.min-js $$DESTDIR
+    }
+}
