@@ -4,7 +4,7 @@
 ###############################################################################
 #
 # This script compress the necessary javascript files.
-# The ouput will be placed in the Web/ressources/javascript/ folder.
+# The ouput will be placed in the DESTDIR folder.
 #
 # You need to install the YUI Compressor.
 # On Ubuntu, you can download the package \"yui-compressor\".
@@ -21,10 +21,6 @@ echo " "
 SCRIPTDIR="$( cd "$( dirname "$0" )" && pwd )"
 JS_PATH=$SCRIPTDIR/web/ressources/javascript  
 DESTDIR=$1
-
-echo $SCRIPTDIR
-echo $DESTDIR
-echo $JS_PATH
 
 mkdir -p $DESTDIR/core
 
@@ -43,6 +39,3 @@ else
 echo "# Usage: compress_javascript.sh DESTDIR"
 
 fi
-
-
-
