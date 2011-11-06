@@ -1,22 +1,41 @@
-# RECUPERATION REVISION - http://wiki.qtcentre.org/index.php?title=Version_numbering_using_QMake
-#VERSION = $$system(svnversion)
-#VERSTR = '\\"$${VERSION}\\"' # place quotes around the version string
-#DEFINES += REVISION=\"$${VERSTR}\" # create a VER macro containing the version string
-
 
 CONFIG  += debug_and_release \
 #       += link_prl
         
 QT += xml
 
-#OTHER_FILES += Makefile.Release \
-#    Makefile.Debug \
-#    Makefile
+### User defined variables ###
+Debug|Release{
+    SCRIPTDIR = $$PWD/..
+    BUILDDIR = $$PWD/../build
+}
+
+### Output ###
+Debug {
+    DESTDIR =        $$BUILDDIR/debug
+    OBJECTS_DIR =    $$BUILDDIR/.obj
+    MOC_DIR =        $$BUILDDIR/.moc
+    RCC_DIR =        $$BUILDDIR/.rcc
+    UI_DIR =         $$BUILDDIR/.ui
+    MINJS_DIR =      $$BUILDDIR/.min-js
+    WEBDIR =         $$PWD/../web
+}
+Release {
+    DESTDIR =      $$BUILDDIR/release
+    OBJECTS_DIR =  $$BUILDDIR/.obj
+    MOC_DIR =      $$BUILDDIR/.moc
+    RCC_DIR =      $$BUILDDIR/.rcc
+    UI_DIR =       $$BUILDDIR/.ui
+    MINJS_DIR =    $$BUILDDIR/.min-js
+}
+
+
 
 ### Prebuilding step on unix & macos ###
 # The windows equivalent is done via some custom prebuild step defined  in the vcxproj file.
 unix|macx {
     Debug{
+            scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh && mkdir -p $$DESTDIR/skins && mkdir $$DESTDIR/res )
             versiontarget.target = bazaarrev.h
             versiontarget.commands = $$system(bzr version-info --custom --template=\"static const unsigned int BAZAAR_REVISION = 133 + {revno};\" > bazaarrev.h)
             versiontarget.depends = FORCE
@@ -24,6 +43,7 @@ unix|macx {
             QMAKE_EXTRA_TARGETS += versiontarget
     }
     Release{
+            scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh && mkdir -p $$DESTDIR/skins && mkdir $$DESTDIR/res )
             versiontarget.target = bazaarrev.h
             versiontarget.commands = $$system(bzr version-info --custom --template=\"static const unsigned int BAZAAR_REVISION = 133 + {revno};\" > bazaarrev.h)
             versiontarget.depends = FORCE
@@ -31,23 +51,6 @@ unix|macx {
             QMAKE_EXTRA_TARGETS += versiontarget
     }
 }
-
-### Output ###
-Debug {
-    DESTDIR =         $$PWD/build/debug
-    OBJECTS_DIR =     $$PWD/build/.obj
-    MOC_DIR =         $$PWD/build/.moc
-    RCC_DIR =         $$PWD/build/.rcc
-    UI_DIR =          $$PWD/build/.ui
-}
-Release {
-    DESTDIR =       $$PWD/build/release
-    OBJECTS_DIR =   $$PWD/build/.obj
-    MOC_DIR =       $$PWD/build/.moc
-    RCC_DIR =       $$PWD/build/.rcc
-    UI_DIR =        $$PWD/build/.ui
-}
-
     
 LIBS += -lMagick++ -lMagickCore -lMagickWand
 
@@ -114,3 +117,32 @@ TRANSLATIONS += ressources/languages/GalleryDesigner_en.ts \
 
 RESOURCES = ressources/GalleryDesigner.qrc
 win32:RC_FILE = ressources/win32/GalleryDesigner.rc
+
+### POST BUILD STEPS : calling the deployment script
+unix|macx {
+    Debug: message( "Don\'t forget to copy the necessary ressource files into \"build/debug\" in order to debug. Use compress_javascript.sh and create_release.sh scripts." )
+    Release{ QMAKE_POST_LINK += $$SCRIPTDIR/compress_javascript.sh $$MINJS_DIR && \
+                                $$SCRIPTDIR/create_release.sh $$DESTDIR/$$TARGET $$MINJS_DIR $$DESTDIR
+    }
+}
+
+
+### DEPLOYMENT
+unix {
+        INSTALLDIR = /opt/$$TARGET
+        ressources.path = $$INSTALLDIR
+        ressources.files = $$DESTDIR/res $$DESTDIR/skins $$DESTDIR/$$TARGET
+        INSTALLS += ressources
+}
+
+
+### CLEAN
+QMAKE_CLEAN +=  $$MINJS_DIR/common-min.js \
+                $$MINJS_DIR/image-min.js \
+                $$MINJS_DIR/index-min.js \
+                $$MINJS_DIR/core/classDisplayManager-min.js \
+                $$MINJS_DIR/core/classFifo-min.js \
+                $$MINJS_DIR/core/classHashTable-min.js \
+                $$MINJS_DIR/core/classObjetAjustable-min.js \
+                $$MINJS_DIR/core/classTablePhoto-min.js \
+                $$MINJS_DIR/core/

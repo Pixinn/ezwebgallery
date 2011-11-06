@@ -1,29 +1,30 @@
 ﻿ #!/bin/sh
 
-echo ""
-echo "###############################################################################"
-echo "#"
-echo "# Usage: deploy BINARY_FOLDER DESTINATION_FOLDER"
-echo "#"
-echo "# This script build the project, compress the js files and copies the resulting"
-echo "# files into the provided destination folder."
-echo "#"
-echo "# The package yui-compressor is required to compress the javascript files."
-echo "#"
-echo "# The binary folder is defined in the .pro file."
-echo "###############################################################################"
-echo ""
+###############################################################################
+#
+# Usage: deploy BINARY_FOLDER DESTINATION_FOLDER
+#
+# This script build the project, compress the js files and copies the resulting
+# files into the provided destination folder.
+#
+# The package yui-compressor is required to compress the javascript files.
+#
+# The binary folder is defined in the .pro file.
+###############################################################################
+
+echo "DEPRECATED : make will deploy in the build/release folder."
 
 if [ $# -eq 0 ]; then
 
-echo "Usage: deploy BINARY_FOLDER DESTINATION_FOLDER."
+echo "Usage: deploy BINARY DESTINATION_FOLDER."
 
 else
 
+TEMPDIR=.min-js
 qmake ./src/EZWebGallery.pro
 make -f Makefile.Release
-./compress_javascript.sh
-./create_release.sh $1 $2
+./compress_javascript.sh $TEMPDIR
+./create_release.sh $1 $TEMPDIR $2
 
 echo ""
 echo "###############################################################################"

@@ -5,10 +5,11 @@ Read the folowing instructions in oder to build EZWebGallery more easily.
 Prerequisites *
 ***************
 
-* Qt : https://qt.nokia.com/downloads/
-* ImageMagick : http://www.imagemagick.org/script/download.php
+* Qt: https://qt.nokia.com/downloads/
+* ImageMagick: http://www.imagemagick.org/script/download.php
     + If you want to build ImageMagick from source to enhance performance, use the following options : --disable-static --with-quantum-depth=8 --without-perl
-    + Windows only : ImageMagick cannot be built using Visual Studio Express.
+    + Windows only: ImageMagick cannot be built using Visual Studio Express.
+* Bazaar: http://bazaar.canonical.com/
 
     
 *************************
@@ -31,6 +32,7 @@ Linux   *
     libqt4-dev
     libmagick++-dev
     yui-compressor
+    bzr
 
 * If your editor has trouble displaying the accentuated characters, know that te files are encoded using the Windows-1252 (CP-1252) character encoding.
 

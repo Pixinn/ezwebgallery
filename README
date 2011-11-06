@@ -2,17 +2,20 @@
 Read the following for a better understanding on how to generate a release of
 EZWebGallery.
 
-* Two scripts are provided for windows and three for linux:
+* On Linux you can run "make install": EZWebGallery will then be installed in
+  /opt/ezwebgallery.
+  If you are running windows or want to perform a manual installation, follow
+  these instructions:
 
     0 - Linux only : set the execute permission of the two sh script files on.
-    1 - compress_javascript will compress the javascript files using
+    1 - "compress_javascript" will compress the javascript files using
         YUI_COMPRESSOR. The "web files" are nows ready to be included in a
         release using the 2nd script. If you are using Ubuntu, YUI_COMPRESSOR
         can be downloaded in the package "yui-compressor".
-    2 - create_release builds the proper file structure into the target
-        directory and copies to it the required files. Including the compressed
+    2 - "create_release" builds the proper file structure into the target
+        directory and copies the required files, Including the compressed
         js files generated using the 1st script.
-    3 - Linux only: deploy builds the release binary then run the two previous 
+    3 - Linux only: "deploy" builds the release binary then run the two previous 
         scripts, thus building from scratch a folder containing all the files
         needed to deploy EZWebGallery.
 

@@ -1,33 +1,41 @@
  #!/bin/sh
 
-echo ""
-echo "###############################################################################"
-echo "#"
-echo "# This script compress the necessary javascript files."
-echo "# The ouput will be placed in the Web/ressources/javascript/min-js/ folder."  
-echo "#"
-echo "# You need to install the YUI Compressor."
-echo "# On Ubuntu, you can download the package \"yui-compressor\"."
-echo "# See http://developer.yahoo.com/yui/compressor/ for details about YUI"
-echo "#"
-echo "###############################################################################"
-echo ""
 
+###############################################################################
+#
+# This script compress the necessary javascript files.
+# The ouput will be placed in the DESTDIR folder.
+#
+# You need to install the YUI Compressor.
+# On Ubuntu, you can download the package \"yui-compressor\".
+# See http://developer.yahoo.com/yui/compressor/ for details about YUI
+#
+###############################################################################
 
-export JS_PATH='./web/ressources/javascript'
+if [ $# -eq 1 ]; then
 
-mkdir $JS_PATH/min-js/
-mkdir $JS_PATH/min-js/core
+echo " "
+echo "###### Minifying javascript files "
+echo " "
 
+SCRIPTDIR="$( cd "$( dirname "$0" )" && pwd )"
+JS_PATH=$SCRIPTDIR/web/ressources/javascript  
+DESTDIR=$1
 
-yui-compressor --charset UTF-8 -o $JS_PATH/min-js/common-min.js  $JS_PATH/common.js
-yui-compressor --charset UTF-8 -o $JS_PATH/min-js/image-min.js   $JS_PATH/image.js
-yui-compressor --charset UTF-8 -o $JS_PATH/min-js/index-min.js   $JS_PATH/index.js
+mkdir -p $DESTDIR/core
+
+yui-compressor --charset UTF-8 -o $DESTDIR/common-min.js  $JS_PATH/common.js
+yui-compressor --charset UTF-8 -o $DESTDIR/image-min.js   $JS_PATH/image.js
+yui-compressor --charset UTF-8 -o $DESTDIR/index-min.js   $JS_PATH/index.js
                                 
-yui-compressor --charset UTF-8 -o $JS_PATH/min-js/core/classDisplayManager-min.js    $JS_PATH/core/classDisplayManager.js
-yui-compressor --charset UTF-8 -o $JS_PATH/min-js/core/classFifo-min.js              $JS_PATH/core/classFifo.js
-yui-compressor --charset UTF-8 -o $JS_PATH/min-js/core/classHashTable-min.js         $JS_PATH/core/classHashTable.js
-yui-compressor --charset UTF-8 -o $JS_PATH/min-js/core/classObjetAjustable-min.js    $JS_PATH/core/classObjetAjustable.js
-yui-compressor --charset UTF-8 -o $JS_PATH/min-js/core/classTablePhoto-min.js        $JS_PATH/core/classTablePhoto.js
+yui-compressor --charset UTF-8 -o $DESTDIR/core/classDisplayManager-min.js    $JS_PATH/core/classDisplayManager.js
+yui-compressor --charset UTF-8 -o $DESTDIR/core/classFifo-min.js              $JS_PATH/core/classFifo.js
+yui-compressor --charset UTF-8 -o $DESTDIR/core/classHashTable-min.js         $JS_PATH/core/classHashTable.js
+yui-compressor --charset UTF-8 -o $DESTDIR/core/classObjetAjustable-min.js    $JS_PATH/core/classObjetAjustable.js
+yui-compressor --charset UTF-8 -o $DESTDIR/core/classTablePhoto-min.js        $JS_PATH/core/classTablePhoto.js
 
-echo "DONE."
+else
+
+echo "# Usage: compress_javascript.sh DESTDIR"
+
+fi
