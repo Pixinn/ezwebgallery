@@ -10,27 +10,6 @@ Debug|Release{
     BUILDDIR = $$PWD/../build
 }
 
-### Prebuilding step on unix & macos ###
-# The windows equivalent is done via some custom prebuild step defined  in the vcxproj file.
-unix|macx {
-    Debug{
-            scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh )
-            versiontarget.target = bazaarrev.h
-            versiontarget.commands = $$system(bzr version-info --custom --template=\"static const unsigned int BAZAAR_REVISION = 133 + {revno};\" > bazaarrev.h)
-            versiontarget.depends = FORCE
-            PRE_TARGETDEPS += bazaarrev.h
-            QMAKE_EXTRA_TARGETS += versiontarget
-    }
-    Release{
-            scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh )
-            versiontarget.target = bazaarrev.h
-            versiontarget.commands = $$system(bzr version-info --custom --template=\"static const unsigned int BAZAAR_REVISION = 133 + {revno};\" > bazaarrev.h)
-            versiontarget.depends = FORCE
-            PRE_TARGETDEPS += bazaarrev.h
-            QMAKE_EXTRA_TARGETS += versiontarget
-    }
-}
-
 ### Output ###
 Debug {
     DESTDIR =        $$BUILDDIR/debug
@@ -49,6 +28,28 @@ Release {
     MINJS_DIR =    $$BUILDDIR/.min-js
 }
 
+
+
+### Prebuilding step on unix & macos ###
+# The windows equivalent is done via some custom prebuild step defined  in the vcxproj file.
+unix|macx {
+    Debug{
+            scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh && mkdir -p $$DESTDIR/skins && mkdir $$DESTDIR/res )
+            versiontarget.target = builddate.h
+            versiontarget.commands = $$system(bzr version-info --custom --template=\'$${LITERAL_HASH}define BUILD_DATE \"{build_date}\"\' > builddate.h)
+            versiontarget.depends = FORCE
+            PRE_TARGETDEPS += builddate.h
+            QMAKE_EXTRA_TARGETS += versiontarget
+    }
+    Release{
+            scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh && mkdir -p $$DESTDIR/skins && mkdir $$DESTDIR/res )
+            versiontarget.target = builddate.h
+            versiontarget.commands = $$system(bzr version-info --custom --template=\'$${LITERAL_HASH}define BUILD_DATE \"{build_date}\"\' > builddate.h)
+            versiontarget.depends = FORCE
+            PRE_TARGETDEPS += builddate.h
+            QMAKE_EXTRA_TARGETS += versiontarget
+    }
+}
     
 LIBS += -lMagick++ -lMagickCore -lMagickWand
 

@@ -877,7 +877,6 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
     int nbPhotoProcessFailed;
     int idPhotoDone;
     bool f_wip;
-    bool f_stopRequested;
     m_mutex.lock();
     f_wip = m_f_WorkInProgress;
     m_mutex.unlock();
@@ -927,7 +926,6 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
      default:
         m_mutex.lock();
             m_nbPhotoProcessFailed++;
-            f_stopRequested = m_fStopRequested;
         m_mutex.unlock();
         emit abordGenerationSignal( );
      break;

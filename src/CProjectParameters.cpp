@@ -296,7 +296,7 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
 
     //--- Conversion automatique du projet si il a t cr par une version antrieure  la version actuelle
     m_version = root.attribute( "release" ).remove( QChar('M') ).toInt( );
-    int currentVersion = CPlatform::revision().remove( QChar('M') ).toInt( );    
+    int currentVersion = CPlatform::revisionInt();
     if( m_version < currentVersion ){
         document = convertFromOldVersion( document, m_version );
         root = document.firstChildElement( "Session" );
@@ -408,7 +408,7 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
 {
     QDomDocument document;
     QDomElement root = document.createElement( "Session" );
-    root.setAttribute( "release", CPlatform::revision() );
+    root.setAttribute( "release", QString::number(CPlatform::revisionInt()) );
     document.appendChild( root );
 
     

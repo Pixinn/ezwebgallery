@@ -368,7 +368,7 @@ void CSkinParameters::fromDomDocument( QDomDocument &document )
 
     //--- Conversion automatique de la skin si elle a t cre par une version antrieure  la version actuelle
     m_version = root.attribute( "release" ).remove( QChar('M') ).toInt( );
-    int currentVersion = CPlatform::revision().remove( QChar('M') ).toInt( );    
+    int currentVersion = CPlatform::revisionInt();
     if( m_version < currentVersion ){
         document = convertFromOldVersion( document, m_version );
         root = document.firstChildElement( "Skin" );
@@ -629,7 +629,7 @@ QDomDocument CSkinParameters::toDomDocument( )
 {
     QDomDocument document;
     QDomElement root = document.createElement( SKIN_TAG_NAME );
-    root.setAttribute( QString("release"), CPlatform::revision() );
+    root.setAttribute( QString("release"), QString::number(CPlatform::revisionInt()) );
     root.setAttribute( QString("name"), m_name );
     document.appendChild( root );
    

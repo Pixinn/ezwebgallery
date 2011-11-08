@@ -347,14 +347,12 @@ void CWatermark::setTaggedString( CTaggedString inText, QFont inFont, QColor inC
 void CWatermark::setOpacity( const unsigned int opacity )
 {
     PixelPacket* pixel;
-    int transparency;
     int nbCols;
     int nbRows;
     
     if( opacity != 100 )
     {
         try{
-            transparency = 100 - opacity;
             this->modifyImage( );
             this->matte( MagickTrue );  //A appeler imprativement avant de toucher  l'opacit des pixels.
                                         //sinon, l'alpha channel rique d'tre ignor !

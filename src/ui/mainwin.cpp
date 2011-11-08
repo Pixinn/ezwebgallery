@@ -751,7 +751,7 @@ void MainWin::about( )
 {
 
     QMessageBox::about( this,
-                        tr("About EZWebGallery - svn version ") + CPlatform::revision(),
+                        tr("About EZWebGallery - build date ") + CPlatform::revision(),
                         CPlatform::readTranslatedTextFile( "about.html" ));
 
 }

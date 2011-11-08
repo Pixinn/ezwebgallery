@@ -233,7 +233,7 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="$(TargetDir)\$(TargetFileName)">
-      <Command>bzr version-info --custom --template="static const unsigned int BAZAAR_REVISION = 133 + {revno};" &gt; bazaarrev.h</Command>
+      <Command>bzr version-info --custom --template="static const unsigned int BAZAAR_REVISION = 133 + {revno};\nstatic QString BUILD_DATE(\"{date}\");" &gt; bazaarrev.h</Command>
       <Outputs>bazaarrev.h</Outputs>
     </CustomBuild>
     <ClInclude Include="CCaption.h" />

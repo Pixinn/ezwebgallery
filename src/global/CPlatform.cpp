@@ -24,9 +24,10 @@
 #include <QDir>
 #include <QImageReader>
 #include <QTextStream>
+#include <QString>
 
 #include "CPlatform.h"
-#include "bazaarrev.h"  //Fichiers généré en précompilation par l'outil svnrev
+#include "builddate.h"
 
 /*************************** VARIABLES STATIQUES ****************/
 const QRegExp CPlatform::m_forbiddenCharacters = QRegExp("[ '<>.%/\\*|\"()&:?]"); //Les caractères interdits du filesystem
@@ -47,7 +48,27 @@ CPlatform::CPlatform()
 ***************************/
 QString CPlatform::revision()
 {
-    return QString::number(BAZAAR_REVISION);
+    QString buildDate( BUILD_DATE );
+    buildDate.replace('-','/');
+    buildDate = buildDate.left( buildDate.indexOf(" ") );
+
+    return buildDate;
+}
+
+
+
+/**************************
+* revisionInt()
+* ----------
+* Retourne le numéro de révision.
+***************************/
+int CPlatform::revisionInt()
+{
+    QString buildDate( BUILD_DATE );
+    buildDate.remove('-');
+    buildDate = buildDate.left( buildDate.indexOf(" ") );
+
+    return buildDate.toInt();
 }
 
 
@@ -90,17 +111,6 @@ QStringList CPlatform::languageList( )
     return m_languageList;
 }
 
-
-
-/**************************
-* revisionInt()
-* ----------
-* Retourne le numéro de révision.
-***************************/
-int CPlatform::revisionInt()
-{
-    return BAZAAR_REVISION;
-}
 
 /**************************
 * defaultFont()
