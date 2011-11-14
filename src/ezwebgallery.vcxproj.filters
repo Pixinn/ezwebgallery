@@ -50,6 +50,12 @@
     <Filter Include="Source Files\widgets">
       <UniqueIdentifier>{d85e90c5-26b7-41ed-a59b-1d603a35ad25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\global">
+      <UniqueIdentifier>{81bbcdbe-fa97-4c15-9624-5800258d273e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\global">
+      <UniqueIdentifier>{7dbb15b4-f487-4fe4-a930-9eaba9d32b06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCaption.cpp">
@@ -59,9 +65,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CCss.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="global\CErrorMessages.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CGalleryGenerator.cpp">
@@ -74,9 +77,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CPhotoProperties.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="global\CPlatform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CProjectParameters.cpp">
@@ -193,6 +193,12 @@
     <ClCompile Include="widgets\CImagePicker.cpp">
       <Filter>Source Files\widgets</Filter>
     </ClCompile>
+    <ClCompile Include="global\CErrorMessages.cpp">
+      <Filter>Source Files\global</Filter>
+    </ClCompile>
+    <ClCompile Include="global\CPlatform.cpp">
+      <Filter>Source Files\global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCaption.h">
@@ -202,9 +208,6 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <ClInclude Include="CCss.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="global\CErrorMessages.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <CustomBuild Include="CGalleryGenerator.h">
@@ -219,9 +222,6 @@
     <CustomBuild Include="CPhotoProperties.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <ClInclude Include="global\CPlatform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <CustomBuild Include="CProjectParameters.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -229,9 +229,6 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <ClInclude Include="CTaggedString.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="global\GlobalDefinitions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IParameters.h">
@@ -248,6 +245,15 @@
     </ClInclude>
     <ClInclude Include=".\ui\ui_mainwin.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="global\CErrorMessages.h">
+      <Filter>Header Files\global</Filter>
+    </ClInclude>
+    <ClInclude Include="global\CPlatform.h">
+      <Filter>Header Files\global</Filter>
+    </ClInclude>
+    <ClInclude Include="global\GlobalDefinitions.h">
+      <Filter>Header Files\global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -445,50 +451,12 @@
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
-    <CustomBuild Include="CCaption.h">
-      <Filter>Generated Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CCss.h" />
     <CustomBuild Include="CGalleryGenerator.h" />
-    <CustomBuild Include="CPhoto.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
-    <CustomBuild Include="CTaggedString.h" />
-    <CustomBuild Include="IParameters.h" />
-    <CustomBuild Include="CCaption.cpp" />
-    <CustomBuild Include="CCaptionManager.cpp" />
-    <CustomBuild Include="CCss.cpp" />
-    <CustomBuild Include="CGalleryGenerator.cpp" />
-    <CustomBuild Include="CPhoto.cpp" />
-    <CustomBuild Include="CPhotoProcessor.cpp" />
-    <CustomBuild Include="CPhotoProperties.cpp" />
-    <CustomBuild Include="CProjectParameters.cpp" />
-    <CustomBuild Include="CSkinParameters.cpp" />
-    <CustomBuild Include="CTaggedString.cpp" />
-    <CustomBuild Include="main.cpp" />
-    <CustomBuild Include=".\global\CErrorMessages.h" />
-    <CustomBuild Include=".\global\CPlatform.h" />
-    <CustomBuild Include=".\global\GlobalDefinitions.h" />
-    <CustomBuild Include=".\global\CErrorMessages.cpp" />
-    <CustomBuild Include=".\global\CPlatform.cpp" />
-    <CustomBuild Include=".\ui\CLanguageManager.cpp" />
-    <CustomBuild Include=".\ui\CTerminalUi.cpp" />
-    <CustomBuild Include=".\ui\mainwin.cpp" />
-    <CustomBuild Include=".\ui\WinConfigure.cpp" />
-    <CustomBuild Include=".\ui\WinSkinDesigner.cpp" />
-    <CustomBuild Include=".\widgets\CColorPicker.h" />
-    <CustomBuild Include=".\widgets\CColorPickerPlugin.h" />
-    <CustomBuild Include=".\widgets\CImagePicker.h" />
-    <CustomBuild Include=".\widgets\CImagePickerPlugin.h" />
-    <CustomBuild Include=".\widgets\EZWWidgets.h" />
-    <CustomBuild Include=".\widgets\CColorPicker.cpp" />
-    <CustomBuild Include=".\widgets\CColorPickerPlugin.cpp" />
-    <CustomBuild Include=".\widgets\CImagePicker.cpp" />
-    <CustomBuild Include=".\widgets\CImagePickerPlugin.cpp" />
-    <CustomBuild Include=".\widgets\EZWWidgets.cpp" />
     <CustomBuild Include="CCaption.h">
       <Filter>Generated Files</Filter>
     </CustomBuild>

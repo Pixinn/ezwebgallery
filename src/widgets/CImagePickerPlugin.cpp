@@ -1,4 +1,4 @@
-#include "CImagePicker.h"
+﻿#include "CImagePicker.h"
 #include "CImagePickerPlugin.h"
 
 #include <QtCore/QtPlugin>

@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     //Instanciation du gnrateur de galerie
     CGalleryGenerator* galleryGenerator = new CGalleryGenerator( );
 
-    //Deux possibilits : ouverture de la fentre ou xection  partir d'un terminal
+    //Deux possibilités : ouverture de la fenêtre ou éxecution  partir d'un terminal
     // ----------------- MODE FENETRE
     if( argc == 1 )
     {

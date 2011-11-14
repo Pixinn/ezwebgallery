@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *

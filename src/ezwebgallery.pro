@@ -34,12 +34,12 @@ Release {
 # The windows equivalent is done via some custom prebuild step defined  in the vcxproj file.
 unix|macx {
     Debug{
-            scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh && mkdir -p $$DESTDIR/skins && mkdir $$DESTDIR/res )
-            versiontarget.target = builddate.h
-            versiontarget.commands = $$system(bzr version-info --custom --template=\'$${LITERAL_HASH}define BUILD_DATE \"{build_date}\"\' > builddate.h)
-            versiontarget.depends = FORCE
-            PRE_TARGETDEPS += builddate.h
-            QMAKE_EXTRA_TARGETS += versiontarget
+#           scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh && mkdir -p $$DESTDIR/skins && mkdir $$DESTDIR/res )
+#           versiontarget.target = builddate.h
+#            versiontarget.commands = $$system(bzr version-info --custom --template=\'$${LITERAL_HASH}define BUILD_DATE \"{build_date}\"\' > builddate.h)
+#            versiontarget.depends = FORCE
+#            PRE_TARGETDEPS += builddate.h
+#            QMAKE_EXTRA_TARGETS += versiontarget
     }
     Release{
             scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh && mkdir -p $$DESTDIR/skins && mkdir $$DESTDIR/res )
@@ -84,7 +84,9 @@ HEADERS += ui/mainwin.h \
     CCaptionManager.h \
     CProjectParameters.h \
     IParameters.h \
-    CSkinParameters.h
+    CSkinParameters.h \
+    IPhotoFeeder.h \
+    CPhotoFeederDirectory.h
 
 SOURCES += main.cpp \
     ui/mainwin.cpp \
@@ -105,7 +107,8 @@ SOURCES += main.cpp \
     CCaption.cpp \
     CCaptionManager.cpp \
     CProjectParameters.cpp \    
-    CSkinParameters.cpp
+    CSkinParameters.cpp \
+    CPhotoFeederDirectory.cpp
 
 FORMS += ui/mainwin.ui \
     ui/WinSkinDesigner.ui \

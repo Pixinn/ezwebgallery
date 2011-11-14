@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -50,14 +50,14 @@ class CCaptionManager : public QObject
         QList<CCaption> captionList( );          //Retourne la liste de lgendes sous forme de QStringList
         QMap<QString,CCaption> captionMap( );           //Retourne la liste de lgendes sous forme de QMap<QString,QString>
         void setCaptionMap( QMap<QString,CCaption> &);   //Set la liste de lgendes 
-        void setExifTags( const QString &, const QMap<QString,QString> & ); //Indique les <tags Exifs / metadata>  utiliser pour la lgende de la photo spcifie
+        void setExifTags( const QString &, const QMap<QString,QString> & ); //Indique les <tags Exifs / metadata>  utiliser pour la légende de la photo spécifiée
         void setFileInfo( const QString &, const QFileInfo & );             //Indique les infos fichier  utiliser par la lgende de la photo spcifie
-        bool captionsEdited();    //Les lgendes ont-elle t dite depuis le dernier appel de legencaptionedReset() ?
+        bool captionsEdited();    //Les légendes ont-elle été éditées depuis le dernier appel de legencaptionedReset() ?
         void captionsEditedReset();
 
     private:
         void setNumber( int nb );//Positionne la liste de photos et envoie le signal d'affichage du thumb correspondant
-        int  remapCaptionList( ); //Refabrique une map de lgendes correspondant au modle associ
+        int  remapCaptionList( ); //Refabrique une map de légendes correspondant au modèle associé
 
     signals:
         void displayThumbnailSignal( QModelIndex );
@@ -73,10 +73,9 @@ class CCaptionManager : public QObject
         void onCaptionEndingEdited(QString);
 
     private:
-        int m_photoIndex;                       //Pour dplacement dans la liste des photos, en connection avec la listView
+        int m_photoIndex;                       //Pour déplacement dans la liste des photos, en connection avec la listView
         QListView* m_p_photoList;               //La listView qui permet d'obtenir les lgendes
-  //      QMap<QString,QString> m_captionList;     //La liste des lgendes proprement dites <filename,lengend> (pas le path complet)
-        QMap<QString,CCaption> m_captionMap;     //La liste des lgendes proprement dites <filename,lengend> (pas le path complet)
+        QMap<QString,CCaption> m_captionMap;     //La liste des légendes proprement dites <filename,lengend> (pas le path complet)
         bool m_f_captionsEdited;                //Les lgendes ont-elle t dite depuis le dernier appel de legencaptionedReset() ?
 };
 

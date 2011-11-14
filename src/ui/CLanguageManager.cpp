@@ -1,4 +1,4 @@
-/* 
+ï»¿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -47,9 +47,9 @@ CLanguageManager::CLanguageManager(QObject *parent) :
 * initSupportedLanguages( )
 * ---------------
 * !!! INSERER ICI TOUTES LES LANGUES SUPPORTEES !!!
-* Initialise la liste de toutes les langues supportées.
-* Fonction appelée à chaque retraduction, car les langues apparaissent
-* dans l'ui et doivent elles-même être traduites...
+* Initialise la liste de toutes les langues supportÃ©es.
+* Fonction appelÃ©e Ã  chaque retraduction, car les langues apparaissent
+* dans l'ui et doivent elles-mÃªme Ãªtre traduites...
 *************************/
 void CLanguageManager::initSupportedLanguages()
 {
@@ -62,7 +62,7 @@ void CLanguageManager::initSupportedLanguages()
 /*************************
 * supportedLanguages( )
 * ---------------
-* Retourne la liste des langues supportées par l'ui
+* Retourne la liste des langues supportÃ©es par l'ui
 * traduites dans la langue actuelle.
 *************************/
 QStringList CLanguageManager::supportedLanguages( )
@@ -73,8 +73,8 @@ QStringList CLanguageManager::supportedLanguages( )
 /*************************
 * languageCode( const QString &language )
 * ---------------
-* Retourne le code de la langue fournie en entrée
-* Le code est vide si la langue n'est pas supportée
+* Retourne le code de la langue fournie en entrÃ©e
+* Le code est vide si la langue n'est pas supportÃ©e
 * In : (QString) language
 * Return : (QString) code de la langue
 *************************/
@@ -100,14 +100,14 @@ QString CLanguageManager::currentLanguage()
 * translate( QString )
 * ---------------
 * Traduit l'appli en fonction de QSettings si possible,
-* sinon en fonction de la langue locale ou à défaut en anglais
+* sinon en fonction de la langue locale ou Ã  dÃ©faut en anglais
 *************************/
 void CLanguageManager::translate( )
 {
     QSettings settings;
     QString langCode;
 
-    //On commence par retirer tout traducteur déjà présent
+    //On commence par retirer tout traducteur dÃ©jÃ  prÃ©sent
     QApplication::removeTranslator(m_p_trAppli);
     QApplication::removeTranslator(m_p_trQtLibs);
     //Si les settings contiennent une langue, on essaiera de la charger,
@@ -116,11 +116,11 @@ void CLanguageManager::translate( )
         langCode = settings.value( SETTINGS_LANGUAGE ).toString();
     }
     else {
-        langCode = QLocale::system().name().section('_', 0, 0); //récupération de la langue de l'os
+        langCode = QLocale::system().name().section('_', 0, 0); //rÃ©cupÃ©ration de la langue de l'os
     }
 
     //Si on n'a pas pu charger la langue, on bascule sur l'anglais
-    if( !m_p_trAppli->load(QString( LANGUAGE_PREFIX_APPLI ) + langCode) ) { //Cela ne peut arriver que si settings JAMAIS encore configuré et sur un OS dont l langue n'est pas supportée
+    if( !m_p_trAppli->load(QString( LANGUAGE_PREFIX_APPLI ) + langCode) ) { //Cela ne peut arriver que si settings JAMAIS encore configurÃ© et sur un OS dont l langue n'est pas supportÃ©e
           langCode = QString("en");
           m_p_trAppli->load(QString( LANGUAGE_PREFIX_APPLI ) + langCode);
     }
@@ -130,9 +130,9 @@ void CLanguageManager::translate( )
     QApplication::installTranslator(m_p_trAppli);
     QApplication::installTranslator(m_p_trQtLibs);
 
-    initSupportedLanguages();//A placer après l'installation des translator afin d'avoir une traduction correcte
+    initSupportedLanguages();//A placer aprÃ¨s l'installation des translator afin d'avoir une traduction correcte
 
-    //Indication au reste de l'application de la langue chargée
+    //Indication au reste de l'application de la langue chargÃ©e
     CPlatform::setLanguage( langCode );
 
 }

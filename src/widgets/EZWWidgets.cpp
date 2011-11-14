@@ -1,4 +1,4 @@
-#include "CColorPickerPlugin.h"
+﻿#include "CColorPickerPlugin.h"
 #include "CImagePickerPlugin.h"
 #include "EZWWidgets.h"
 

@@ -1,4 +1,4 @@
-/* 
+ï»¿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -30,9 +30,9 @@
 #include "builddate.h"
 
 /*************************** VARIABLES STATIQUES ****************/
-const QRegExp CPlatform::m_forbiddenCharacters = QRegExp("[ '<>.%/\\*|\"()&:?]"); //Les caractères interdits du filesystem
-const QStringList CPlatform::m_languageList = QStringList() << QObject::tr("English")   // !! Entrer ici toutes les langues suportées !!! //
-                                                            << QObject::tr("French");   // !! L'ordre ne pas changer d'une version à une autre !! //
+const QRegExp CPlatform::m_forbiddenCharacters = QRegExp("[ '<>.%/\\*|\"()&:?]"); //Les caractÃ¨res interdits du filesystem
+const QStringList CPlatform::m_languageList = QStringList() << QObject::tr("English")   // !! Entrer ici toutes les langues suportÃ©es !!! //
+                                                            << QObject::tr("French");   // !! L'ordre ne pas changer d'une version Ã  une autre !! //
 QString CPlatform::m_language = QString();
 
 /*************************** METHODES *********************/
@@ -44,7 +44,7 @@ CPlatform::CPlatform()
 /**************************
 * revision()
 * ----------
-* Retourne le numéro de révision.
+* Retourne le numÃ©ro de rÃ©vision.
 ***************************/
 QString CPlatform::revision()
 {
@@ -60,7 +60,7 @@ QString CPlatform::revision()
 /**************************
 * revisionInt()
 * ----------
-* Retourne le numéro de révision.
+* Retourne le numÃ©ro de rÃ©vision.
 ***************************/
 int CPlatform::revisionInt()
 {
@@ -75,7 +75,7 @@ int CPlatform::revisionInt()
 /**************************
 * language()
 * ----------
-* Retourne la langue de l'ui si elle a été configurée
+* Retourne la langue de l'ui si elle a Ã©tÃ© configurÃ©e
 * sinon retourne la langue de l'os
 ***************************/
 QString CPlatform::language( )
@@ -93,7 +93,7 @@ QString CPlatform::language( )
 /**************************
 * setLanguage( const QString &language  )
 * ----------
-* Indique la langue utilisée
+* Indique la langue utilisÃ©e
 ***************************/
 void CPlatform::setLanguage( const QString &language )
 {
@@ -104,7 +104,7 @@ void CPlatform::setLanguage( const QString &language )
 /**************************
 * languageList()
 * ----------
-* Retourn la liste des langues supportées
+* Retourn la liste des langues supportÃ©es
 ***************************/
 QStringList CPlatform::languageList( )
 {
@@ -115,7 +115,7 @@ QStringList CPlatform::languageList( )
 /**************************
 * defaultFont()
 * ----------
-* Retourne la police par défaut du system
+* Retourne la police par dÃ©faut du system
 ***************************/
 QFont CPlatform::defaultFont()
 {
@@ -127,14 +127,14 @@ QFont CPlatform::defaultFont()
 #ifdef Q_WS_X11
     return QFont("Nimbus Sans L",8);
 #endif
-    //Windows (par défaut)
+    //Windows (par dÃ©faut)
     return QFont("MS Shell Dlg 2",8);
 }
 
 /**************************
 * applicationDirPath()
 * ----------
-* Retourne le répertoire où se trouve le programme
+* Retourne le rÃ©pertoire oÃ¹ se trouve le programme
 ***************************/
 QString CPlatform::applicationDirPath()
 {
@@ -150,7 +150,7 @@ QString CPlatform::applicationDirPath()
 /**************************
 * applicationDirPath()
 * ----------
-* Retourne le répertoire où se trouvent les skins fournies
+* Retourne le rÃ©pertoire oÃ¹ se trouvent les skins fournies
 ***************************/
 QString CPlatform::skinDirPath()
 {
@@ -162,7 +162,7 @@ QString CPlatform::skinDirPath()
 /**************************
 * appDataDir()
 * ----------
-* Retourne le répertore où sont sauvées les données persistantes du programme
+* Retourne le rÃ©pertore oÃ¹ sont sauvÃ©es les donnÃ©es persistantes du programme
 ***************************/
 QString CPlatform::appDataDir()
 {
@@ -181,7 +181,7 @@ QString CPlatform::appDataDir()
 /**************************
 * appDataDir()
 * ----------
-* Retourne les caractères interdits.
+* Retourne les caractÃ¨res interdits.
 * ex: pour nommer un nom de fichier
 ***************************/
 QRegExp CPlatform::forbiddenCharacters()
@@ -194,20 +194,20 @@ QRegExp CPlatform::forbiddenCharacters()
 
 #include "CErrorMessages.h"
 
-//Outils suceptibles d'être utilisés par plusieurs classes
+//Outils suceptibles d'Ãªtre utilisÃ©s par plusieurs classes
 
 /*************************
 * getImagesInDir( const QDir &dir, QString filter = "All" )
 *----------------------
-* Retourne la liste des images du répertoire "dir"
-* Si filter = "All", tous les formats d'images supportés seront pris en compte
+* Retourne la liste des images du rÃ©pertoire "dir"
+* Si filter = "All", tous les formats d'images supportÃ©s seront pris en compte
 **************************/
 QStringList CPlatform::getImagesInDir( const QDir &dir, QStringList filter )
 {
     QStringList imagesFilter;
     QStringList photoList;
 
-	//Construction de la liste de tous les formats supportés si aucun filtre n'a été spécifié
+	//Construction de la liste de tous les formats supportÃ©s si aucun filtre n'a Ã©tÃ© spÃ©cifiÃ©
 	if( filter.isEmpty() )
     {
             QByteArray supportedImageFormat;
@@ -216,11 +216,11 @@ QStringList CPlatform::getImagesInDir( const QDir &dir, QStringList filter )
                     imagesFilter << QString("*.") + supportedImageFormat;
             }
     }
-    //Utilisation du filtre fourni en entrée
+    //Utilisation du filtre fourni en entrÃ©e
     else{
             imagesFilter = filter;
     }
-            photoList = dir.entryList( imagesFilter, QDir::Readable | QDir::Files, QDir::Name ); //Récupération de la liste
+            photoList = dir.entryList( imagesFilter, QDir::Readable | QDir::Files, QDir::Name ); //RÃ©cupÃ©ration de la liste
 
 	return photoList;
 }
@@ -230,14 +230,14 @@ QStringList CPlatform::getImagesInDir( const QDir &dir, QStringList filter )
 /*************************
 * copyDirectory( QDir source, QDir destination, QString &errorMsg )
 *----------------------
-* Copie récursive du contenu du répertoire source dans le répertoire destination
-* Renvoie true si succès ou false sinon
-* In: QDir source - répertoire source
-* In: QDir destination - répertoire destination
+* Copie rÃ©cursive du contenu du rÃ©pertoire source dans le rÃ©pertoire destination
+* Renvoie true si succÃ¨s ou false sinon
+* In: QDir source - rÃ©pertoire source
+* In: QDir destination - rÃ©pertoire destination
 * Out: QString &errorMsg - message d'erreur si pb
-* Return: true si succès, false si échec
+* Return: true si succÃ¨s, false si Ã©chec
 **************************/
-//Inspiré par niak74 : http://www.siteduzero.com/forum-83-434816-p1-qt---supprimer-un-dossier.html
+//InspirÃ© par niak74 : http://www.siteduzero.com/forum-83-434816-p1-qt---supprimer-un-dossier.html
 bool CPlatform::copyDirectory( QDir source, QDir destination, QString &errorMsg )
 {
     //QDir currentDestPath = destination;
@@ -249,19 +249,19 @@ bool CPlatform::copyDirectory( QDir source, QDir destination, QString &errorMsg 
         {
             QDir currentDestPath = destination;
             QFileInfo destDirInfo( destination.absoluteFilePath(fileInfo.fileName()) );
-            if( !destDirInfo.exists() ){ //Si le répertoire n'existe pas déjà, on le créé
-                if ( !destination.mkdir( fileInfo.fileName() ) ){ //Erreur lors de la création du rep
+            if( !destDirInfo.exists() ){ //Si le rÃ©pertoire n'existe pas dÃ©jÃ , on le crÃ©Ã©
+                if ( !destination.mkdir( fileInfo.fileName() ) ){ //Erreur lors de la crÃ©ation du rep
                     errorMsg = CErrorMessages::error(DirectoryCreation) + destination.absolutePath() + "/" + fileInfo.fileName();
                     return false;
                 }
             }
-            currentDestPath.cd( fileInfo.fileName() ); //On entre dans le répertoire
-            if( !copyDirectory(fileInfo.filePath(), currentDestPath, errorMsg) ){ //On le clone => récursivité !
+            currentDestPath.cd( fileInfo.fileName() ); //On entre dans le rÃ©pertoire
+            if( !copyDirectory(fileInfo.filePath(), currentDestPath, errorMsg) ){ //On le clone => rÃ©cursivitÃ© !
                 return false;
             }
         }
         else{
-            // Si le fichier existe déjà : le supprimer
+            // Si le fichier existe dÃ©jÃ  : le supprimer
             QFileInfo destFileInfo( destination.absoluteFilePath(fileInfo.fileName()) );
             if( destFileInfo.exists() ){
                 if( !destination.remove( destFileInfo.fileName() ) ){//Impossible de supprimer le fichier
@@ -287,21 +287,21 @@ bool CPlatform::copyDirectory( QDir source, QDir destination, QString &errorMsg 
 * Charge la bonne version (bonne langue) d'un fichier texte des ressources
 * en fonction de la langue actuelle de l'ui.
 * In: (QString) nom de base du fichier AVEC EXTENSION, sans le suffixe de langue
-* Return: (QString) Texte chargé
+* Return: (QString) Texte chargÃ©
 **************************/
 QString CPlatform::readTranslatedTextFile( const QString &baseName )
 {
     QString langSuffix;
     QString trFileName;
-    QString enFileName; //on calcule le nom du fichier anglais pour se rabattre dessus par défaut
+    QString enFileName; //on calcule le nom du fichier anglais pour se rabattre dessus par dÃ©faut
     QString enSuffix( "_en" );
     int indexOf;
     
-    //Détermination du suffixe en fonction de la langue
+    //DÃ©termination du suffixe en fonction de la langue
     if( m_language == "fr" ){
         langSuffix = QString("_fr" );
     }
-    else{ //Par défaut : anglais
+    else{ //Par dÃ©faut : anglais
         langSuffix = enSuffix;
     }
     //Composition du nom
@@ -318,7 +318,7 @@ QString CPlatform::readTranslatedTextFile( const QString &baseName )
     }
 
     QFile* fileToRead = new QFile( trFileName );
-    if( !fileToRead->exists() ){ //Si le fichier traduit n'éxiste pas on se rabat sur l'Anglais
+    if( !fileToRead->exists() ){ //Si le fichier traduit n'Ã©xiste pas on se rabat sur l'Anglais
         delete fileToRead;
         fileToRead = new QFile( enFileName );
     }

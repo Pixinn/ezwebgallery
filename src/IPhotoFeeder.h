@@ -17,28 +17,21 @@
 */
 
 
+#include <QStringList>
 
-#ifndef CERRORMESSAGES_H
-#define CERRORMESSAGES_H
 
-#include <QString>
-
-//Enumération de toutes les erreurs
-enum e_errors{
-    FileSaving,
-    FileOpening,
-    FileCreation,
-    DirectoryCreation,
-    SourceFileNotFound,
-    WatermarkInvalid
-};
-
-class CErrorMessages
+/*****************************************
+ * IPhotoFeeder
+ * ----------------------
+ * Abstract class feeding the application
+ * with photos
+ *****************************************/
+class IPhotoFeeder
 {
-
 public:
-    CErrorMessages();
-    static QString error( e_errors );  //Retourne l'erreur correctement traduite
+    IPhotoFeeder( void );
+    virtual ~IPhotoFeeder( void );
+    virtual bool isValid( void ) = 0;                      //Is the feeder set and valid?
+    virtual QStringList getPhotoList( void ) = 0;   //Returns an alphabetically ordered list of the
+                                                                    //absolute filepath of ALL the photos passed to EZWG
 };
-
-#endif // CERRORMESSAGES_H

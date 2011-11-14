@@ -1,4 +1,4 @@
-/* 
+ï»¿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -79,10 +79,10 @@ private:
     void displayRecentFiles( ); //Affiche la liste des fichiers rcemments ouverts
     int displayUnsavedMsgBox( bool, bool ); //Affiche une message box indiquant que le projet et/ou la skin n'ont pas t savegards. Retourne le bouton appuy
     int displayMoreRecentMsgBox( ); //Affiche une alerte si on essaie d'ouvrir un projet gnr avec une version d'EZWG plus rcente
-    void swapButtons( ); //swap certains boutons pour cause de génération de galerie
-    bool checkForGeneration( QString & );//Vérifie les paramètres fournis pour la génération
-    QStringList checkPhotosInDir( const QStringList&, const QDir & ); //Vérifie la prsence des photos de la liste dans le répertoire
-    bool checkCreateDir( QString & ); //Vérifie l'existance d'un répertoire et propose sa création via msgBox le cas échant
+    void swapButtons( ); //swap certains boutons pour cause de gÃ©nÃ©ration de galerie
+    bool checkForGeneration( QString & );//VÃ©rifie les paramÃ¨tres fournis pour la gÃ©nÃ©ration
+    QStringList checkPhotosInDir( const QStringList&, const QDir & ); //VÃ©rifie la prsence des photos de la liste dans le rÃ©pertoire
+    bool checkCreateDir( QString & ); //VÃ©rifie l'existance d'un rÃ©pertoire et propose sa crÃ©ation via msgBox le cas Ã©chant
 
 /********* SLOTS ********/
 public slots:

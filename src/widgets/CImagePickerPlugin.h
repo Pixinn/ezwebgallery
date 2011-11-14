@@ -1,4 +1,4 @@
-#ifndef CImagePickerPlugin_H
+﻿#ifndef CImagePickerPlugin_H
 #define CImagePickerPlugin_H
 
 #include <QDesignerCustomWidgetInterface>

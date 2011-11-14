@@ -1,4 +1,4 @@
-/* 
+ï»¿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -48,13 +48,13 @@ using namespace std;
 
 
 /*********************************************** DEFINES ********************************/
-#define qApp (static_cast<QApplication *>(QCoreApplication::instance())) /* pour avoir accès à l'instance de l'application */
+#define qApp (static_cast<QApplication *>(QCoreApplication::instance())) /* pour avoir accÃ¨s Ã  l'instance de l'application */
 
 /********************************************** PUBLIC MEMBERS ********************************************/
 
-/******************************************* Réalisation Interface **********************************************/
-//IUserInterface::IUserInterface( ){ } //Implémentation obligatoire car on l'utilse dans le constructeur de MainWin
-//IUserInterface::~IUserInterface(){}//Implémentation du destructeur virtuel obligatoire
+/******************************************* RÃ©alisation Interface **********************************************/
+//IUserInterface::IUserInterface( ){ } //ImplÃ©mentation obligatoire car on l'utilse dans le constructeur de MainWin
+//IUserInterface::~IUserInterface(){}//ImplÃ©mentation du destructeur virtuel obligatoire
 
 
 void MainWin::setGenerator( CGalleryGenerator* interface){
@@ -75,7 +75,7 @@ void MainWin::sharpeningRadiusChanged( double value )
     this->m_ui->horizontalSlider_PhotoSharpeningRadius->setValue( intValue );
 }
 
-//Affiche ou cache les paramètres de sharpening en fonction de la stratégie d'optimisation
+//Affiche ou cache les paramÃ¨tres de sharpening en fonction de la stratÃ©gie d'optimisation
 void MainWin::imageOptimizationStrategyChanged( int strategy )
 {
     if( strategy == t_photosConf::OPTIMIZE_SCREENUSAGE )
@@ -107,7 +107,7 @@ void MainWin::watermarkGroupChecked( bool isChecked )
 
 void MainWin::watermarkTypeChanged( int type )
 {
-    if( m_ui->groupBox_Watermark->isChecked() ) //Ne pas activer des widgets alors que le groupbox n'est pas sélectionné !
+    if( m_ui->groupBox_Watermark->isChecked() ) //Ne pas activer des widgets alors que le groupbox n'est pas sÃ©lectionnÃ© !
     {
         QWidget* widget;                
         QRegExp selectorImage;
@@ -120,11 +120,11 @@ void MainWin::watermarkTypeChanged( int type )
         if( type == t_watermark::IMAGE )
         {
             //Activer tous les widgets "watermark images"
-            QList<QWidget *> widgetImageList = m_ui->tab_2_Presentation->findChildren<QWidget *>( selectorImage ); //On ne peut pas sélectionner les enfants à partir du groupbox...
+            QList<QWidget *> widgetImageList = m_ui->tab_2_Presentation->findChildren<QWidget *>( selectorImage ); //On ne peut pas sÃ©lectionner les enfants Ã  partir du groupbox...
             foreach( widget, widgetImageList ){
                 widget->setDisabled( false );
             }
-            //Désactiver tous les widgets "watermark texte"   
+            //DÃ©sactiver tous les widgets "watermark texte"   
             QList<QWidget *> widgetTextList = m_ui->tab_2_Presentation->findChildren<QWidget *>( selectorText );
             foreach( widget, widgetTextList ){
                 widget->setDisabled( true );
@@ -132,8 +132,8 @@ void MainWin::watermarkTypeChanged( int type )
         }
         else //Type texte
         { 
-            //Désactiver tous les widgets "watermark images"
-            QList<QWidget *> widgetImageList = m_ui->tab_2_Presentation->findChildren<QWidget *>( selectorImage ); //On ne peut pas sélectionner les enfants à partir du groupbox...
+            //DÃ©sactiver tous les widgets "watermark images"
+            QList<QWidget *> widgetImageList = m_ui->tab_2_Presentation->findChildren<QWidget *>( selectorImage ); //On ne peut pas sÃ©lectionner les enfants Ã  partir du groupbox...
             foreach( widget, widgetImageList ){
                 widget->setDisabled( true );
             }
@@ -142,7 +142,7 @@ void MainWin::watermarkTypeChanged( int type )
             foreach( widget, widgetTextList ){
                 widget->setDisabled( false );
             }
-            //Désactiver le CColorPicker en cas de couleur automatique
+            //DÃ©sactiver le CColorPicker en cas de couleur automatique
             if( m_ui->checkBox_WatermarkTextColorAuto->isChecked() ){
                 m_ui->cColorPicker_WatermarkText->setDisabled( true );
             }
@@ -157,7 +157,7 @@ void MainWin::watermarkAutoColorChecked( int state )
         m_ui->cColorPicker_WatermarkText->setColor( QColor("White") );
         m_ui->cColorPicker_WatermarkText->setDisabled( true );
     }
-    else if( m_ui->groupBox_Watermark->isChecked() ){ //important de tester le isChecked(), car sinon on peut enabler à mauvais essient
+    else if( m_ui->groupBox_Watermark->isChecked() ){ //important de tester le isChecked(), car sinon on peut enabler Ã  mauvais essient
         m_ui->cColorPicker_WatermarkText->setDisabled( false );
     }
 }
@@ -215,7 +215,7 @@ void MainWin::onForceStoppedFinished( QStringList errorMessages )
 
 
 //--------------------------------
-//------ Gallerie générée
+//------ Gallerie gÃ©nÃ©rÃ©e
 //--------------------------------
 void MainWin::onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties> propertiesList )
 {
@@ -223,21 +223,21 @@ void MainWin::onGalleryGenerationFinished( /*bool success*/QList<CPhotoPropertie
     
     foreach( CPhotoProperties photoProperties, propertiesList )
     {
-        //Mise à jour des propriétés des photos
+        //Mise Ã  jour des propriÃ©tÃ©s des photos
         m_projectParameters.m_photoPropertiesMap.insert( photoProperties.fileName(), photoProperties );
-        //La génération a-t-elle aboutie pour cette photo ?
+        //La gÃ©nÃ©ration a-t-elle aboutie pour cette photo ?
         if( !photoProperties.processed() ){
             success = false; 
         }
     }
 
-    //La génération a abouti pour toutes les photos
+    //La gÃ©nÃ©ration a abouti pour toutes les photos
     if( success ){
         m_projectParameters.m_galleryConfig.f_regeneration = false;
         m_projectParameters.m_photosConfig.f_regeneration = false;
         m_projectParameters.m_thumbsConfig.f_regeneration = false;
 
-        swapButtons( ); //Bouton "cancel" redevient "generate" et réactivation des actions
+        swapButtons( ); //Bouton "cancel" redevient "generate" et rÃ©activation des actions
         m_ui->statusbar->showMessage( tr("Generation successfully completed."), 7000 );
 
         //Ouverture de la galerie
@@ -262,29 +262,29 @@ MainWin::MainWin( QWidget *parent ) :
     qRegisterMetaType<CPhotoProperties> ( "CPhotoProperties" );
 
     setWindowIcon( QIcon(":/icons/app_icon") );
-    m_ui->setupUi(this); //"this" hérite de QMainWindow via IUserInterface
+    m_ui->setupUi(this); //"this" hÃ©rite de QMainWindow via IUserInterface
 
     m_lastSelectedDir = QDir::homePath();
     m_p_galleryGenerator = NULL;
     
     m_stateGeneration = eGenerating;  
     
-    //Fenêtre de debug
+    //FenÃªtre de debug
     m_p_logDisplay = new QTextEdit( 0 );
     m_p_logDisplay->setReadOnly( true );
     m_p_logDisplay->setWindowTitle( tr("Logs") );
     m_p_logDisplay->resize(720,480);
-    //Fenêtre de tags   
+    //FenÃªtre de tags   
     m_p_tagsWindow = new QTextEdit( 0 );
     m_p_tagsWindow->setReadOnly( true );
     m_p_tagsWindow->setWindowTitle( tr("TAG list") );
     m_p_tagsWindow->resize(720,500);
     m_p_tagsWindow->setHtml( CPlatform::readTranslatedTextFile( "tagList.html" ) );
-    //Fenêtre de conception de skin
-    m_p_skinDesignerWindow = new WinSkinDesigner( &m_skinParameters /*, this*/ ); //La connection des paramètres avec l'ui se fait dans ce constructeur
-    //Fenêtre de Configuration
+    //FenÃªtre de conception de skin
+    m_p_skinDesignerWindow = new WinSkinDesigner( &m_skinParameters /*, this*/ ); //La connection des paramÃ¨tres avec l'ui se fait dans ce constructeur
+    //FenÃªtre de Configuration
     m_p_configureWindow = new WinConfigure( this );
-    //Légendes
+    //LÃ©gendes
     m_ui->listView_Photos->setModel( &m_photosListModel );
 
     /**** Connections SIGNAUX/SLOTS ******/  
@@ -294,15 +294,15 @@ MainWin::MainWin( QWidget *parent ) :
     connect( this->m_ui->action_SaveSession, SIGNAL(triggered()), this, SLOT(onSaveSession()));
     connect( this->m_ui->action_SaveSessionAs, SIGNAL(triggered()), this, SLOT(onSaveSessionAs()));
     connect( this->m_ui->action_Quit, SIGNAL(triggered()), this, SLOT(close()) );
-    //Paramètres (=Session)
+    //ParamÃ¨tres (=Session)
     connect( &m_projectParameters, SIGNAL(loaded(QString)), this, SLOT(sessionLoaded(QString)));
     connect( &m_projectParameters, SIGNAL(saved(QString)), this, SLOT(sessionSaved(QString)));
     connect( &m_projectParameters, SIGNAL(message(QString)), this, SLOT(onLogMsg(QString)));
-    //Afficher la fenêtre de tags
+    //Afficher la fenÃªtre de tags
     connect( this->m_ui->action_DisplayTags, SIGNAL(triggered()), this, SLOT(showTagsWindow()));
-    //Afficher la fenêtre de debug    
+    //Afficher la fenÃªtre de debug    
     connect( this->m_ui->action_ShowLogWindow, SIGNAL(triggered()), this, SLOT(showLogWindow()));
-    //Afficher la fenêtre de configuration
+    //Afficher la fenÃªtre de configuration
     connect( this->m_ui->action_Configure, SIGNAL(triggered()), this, SLOT(showConfigureWindow()));
     //Help
     connect( this->m_ui->action_OnlineManual, SIGNAL(triggered()), this, SLOT(onlineManual()));
@@ -311,13 +311,13 @@ MainWin::MainWin( QWidget *parent ) :
     connect( this->m_ui->action_AboutImageMagick, SIGNAL(triggered()), this, SLOT(aboutImageMagick()));
     //Traductions    
     connect( m_p_configureWindow, SIGNAL( languageChanged() ), &m_languageManager, SLOT(translate()) );
-    //Répertoire source
+    //RÃ©pertoire source
     connect( this->m_ui->pushButton_SourceFolder, SIGNAL(clicked()), this, SLOT(choosePhotosDir()));
     connect( this->m_ui->lineEdit_SourceFolder, SIGNAL(editingFinished()), this, SLOT(choosePhotosDirManually()));
-    //Répertoire destination
+    //RÃ©pertoire destination
     connect( this->m_ui->pushButton_DestinationFolder, SIGNAL(clicked()), this, SLOT(chooseDestDir()));
     connect( this->m_ui->lineEdit_DestinationFolder, SIGNAL(editingFinished()), this, SLOT(chooseDestDirManually()));
-    //Génération de la gallery
+    //GÃ©nÃ©ration de la gallery
     connect( this->m_ui->pushButton_Generation, SIGNAL(clicked()), this, SLOT( generateGallery() ));
     //Ouverture / Conception d'une skin
     connect( this->m_ui->pushButton_DesignSkin, SIGNAL(clicked( )), this, SLOT( openSkinDesigner() ) );
@@ -325,7 +325,7 @@ MainWin::MainWin( QWidget *parent ) :
     connect( &m_skinParameters, SIGNAL(nameChanged(QString)), this, SLOT(skinNameChanged(QString)) );
     connect( &m_skinParameters, SIGNAL(skinOpened(QString)), this, SLOT(skinPathChanged(QString)) );
     connect( &m_skinParameters, SIGNAL(skinSaved(QString)), this, SLOT(skinPathChanged(QString)) );
-    //Navigation dans les Thumnail de "tab Légendes"
+    //Navigation dans les Thumnail de "tab LÃ©gendes"
     connect( this->m_ui->pushButton_UpdatePhotoList, SIGNAL(clicked()), this, SLOT( buildPhotoLists() ) );
     connect( this->m_ui->checkBox_GalleryThumb, SIGNAL(stateChanged(int)), this, SLOT(thumnailChanged(int)));
     connect( this->m_ui->pushButton_PrevPhoto, SIGNAL(clicked( )), &(this->m_captionManager), SLOT( onPrevious() ) );
@@ -337,7 +337,7 @@ MainWin::MainWin( QWidget *parent ) :
     connect( &(this->m_captionManager), SIGNAL(displayThumbnailSignal(QModelIndex)), this, SLOT(displayThumbnail(QModelIndex)) );
     connect( &(this->m_captionManager), SIGNAL(displayCaptionSignal(QString)), this, SLOT(displayCaption(QString)) );
     connect( &(this->m_captionManager), SIGNAL(displayPreviewSignal(QString)), this, SLOT(previewCaption(QString)) );
-    //Onglet Présentation
+    //Onglet PrÃ©sentation
     connect( this->m_ui->horizontalSlider_PhotoSharpeningRadius, SIGNAL(valueChanged(int)), this, SLOT(sharpeningRadiusChanged(int)) );
     connect( this->m_ui->doubleSpinBox_PhotoSharpeningRadius, SIGNAL(valueChanged(double)), this, SLOT(sharpeningRadiusChanged(double)) );
     connect( this->m_ui->comboBox_ImageQualityStrategy, SIGNAL(currentIndexChanged(int)), this, SLOT(imageOptimizationStrategyChanged(int)) );
@@ -357,12 +357,12 @@ MainWin::MainWin( QWidget *parent ) :
     m_newProjectParameters.setUi( m_ui );
     m_newProjectParameters.setcaptionManager( &m_captionManager );
     m_newProjectParameters.setSkin( &m_skinParameters );
-    m_newProjectParameters.fromUi( ); //Cela initialise les valeurs à celles par défaut dans l'ui
+    m_newProjectParameters.fromUi( ); //Cela initialise les valeurs Ã  celles par dÃ©faut dans l'ui
     
-    //Dernières sessions
+    //DerniÃ¨res sessions
     QSettings settings;
     m_recentSessions = settings.value( SETTINGS_RECENTPROJECTS ).toStringList();
-    for( int i = 0; i < NBMAXRECENTFILES; i++ ){ //Création du tableau d'actions pour ouvrir les fichiers récents
+    for( int i = 0; i < NBMAXRECENTFILES; i++ ){ //CrÃ©ation du tableau d'actions pour ouvrir les fichiers rÃ©cents
         m_recentSessionsActions[i] = new QAction( this );
         m_ui->menuFichiers->addAction( m_recentSessionsActions[i] );
         connect(m_recentSessionsActions[i], SIGNAL(triggered()),this, SLOT(onOpenRecentSession()));
@@ -373,14 +373,14 @@ MainWin::MainWin( QWidget *parent ) :
 
 
     bool f_lastSessionOK = false;
-    //Par défaut : Nouvelle session
+    //Par dÃ©faut : Nouvelle session
     newSession( );
-    //m_skinParameters.load( m_projectParameters.m_galleryConfig.skinPath ); //skin par défaut
-    //Chargement de la dernière session si configuré ainsi
+    //m_skinParameters.load( m_projectParameters.m_galleryConfig.skinPath ); //skin par dÃ©faut
+    //Chargement de la derniÃ¨re session si configurÃ© ainsi
     if( (bool)settings.value( SETTINGS_OPENMOSTRECENTPJT ).toInt() )
     {
-        f_lastSessionOK = !m_recentSessions.isEmpty(); //Sera vide si on lance EZWG pour la première fois
-        if( f_lastSessionOK ){ //Une dernière session existe
+        f_lastSessionOK = !m_recentSessions.isEmpty(); //Sera vide si on lance EZWG pour la premiÃ¨re fois
+        if( f_lastSessionOK ){ //Une derniÃ¨re session existe
             QString  fileToLoad = m_recentSessions.first();
             openSession( fileToLoad );
         }
@@ -402,17 +402,17 @@ void MainWin::changeEvent(QEvent *e)
     QMainWindow::changeEvent(e);
     switch (e->type()) {
     case QEvent::LanguageChange:
-        //Il faut sauver / recharger les paramètres, car les combobox reviennent sur les valeurs par défaut
+        //Il faut sauver / recharger les paramÃ¨tres, car les combobox reviennent sur les valeurs par dÃ©faut
         m_projectParameters.fromUi();
         m_skinParameters.fromUi();
         //traductions
         m_ui->retranslateUi(this);
         m_p_skinDesignerWindow->retranslate();
         m_p_configureWindow->retranslate();
-        //Restauration des paramètres
+        //Restauration des paramÃ¨tres
         m_projectParameters.toUi();
         m_skinParameters.toUi();
-        //Traduction des textes supplémentaires (htm, etc)
+        //Traduction des textes supplÃ©mentaires (htm, etc)
         m_p_tagsWindow->setHtml( CPlatform::readTranslatedTextFile( "tagList.html" ) );
         //CPlatform::setLanguage( langSuffix );
         break;
@@ -421,11 +421,11 @@ void MainWin::changeEvent(QEvent *e)
     }
 }
 
-//Surcharge de la fermeture de la fenêtre
+//Surcharge de la fermeture de la fenÃªtre
 // -> sauvegardes du projet et de la skin avant de quitter
  void MainWin::closeEvent(QCloseEvent *event)
  {   
-    //On regarde ce qui n'a pas été sauvé
+    //On regarde ce qui n'a pas Ã©tÃ© sauvÃ©
     m_projectParameters.fromUi();
     bool f_skinUnsaved = m_p_skinDesignerWindow->isUnsaved();
     bool f_sessionUnsaved = isUnsaved( );
@@ -454,9 +454,9 @@ void MainWin::changeEvent(QEvent *e)
 
 void MainWin::onNewSession( )
 {    
-    //Si le projet courant n'a pas été sauvé, on propose de le faire    
-    //On propose la sauvegarde de la skin ici et non à l'ouverture effecture de la nouvelle :
-    //en effet, il faut pouvoir annuler le chargement de la session et de sa skin très en amont si
+    //Si le projet courant n'a pas Ã©tÃ© sauvÃ©, on propose de le faire    
+    //On propose la sauvegarde de la skin ici et non Ã  l'ouverture effecture de la nouvelle :
+    //en effet, il faut pouvoir annuler le chargement de la session et de sa skin trÃ¨s en amont si
     //pb ou annulation lors de la sauvegarde de la skin courante.
     int retDlg = QMessageBox::Ok;
     bool f_sessionUnsaved = isUnsaved();
@@ -475,14 +475,14 @@ void MainWin::onNewSession( )
 void MainWin::newSession( )
 {
         m_projectParameters = m_newProjectParameters;
-        //Rechargement de la skin par défaut
+        //Rechargement de la skin par dÃ©faut
         m_projectParameters.m_galleryConfig.skinPath = CSkinParameters::defaultSkin();
         m_skinParameters.load( m_projectParameters.m_galleryConfig.skinPath  );         
         m_projectParameters.toUi( );                             //Maj UI
         buildPhotoLists();                                       //Construction liste des photos (vide...)
         m_referenceProjectParameters = m_projectParameters;
         //UI
-        m_ui->action_SaveSession->setDisabled( true );           //Il *faut* désactiver l'option save pour ne pas écraser le fichier le plus récent
+        m_ui->action_SaveSession->setDisabled( true );           //Il *faut* dÃ©sactiver l'option save pour ne pas Ã©craser le fichier le plus rÃ©cent
 }
 
 
@@ -494,7 +494,7 @@ void MainWin::onOpenSession( )
                                                         m_lastSelectedDir,
                                                         selectedFilter,
                                                         &selectedFilter);
-    if( !sessionFile.isEmpty() ) { //Vide si cancel, ce qui génèrerait une erreur...
+    if( !sessionFile.isEmpty() ) { //Vide si cancel, ce qui gÃ©nÃ¨rerait une erreur...
         openSession( sessionFile );
     }
 }
@@ -514,26 +514,26 @@ void MainWin::onOpenRecentSession( )
 void MainWin::openSession( const QString &sessionFile )
 {    
 
-    //Si lecture du fichier réussie
+    //Si lecture du fichier rÃ©ussie
     if( m_projectParameters.load( sessionFile ) )
     {
 
-       //Si le projet courant n'a pas été sauvé, on propose de le faire    
-       //On propose la sauvegarde de la skin ici et non à l'ouverture effecture de la nouvelle :
-       //en effet, il faut pouvoir annuler le chargement de la session et de sa skin très en amont si
+       //Si le projet courant n'a pas Ã©tÃ© sauvÃ©, on propose de le faire    
+       //On propose la sauvegarde de la skin ici et non Ã  l'ouverture effecture de la nouvelle :
+       //en effet, il faut pouvoir annuler le chargement de la session et de sa skin trÃ¨s en amont si
        //pb ou annulation lors de la sauvegarde de la skin courante.
        int retDlg = QMessageBox::Ok;
        bool f_sessionUnsaved = isUnsaved();
        bool f_skinUnsaved = m_p_skinDesignerWindow->isUnsaved();
-       //Affichage de la boite de dialogue si la session courante n'a pas été sauvée, récupération du code retour
+       //Affichage de la boite de dialogue si la session courante n'a pas Ã©tÃ© sauvÃ©e, rÃ©cupÃ©ration du code retour
        if( f_sessionUnsaved || f_skinUnsaved ){ 
            retDlg = displayUnsavedMsgBox( f_sessionUnsaved, f_skinUnsaved );
        }
-       //Si annulation demandée
+       //Si annulation demandÃ©e
        if( retDlg == QMessageBox::Cancel )   {
            return;
        }
-       else //Si pas d'annulation demandée
+       else //Si pas d'annulation demandÃ©e
        {
             QDir inDir;
             m_lastSelectedDir = QFileInfo(sessionFile).absolutePath();        
@@ -541,13 +541,13 @@ void MainWin::openSession( const QString &sessionFile )
             QMessageBox alertBox(this);
             QStringList missingPhotos; 
 
-//            m_projectParameters = m_newProjectParameters; //On repart d'une base saine : si une propriété est mal ouverte, elle sera ainsi settée par défaut
+//            m_projectParameters = m_newProjectParameters; //On repart d'une base saine : si une propriÃ©tÃ© est mal ouverte, elle sera ainsi settÃ©e par dÃ©faut
 
-            //Affichage d'un message si la version du projet est plus récente que l'application
+            //Affichage d'un message si la version du projet est plus rÃ©cente que l'application
             if( m_projectParameters.version( ) > CPlatform::revisionInt() ){
                 displayMoreRecentMsgBox( );
             }
-            //Le contenu du répertoire d'entre est-il toujours valable depuis la dernière sauvegarde ?
+            //Le contenu du rÃ©pertoire d'entre est-il toujours valable depuis la derniÃ¨re sauvegarde ?
             //ie : les photos source ont-elles chang de place depuis ??
             if( QFileInfo( m_projectParameters.m_galleryConfig.inputDir ).isDir() ){
                 inDir = QDir( m_projectParameters.m_galleryConfig.inputDir  );
@@ -557,10 +557,10 @@ void MainWin::openSession( const QString &sessionFile )
                 missingPhotos << tr("Input folder does not exist.");
             }
 
-            //Tant que le répertoire d'entrée n'est pas valide on propose de le fournir
+            //Tant que le rÃ©pertoire d'entrÃ©e n'est pas valide on propose de le fournir
             while( !missingPhotos.isEmpty() )
             {
-                //Boite de dialogue informant du problème
+                //Boite de dialogue informant du problÃ¨me
                 alertBox.setText( tr("Input folder: ","Source folder containing the pictures")
                                   + m_projectParameters.m_galleryConfig.inputDir
                                   + tr("\nSome photos cannot be found. They will be removed from the project.\n")
@@ -582,20 +582,20 @@ void MainWin::openSession( const QString &sessionFile )
                         m_ui->lineEdit_SourceFolder->setText( m_projectParameters.m_galleryConfig.inputDir );
                         missingPhotos = checkPhotosInDir( m_projectParameters.m_photoPropertiesMap.keys(), inDir );
                     }
-                    else{ //L'utilisateur a annulé le choix d'un répertoire
+                    else{ //L'utilisateur a annulÃ© le choix d'un rÃ©pertoire
                          m_lastSelectedDir = QDir::homePath();
                          missingPhotos.clear();
                     }
                 }
                 else{
-                    missingPhotos.clear(); //L'utilisateur a décliné: on utilise le répertoire qui était dans la sauvegarde
+                    missingPhotos.clear(); //L'utilisateur a dÃ©clinÃ©: on utilise le rÃ©pertoire qui Ã©tait dans la sauvegarde
                 }
             }
             buildPhotoLists( );
        
             //Chargement de la skin
             QStringList errors;
-            QString skinToLoad = m_projectParameters.m_galleryConfig.skinPath; //On sauve dans une variable car sera changé en "default" si erreur de chargement et donc le err msg affichera "default"
+            QString skinToLoad = m_projectParameters.m_galleryConfig.skinPath; //On sauve dans une variable car sera changÃ© en "default" si erreur de chargement et donc le err msg affichera "default"
             errors = m_p_skinDesignerWindow->openSkin( skinToLoad );
             //Si des erreurs sont survenues
             if( !errors.isEmpty() )
@@ -612,7 +612,7 @@ void MainWin::openSession( const QString &sessionFile )
                 onLogMsg( QString("[Skin]. Skin loaded: ") + m_skinParameters.name() );
             }
             
-        } //Fin du traitement de la session chargée
+        } //Fin du traitement de la session chargÃ©e
     }
         
     else //Erreur de chargement de la session
@@ -626,14 +626,14 @@ void MainWin::openSession( const QString &sessionFile )
 }
 
 
-//Si possible, sauve la session sur le fichier le plus récent,
+//Si possible, sauve la session sur le fichier le plus rÃ©cent,
 //sinon, appelle saveAs()
 bool MainWin::onSaveSession( )
 {
     QString sessionFile;
     bool fileSaved = false;
 
-    //Par défaut, sauvegarde sur le fichier le plus récent
+    //Par dÃ©faut, sauvegarde sur le fichier le plus rÃ©cent
     if( !m_recentSessions.isEmpty() ){
         sessionFile = m_recentSessions.first();
     }
@@ -648,7 +648,7 @@ bool MainWin::onSaveSession( )
         m_projectParameters.fromUi( );
         fileSaved = m_projectParameters.save( sessionFile );
         
-        //Si la sauvegarde a échouée, avertissement
+        //Si la sauvegarde a Ã©chouÃ©e, avertissement
         if( !fileSaved ){
                 QMessageBox msgBox( this );
                 msgBox.setText( tr("The session could not be saved.") );
@@ -657,7 +657,7 @@ bool MainWin::onSaveSession( )
                 msgBox.exec();
         }
     }
-    //Mais si le fichier le plus récent n'éxiste pas, on ouvre la boite de dialogue "SaveAs"
+    //Mais si le fichier le plus rÃ©cent n'Ã©xiste pas, on ouvre la boite de dialogue "SaveAs"
     else{
         fileSaved = onSaveSessionAs( );
     }
@@ -677,7 +677,7 @@ bool MainWin::onSaveSessionAs( )
                                                         &selectedFilter);
     if( !sessionFile.isEmpty() )
     {
-        //Ajouter l'extension si ça n'a pas été fait par la boite de dialogue
+        //Ajouter l'extension si Ã§a n'a pas Ã©tÃ© fait par la boite de dialogue
         if( !sessionFile.contains(QString( XMLSESSIONEXTENSION )) ){
             sessionFile.append( QString(XMLSESSIONEXTENSION) );
         }    
@@ -686,7 +686,7 @@ bool MainWin::onSaveSessionAs( )
         m_projectParameters.fromUi( );
         fileSaved = m_projectParameters.save( sessionFile );     
 
-        //Si la sauvegarde a échouée, avertissement
+        //Si la sauvegarde a Ã©chouÃ©e, avertissement
         if( !fileSaved ){
                 QMessageBox msgBox( this );
                 msgBox.setText( tr("The session could not be saved.") );
@@ -711,7 +711,7 @@ bool MainWin::isUnsaved()
 void MainWin::showTagsWindow( )
 {
     m_p_tagsWindow->show();
-    m_p_tagsWindow->activateWindow(); //Force la fenêtre au premier plan (utile si déjà ouverte)
+    m_p_tagsWindow->activateWindow(); //Force la fenÃªtre au premier plan (utile si dÃ©jÃ  ouverte)
 }
 
 
@@ -738,8 +738,8 @@ void MainWin::showConfigureWindow( )
 void MainWin::onlineManual( )
 {
 
-    QString manual = QString( "http://www.ezwebgallery.org/spip.php?article6" ); //Version française
-    //Ouvrir l'url en français
+    QString manual = QString( "http://www.ezwebgallery.org/spip.php?article6" ); //Version franÃ§aise
+    //Ouvrir l'url en franÃ§ais
     if( CPlatform::language() != "fr" ){
         manual = QString( "http://www.ezwebgallery.org/spip.php?article11" );
     }
@@ -767,12 +767,12 @@ void MainWin::aboutImageMagick( )
 }
 
 //--------------------------------
-//------ Paramètres chargés
+//------ ParamÃ¨tres chargÃ©s
 //--------------------------------
 void MainWin::sessionLoaded( QString fileLoaded )
 {
     QSettings settings;
-    //Insertion du fichier dans la liste des fichiers récemment utilisés
+    //Insertion du fichier dans la liste des fichiers rÃ©cemment utilisÃ©s
     m_recentSessions.removeAll(fileLoaded);
     m_recentSessions.prepend(fileLoaded);
     if( m_recentSessions.size() > NBMAXRECENTFILES ){
@@ -789,12 +789,12 @@ void MainWin::sessionLoaded( QString fileLoaded )
     watermarkTypeChanged( m_projectParameters.m_photosConfig.watermark.type );
 }
 //--------------------------------
-//------ Paramètres sauvés
+//------ ParamÃ¨tres sauvÃ©s
 //--------------------------------
 void MainWin::sessionSaved( QString fileSaved )
 {
     QSettings settings;
-    //Insertion du fichier dans la liste des fichiers récemment utilisés
+    //Insertion du fichier dans la liste des fichiers rÃ©cemment utilisÃ©s
     m_recentSessions.removeAll(fileSaved);
     m_recentSessions.prepend(fileSaved);
     if( m_recentSessions.size() > NBMAXRECENTFILES ){
@@ -808,7 +808,7 @@ void MainWin::sessionSaved( QString fileSaved )
     displayRecentFiles();
 }
 //--------------------------------
-//------ Sélection Répertoire Source
+//------ SÃ©lection RÃ©pertoire Source
 //--------------------------------
 void MainWin::choosePhotosDir()
 {
@@ -818,13 +818,13 @@ void MainWin::choosePhotosDir()
                                                       m_lastSelectedDir,
                                                       QFileDialog::ShowDirsOnly );
     if( !dir.isEmpty()
-        //Si on n'a pas changé de répertoire, lenteurs inutiles dûe au rafrachissement de la vignette dans le "tab légendes"
+        //Si on n'a pas changÃ© de rÃ©pertoire, lenteurs inutiles dÃ»e au rafrachissement de la vignette dans le "tab lÃ©gendes"
         && dir!=m_projectParameters.m_galleryConfig.inputDir )
     {
         m_projectParameters.m_galleryConfig.inputDir = dir;
         m_lastSelectedDir = m_projectParameters.m_galleryConfig.inputDir;
         m_ui->lineEdit_SourceFolder->setText( dir );//Affichage
-        //On créé la liste des jpegs ici pour qu'elle soit dispo sous l'onglet "Légendes"
+        //On crÃ©Ã© la liste des jpegs ici pour qu'elle soit dispo sous l'onglet "LÃ©gendes"
         buildPhotoLists( );
     }
 
@@ -833,21 +833,21 @@ void MainWin::choosePhotosDirManually()
 {
     QDir sourceFolder = QDir( QDir::cleanPath(m_ui->lineEdit_SourceFolder->text()) );
     if( sourceFolder.exists( ) ){
-        //Si on n'a pas changé de répertoire, lenteurs inutiles dûe au rafrachissement de la vignette dans le "tab légendes"
+        //Si on n'a pas changÃ© de rÃ©pertoire, lenteurs inutiles dÃ»e au rafrachissement de la vignette dans le "tab lÃ©gendes"
         if( sourceFolder.absolutePath()!=m_projectParameters.m_galleryConfig.inputDir ){
             m_projectParameters.m_galleryConfig.inputDir = sourceFolder.absolutePath();
             m_lastSelectedDir = m_projectParameters.m_galleryConfig.inputDir;
-            //On créé la liste des jpegs ici pour qu'elle soit dispo sous l'onglet "Légendes"
+            //On crÃ©Ã© la liste des jpegs ici pour qu'elle soit dispo sous l'onglet "LÃ©gendes"
             buildPhotoLists( );
         }
     }
     else{
         m_ui->lineEdit_SourceFolder->setText( tr("Invalid directory.") );
-        m_projectParameters.m_galleryConfig.inputDir.clear(); //Sinon bug lorsque l'on rechoisi le répertoire d'avant
+        m_projectParameters.m_galleryConfig.inputDir.clear(); //Sinon bug lorsque l'on rechoisi le rÃ©pertoire d'avant
     }
 }
 //--------------------------------
-//----------- Sélection Répertoire Destination
+//----------- SÃ©lection RÃ©pertoire Destination
 //--------------------------------
 void MainWin::chooseDestDir()
 {
@@ -872,7 +872,7 @@ void MainWin::chooseDestDirManually()
     }
 }
 //--------------------------------
-//--------- Génération de la gallerie
+//--------- GÃ©nÃ©ration de la gallerie
 //--------------------------------
 void MainWin::generateGallery( )
 {    
@@ -883,7 +883,7 @@ void MainWin::generateGallery( )
     info.setStandardButtons( QMessageBox::Ok );
     info.setIcon( QMessageBox::Information );
 
-    //La génération n'est pas en cours -> la lancer
+    //La gÃ©nÃ©ration n'est pas en cours -> la lancer
     if( !m_p_galleryGenerator->isGenerationInProgress() )
     {
         //Check des champs obligatoires
@@ -900,32 +900,32 @@ void MainWin::generateGallery( )
         {
             QStringList skinErrorList;
             QStringList skinWarningList;
-            //MAJ des paramètres
+            //MAJ des paramÃ¨tres
             m_projectParameters.fromUi( );
             m_skinParameters.fromUi( );
-            //Vérification de la skin et affichage d'une infobox si pb
+            //VÃ©rification de la skin et affichage d'une infobox si pb
             m_skinParameters.check( &skinErrorList, &skinWarningList );
             if( !skinErrorList.isEmpty() )
             {
                 QString detailedText;
-                //Détail des erreurs
+                //DÃ©tail des erreurs
                 foreach( QString error, skinErrorList ){
                     detailedText.append( error );
                     detailedText.append( "\n" );
                 }
                 QMessageBox* alertBox = new QMessageBox( QMessageBox::Critical, tr("Error"),
-                                                         tr("Your skin is not valid.                                                                                ", "Please leave 60 blank space !"), //60 espacements pour élargir la fenêtre
+                                                         tr("Your skin is not valid.                                                                                ", "Please leave 60 blank space !"), //60 espacements pour Ã©largir la fenÃªtre
                                                          QMessageBox::Close);
                 alertBox->setDetailedText( detailedText );
                 alertBox->exec();
                 delete alertBox;
-                return; //On abandonne la génération !
+                return; //On abandonne la gÃ©nÃ©ration !
             }
-            //Vérification de la liste des photos d'entrée et reconstruction des légendes si besoin
+            //VÃ©rification de la liste des photos d'entrÃ©e et reconstruction des lÃ©gendes si besoin
             onProgressBar( 0, "green", tr("Building photo list.") );
             nbCaptionsRemoved = buildPhotoLists();   //Reconstruction de la liste de photos, cela peut prendre quelques secondes...
          
-            if( nbCaptionsRemoved != 0)  //Certaines photos légendées ne sont plus dans le répertoire d'entrée : on informe
+            if( nbCaptionsRemoved != 0)  //Certaines photos lÃ©gendÃ©es ne sont plus dans le rÃ©pertoire d'entrÃ©e : on informe
             {
                 info.setText( tr("The input directory changed.\nThe captions have been automatically reassociated, but the process failed for %n caption(s).",
                                  "Some captions couldn't be remapped", nbCaptionsRemoved) );
@@ -935,10 +935,10 @@ void MainWin::generateGallery( )
             //GENERATION !
             if( m_projectParameters.m_photoPropertiesMap.size() != 0 )
             {
-                //Affichage bouton annulation et déscativation de certaines actions
+                //Affichage bouton annulation et dÃ©scativation de certaines actions
                 swapButtons( );
 
-                //Génération
+                //GÃ©nÃ©ration
                 m_p_galleryGenerator->generateGallery(  m_projectParameters,
                                                         m_skinParameters/*, 
                                                         m_captionManager.captionMap()*/ );
@@ -963,7 +963,7 @@ void MainWin::generateGallery( )
 
 
 //--------------------------------
-//--------- Affichage d'une vignette à légender
+//--------- Affichage d'une vignette Ã  lÃ©gender
 //--------------------------------
 void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 {
@@ -974,7 +974,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 
     m_ui->label_thumbPhoto->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     
-    //Transformation du curseur en sablier car ça peut être un peu long...
+    //Transformation du curseur en sablier car Ã§a peut Ãªtre un peu long...
     QApplication::setOverrideCursor ( Qt::WaitCursor );
 
     bool f_readSuccess = true;
@@ -994,7 +994,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
         photo.zoom( thumbSize, Qt::FastTransformation );
         //Orientation
         photo.orientationExif();
-        //vérification que tout est ok, sinon log des messages
+        //vÃ©rification que tout est ok, sinon log des messages
         if( !photo.errors().isEmpty() ){
             foreach( QString err, photo.errors() ){
                 onLogMsg( QString("[Thumbnail]." ) + err );
@@ -1011,7 +1011,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
         else{
             f_conversionSuccess = false;
         }
-        //Propagation des données EXIF lues et autres infos au captionManager
+        //Propagation des donnÃ©es EXIF lues et autres infos au captionManager
         m_captionManager.setExifTags( photoFilename, photo.exifTags() );
         m_captionManager.setFileInfo( photoFilename, photoFileInfo );
 
@@ -1033,7 +1033,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 }
 
 //--------------------------------
-//--------- La vignette représentant la gallerie a changé
+//--------- La vignette reprÃ©sentant la gallerie a changÃ©
 //--------------------------------
 void MainWin::thumnailChanged( int state )
 {
@@ -1051,7 +1051,7 @@ void MainWin::displayCaption( QString text )
 void MainWin::openSkinDesigner( )
 {        
     m_p_skinDesignerWindow->show( );
-    m_p_skinDesignerWindow->activateWindow(); //Force la fenêtre au premier plan (utile si déjà ouverte)
+    m_p_skinDesignerWindow->activateWindow(); //Force la fenÃªtre au premier plan (utile si dÃ©jÃ  ouverte)
 }
 
 void MainWin::skinNameChanged( QString newName )
@@ -1135,10 +1135,10 @@ void MainWin::displayRecentFiles( )
 /*************************
 * int displayUnsavedMsgBox( bool f_sessionUnsaved, bool f_skinUnsaved )
 *----------------------
-* Affiche une message box indiquant que le projet et/ou la skin n'ont pas été savegardés
+* Affiche une message box indiquant que le projet et/ou la skin n'ont pas Ã©tÃ© savegardÃ©s
 * Sauve les modification si c'est le choix de l'utilisateur
-* In: (bool) f_sessionUnsaved, (bool) f_skinUnsaved indiquent ce qui n'a pas été sauvé.
-* Return: le bouton pressé par l'utilisateur
+* In: (bool) f_sessionUnsaved, (bool) f_skinUnsaved indiquent ce qui n'a pas Ã©tÃ© sauvÃ©.
+* Return: le bouton pressÃ© par l'utilisateur
 **************************/
 int MainWin::displayUnsavedMsgBox( bool f_sessionUnsaved, bool f_skinUnsaved )
 {
@@ -1151,7 +1151,7 @@ int MainWin::displayUnsavedMsgBox( bool f_sessionUnsaved, bool f_skinUnsaved )
         
     switch( unsaved )
     {
-        case 1:   //Session non sauvée            
+        case 1:   //Session non sauvÃ©e            
             msgBox.setText( tr("Your project has been modified.") );
             msgBox.setStandardButtons( QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel );
             msgBox.setDefaultButton(QMessageBox::SaveAll);
@@ -1162,10 +1162,10 @@ int MainWin::displayUnsavedMsgBox( bool f_sessionUnsaved, bool f_skinUnsaved )
                 }
             }
             break;
-        case 2:   //Skin non sauvée
+        case 2:   //Skin non sauvÃ©e
             ret = m_p_skinDesignerWindow->displayUnsavedMsgBox( );
             break;
-        case 3:   //Skin et session non sauvées
+        case 3:   //Skin et session non sauvÃ©es
             msgBox.setText( tr("Your project and your skin have been modified.") );
             msgBox.setStandardButtons( QMessageBox::SaveAll | QMessageBox::Discard | QMessageBox::Cancel );
             msgBox.setDefaultButton(QMessageBox::SaveAll);
@@ -1176,7 +1176,7 @@ int MainWin::displayUnsavedMsgBox( bool f_sessionUnsaved, bool f_skinUnsaved )
                 }                
             }
             break;
-        default:  //Tout avait été sauvé
+        default:  //Tout avait Ã©tÃ© sauvÃ©
             ret = QMessageBox::Discard;
             break;
     }  
@@ -1186,7 +1186,7 @@ int MainWin::displayUnsavedMsgBox( bool f_sessionUnsaved, bool f_skinUnsaved )
 /*************************
 * int displayMoreRecentMsgBox( )
 *----------------------
-* Affiche une alerte si on essaie d'ouvrir un projet généré avec une version d'EZWG plus récente
+* Affiche une alerte si on essaie d'ouvrir un projet gÃ©nÃ©rÃ© avec une version d'EZWG plus rÃ©cente
 **************************/
 int MainWin::displayMoreRecentMsgBox( )
 {
@@ -1200,8 +1200,8 @@ int MainWin::displayMoreRecentMsgBox( )
 /*************************
 * checkPhotosInDir( const QDir &dir )
 *----------------------
-* Vérifie la présence d'une liste de photos dans un répertoire
-* Retourne true même si des photos supplémentaires sont présentes
+* VÃ©rifie la prÃ©sence d'une liste de photos dans un rÃ©pertoire
+* Retourne true mÃªme si des photos supplÃ©mentaires sont prÃ©sentes
 * Retourne false si il manque une photo
 **************************/
 QStringList MainWin::checkPhotosInDir( const QStringList& photosInConfig, const QDir &dir )
@@ -1211,7 +1211,7 @@ QStringList MainWin::checkPhotosInDir( const QStringList& photosInConfig, const 
     QString photo;
     QStringList missingPhotos;
 
-	photoFileTypes << "*.jpeg" << "*.jpg" << "*.tiff" << "*.tif"; //Formats d'image supportés en entrée
+	photoFileTypes << "*.jpeg" << "*.jpg" << "*.tiff" << "*.tif"; //Formats d'image supportÃ©s en entrÃ©e
     photosInDir = CPlatform::getImagesInDir( dir, photoFileTypes );
     /*
     if( photosInConfig.size() > photosInDir.size() ){
@@ -1235,17 +1235,17 @@ QStringList MainWin::checkPhotosInDir( const QStringList& photosInConfig, const 
 /*************************
 * buildPhotoLists
 *----------------------
-* Parcourt le répertoire d'entrée pour y trouver les photos à traiter et
-* met à jour le QMap de CPhotoProperties avec les données disponibles : 
-* CPhotoProperties actuelles, légendes renseignées et nouvelles photos
+* Parcourt le rÃ©pertoire d'entrÃ©e pour y trouver les photos Ã  traiter et
+* met Ã  jour le QMap de CPhotoProperties avec les donnÃ©es disponibles : 
+* CPhotoProperties actuelles, lÃ©gendes renseignÃ©es et nouvelles photos
 *
-* 1 - Création de la liste des photos dipos dans le répertoire d'entrée.
-*     Ajout d'une entrée dans le QMap des propriétés si nouvelle photo, suppression si photo introuvable.
-* 2 - MAJ du gestionnaire des légendes. Maj UI, et récupération du nombre de photos introuvables dans le rep d'entrée.
-* 3 - Récupération des légendes reseignées pour MAJ du QMap de properties.
-* 4 - MAJ de la vignette représentant la galerie.
+* 1 - CrÃ©ation de la liste des photos dipos dans le rÃ©pertoire d'entrÃ©e.
+*     Ajout d'une entrÃ©e dans le QMap des propriÃ©tÃ©s si nouvelle photo, suppression si photo introuvable.
+* 2 - MAJ du gestionnaire des lÃ©gendes. Maj UI, et rÃ©cupÃ©ration du nombre de photos introuvables dans le rep d'entrÃ©e.
+* 3 - RÃ©cupÃ©ration des lÃ©gendes reseignÃ©es pour MAJ du QMap de properties.
+* 4 - MAJ de la vignette reprÃ©sentant la galerie.
 *
-* Return : le nombre de CPhotosProperties retirées du QMap car la photo correspondante n'est plus présente dans le répertoire d'entrée.
+* Return : le nombre de CPhotosProperties retirÃ©es du QMap car la photo correspondante n'est plus prÃ©sente dans le rÃ©pertoire d'entrÃ©e.
 **************************/
 int MainWin::buildPhotoLists( )
 {
@@ -1259,15 +1259,15 @@ int MainWin::buildPhotoLists( )
     int nbPhotoNotFound;
 
 
-    // 1 -Reconstruction de la liste des photos réellement présentes dans le répertoire d'entrée    
-	photoFileTypes << "*.jpeg" << "*.jpg" << "*.tiff" << "*.tif"; //Formats d'image supportés en entrée
-    photoList = CPlatform::getImagesInDir( inputDir, photoFileTypes ); //Récupération de la liste des photos du répertoire d'entrée
+    // 1 -Reconstruction de la liste des photos rÃ©ellement prÃ©sentes dans le rÃ©pertoire d'entrÃ©e    
+	photoFileTypes << "*.jpeg" << "*.jpg" << "*.tiff" << "*.tif"; //Formats d'image supportÃ©s en entrÃ©e
+    photoList = CPlatform::getImagesInDir( inputDir, photoFileTypes ); //RÃ©cupÃ©ration de la liste des photos du rÃ©pertoire d'entrÃ©e
     p_photoListIterator = new QStringListIterator( photoList );
-    while( p_photoListIterator->hasNext() ) //On vérifie que les paramètres des photos sont toujours à jour
+    while( p_photoListIterator->hasNext() ) //On vÃ©rifie que les paramÃ¨tres des photos sont toujours Ã  jour
     {    
         photoName = p_photoListIterator->next();
         p_photoFileInfo = new QFileInfo( inputDir.absoluteFilePath( photoName ) );
-        //Si les paramètres de la galerie ne comportaient pas le fichier, on met à jour et on demande la regénération
+        //Si les paramÃ¨tres de la galerie ne comportaient pas le fichier, on met Ã  jour et on demande la regÃ©nÃ©ration
         if( !m_projectParameters.m_photoPropertiesMap.contains( photoName ) )
         {
             CPhotoProperties newProperties;
@@ -1277,7 +1277,7 @@ int MainWin::buildPhotoLists( )
             m_projectParameters.m_photosConfig.f_regeneration = true;
             m_projectParameters.m_thumbsConfig.f_regeneration = true;
         }
-        //Si les infos de date du fichier sont différentes => on update et on demande la regération également
+        //Si les infos de date du fichier sont diffÃ©rentes => on update et on demande la regÃ©ration Ã©galement
         else
         {
             CPhotoProperties deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
@@ -1292,22 +1292,22 @@ int MainWin::buildPhotoLists( )
         onLogMsg( QString("[Photolist]." ) + photoName + QString(": ") + p_photoFileInfo->lastModified().toString() );
         delete p_photoFileInfo;
     }
-	//Suppression des entrées qui ne correspondent pas à une photo trouvée dans le répertoire
+	//Suppression des entrÃ©es qui ne correspondent pas Ã  une photo trouvÃ©e dans le rÃ©pertoire
     nbPhotoNotFound = 0;
 	foreach( photoName, m_projectParameters.m_photoPropertiesMap.keys() ){
 		if( !photoList.contains( photoName ) ){
 			m_projectParameters.m_photoPropertiesMap.remove( photoName );
             nbPhotoNotFound++;
 		}
-	}//NOTE: m_projectParameters.m_photoPropertiesMap.keys() correspond maintenant exactement aux photos trouvées dans le rep d'entrée    
+	}//NOTE: m_projectParameters.m_photoPropertiesMap.keys() correspond maintenant exactement aux photos trouvÃ©es dans le rep d'entrÃ©e    
 
-    //2 - Maj du Caption Manager et affichage dans TAB "Légendes"
-    //- Mise à jour du Modèle avec la liste des photos trouvées
-    m_photosListModel.setStringList( m_projectParameters.m_photoPropertiesMap.keys() /*photoList*/ ); //Mise  jour du Modèle pour affichage
-    //Mise  jour du gestionnaire de légendes : association avec le modèle mis à jour
+    //2 - Maj du Caption Manager et affichage dans TAB "LÃ©gendes"
+    //- Mise Ã  jour du ModÃ¨le avec la liste des photos trouvÃ©es
+    m_photosListModel.setStringList( m_projectParameters.m_photoPropertiesMap.keys()  ); //Mise  jour du ModÃ¨le pour affichage
+    //Mise  jour du gestionnaire de lÃ©gendes : association avec le modÃ¨le mis Ã  jour
     m_captionManager.setPhotoList( m_ui->listView_Photos );
 	
-    //3 - Récupération des légendes
+    //3 - RÃ©cupÃ©ration des lÃ©gendes
 	QMap<QString,CCaption> captionMap = m_captionManager.captionMap();
 	foreach( photoName, captionMap.keys() ) {
 			CPhotoProperties photoProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
@@ -1315,13 +1315,13 @@ int MainWin::buildPhotoLists( )
 			m_projectParameters.m_photoPropertiesMap.insert( photoName, photoProperties );
 	}
 
-    //4 - Vignette réprésentant la galerie
-    //Si elle n'est pas dans la galerie -> attribuer la première photo
+    //4 - Vignette rÃ©prÃ©sentant la galerie
+    //Si elle n'est pas dans la galerie -> attribuer la premiÃ¨re photo
     if( !photoList.contains( m_projectParameters.m_galleryConfig.thumbPhoto )
         && !photoList.isEmpty() )
     {
         m_projectParameters.m_galleryConfig.thumbPhoto = photoList.at( 0 );
-        m_ui->checkBox_GalleryThumb->setChecked( true ); //Comme c'est la 1ere photo qui est affichée, on coche.
+        m_ui->checkBox_GalleryThumb->setChecked( true ); //Comme c'est la 1ere photo qui est affichÃ©e, on coche.
         onLogMsg( QString("[Photolist]. New thumbnail: ") + m_projectParameters.m_galleryConfig.thumbPhoto );
     }
 
@@ -1334,8 +1334,8 @@ int MainWin::buildPhotoLists( )
 /*************************
 * checkCreateDir
 *----------------------
-* Affiche une prévisualisation de la légende
-* In : (QString) caption - légende à afficher
+* Affiche une prÃ©visualisation de la lÃ©gende
+* In : (QString) caption - lÃ©gende Ã  afficher
 **************************/
 void MainWin::previewCaption( QString caption )
 {
@@ -1345,20 +1345,20 @@ void MainWin::previewCaption( QString caption )
 /*************************
 * checkCreateDir
 *----------------------
-* Vérifie l'existence d'un répertoire et propose sa création le cas échéant
-* Retourne true si le répertoire éxiste ou a pu être créé.
-* Attention QString & dir peut-être MODIFIE !
+* VÃ©rifie l'existence d'un rÃ©pertoire et propose sa crÃ©ation le cas Ã©chÃ©ant
+* Retourne true si le rÃ©pertoire Ã©xiste ou a pu Ãªtre crÃ©Ã©.
+* Attention QString & dir peut-Ãªtre MODIFIE !
 **************************/
 bool MainWin::checkCreateDir( QString & dir ){
 
-    if( dir.isEmpty() ){return false;} //On ressort directement sinon on va créer le répertoire "/"
+    if( dir.isEmpty() ){return false;} //On ressort directement sinon on va crÃ©er le rÃ©pertoire "/"
 
     QDir destFolder = QDir( QDir::cleanPath(dir) );
 
     if( destFolder.exists( ) ){
         return true;
     }
-    else{//Le répertoire n'éxiste pas
+    else{//Le rÃ©pertoire n'Ã©xiste pas
         QMessageBox msgBox(this);
 
         msgBox.setText( QString(" \"")+QDir::cleanPath(dir)+QString("\": ") + tr("this directory does not exist.") );
@@ -1367,14 +1367,14 @@ bool MainWin::checkCreateDir( QString & dir ){
         msgBox.setStandardButtons( QMessageBox::Yes | QMessageBox::Cancel);
         msgBox.setDefaultButton( QMessageBox::Yes );
 
-        //L'uilisateur veut créer le répertoire
+        //L'uilisateur veut crÃ©er le rÃ©pertoire
         if( msgBox.exec() == QMessageBox::Yes ){
-            //Création du répertoire réussie
+            //CrÃ©ation du rÃ©pertoire rÃ©ussie
             if( destFolder.mkpath( QDir::cleanPath( dir ) ) ){
-                dir = destFolder.absoluteFilePath("");          // => dir est modifié !!
+                dir = destFolder.absoluteFilePath("");          // => dir est modifiÃ© !!
                 return true;
             }
-            else{ //Création échouée
+            else{ //CrÃ©ation Ã©chouÃ©e
                 QMessageBox* alertBox = new QMessageBox ( QMessageBox::Critical, tr("Error"),
                                                           CErrorMessages::error(DirectoryCreation) );
                 alertBox->exec();
@@ -1382,7 +1382,7 @@ bool MainWin::checkCreateDir( QString & dir ){
                 return false;
             }
         }
-        else{//L'utilisateur ne veut pas créer le répertoire
+        else{//L'utilisateur ne veut pas crÃ©er le rÃ©pertoire
             return false;
         }
 

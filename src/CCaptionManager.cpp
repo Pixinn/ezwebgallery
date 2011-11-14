@@ -1,4 +1,4 @@
-/* 
+ï»¿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf@ezwebgallery.org>
  *
@@ -37,8 +37,8 @@ CCaptionManager::CCaptionManager( )
 // operator=(const CCaptionManager & toCopy)
 // ----------------
 // Surcharge de l'assignation.
-// Attention :  + on perd toutes les connections SIGNAUX/SLOTS dûes à QObject !!
-//              + La classe ne sera pas connextée à une QListeView => utiliser setPhotoList( QListView* ) !!!
+// Attention :  + on perd toutes les connections SIGNAUX/SLOTS dÃ»es Ã  QObject !!
+//              + La classe ne sera pas connextÃ©e Ã  une QListeView => utiliser setPhotoList( QListView* ) !!!
 //----------------------
 CCaptionManager::CCaptionManager( const CCaptionManager & toCopy ) :
     QObject( )
@@ -53,8 +53,8 @@ CCaptionManager::CCaptionManager( const CCaptionManager & toCopy ) :
 // operator=(const CCaptionManager & toCopy)
 // ----------------
 // Surcharge de l'assignation.
-// Attention :  + on perd toutes les connections SIGNAUX/SLOTS dûes à QObject !!
-//              + La classe ne sera pas connextée à une QListeView => utiliser setPhotoList( QListView* ) !!!
+// Attention :  + on perd toutes les connections SIGNAUX/SLOTS dÃ»es Ã  QObject !!
+//              + La classe ne sera pas connextÃ©e Ã  une QListeView => utiliser setPhotoList( QListView* ) !!!
 //----------------------
 CCaptionManager CCaptionManager::operator=(const CCaptionManager & toCopy)
 {
@@ -69,8 +69,8 @@ CCaptionManager CCaptionManager::operator=(const CCaptionManager & toCopy)
 //-----------------------
 // setPhotoList( QListView* )
 // ----------------
-// Donne une nouvelle liste de photos à utiliser
-// Affiche la première photo et sa légende
+// Donne une nouvelle liste de photos Ã  utiliser
+// Affiche la premiÃ¨re photo et sa lÃ©gende
 //----------------------
 void CCaptionManager::setPhotoList( QListView* photoList )
 {
@@ -86,7 +86,7 @@ void CCaptionManager::setPhotoList( QListView* photoList )
 //-----------------------
 // photo( )
 // ----------------
-// Retourne le nom de la photo affichée actuellement
+// Retourne le nom de la photo affichÃ©e actuellement
 //----------------------
 QString CCaptionManager::photo( )
 {
@@ -100,9 +100,9 @@ QString CCaptionManager::photo( )
 //-----------------------
 // captionList
 // ----------------
-// Retourne la liste de légendes sous forme d'une QList
-// Ordonnée comme sur la QListView
-// => Attention : l'instance doit être préalablement connectée à une QListView
+// Retourne la liste de lÃ©gendes sous forme d'une QList
+// OrdonnÃ©e comme sur la QListView
+// => Attention : l'instance doit Ãªtre prÃ©alablement connectÃ©e Ã  une QListView
 //                voir setPhotoList( QListView* photoList )
 //----------------------
 QList<CCaption> CCaptionManager::captionList( )
@@ -112,7 +112,7 @@ QList<CCaption> CCaptionManager::captionList( )
     QList<CCaption> captionList;
     CCaption emptyCaption;
 
-    //La liste doit être générée sous forme de QList, ordonnée comme le seront les photos de la galerie
+    //La liste doit Ãªtre gÃ©nÃ©rÃ©e sous forme de QList, ordonnÃ©e comme le seront les photos de la galerie
     foreach(QString photo, photoList )
     {
         captionList << m_captionMap.value( photo, emptyCaption );
@@ -125,7 +125,7 @@ QList<CCaption> CCaptionManager::captionList( )
 //-----------------------
 // captionList
 // ----------------
-// Retourne la liste de légendes
+// Retourne la liste de lÃ©gendes
 //----------------------
 QMap<QString,CCaption> CCaptionManager::captionMap( )
 {
@@ -136,7 +136,7 @@ QMap<QString,CCaption> CCaptionManager::captionMap( )
 //-----------------------
 // setCaptionList
 // ----------------
-// Set la liste de légendes.
+// Set la liste de lÃ©gendes.
 //----------------------
 void CCaptionManager::setCaptionMap( QMap<QString,CCaption> & captionMap)
 {    
@@ -146,7 +146,7 @@ void CCaptionManager::setCaptionMap( QMap<QString,CCaption> & captionMap)
 //-----------------------
 // setExifTags
 // ----------------
-// Indique les <tags Exifs / metadata> à utiliser pour la légende de la photo spécifiée.
+// Indique les <tags Exifs / metadata> Ã  utiliser pour la lÃ©gende de la photo spÃ©cifiÃ©e.
 //----------------------
 void CCaptionManager::setExifTags( const QString &photoName, const QMap<QString,QString> &exifTags )
 {    
@@ -159,7 +159,7 @@ void CCaptionManager::setExifTags( const QString &photoName, const QMap<QString,
 //-----------------------
 // setFileInfo
 // ----------------
-//Indique les infos fichier à utiliser par la légende de la photo spécifiée
+//Indique les infos fichier Ã  utiliser par la lÃ©gende de la photo spÃ©cifiÃ©e
 //----------------------
 void CCaptionManager::setFileInfo( const QString & photoName, const QFileInfo & fileInfo )
 {
@@ -175,7 +175,7 @@ void CCaptionManager::setFileInfo( const QString & photoName, const QFileInfo & 
 //-----------------------
 // setNumber( int )
 // ----------------
-// Demande l'affichage de la légende et de la vignette correspondante
+// Demande l'affichage de la lÃ©gende et de la vignette correspondante
 //----------------------
 void CCaptionManager::setNumber( int nb )
 {   
@@ -186,13 +186,13 @@ void CCaptionManager::setNumber( int nb )
 
 
     //Affichage vignette
-    emit displayThumbnailSignal( indexPhotoSelected );  //Affichage vignette à réaliser en premier
-                                                        //Les données exifs lues à ce moment permettront la preview correcte de la légende
+    emit displayThumbnailSignal( indexPhotoSelected );  //Affichage vignette Ã  rÃ©aliser en premier
+                                                        //Les donnÃ©es exifs lues Ã  ce moment permettront la preview correcte de la lÃ©gende
 
-    //Affichage légende
+    //Affichage lÃ©gende
     QVariant photoSelected = model->data( indexPhotoSelected, Qt::DisplayRole );
     caption = m_captionMap.value( photoSelected.toString() );
-    caption.setId( nb + 1 ); //Maj du numéro de la photo affichée pour utilisation par la légende
+    caption.setId( nb + 1 ); //Maj du numÃ©ro de la photo affichÃ©e pour utilisation par la lÃ©gende
     m_captionMap.insert( photoSelected.toString(), caption );
     emit displayCaptionSignal( caption.body() );
     emit displayPreviewSignal( caption.render( CTaggedString::PREVIEW ) );
@@ -201,8 +201,8 @@ void CCaptionManager::setNumber( int nb )
 //-----------------------
 // remapCaptionList( )
 // ----------------
-// Refabrique une nouvelle Map de légendes correspondat au modèle associé
-// Retourne le nombre d'anciennes légendes n'ayant pu être gardées
+// Refabrique une nouvelle Map de lÃ©gendes correspondat au modÃ¨le associÃ©
+// Retourne le nombre d'anciennes lÃ©gendes n'ayant pu Ãªtre gardÃ©es
 //----------------------
 int CCaptionManager::remapCaptionList( )
 {
@@ -212,7 +212,7 @@ int CCaptionManager::remapCaptionList( )
 
     foreach(QString photoName, m_captionMap.keys() )
     {
-        //Si une photo de l'ancienne liste n'est plus dans la nouvelle, supprimer sa légende
+        //Si une photo de l'ancienne liste n'est plus dans la nouvelle, supprimer sa lÃ©gende
         if( !photoList.contains( photoName ) ){
             m_captionMap.remove( photoName );
             nbCaptionsRemoved++;
@@ -226,7 +226,7 @@ int CCaptionManager::remapCaptionList( )
 //-----------------------
 // captionsEdited( )
 // ----------------
-// Retourne un booléen indiquant si les légendes ont été modifiées
+// Retourne un boolÃ©en indiquant si les lÃ©gendes ont Ã©tÃ© modifiÃ©es
 // depuis le dernier appel de captionsEditedReset()
 //----------------------
 bool CCaptionManager::captionsEdited()
@@ -238,9 +238,9 @@ bool CCaptionManager::captionsEdited()
 //-----------------------
 // captionsEditedReset( )
 // ----------------
-// Remet l'indicateur de modification des légendes sur false
-// Utilisé vec remapLCaptionist(), permet de savoir si les légendes ont
-// été modifiées.
+// Remet l'indicateur de modification des lÃ©gendes sur false
+// UtilisÃ© vec remapLCaptionist(), permet de savoir si les lÃ©gendes ont
+// Ã©tÃ© modifiÃ©es.
 //----------------------
 void CCaptionManager::captionsEditedReset()
 {
@@ -291,7 +291,7 @@ void CCaptionManager::onCaptionHeaderEdited( QString text )
 {
     QMutableMapIterator<QString,CCaption> i(m_captionMap);
     CCaption caption;
-    //Modification de toutes les légendes
+    //Modification de toutes les lÃ©gendes
     while( i.hasNext() ){
         i.next( );
         caption = i.value();
@@ -309,7 +309,7 @@ void CCaptionManager::onCaptionEndingEdited( QString text )
 {
     QMutableMapIterator<QString,CCaption> i(m_captionMap);
     CCaption caption;
-    //Modification de toutes les légendes
+    //Modification de toutes les lÃ©gendes
     while( i.hasNext() ){
         i.next( );
         caption = i.value();
