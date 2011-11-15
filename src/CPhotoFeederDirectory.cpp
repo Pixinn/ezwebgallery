@@ -16,9 +16,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
- #include "CPhotoFeederDirectory.h"
- 
- 
+#include "IPhotoFeeder.h"
+#include "CPhotoFeederDirectory.h"
+
+IPhotoFeeder::IPhotoFeeder(){}
+
 //-----------------------
 // setDirectory( QString directoryPath )
 // ----------------
@@ -37,7 +39,7 @@
 // ----------------
 // Returns the photos contained in the directory
 //----------------------
-QStringList CPhotoFeederDirectory::getPhotosList( void )
+QStringList CPhotoFeederDirectory::getPhotoList( void )
 {
     QStringList supportedFileTypes;
     QStringList shortNameList;

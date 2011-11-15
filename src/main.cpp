@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -37,6 +37,7 @@
 #include "CTerminalUi.h"
 #include "CPlatform.h"
 #include "CGalleryGenerator.h"
+#include "CPhotoFeederDirectory.h"
 
 using namespace Magick;
 
@@ -55,24 +56,24 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("ezwebgallery.org");
     QCoreApplication::setApplicationName("Gallery Designer");
 
-    //Instanciation du gnrateur de galerie
-    CGalleryGenerator* galleryGenerator = new CGalleryGenerator( );
+    //Instanciations
+    CGalleryGenerator* galleryGenerator = new CGalleryGenerator( );  //gallery generator
+    CPhotoFeederDirectory photoFeeder;                                           //photo feeder 
 
-    //Deux possibilités : ouverture de la fenêtre ou éxecution  partir d'un terminal
+    //Deux possibilités : ouverture de la fenêtre ou éxecution à partir d'un terminal
     // ----------------- MODE FENETRE
     if( argc == 1 )
     {
         //Instanciation fentre
-        MainWin* appWindow = new MainWin( );
+        MainWin* appWindow = new MainWin( photoFeeder  );
 
-        //Connections UI<->Gnrateur
+        //Connections UI<->Générateur
         QObject::connect( galleryGenerator, SIGNAL( debugSignal(QString)), appWindow, SLOT(onLogMsg(QString)) );
         QObject::connect( galleryGenerator, SIGNAL( progressBarSignal( int, QString, QString ) ), appWindow, SLOT( onProgressBar( int, QString, QString ) ) );
         QObject::connect( galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), appWindow, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
         QObject::connect( galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appWindow, SLOT( onForceStoppedFinished( QStringList ) ) );
 
         appWindow->setGenerator( galleryGenerator );
- //     galleryGenerator->connectToUi( appWindow );
 
         //Affichage fentre et xcution
         appWindow->show( );

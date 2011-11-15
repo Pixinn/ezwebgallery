@@ -16,6 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef IPHOTOSFEEDER_H
+#define IPHOTOSFEEDER_H
 
 #include <QStringList>
 
@@ -30,8 +32,10 @@ class IPhotoFeeder
 {
 public:
     IPhotoFeeder( void );
-    virtual ~IPhotoFeeder( void );
-    virtual bool isValid( void ) = 0;                      //Is the feeder set and valid?
+    virtual ~IPhotoFeeder( void ){ }
+    virtual bool isValid( void ) = 0;               //Is the feeder set and valid?
     virtual QStringList getPhotoList( void ) = 0;   //Returns an alphabetically ordered list of the
-                                                                    //absolute filepath of ALL the photos passed to EZWG
+                                                    //absolute filepath of ALL the photos passed to EZWG
 };
+
+#endif

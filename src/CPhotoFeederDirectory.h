@@ -46,7 +46,7 @@
     bool isValid( void ) { return m_directory.exists(); }
     //accessor
     bool setDirectory( QString directoryPath );
-    QStringList getPhotosList( void );
+    QStringList getPhotoList( void );
     
 private:
     //static members

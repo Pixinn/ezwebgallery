@@ -48,6 +48,7 @@
 #include "WinConfigure.h"
 #include "CCaptionManager.h"
 #include "CLanguageManager.h"
+#include "IPhotoFeeder.h"
 
 namespace Ui { //Pour diffrencier de la classe MainWin de mainwin.h et accder  la *vraie* ui
     class MainWin;
@@ -59,12 +60,12 @@ namespace Ui { //Pour diffrencier de la classe MainWin de mainwin.h et accder  l
 
 
 /************* CLASSES **************/
-class MainWin : public QMainWindow, IUserInterface //Hrite indirectement de QMainWindow -> ncessaire pour appeler m_ui->setupUi(QMainWindow*);
+class MainWin : public QMainWindow, IUserInterface
 {
     Q_OBJECT
 /************ METODES *************/
 public:
-    MainWin( QWidget *parent = 0);
+    MainWin( IPhotoFeeder &, QWidget *parent = 0);
     ~MainWin();
     void setGenerator( CGalleryGenerator* );
 
@@ -75,9 +76,9 @@ protected:
 private:
     void openSession( const QString &);
     void newSession( );
-    bool isUnsaved( );          //Renvoie true si le projet n'a pas t sauv depuis les dernires modifications
+    bool isUnsaved( );          //Renvoie true si le projet n'a pas été sauvédepuis les dernières modifications
     void displayRecentFiles( ); //Affiche la liste des fichiers rcemments ouverts
-    int displayUnsavedMsgBox( bool, bool ); //Affiche une message box indiquant que le projet et/ou la skin n'ont pas t savegards. Retourne le bouton appuy
+    int displayUnsavedMsgBox( bool, bool ); //Affiche une message box indiquant que le projet et/ou la skin n'ont pas été savegardés. Retourne le bouton choisi
     int displayMoreRecentMsgBox( ); //Affiche une alerte si on essaie d'ouvrir un projet gnr avec une version d'EZWG plus rcente
     void swapButtons( ); //swap certains boutons pour cause de génération de galerie
     bool checkForGeneration( QString & );//Vérifie les paramètres fournis pour la génération
@@ -152,7 +153,9 @@ private:
     CProjectParameters m_referenceProjectParameters;
     CSkinParameters m_skinParameters;
     QString m_lastSelectedDir;
-    //Gneration
+    //Photo feeder
+    IPhotoFeeder &m_photoFeeder;
+    //Generation
     CGalleryGenerator* m_p_galleryGenerator;
 
 };

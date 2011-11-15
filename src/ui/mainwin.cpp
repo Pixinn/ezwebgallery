@@ -253,9 +253,10 @@ void MainWin::onGalleryGenerationFinished( /*bool success*/QList<CPhotoPropertie
 /***************************************************************************************************/
 
 
-MainWin::MainWin( QWidget *parent ) :
+MainWin::MainWin( IPhotoFeeder &photoFeeder, QWidget *parent ) :
     QMainWindow( parent ),
-    m_ui(new Ui::MainWin)
+    m_ui(new Ui::MainWin),
+    m_photoFeeder( photoFeeder )
 {
 
     //Pour pouvoir utiliser dans les signaux/slots:
@@ -751,7 +752,7 @@ void MainWin::about( )
 {
 
     QMessageBox::about( this,
-                        tr("About EZWebGallery - build date ") + CPlatform::revision(),
+                        tr("About EZWebGallery - svn version ") + CPlatform::revision(),
                         CPlatform::readTranslatedTextFile( "about.html" ));
 
 }
@@ -1213,15 +1214,7 @@ QStringList MainWin::checkPhotosInDir( const QStringList& photosInConfig, const 
 
 	photoFileTypes << "*.jpeg" << "*.jpg" << "*.tiff" << "*.tif"; //Formats d'image supportés en entrée
     photosInDir = CPlatform::getImagesInDir( dir, photoFileTypes );
-    /*
-    if( photosInConfig.size() > photosInDir.size() ){
-        return false;
-    }
-    foreach( photo, photosInConfig){
-        if( !photosInDir.contains( photo, Qt::CaseSensitive ) ){
-            return false;
-        }
-    }*/
+
     foreach( photo, photosInConfig)
     {
         if( !photosInDir.contains( photo, Qt::CaseSensitive ) ) {
@@ -1303,7 +1296,7 @@ int MainWin::buildPhotoLists( )
 
     //2 - Maj du Caption Manager et affichage dans TAB "Légendes"
     //- Mise à jour du Modèle avec la liste des photos trouvées
-    m_photosListModel.setStringList( m_projectParameters.m_photoPropertiesMap.keys()  ); //Mise  jour du Modèle pour affichage
+    m_photosListModel.setStringList( m_projectParameters.m_photoPropertiesMap.keys() /*photoList*/ ); //Mise  jour du Modèle pour affichage
     //Mise  jour du gestionnaire de légendes : association avec le modèle mis à jour
     m_captionManager.setPhotoList( m_ui->listView_Photos );
 	
