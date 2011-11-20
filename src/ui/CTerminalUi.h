@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -47,7 +47,7 @@ public slots:
     void run( );                        //Contient le code  xcuter pour lancer la gnration
     void onLogMsg( QString );
     void onProgressBar( int completion, QString color, QString message, int timeout = 0 ); //Affiche un % d'avancement
-    void onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties>);
+    void onGalleryGenerationFinished( /*bool success*/QList<CPhotoExtendedProperties>);
     void onForceStoppedFinished( QStringList );
 
 protected:

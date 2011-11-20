@@ -34,8 +34,22 @@ IPhotoFeeder::IPhotoFeeder(){}
     return m_directory.exists();
 }
 
+
  //-----------------------
-// setDirectory( QString directoryPath )
+// setDirectory( const QDir& directory )
+// ----------------
+// Set the directory path.
+// In:      (const QDir&)directoryPath
+// Returns: (bool) true if the directory exists, false otherwise
+//----------------------
+ bool CPhotoFeederDirectory::setDirectory( const QDir& directory )
+{
+    m_directory = directory;
+    return m_directory.exists();
+}
+
+//-----------------------
+// getPhotoList( void )
 // ----------------
 // Returns the photos contained in the directory
 //----------------------
@@ -54,3 +68,4 @@ QStringList CPhotoFeederDirectory::getPhotoList( void )
     
     return fullPathList;
 }
+

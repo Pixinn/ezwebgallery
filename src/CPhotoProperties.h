@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -18,57 +18,93 @@
 
 
 
-#ifndef CPHOTOPROPERTIES_H
-#define CPHOTOPROPERTIES_H
+#ifndef CPhotoProperties_H
+#define CPhotoProperties_H
 
 #include <QObject>
 #include <QString>
-#include <QDateTime>
 #include <QMap>
 #include <QFileInfo>
 
 #include "CCaption.h"
 
-/*****************************
+
+/*****************************************************************
  * CPhotoProperties
  * ----------------------
- * Classe dcrivant les propits d'une photo  traiter
- * Permet de centraliser toutes ces infos
- ********************************************/
-class CPhotoProperties : public QObject //Drive de QObject pour pouvoir tre transmis via un signal
-{        
+ * Base proposeties of a photo ;
+ * required for gallery generation
+ ****************************************************************/
+class CPhotoProperties : public QObject 
+{
 
     Q_OBJECT
 
 public:
-    CPhotoProperties();
-    CPhotoProperties( const CPhotoProperties & );
-    CPhotoProperties & operator=( const CPhotoProperties & );
-    bool operator==( const CPhotoProperties &) const;
-    bool isEquivalent( const CPhotoProperties & ) const; //Ne compare que les champs intressants 
-    void setId( int );
-    void setFileInfo( const QFileInfo & );
-    void setLastModificationTime( const QDateTime & );
-    void setExifTags( const QMap<QString,QString> & );
-    void setCaption( const CCaption & );
-    void setProcessed( bool );
-    int id( ) const;
-    QString fileName( ) const;
-	QFileInfo fileInfo( ) const;
-    QDateTime lastModificationTime( ) const;
-    QMap<QString,QString> exifTags( ) const;
-    CCaption caption() const;
-    bool processed( ) const;
+    CPhotoProperties( void ) :
+        QObject(),
+        m_id(-1),
+        m_f_processed(false)
+    {   }
+    CPhotoProperties( const CPhotoProperties & other) :
+        QObject(),
+        m_id( other.m_id ),
+        m_f_processed( other.m_f_processed ),
+        m_fileInfo( other.m_fileInfo ),
+        m_exifTags( other.m_exifTags ),
+        m_caption( other.m_caption )
+    {   }
 
+    CPhotoProperties & operator=( const CPhotoProperties & other);
+    bool operator==( const CPhotoProperties &) const;
+    
+    void setId( int id ){
+        m_id = id;
+        m_caption.setId( id );
+    }
+    void setProcessed( bool processed ){
+        m_f_processed = processed;
+    }
+    void setFileInfo( const QFileInfo & fileInfo){
+        m_fileInfo = fileInfo;
+        m_caption.setFileInfo( fileInfo );
+    }
+    void setExifTags( const QMap<QString,QString> & exifTags){
+        m_exifTags = exifTags;
+        m_caption.setExifTags( exifTags );
+    }
+
+    void setCaption( const CCaption & caption){
+        m_caption = caption;
+        m_caption.setExifTags( m_exifTags );
+    }
+    
+    int id( ) const {
+        return m_id;
+    }
+    bool processed( ) const {
+        return m_f_processed;
+    }
+    QFileInfo fileInfo( ) const {
+        return m_fileInfo;
+    }
+    QMap<QString,QString> exifTags( ) const {
+        return m_exifTags;
+    }
+    CCaption caption() const {
+        return m_caption;
+    }
+
+    bool isEquivalent( const CPhotoProperties & );
+
+    QString fileName( void ) const { return m_fileInfo.fileName(); } //A RETIRER !!!
+    
 private:
     int m_id;
-    bool m_f_processed; //La photo a t traite
-	QFileInfo m_fileInfo;
-    QString m_fileName;
-    QDateTime m_lastModificationTime;
+    bool m_f_processed;
+    QFileInfo m_fileInfo;
     QMap<QString,QString> m_exifTags;
     CCaption m_caption;
-
 };
 
 #endif

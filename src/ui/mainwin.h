@@ -48,7 +48,7 @@
 #include "WinConfigure.h"
 #include "CCaptionManager.h"
 #include "CLanguageManager.h"
-#include "IPhotoFeeder.h"
+#include "CPhotoFeederDirectory.h"
 
 namespace Ui { //Pour diffrencier de la classe MainWin de mainwin.h et accder  la *vraie* ui
     class MainWin;
@@ -115,7 +115,7 @@ public slots:
     void watermarkGroupChecked( bool );
     void watermarkAutoColorChecked( int );
     //Lgendes
-    int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoProperties avec les donnes disponibles
+    int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoExtendedProperties avec les donnes disponibles
     void previewCaption( QString );  //Affiche un prrendu de la lgende.
     //skinning
     void openSkinDesigner( );
@@ -126,7 +126,7 @@ public slots:
     //-- externes
     void onLogMsg( QString );
     void onProgressBar( int completion, QString color, QString message, int timeout = 0 );
-    void onGalleryGenerationFinished( QList<CPhotoProperties>  );
+    void onGalleryGenerationFinished( QList<CPhotoExtendedProperties>  );
     void onForceStoppedFinished( QStringList );
     void displayThumbnail( QModelIndex ); //Affiche la vignette  lgender correspondant  l'index
     void thumnailChanged( int ); //Une photo a t choisie pour devenir vignette de la galerie
@@ -154,7 +154,7 @@ private:
     CSkinParameters m_skinParameters;
     QString m_lastSelectedDir;
     //Photo feeder
-    IPhotoFeeder &m_photoFeeder;
+    CPhotoFeederDirectory &m_photoFeeder; //This ui knows the nature of feeder used
     //Generation
     CGalleryGenerator* m_p_galleryGenerator;
 

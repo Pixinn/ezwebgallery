@@ -76,6 +76,7 @@ HEADERS += ui/mainwin.h \
     widgets/CColorPicker.h \
     CGalleryGenerator.h \
     CPhotoProperties.h \
+    CPhotoExtendedProperties.h \
     CPhoto.h \
     CPhotoProcessor.h \
     CCss.h \
@@ -100,6 +101,7 @@ SOURCES += main.cpp \
     widgets/CColorPicker.cpp \
     CGalleryGenerator.cpp \
     CPhotoProperties.cpp \
+    CPhotoExtendedProperties.cpp \
     CPhoto.cpp \
     CPhotoProcessor.cpp \
     CCss.cpp \

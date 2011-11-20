@@ -21,6 +21,8 @@
  
  #include "IPhotoFeeder.h"
  
+#ifndef CPHOTOFEEDERDIRECTORY_H
+#define CPHOTOFEEDERDIRECTORY_H
  
 /*****************************************
  * CPhotoFeederDirectory
@@ -44,9 +46,12 @@
     //public functions
     void refresh( void );
     bool isValid( void ) { return m_directory.exists(); }
-    //accessor
+    //accessors
     bool setDirectory( QString directoryPath );
+    bool setDirectory( const QDir& directory );
     QStringList getPhotoList( void );
+    QDir& getDirectory( void ){ return m_directory; }
+    QString getDirectoryPath( void ){ return m_directory.absolutePath(); }
     
 private:
     //static members
@@ -56,4 +61,5 @@ private:
     
  };
  
- 
+#endif
+

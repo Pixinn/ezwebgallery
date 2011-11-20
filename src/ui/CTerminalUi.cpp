@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -74,10 +74,10 @@ void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
     emit done();
 }
 
-void CTerminalUi::onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties> propertiesList )
+void CTerminalUi::onGalleryGenerationFinished( /*bool success*/QList<CPhotoExtendedProperties> propertiesList )
 {
     bool success = true;
-    foreach( CPhotoProperties photoProperties, propertiesList ){
+    foreach( CPhotoExtendedProperties photoProperties, propertiesList ){
         if( !photoProperties.processed() ){
             success = false;
         }
@@ -181,7 +181,7 @@ void CTerminalUi::run( )
         //Si les paramtres de la galerie ne comportaient le fichier, on met  jour et on demande la regnration
         if( !m_projectParameters.m_photoPropertiesMap.contains( photoName ) )
         {
-            CPhotoProperties newProperties;
+            CPhotoExtendedProperties newProperties;
 //          newProperties.setFileName( photoName );
             newProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
             m_projectParameters.m_photoPropertiesMap.insert( photoName, newProperties );
@@ -190,7 +190,7 @@ void CTerminalUi::run( )
         }
         //Si les infos de date du fichier sont diffrentes => on update et on demande la regration galement
         else{
-            CPhotoProperties deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
+            CPhotoExtendedProperties deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
             if(  deprecatedProperties.lastModificationTime().toString() != p_photoFileInfo->lastModified().toString() ) { //Les QDateTime non convertis ne semblent pas bien se comparer ???
                 deprecatedProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
                 m_projectParameters.m_photosConfig.f_regeneration = true;

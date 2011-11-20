@@ -217,22 +217,23 @@ void MainWin::onForceStoppedFinished( QStringList errorMessages )
 //--------------------------------
 //------ Gallerie générée
 //--------------------------------
-void MainWin::onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties> propertiesList )
+void MainWin::onGalleryGenerationFinished( QList<CPhotoExtendedProperties> propertiesList )
 {
-    bool success = true;
+    QStringList nonProcessedFiles;
     
-    foreach( CPhotoProperties photoProperties, propertiesList )
+    foreach( CPhotoExtendedProperties photoProperties, propertiesList )
     {
         //Mise à jour des propriétés des photos
         m_projectParameters.m_photoPropertiesMap.insert( photoProperties.fileName(), photoProperties );
-        //La génération a-t-elle aboutie pour cette photo ?
+        //La génération a-t-elle abouti pour cette photo ?
         if( !photoProperties.processed() ){
-            success = false; 
+            nonProcessedFiles << photoProperties.fileName();
         }
     }
 
     //La génération a abouti pour toutes les photos
-    if( success ){
+    if( nonProcessedFiles.isEmpty() )
+    {
         m_projectParameters.m_galleryConfig.f_regeneration = false;
         m_projectParameters.m_photosConfig.f_regeneration = false;
         m_projectParameters.m_thumbsConfig.f_regeneration = false;
@@ -247,6 +248,11 @@ void MainWin::onGalleryGenerationFinished( /*bool success*/QList<CPhotoPropertie
             QDesktopServices::openUrl( url.fromLocalFile( indexPath ) );
         }
     }
+    else
+    {
+        swapButtons( ); //Bouton "cancel" redevient "generate" et réactivation des actions
+        m_ui->statusbar->showMessage( tr("A problem occured."), 7000 );
+    }
 }
 
 
@@ -256,11 +262,11 @@ void MainWin::onGalleryGenerationFinished( /*bool success*/QList<CPhotoPropertie
 MainWin::MainWin( IPhotoFeeder &photoFeeder, QWidget *parent ) :
     QMainWindow( parent ),
     m_ui(new Ui::MainWin),
-    m_photoFeeder( photoFeeder )
+    m_photoFeeder( static_cast<CPhotoFeederDirectory&>(photoFeeder) )
 {
 
     //Pour pouvoir utiliser dans les signaux/slots:
-    qRegisterMetaType<CPhotoProperties> ( "CPhotoProperties" );
+    qRegisterMetaType<CPhotoExtendedProperties>("CPhotoExtendedProperties");
 
     setWindowIcon( QIcon(":/icons/app_icon") );
     m_ui->setupUi(this); //"this" hérite de QMainWindow via IUserInterface
@@ -515,10 +521,12 @@ void MainWin::onOpenRecentSession( )
 void MainWin::openSession( const QString &sessionFile )
 {    
 
+    //TODO : ASK THE USER IF HE WANTS TO CANCEL BEFORE LOADING THE PROJECT,
+    //THEN LOAD, VERIFY IF MISSING PHOTOS !!
+
     //Si lecture du fichier réussie
     if( m_projectParameters.load( sessionFile ) )
     {
-
        //Si le projet courant n'a pas été sauvé, on propose de le faire    
        //On propose la sauvegarde de la skin ici et non à l'ouverture effecture de la nouvelle :
        //en effet, il faut pouvoir annuler le chargement de la session et de sa skin très en amont si
@@ -536,23 +544,18 @@ void MainWin::openSession( const QString &sessionFile )
        }
        else //Si pas d'annulation demandée
        {
-            QDir inDir;
             m_lastSelectedDir = QFileInfo(sessionFile).absolutePath();        
-            //bool checkPhotos = false;    //initialisation importante pour le while()
             QMessageBox alertBox(this);
             QStringList missingPhotos; 
-
-//            m_projectParameters = m_newProjectParameters; //On repart d'une base saine : si une propriété est mal ouverte, elle sera ainsi settée par défaut
 
             //Affichage d'un message si la version du projet est plus récente que l'application
             if( m_projectParameters.version( ) > CPlatform::revisionInt() ){
                 displayMoreRecentMsgBox( );
             }
-            //Le contenu du répertoire d'entre est-il toujours valable depuis la dernière sauvegarde ?
-            //ie : les photos source ont-elles chang de place depuis ??
-            if( QFileInfo( m_projectParameters.m_galleryConfig.inputDir ).isDir() ){
-                inDir = QDir( m_projectParameters.m_galleryConfig.inputDir  );
-                missingPhotos = checkPhotosInDir( m_projectParameters.m_photoPropertiesMap.keys(), inDir );
+            //Le contenu du répertoire d'entrée est-il toujours valable depuis la dernière sauvegarde ?
+            //ie : les photos source ont-elles changé de place depuis ??
+            if( m_photoFeeder.isValid() ){               
+                missingPhotos = checkPhotosInDir( m_projectParameters.m_photoPropertiesMap.keys(), m_photoFeeder.getDirectory() );
             }
             else {
                 missingPhotos << tr("Input folder does not exist.");
@@ -563,7 +566,7 @@ void MainWin::openSession( const QString &sessionFile )
             {
                 //Boite de dialogue informant du problème
                 alertBox.setText( tr("Input folder: ","Source folder containing the pictures")
-                                  + m_projectParameters.m_galleryConfig.inputDir
+                                  + m_photoFeeder.getDirectoryPath()
                                   + tr("\nSome photos cannot be found. They will be removed from the project.\n")
                                   + tr("Do you want to manually provide their location ?") 
                                 );
@@ -579,9 +582,8 @@ void MainWin::openSession( const QString &sessionFile )
                                              QFileDialog::ShowDirsOnly );
                     if( !m_lastSelectedDir.isEmpty() ){
                         m_projectParameters.m_galleryConfig.inputDir = m_lastSelectedDir;
-                        inDir = QDir( m_projectParameters.m_galleryConfig.inputDir );
-                        m_ui->lineEdit_SourceFolder->setText( m_projectParameters.m_galleryConfig.inputDir );
-                        missingPhotos = checkPhotosInDir( m_projectParameters.m_photoPropertiesMap.keys(), inDir );
+                        m_ui->lineEdit_SourceFolder->setText( m_photoFeeder.getDirectoryPath() );
+                        missingPhotos = checkPhotosInDir( m_projectParameters.m_photoPropertiesMap.keys(),  m_photoFeeder.getDirectory() );
                     }
                     else{ //L'utilisateur a annulé le choix d'un répertoire
                          m_lastSelectedDir = QDir::homePath();
@@ -782,6 +784,7 @@ void MainWin::sessionLoaded( QString fileLoaded )
     settings.setValue( SETTINGS_RECENTPROJECTS, m_recentSessions );
     m_referenceProjectParameters = m_projectParameters;
     m_captionManager.captionsEditedReset();
+    m_photoFeeder.setDirectory( m_projectParameters.m_galleryConfig.inputDir );
     //Affichage
     m_ui->action_SaveSession->setDisabled( false );
     m_projectParameters.toUi( );   
@@ -823,7 +826,8 @@ void MainWin::choosePhotosDir()
         && dir!=m_projectParameters.m_galleryConfig.inputDir )
     {
         m_projectParameters.m_galleryConfig.inputDir = dir;
-        m_lastSelectedDir = m_projectParameters.m_galleryConfig.inputDir;
+        m_photoFeeder.setDirectory( dir );
+        m_lastSelectedDir = dir;
         m_ui->lineEdit_SourceFolder->setText( dir );//Affichage
         //On créé la liste des jpegs ici pour qu'elle soit dispo sous l'onglet "Légendes"
         buildPhotoLists( );
@@ -835,9 +839,10 @@ void MainWin::choosePhotosDirManually()
     QDir sourceFolder = QDir( QDir::cleanPath(m_ui->lineEdit_SourceFolder->text()) );
     if( sourceFolder.exists( ) ){
         //Si on n'a pas changé de répertoire, lenteurs inutiles dûe au rafrachissement de la vignette dans le "tab légendes"
-        if( sourceFolder.absolutePath()!=m_projectParameters.m_galleryConfig.inputDir ){
+        if( sourceFolder.absolutePath() != m_photoFeeder.getDirectoryPath() ){
             m_projectParameters.m_galleryConfig.inputDir = sourceFolder.absolutePath();
-            m_lastSelectedDir = m_projectParameters.m_galleryConfig.inputDir;
+            m_photoFeeder.setDirectory( sourceFolder );
+            m_lastSelectedDir =  m_photoFeeder.getDirectoryPath();
             //On créé la liste des jpegs ici pour qu'elle soit dispo sous l'onglet "Légendes"
             buildPhotoLists( );
         }
@@ -845,6 +850,7 @@ void MainWin::choosePhotosDirManually()
     else{
         m_ui->lineEdit_SourceFolder->setText( tr("Invalid directory.") );
         m_projectParameters.m_galleryConfig.inputDir.clear(); //Sinon bug lorsque l'on rechoisi le répertoire d'avant
+        m_photoFeeder.setDirectory( QDir::home() );
     }
 }
 //--------------------------------
@@ -970,7 +976,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 {
     QVariant photoSelected = m_photosListModel.data( indexPhotoName, Qt::DisplayRole );
     QString photoFilename = photoSelected.toString();
-    QFileInfo photoFileInfo( QDir( m_projectParameters.m_galleryConfig.inputDir ), photoFilename );
+    QFileInfo photoFileInfo( m_photoFeeder.getDirectory(), photoFilename );
     onLogMsg( QString("[Thumbnail]. Affichage Vignette: ") + photoFilename  );
 
     m_ui->label_thumbPhoto->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
@@ -1229,8 +1235,8 @@ QStringList MainWin::checkPhotosInDir( const QStringList& photosInConfig, const 
 * buildPhotoLists
 *----------------------
 * Parcourt le répertoire d'entrée pour y trouver les photos à traiter et
-* met à jour le QMap de CPhotoProperties avec les données disponibles : 
-* CPhotoProperties actuelles, légendes renseignées et nouvelles photos
+* met à jour le QMap de CPhotoExtendedProperties avec les données disponibles :
+* CPhotoExtendedProperties actuelles, légendes renseignées et nouvelles photos
 *
 * 1 - Création de la liste des photos dipos dans le répertoire d'entrée.
 *     Ajout d'une entrée dans le QMap des propriétés si nouvelle photo, suppression si photo introuvable.
@@ -1263,7 +1269,7 @@ int MainWin::buildPhotoLists( )
         //Si les paramètres de la galerie ne comportaient pas le fichier, on met à jour et on demande la regénération
         if( !m_projectParameters.m_photoPropertiesMap.contains( photoName ) )
         {
-            CPhotoProperties newProperties;
+            CPhotoExtendedProperties newProperties;
             newProperties.setFileInfo( *p_photoFileInfo );
             newProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
             m_projectParameters.m_photoPropertiesMap.insert( photoName, newProperties );
@@ -1273,7 +1279,7 @@ int MainWin::buildPhotoLists( )
         //Si les infos de date du fichier sont différentes => on update et on demande la regération également
         else
         {
-            CPhotoProperties deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
+            CPhotoExtendedProperties deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
             if(  deprecatedProperties.lastModificationTime().toString() != p_photoFileInfo->lastModified().toString() ) { //Les QDateTime non convertis ne semblent pas bien se comparer ???
                 deprecatedProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
                 deprecatedProperties.setProcessed( false );
@@ -1303,7 +1309,7 @@ int MainWin::buildPhotoLists( )
     //3 - Récupération des légendes
 	QMap<QString,CCaption> captionMap = m_captionManager.captionMap();
 	foreach( photoName, captionMap.keys() ) {
-			CPhotoProperties photoProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
+                        CPhotoExtendedProperties photoProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
 			photoProperties.setCaption( captionMap.value( photoName ) );
 			m_projectParameters.m_photoPropertiesMap.insert( photoName, photoProperties );
 	}

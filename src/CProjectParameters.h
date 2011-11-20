@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -29,7 +29,7 @@
 #include "CCaptionManager.h"
 #include "CCaption.h"
 #include "CSkinParameters.h"
-#include "CPhotoProperties.h"
+#include "CPhotoExtendedProperties.h"
 #include "CTaggedString.h"
 
 namespace Ui { //Pour diffrencier de la classe MainWin de mainwin.h et accder  la *vraie* ui
@@ -176,7 +176,7 @@ signals:
 // !! BIEN METTRE A JOUR operator= , == et != en cas d'ajout d'attribut !! //
 public:
 //    QMap<QString,QDateTime> m_photosList;
-    QMap<QString,CPhotoProperties> m_photoPropertiesMap;
+    QMap<QString,CPhotoExtendedProperties> m_photoPropertiesMap;
     t_galleryConf m_galleryConfig;
     t_thumbsConf m_thumbsConfig;
     t_photosConf m_photosConfig;

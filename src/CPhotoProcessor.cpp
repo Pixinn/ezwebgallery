@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -39,7 +39,7 @@ const CErrorMessages CPhotoProcessor::MsgError;
 
 
 
-CPhotoProcessor::CPhotoProcessor(   CPhotoProperties photoProperties,
+CPhotoProcessor::CPhotoProcessor(   CPhotoExtendedProperties photoProperties,
                                     QDir outPath,           //Path de la gallerie gnre
                                     QQueue<QSize> &sizes,   //Fifo des tailles  gnrer. Au moins deux: thumb + 1 taille de sortie
                                     QQueue<int> &quality,   //Qualit des Jpegs gnrs. Au moins deux: thumb + 1 jpeg de sortie                                    

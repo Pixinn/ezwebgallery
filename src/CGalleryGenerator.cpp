@@ -128,7 +128,7 @@ void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, 
     if( !this->isGenerationInProgress() )
     {
         CCaption emptyCaption;
-        CPhotoProperties photoProperties;
+        CPhotoExtendedProperties photoProperties;
 		QDir inputDir;
         QFileInfo fileInfo;
         int id = 1;
@@ -172,7 +172,7 @@ void CGalleryGenerator::abordGeneration( )
     m_p_ui = ui;
     connect( this, SIGNAL( debugSignal(QString) ), m_p_ui, SLOT( onLogMsg(QString) ) );
     connect( this, SIGNAL( progressBarSignal( int, QString, QString ) ), m_p_ui, SLOT( onProgressBar( int, QString, QString ) ) );
-    connect( this, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), m_p_ui, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
+    connect( this, SIGNAL( generationFinishedSignal(QList<CPhotoExtendedProperties> ) ), m_p_ui, SLOT( onGalleryGenerationFinished( QList<CPhotoExtendedProperties> ) ) );
     connect( this, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), m_p_ui, SLOT( onForceStoppedFinished( QStringList ) ) );
 }
 */
@@ -441,7 +441,7 @@ int CGalleryGenerator::generatePhotos( )
     displayProgressBar( 0, "green", tr("Generating the photos : ")+QString::number(0)+"%" );
     m_mutexControlProcessors.lock(); //Pour ne pas que les threads dmarrent trop tt
 
-    foreach( CPhotoProperties photoProperties, m_photoPropertiesList )
+    foreach( CPhotoExtendedProperties photoProperties, m_photoPropertiesList )
     {
         photoToProcess = new CPhotoProcessor( photoProperties,
                                               outPath,
@@ -553,7 +553,7 @@ bool CGalleryGenerator::generateJsFiles( )
     int iteratorCaptions;
     CCaption caption;
     QString renderedCaption;
-    CPhotoProperties photoProperties;
+    CPhotoExtendedProperties photoProperties;
     jsGalleryConfigurationStream << "listeCaptions =  {" << endl;
     for( iteratorCaptions = 1; iteratorCaptions < m_photoPropertiesList.size(); iteratorCaptions++ ) {
         photoProperties = m_photoPropertiesList.at( iteratorCaptions - 1);
@@ -857,7 +857,7 @@ bool CGalleryGenerator::skinning( )
         //-- FIN DE LA GENERATION --//
         m_mutex.lock();
         m_f_WorkInProgress = false;        
-        emit generationFinishedSignal( /*true*/m_photoPropertiesList ); //Information de l'UI
+        emit generationFinishedSignal( m_photoPropertiesList ); //Information de l'UI
         emit jobDone();
         m_mutex.unlock();
 	
@@ -880,7 +880,7 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
     m_mutex.lock();
     f_wip = m_f_WorkInProgress;
     m_mutex.unlock();
-    CPhotoProperties photoProperties;
+    CPhotoExtendedProperties photoProperties;
 
     switch( generatedPhotoParams.exitStatus() )
     {
