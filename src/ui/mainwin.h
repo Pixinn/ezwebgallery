@@ -49,6 +49,7 @@
 #include "CCaptionManager.h"
 #include "CLanguageManager.h"
 #include "CPhotoFeederDirectory.h"
+#include "CPhotoDatabase.h"
 
 namespace Ui { //Pour diffrencier de la classe MainWin de mainwin.h et accder  la *vraie* ui
     class MainWin;
@@ -65,9 +66,9 @@ class MainWin : public QMainWindow, IUserInterface
     Q_OBJECT
 /************ METODES *************/
 public:
-    MainWin( IPhotoFeeder &, QWidget *parent = 0);
+    MainWin( IPhotoFeeder &, CPhotoDatabase &, CGalleryGenerator*, QWidget *parent = 0);
     ~MainWin();
-    void setGenerator( CGalleryGenerator* );
+    //void setGenerator( CGalleryGenerator* );
 
 protected:
     void changeEvent(QEvent *e);
@@ -107,14 +108,16 @@ public slots:
     void chooseDestDirManually( );
     void sessionLoaded( QString );
     void sessionSaved( QString );
-    //Prsentation
+    //Présentation
     void sharpeningRadiusChanged( int );
     void sharpeningRadiusChanged( double );
     void imageOptimizationStrategyChanged( int );
     void watermarkTypeChanged( int );
     void watermarkGroupChecked( bool );
     void watermarkAutoColorChecked( int );
-    //Lgendes
+    //Photo DB
+    void missingPhotos( QStringList ); //Some photos are present in the DB but not on the disk
+    //Légendes
     int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoExtendedProperties avec les donnes disponibles
     void previewCaption( QString );  //Affiche un prrendu de la lgende.
     //skinning
@@ -154,7 +157,9 @@ private:
     CSkinParameters m_skinParameters;
     QString m_lastSelectedDir;
     //Photo feeder
-    CPhotoFeederDirectory &m_photoFeeder; //This ui knows the nature of feeder used
+    CPhotoFeederDirectory &m_photoFeeder; //This ui knows the nature of feeder use
+    //Photo Database
+    CPhotoDatabase &m_photoDatabase;
     //Generation
     CGalleryGenerator* m_p_galleryGenerator;
 

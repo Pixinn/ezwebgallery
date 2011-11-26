@@ -49,6 +49,8 @@ public slots:
     void onProgressBar( int completion, QString color, QString message, int timeout = 0 ); //Affiche un % d'avancement
     void onGalleryGenerationFinished( /*bool success*/QList<CPhotoExtendedProperties>);
     void onForceStoppedFinished( QStringList );
+    //Photo DB
+    void missingPhotos( QStringList ){}; //Some photos are present in the DB but not on the disk
 
 protected:
     void keyPressEvent ( QKeyEvent * event );

@@ -43,17 +43,18 @@ class CPhotoProperties : public QObject
 public:
     CPhotoProperties( void ) :
         QObject(),
-        m_id(-1),
-        m_f_processed(false)
+        m_id(-1)
+        //m_f_processed(false)
     {   }
     CPhotoProperties( const CPhotoProperties & other) :
         QObject(),
         m_id( other.m_id ),
-        m_f_processed( other.m_f_processed ),
+        //m_f_processed( other.m_f_processed ),
         m_fileInfo( other.m_fileInfo ),
         m_exifTags( other.m_exifTags ),
         m_caption( other.m_caption )
     {   }
+        ~CPhotoProperties( void ){ }
 
     CPhotoProperties & operator=( const CPhotoProperties & other);
     bool operator==( const CPhotoProperties &) const;
@@ -62,9 +63,9 @@ public:
         m_id = id;
         m_caption.setId( id );
     }
-    void setProcessed( bool processed ){
+    /*void setProcessed( bool processed ){
         m_f_processed = processed;
-    }
+    }*/
     void setFileInfo( const QFileInfo & fileInfo){
         m_fileInfo = fileInfo;
         m_caption.setFileInfo( fileInfo );
@@ -82,9 +83,9 @@ public:
     int id( ) const {
         return m_id;
     }
-    bool processed( ) const {
+    /*bool processed( ) const {
         return m_f_processed;
-    }
+    }*/
     QFileInfo fileInfo( ) const {
         return m_fileInfo;
     }
@@ -101,7 +102,7 @@ public:
     
 private:
     int m_id;
-    bool m_f_processed;
+    //bool m_f_processed;
     QFileInfo m_fileInfo;
     QMap<QString,QString> m_exifTags;
     CCaption m_caption;

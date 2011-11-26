@@ -28,14 +28,18 @@
  * Abstract class feeding the application
  * with photos
  *****************************************/
-class IPhotoFeeder
+class IPhotoFeeder : public QObject
 {
+    Q_OBJECT
+
 public:
-    IPhotoFeeder( void );
+    IPhotoFeeder( void ){ }
     virtual ~IPhotoFeeder( void ){ }
     virtual bool isValid( void ) = 0;               //Is the feeder set and valid?
-    virtual QStringList getPhotoList( void ) = 0;   //Returns an alphabetically ordered list of the
-                                                    //absolute filepath of ALL the photos passed to EZWG
+    virtual QStringList getPhotoList( void ) = 0;    //Returns an alphabetically ordered list of the
+                                                    //absolute filepath of ALL the photos passed to EZWG                                                    
+signals:
+     void newPhotoList( QStringList );  //Emit a list containing  the absolute filepath of ALL the photos passed to EZWG, usually when it has been updated
 };
 
 #endif

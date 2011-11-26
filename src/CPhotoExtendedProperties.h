@@ -45,6 +45,7 @@ public:
     CPhotoExtendedProperties();
     CPhotoExtendedProperties( const CPhotoExtendedProperties & );
     CPhotoExtendedProperties & operator=( const CPhotoExtendedProperties & );
+    ~CPhotoExtendedProperties( void ){ }
     bool operator==( const CPhotoExtendedProperties &) const;
     bool isEquivalent( const CPhotoExtendedProperties & ) const; //Ne compare que les champs intressants 
     void setLastModificationTime( const QDateTime & );

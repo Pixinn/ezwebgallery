@@ -57,13 +57,7 @@ CPhotoExtendedProperties::CPhotoExtendedProperties( const CPhotoExtendedProperti
 ********************************************************************/
 CPhotoExtendedProperties & CPhotoExtendedProperties::operator=( const CPhotoExtendedProperties &other )
 {
-    if( this != &other )
-    {
-        /*this->setCaption( other.caption() );
-        this->setExifTags( other.exifTags() );
-        this->setFileInfo( other.fileInfo() );
-        this->setId( other.id() );
-        this->setProcessed( other.processed() );*/
+    if( this != &other ) {
         CPhotoProperties::operator=( other );
         this->m_lastModificationTime = other.m_lastModificationTime;
     }

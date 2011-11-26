@@ -52,14 +52,11 @@ using namespace std;
 
 /********************************************** PUBLIC MEMBERS ********************************************/
 
-/******************************************* Réalisation Interface **********************************************/
-//IUserInterface::IUserInterface( ){ } //Implémentation obligatoire car on l'utilse dans le constructeur de MainWin
-//IUserInterface::~IUserInterface(){}//Implémentation du destructeur virtuel obligatoire
 
-
+/*
 void MainWin::setGenerator( CGalleryGenerator* interface){
     this->m_p_galleryGenerator = interface;
-}
+}*/
 
 //--- SLOTS ---//
 
@@ -163,6 +160,13 @@ void MainWin::watermarkAutoColorChecked( int state )
 }
 
 
+
+void MainWin::missingPhotos( QStringList )
+{
+
+}
+
+
 void MainWin::onProgressBar( int completion, QString color, QString message, int timeout )
 {
     //La couleur de la barre ne change pas..
@@ -219,21 +223,21 @@ void MainWin::onForceStoppedFinished( QStringList errorMessages )
 //--------------------------------
 void MainWin::onGalleryGenerationFinished( QList<CPhotoExtendedProperties> propertiesList )
 {
-    QStringList nonProcessedFiles;
+    //QStringList nonProcessedFiles;
     
     foreach( CPhotoExtendedProperties photoProperties, propertiesList )
     {
         //Mise à jour des propriétés des photos
-        m_projectParameters.m_photoPropertiesMap.insert( photoProperties.fileName(), photoProperties );
-        //La génération a-t-elle abouti pour cette photo ?
+        m_projectParameters.m_photoPropertiesMap.insert( photoProperties.fileName(), photoProperties ); // STILL USEFUL ???
+        /*//La génération a-t-elle abouti pour cette photo ?
         if( !photoProperties.processed() ){
             nonProcessedFiles << photoProperties.fileName();
-        }
+        }*/
     }
 
     //La génération a abouti pour toutes les photos
-    if( nonProcessedFiles.isEmpty() )
-    {
+    /*if( nonProcessedFiles.isEmpty() )
+    {*/
         m_projectParameters.m_galleryConfig.f_regeneration = false;
         m_projectParameters.m_photosConfig.f_regeneration = false;
         m_projectParameters.m_thumbsConfig.f_regeneration = false;
@@ -247,22 +251,24 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoExtendedProperties> prope
             QString indexPath = QDir(m_projectParameters.m_galleryConfig.outputDir).absoluteFilePath("index.html");
             QDesktopServices::openUrl( url.fromLocalFile( indexPath ) );
         }
-    }
+  /*  }
     else
     {
         swapButtons( ); //Bouton "cancel" redevient "generate" et réactivation des actions
         m_ui->statusbar->showMessage( tr("A problem occured."), 7000 );
-    }
+    }*/
 }
 
 
 /***************************************************************************************************/
 
 
-MainWin::MainWin( IPhotoFeeder &photoFeeder, QWidget *parent ) :
+MainWin::MainWin( IPhotoFeeder &photoFeeder, CPhotoDatabase &photoDatase, CGalleryGenerator* galleryGenerator, QWidget *parent ) :
     QMainWindow( parent ),
     m_ui(new Ui::MainWin),
-    m_photoFeeder( static_cast<CPhotoFeederDirectory&>(photoFeeder) )
+    m_photoFeeder( static_cast<CPhotoFeederDirectory&>(photoFeeder) ),
+    m_photoDatabase(  photoDatase ),
+    m_p_galleryGenerator(  galleryGenerator )
 {
 
     //Pour pouvoir utiliser dans les signaux/slots:
@@ -1276,13 +1282,13 @@ int MainWin::buildPhotoLists( )
             m_projectParameters.m_photosConfig.f_regeneration = true;
             m_projectParameters.m_thumbsConfig.f_regeneration = true;
         }
-        //Si les infos de date du fichier sont différentes => on update et on demande la regération également
+        //Si les infos de date du fichier sont différentes => on update et on demande la regénération également
         else
         {
             CPhotoExtendedProperties deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
             if(  deprecatedProperties.lastModificationTime().toString() != p_photoFileInfo->lastModified().toString() ) { //Les QDateTime non convertis ne semblent pas bien se comparer ???
                 deprecatedProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
-                deprecatedProperties.setProcessed( false );
+                //deprecatedProperties.setProcessed( false );
 				m_projectParameters.m_photoPropertiesMap.insert( photoName, deprecatedProperties );
                 m_projectParameters.m_photosConfig.f_regeneration = true;
                 m_projectParameters.m_thumbsConfig.f_regeneration = true;

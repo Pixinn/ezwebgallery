@@ -19,7 +19,7 @@
 #include "IPhotoFeeder.h"
 #include "CPhotoFeederDirectory.h"
 
-IPhotoFeeder::IPhotoFeeder(){}
+//IPhotoFeeder::IPhotoFeeder(){}
 
 //-----------------------
 // setDirectory( QString directoryPath )
@@ -31,6 +31,7 @@ IPhotoFeeder::IPhotoFeeder(){}
  bool CPhotoFeederDirectory::setDirectory( QString directoryPath )
 {
     m_directory.setPath( directoryPath );
+    emit newPhotoList( getPhotoList() );
     return m_directory.exists();
 }
 
@@ -45,6 +46,7 @@ IPhotoFeeder::IPhotoFeeder(){}
  bool CPhotoFeederDirectory::setDirectory( const QDir& directory )
 {
     m_directory = directory;
+    emit newPhotoList( getPhotoList() );
     return m_directory.exists();
 }
 
@@ -52,6 +54,7 @@ IPhotoFeeder::IPhotoFeeder(){}
 // getPhotoList( void )
 // ----------------
 // Returns the photos contained in the directory
+// Return: (QStringList) absolute file paths
 //----------------------
 QStringList CPhotoFeederDirectory::getPhotoList( void )
 {

@@ -903,7 +903,7 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
         //Mise  jour des proprits de la photo
         photoProperties = m_photoPropertiesList.at( idPhotoDone - 1 );
         photoProperties.setExifTags( generatedPhotoParams.exifTags() );
-        photoProperties.setProcessed( true );
+        //photoProperties.setProcessed( true );
         m_photoPropertiesList.replace( idPhotoDone - 1, photoProperties );
 
         //Fin nominale du process des photos??
@@ -948,7 +948,7 @@ void CGalleryGenerator::onAbordGeneration( )
     //Finalisation de l'annulation si tout est arrt
     if( nbPhotosProcessed + nbPhotoProcessFailed == m_nbPhotosToProcess )
 	{
-        m_p_photoProcessorPool->waitForDone(); 	//Pour que les dernires threads du pool aient le temps de se terminer proprement
+        m_p_photoProcessorPool->waitForDone(); 	//Pour que les derniers threads du pool aient le temps de se terminer proprement
 												//Dangereux si plus de deux cpus??
         emit jobDone();
         m_mutex.lock();

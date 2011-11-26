@@ -39,7 +39,7 @@ CPhotoProperties & CPhotoProperties::operator=( const CPhotoProperties &other )
         this->m_exifTags = other.m_exifTags;
         this->m_fileInfo = other.m_fileInfo;
         this->m_id = other.m_id;
-        this->m_f_processed = other.m_f_processed;
+        //this->m_f_processed = other.m_f_processed;
     }
 
     return *this;
@@ -55,7 +55,7 @@ bool CPhotoProperties::operator==( const CPhotoProperties &toCompare ) const
 {
     bool f_result;
     if(    this->m_id == toCompare.m_id
-        && this->m_f_processed == toCompare.m_f_processed
+//        && this->m_f_processed == toCompare.m_f_processed
 //        && this->m_fileName == toCompare.m_fileName
 //        && this->m_lastModificationTime == toCompare.m_lastModificationTime
         && this->m_exifTags == toCompare.m_exifTags

@@ -87,7 +87,8 @@ HEADERS += ui/mainwin.h \
     IParameters.h \
     CSkinParameters.h \
     IPhotoFeeder.h \
-    CPhotoFeederDirectory.h
+    CPhotoFeederDirectory.h \
+    CPhotoDatabase
 
 SOURCES += main.cpp \
     ui/mainwin.cpp \
@@ -110,7 +111,8 @@ SOURCES += main.cpp \
     CCaptionManager.cpp \
     CProjectParameters.cpp \    
     CSkinParameters.cpp \
-    CPhotoFeederDirectory.cpp
+    CPhotoFeederDirectory.cpp \
+    CPhotoDatabase.cpp
 
 FORMS += ui/mainwin.ui \
     ui/WinSkinDesigner.ui \

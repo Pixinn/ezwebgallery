@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -32,6 +32,7 @@
 #include <cstdio>
 #include <iostream>
 
+#include "CPhotoDatabase.h"
 #include "CPhotoFeederDirectory.h"
 #include "IUserInterface.h"
 #include "mainwin.h"
@@ -59,24 +60,30 @@ int main(int argc, char *argv[])
 
     //Instanciations
     CGalleryGenerator* galleryGenerator = new CGalleryGenerator( );  //gallery generator
-    CPhotoFeederDirectory photoFeeder;                                           //photo feeder 
+    CPhotoFeederDirectory* photoFeeder = new  CPhotoFeederDirectory();  //photo feeder 
+    CPhotoDatabase* photoDatabase = new CPhotoDatabase();
+    
+    //Connections
+    QObject::connect( photoFeeder, SIGNAL( newPhotoList( QStringList ) ), photoDatabase, SLOT( feed(QStringList ) ) );
 
     //Deux possibilités : ouverture de la fenêtre ou éxecution à partir d'un terminal
     // ----------------- MODE FENETRE
     if( argc == 1 )
     {
         //Instanciation fentre
-        MainWin* appWindow = new MainWin( photoFeeder  );
+        MainWin* appWindow = new MainWin( *photoFeeder, *photoDatabase, galleryGenerator  );
 
         //Connections UI<->Générateur
         QObject::connect( galleryGenerator, SIGNAL( debugSignal(QString)), appWindow, SLOT(onLogMsg(QString)) );
         QObject::connect( galleryGenerator, SIGNAL( progressBarSignal( int, QString, QString ) ), appWindow, SLOT( onProgressBar( int, QString, QString ) ) );
         QObject::connect( galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoExtendedProperties> ) ), appWindow, SLOT( onGalleryGenerationFinished( QList<CPhotoExtendedProperties> ) ) );
         QObject::connect( galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appWindow, SLOT( onForceStoppedFinished( QStringList ) ) );
+        // UI <-> DB
+        QObject::connect( photoDatabase, SIGNAL( missingPhotos( QStringList ) ), appWindow, SLOT( missingPhotos( QStringList ) ) );
 
-        appWindow->setGenerator( galleryGenerator );
+        //appWindow->setGenerator( galleryGenerator );
 
-        //Affichage fentre et xcution
+        //Affichage fenêtre et éxécution
         appWindow->show( );
         exitValue = appli.exec();
 
@@ -107,6 +114,9 @@ int main(int argc, char *argv[])
 
     galleryGenerator->quit();
     galleryGenerator->deleteLater();
+    delete photoFeeder;
+    delete photoDatabase;
+    
     return exitValue;
 }
 
