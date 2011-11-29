@@ -39,6 +39,7 @@
 #include "CTerminalUi.h"
 #include "CPlatform.h"
 #include "CGalleryGenerator.h"
+#include "CError.h"
 
 
 using namespace Magick;
@@ -76,10 +77,11 @@ int main(int argc, char *argv[])
         //Connections UI<->Générateur
         QObject::connect( galleryGenerator, SIGNAL( debugSignal(QString)), appWindow, SLOT(onLogMsg(QString)) );
         QObject::connect( galleryGenerator, SIGNAL( progressBarSignal( int, QString, QString ) ), appWindow, SLOT( onProgressBar( int, QString, QString ) ) );
-        QObject::connect( galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoExtendedProperties> ) ), appWindow, SLOT( onGalleryGenerationFinished( QList<CPhotoExtendedProperties> ) ) );
+        QObject::connect( galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoPropertiesExtended> ) ), appWindow, SLOT( onGalleryGenerationFinished( QList<CPhotoPropertiesExtended> ) ) );
         QObject::connect( galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appWindow, SLOT( onForceStoppedFinished( QStringList ) ) );
         // UI <-> DB
         QObject::connect( photoDatabase, SIGNAL( missingPhotos( QStringList ) ), appWindow, SLOT( missingPhotos( QStringList ) ) );
+        QObject::connect( photoDatabase, SIGNAL( error( CError ) ), appWindow, SLOT( error( CError ) ) );
 
         //appWindow->setGenerator( galleryGenerator );
 
@@ -99,7 +101,7 @@ int main(int argc, char *argv[])
         //Connections UI<->Gnrateur
         QObject::connect( galleryGenerator, SIGNAL(debugSignal(QString)), appCLI, SLOT(onLogMsg(QString)) );
         QObject::connect( galleryGenerator, SIGNAL( progressBarSignal( int, QString, QString ) ), appCLI, SLOT( onProgressBar( int, QString, QString ) ) );
-        QObject::connect( galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoExtendedProperties> ) ), appCLI, SLOT( onGalleryGenerationFinished( QList<CPhotoExtendedProperties> ) ) );
+        QObject::connect( galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoPropertiesExtended> ) ), appCLI, SLOT( onGalleryGenerationFinished( QList<CPhotoPropertiesExtended> ) ) );
         QObject::connect( galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appCLI, SLOT( onForceStoppedFinished( QStringList ) ) );
 
         appCLI->setGenerator( galleryGenerator );

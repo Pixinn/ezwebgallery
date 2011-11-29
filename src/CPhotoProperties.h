@@ -21,7 +21,7 @@
 #ifndef CPhotoProperties_H
 #define CPhotoProperties_H
 
-#include <QObject>
+#include <QDomDocument>
 #include <QString>
 #include <QMap>
 #include <QFileInfo>
@@ -54,7 +54,8 @@ public:
         m_exifTags( other.m_exifTags ),
         m_caption( other.m_caption )
     {   }
-        ~CPhotoProperties( void ){ }
+    CPhotoProperties( const QDomNode & );
+    ~CPhotoProperties( void ){ }
 
     CPhotoProperties & operator=( const CPhotoProperties & other);
     bool operator==( const CPhotoProperties &) const;
@@ -101,7 +102,10 @@ public:
     QString fileName( void ) const { return m_fileInfo.fileName(); } //A RETIRER !!!
     
 private:
-    int m_id;
+    static const QString CAPTION;
+    static const QString CAPTIONHEADER;
+    static const QString CAPTIONENDING;
+    int m_id;	//NECESSAIRE ???
     //bool m_f_processed;
     QFileInfo m_fileInfo;
     QMap<QString,QString> m_exifTags;

@@ -32,7 +32,7 @@
 
 #include <cstring>
 
-#include "CErrorMessages.h"
+#include "CError.h"
 #include "CProjectParameters.h"
 #include "CTaggedString.h"
 

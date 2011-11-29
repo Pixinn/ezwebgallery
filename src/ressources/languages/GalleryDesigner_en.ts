@@ -1495,37 +1495,37 @@ p, li { white-space: pre-wrap; }
         <translation>Skin Designer</translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="32"/>
+        <location filename="../../global/CError.cpp" line="32"/>
         <source>Unspecified error while saving the file: </source>
         <translation>Unspecified error while saving the file: </translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="35"/>
+        <location filename="../../global/CError.cpp" line="35"/>
         <source>Unspecified error while opening the file: </source>
         <translation>Unspecified error while opening the file: </translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="38"/>
+        <location filename="../../global/CError.cpp" line="38"/>
         <source>Unspecified error while creating the file: </source>
         <translation>Unspecified error while creating the file: </translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="41"/>
+        <location filename="../../global/CError.cpp" line="41"/>
         <source>Unspecified error while creating the directory: </source>
         <translation>Unspecified error while creating the directory: </translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="44"/>
+        <location filename="../../global/CError.cpp" line="44"/>
         <source>Ressource files not found.</source>
         <translation>Ressource files not found.</translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="47"/>
+        <location filename="../../global/CError.cpp" line="47"/>
         <source>Watermark not valid: </source>
         <translation>Watermark not valid: </translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="50"/>
+        <location filename="../../global/CError.cpp" line="50"/>
         <source>Unknown error.</source>
         <translation>Unknown error.</translation>
     </message>

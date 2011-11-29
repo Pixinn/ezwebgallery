@@ -1488,37 +1488,37 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
         <translation>Concepteur de Thèmes</translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="32"/>
+        <location filename="../../global/CError.cpp" line="32"/>
         <source>Unspecified error while saving the file: </source>
         <translation>Erreur lors de la sauvegarde du fichier: </translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="35"/>
+        <location filename="../../global/CError.cpp" line="35"/>
         <source>Unspecified error while opening the file: </source>
         <translation>Erreur lors de l&apos;ouverture du fichier: </translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="38"/>
+        <location filename="../../global/CError.cpp" line="38"/>
         <source>Unspecified error while creating the file: </source>
         <translation>Erreur non-spécifiée lors de la création du fichier: </translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="41"/>
+        <location filename="../../global/CError.cpp" line="41"/>
         <source>Unspecified error while creating the directory: </source>
         <translation>Erreur non-spécifiée lors de la création du répertoire: </translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="44"/>
+        <location filename="../../global/CError.cpp" line="44"/>
         <source>Ressource files not found.</source>
         <translation>Fichiers ressources introuvables.</translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="47"/>
+        <location filename="../../global/CError.cpp" line="47"/>
         <source>Watermark not valid: </source>
         <translation>Filigrane non valide : </translation>
     </message>
     <message>
-        <location filename="../../global/CErrorMessages.cpp" line="50"/>
+        <location filename="../../global/CError.cpp" line="50"/>
         <source>Unknown error.</source>
         <translation>Erreur inconnue.</translation>
     </message>

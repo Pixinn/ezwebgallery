@@ -35,11 +35,11 @@ using namespace std;
 
 //--- Variable statique
 QMutex CPhotoProcessor::m_mutexFileReading;  //Mutex partag pour viter les acces disques concurrents
-const CErrorMessages CPhotoProcessor::MsgError;
+const CError CPhotoProcessor::MsgError;
 
 
 
-CPhotoProcessor::CPhotoProcessor(   CPhotoExtendedProperties photoProperties,
+CPhotoProcessor::CPhotoProcessor(   CPhotoPropertiesExtended photoProperties,
                                     QDir outPath,           //Path de la gallerie gnre
                                     QQueue<QSize> &sizes,   //Fifo des tailles  gnrer. Au moins deux: thumb + 1 taille de sortie
                                     QQueue<int> &quality,   //Qualit des Jpegs gnrs. Au moins deux: thumb + 1 jpeg de sortie                                    
@@ -189,7 +189,7 @@ void CPhotoProcessor::run()
             m_generatedParameters.enqueueSize( QSize( photoResized.size().width(), photoResized.size().height() ) );
         }
         else{ //Echec de la sauvegarde !
-            m_generatedParameters.setMessage( MsgError.error(FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
+            m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
             m_generatedParameters.setExitStatus( failure );
             emit processCompleted( m_generatedParameters );
     	    return;
@@ -213,7 +213,7 @@ void CPhotoProcessor::run()
     saveQuality = m_qualityQueue.dequeue();
     if( !photoResized.save( fileToWrite, saveQuality ) )
     { //Echec de la sauvegarde !
-        m_generatedParameters.setMessage( MsgError.error(FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
+        m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
         m_generatedParameters.setExitStatus( failure );
         emit processCompleted( m_generatedParameters );
         return;

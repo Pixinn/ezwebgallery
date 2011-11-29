@@ -186,11 +186,11 @@ bool  CProjectParameters::operator==(const CProjectParameters &source)
     //Comparaison du Map de proprits
     if( m_photoPropertiesMap.size() == source.m_photoPropertiesMap.size() )
     {
-        QMapIterator<QString,CPhotoExtendedProperties> i( this->m_photoPropertiesMap );
+        QMapIterator<QString,CPhotoPropertiesExtended> i( this->m_photoPropertiesMap );
         while( f_result == true && i.hasNext() ){
             i.next();
-            CPhotoExtendedProperties thisProperties = i.value();
-            CPhotoExtendedProperties sourceProperties = source.m_photoPropertiesMap.value( i.key() );
+            CPhotoPropertiesExtended thisProperties = i.value();
+            CPhotoPropertiesExtended sourceProperties = source.m_photoPropertiesMap.value( i.key() );
             if( !thisProperties.isEquivalent( sourceProperties ) ){
                 f_result = false;
             }
@@ -373,7 +373,7 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     CTaggedString captionHeader;
     CTaggedString captionEnding;
     CCaption caption;
-    CPhotoExtendedProperties photoProperties;
+    CPhotoPropertiesExtended photoProperties;
     QDateTime lastModificationTime;
     //rem: on considre que la liste des fichiers que l'on lit est ordone comme il faut
     for( unsigned int iteratorDomList = 0; iteratorDomList < photosNode.length() ; iteratorDomList++ ){        
@@ -538,7 +538,7 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
 
     //--- PHOTOS et LEGENDES associes  
     QMap<QString,CCaption> captionMap = m_p_captionManager->captionMap();
-    CPhotoExtendedProperties photoProperties;
+    CPhotoPropertiesExtended photoProperties;
     foreach( QString photoName, captionMap.keys() ){
         if( m_photoPropertiesMap.contains( photoName ) ) {
             photoProperties = m_photoPropertiesMap.value( photoName );
@@ -546,7 +546,7 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
             m_photoPropertiesMap.insert( photoName, photoProperties );
         }
         else{
-            CPhotoExtendedProperties newPhotoProperties;
+            CPhotoPropertiesExtended newPhotoProperties;
             m_photoPropertiesMap.insert( photoName, newPhotoProperties );
             //On ne devrait pas tomber ici, car captionMap et m_photoPropertiesMap contiennent les mmes keys / caption (ou properties) !
         }

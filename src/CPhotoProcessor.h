@@ -29,8 +29,8 @@
 #include <QMutex>
 
 #include "CPhoto.h"
-#include "CPhotoExtendedProperties.h"
-#include "CErrorMessages.h"
+#include "CPhotoPropertiesExtended.h"
+#include "CError.h"
 #include "CProjectParameters.h"
 
 
@@ -93,13 +93,13 @@ class CPhotoProcessor : public QObject, public QRunnable
 
     //variable statiques
     static QMutex m_mutexFileReading; //Mutex partag pour viter lesacces disques concurrents
-    static const CErrorMessages MsgError;
+    static const CError MsgError;
     
     signals:
         void processCompleted( CGeneratedPhotoSetParameters );
 	
     public:
-        CPhotoProcessor( CPhotoExtendedProperties photoProperties, //Proprits de la photo  traiter
+        CPhotoProcessor( CPhotoPropertiesExtended photoProperties, //Proprits de la photo  traiter
                          QDir outPath,           //Path de la gallerie gnre
                          QQueue<QSize> &sizes,   //Fifo des tailles  gnrer. Au moins deux: thumb + 1 taille de sortie
                          QQueue<int> &quality,   //Qualit des Jpegs gnrs. Au moins deux: thumb + 1 jpeg de sortie
@@ -112,7 +112,7 @@ class CPhotoProcessor : public QObject, public QRunnable
      
     private:        
         QMutex* m_p_mutexRemoteControl; //Mutex permettant de protger les arrts "forcs" des threads
-        CPhotoExtendedProperties m_photoProperties;
+        CPhotoPropertiesExtended m_photoProperties;
         QString m_inFilePath;
         QDir m_outPath;
         QQueue<QSize> m_sizesQueue;

@@ -25,7 +25,7 @@
 #include "CSkinParameters.h"
 #include "CPlatform.h"
 #include "GlobalDefinitions.h"
-#include "CErrorMessages.h"
+#include "CError.h"
 
 //----------- Dfinitions ---------//
 #define RESSOURCES_TAG_NAME     "Ressources"
@@ -766,12 +766,12 @@ bool CSkinParameters::copyRessources( QDir outputDir/*, QStringList &errorMsg*/ 
             if( destFileInfo.exists() )
             {
                 if( !outputDir.remove( destFileInfo.fileName() ) ){//Impossible de supprimer le fichier
-                    m_lastErrors.append( CErrorMessages::error(FileCreation) + destFileInfo.absoluteFilePath() );
+                    m_lastErrors.append( CError::error(CError::FileCreation) + destFileInfo.absoluteFilePath() );
                 }
             }
             //Copie
             if( !QFile::copy( resourceFile.absoluteFilePath(), destFileInfo.absoluteFilePath()) ){
-                m_lastErrors.append( CErrorMessages::error(FileCreation) + destFileInfo.absoluteFilePath() );
+                m_lastErrors.append( CError::error(CError::FileCreation) + destFileInfo.absoluteFilePath() );
             }
         }
     }

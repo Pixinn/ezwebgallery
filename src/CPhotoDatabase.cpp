@@ -38,11 +38,22 @@ QStringList CPhotoDatabase::setPhotoList(const QStringList &photoList )
     foreach( QString photo, photoList ){
         add( photo );
     }
+    QStringList missingFiles = checkPhotosInDb();
+    if( !missingFiles.isEmpty() ) {
+        QString summary = CError::error(CError::missingFiles);
+        QString details;
+        foreach( QString file, missingFiles ){
+            details += file + QString("\n");
+        }
+        emit error( CError(summary,details) );
+    }
 
-    return checkPhotosInDb();
+    return missingFiles;
 }
 
- /*******************************************************************
+
+
+/*******************************************************************
 * checkPhotosInDb( void )
 * ---------
 * Returns a list of the photos present in the DB but not on the disk
@@ -53,7 +64,7 @@ QStringList CPhotoDatabase::checkPhotosInDb( void )
     QStringList missingPhotos;
     
     foreach( CPhotoDatabaseElem* elem, m_db)  {
-        QFileInfo& fileInfo = elem->fileInfo();
+        QFileInfo fileInfo = elem->fileInfo();
         if( !fileInfo.exists() ) {
             missingPhotos << fileInfo.absoluteFilePath();
         }
@@ -217,7 +228,8 @@ bool CPhotoDatabase::loadThumbnail( const QString & filename )
         //Loging messages if an error occured
         if( !photo.errors().isEmpty() ){
             foreach( QString err, photo.errors() ){
-                emit error( QString("[Thumbnail]." ) + err );
+                CError cerror( QString("[Thumbnail]." ) + err );
+                emit error( cerror );
             }
             f_success = false;
         }

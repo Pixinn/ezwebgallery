@@ -71,12 +71,12 @@ HEADERS += ui/mainwin.h \
     ui/CLanguageManager.h \
     global/CPlatform.h \
     global/GlobalDefinitions.h \
-    global/CErrorMessages.h \
+    global/CError.h \
     widgets/CImagePicker.h \
     widgets/CColorPicker.h \
     CGalleryGenerator.h \
     CPhotoProperties.h \
-    CPhotoExtendedProperties.h \
+    CPhotoPropertiesExtended.h \
     CPhoto.h \
     CPhotoProcessor.h \
     CCss.h \
@@ -88,7 +88,8 @@ HEADERS += ui/mainwin.h \
     CSkinParameters.h \
     IPhotoFeeder.h \
     CPhotoFeederDirectory.h \
-    CPhotoDatabase
+    CPhotoFeederXml.h \
+    CPhotoDatabase.h
 
 SOURCES += main.cpp \
     ui/mainwin.cpp \
@@ -96,13 +97,13 @@ SOURCES += main.cpp \
     ui/CTerminalUi.cpp \
     ui/WinConfigure.cpp \
     ui/CLanguageManager.cpp \
-    global/CErrorMessages.cpp \
+    global/CError.cpp \
     global/CPlatform.cpp \
     widgets/CImagePicker.cpp \
     widgets/CColorPicker.cpp \
     CGalleryGenerator.cpp \
     CPhotoProperties.cpp \
-    CPhotoExtendedProperties.cpp \
+    CPhotoPropertiesExtended.cpp \
     CPhoto.cpp \
     CPhotoProcessor.cpp \
     CCss.cpp \
@@ -112,6 +113,7 @@ SOURCES += main.cpp \
     CProjectParameters.cpp \    
     CSkinParameters.cpp \
     CPhotoFeederDirectory.cpp \
+    CPhotoFeederXml.cpp \
     CPhotoDatabase.cpp
 
 FORMS += ui/mainwin.ui \

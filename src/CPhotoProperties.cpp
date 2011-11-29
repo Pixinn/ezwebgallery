@@ -26,6 +26,31 @@
 //////////////////// CLASSE CPhotoProperties //////////////////////
 ///////////////////////////////////////////////////////////////////
 
+
+/************************ STATIC INSTANCES *********************/
+const QString CPhotoProperties::CAPTION("Caption");
+const QString CPhotoProperties::CAPTIONHEADER("CaptionHeader");
+const QString CPhotoProperties::CAPTIONENDING("CaptionEnding");
+
+
+/*******************************************************************
+* CPhotoProperties( const QDomNode & )
+* ---------
+* Constructs from an XML structure
+********************************************************************/
+CPhotoProperties::CPhotoProperties( const QDomNode & node ) :
+    QObject(),
+    m_fileInfo(),
+    m_exifTags(),
+    m_id(-1)
+{   
+    m_caption.setBody( node.firstChildElement(CAPTION).text() );
+    m_caption.setHeader( node.firstChildElement(CAPTIONHEADER).text() );
+    m_caption.setEnding( node.firstChildElement(CAPTIONENDING).text() );
+}
+
+
+
 /*******************************************************************
 * CPhotoProperties( const CPhotoProperties &)
 * ---------

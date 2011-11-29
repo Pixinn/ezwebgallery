@@ -14,33 +14,39 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
+ 
+#ifndef CPHOTOFEEDERXML_H
+#define CPHOTOFEEDERXML_H
 
-#ifndef IPHOTOSFEEDER_H
-#define IPHOTOSFEEDER_H
-
-#include <QStringList>
-
-
+ #include <QDomElement>
+ #include <QList>
+ 
+ #include "IPhotoFeeder.h"
+ #include "CPhotoPropertiesExtended.h"
+ 
+ 
 /*****************************************
- * IPhotoFeeder
+ * CPhotoFeederXml
  * ----------------------
- * Abstract class feeding the application
- * with photos
+ * Class feeding the application with
+ * data parsed from an XML structure
  *****************************************/
-class IPhotoFeeder : public QObject
-{
-    Q_OBJECT
+ class CPhotoFeederXml : public IPhotoFeeder
+ {
+ public:
+    //CPhotoFeederXml( void ){ };
+    CPhotoFeederXml( const QDomElement & );
+    ~CPhotoFeederXml( void ){ }
+    bool isValid( void ){ return !m_propertiesList.isEmpty(); }
+    QStringList getPhotoList( void );
 
-public:
-    IPhotoFeeder( void ){ }
-    virtual ~IPhotoFeeder( void ){ }
-    virtual bool isValid( void ) = 0;               //Is the feeder set and valid?
-    virtual QStringList getPhotoList( void ) = 0;    //Returns an alphabetically ordered list of the
-                                                    //absolute filepath of ALL the photos passed to EZWG                                                    
-signals:
-     void feed( QStringList );  //Emit a list containing  the absolute filepath of ALL the photos passed to EZWG, usually when it has been updated
-     void error( QString ); //An error happened
-};
-
+private:
+    static const QString PHOTOLIST;
+    static const QString LASTMODIFICATIONTIME;
+    static const QString FILEPATH;
+    QList<CPhotoPropertiesExtended> m_propertiesList;
+   
+ };
+ 
 #endif

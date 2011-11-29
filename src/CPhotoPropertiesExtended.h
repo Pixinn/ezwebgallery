@@ -21,7 +21,6 @@
 #ifndef CPHOTOEXTENDEDPROPERTIES_H
 #define CPHOTOEXTENDEDPROPERTIES_H
 
-#include <QObject>
 #include <QString>
 #include <QDateTime>
 #include <QMap>
@@ -31,23 +30,24 @@
 #include "CCaption.h"
 
 /*****************************
- * CPhotoExtendedProperties
+ * CPhotoPropertiesExtended
  * ----------------------
  * Classe décrivant les propits d'une photo  traiter
  * Permet de centraliser toutes ces infos
  ********************************************/
-class CPhotoExtendedProperties : public CPhotoProperties
+class CPhotoPropertiesExtended : public CPhotoProperties
 {        
 
     Q_OBJECT
 
 public:
-    CPhotoExtendedProperties();
-    CPhotoExtendedProperties( const CPhotoExtendedProperties & );
-    CPhotoExtendedProperties & operator=( const CPhotoExtendedProperties & );
-    ~CPhotoExtendedProperties( void ){ }
-    bool operator==( const CPhotoExtendedProperties &) const;
-    bool isEquivalent( const CPhotoExtendedProperties & ) const; //Ne compare que les champs intressants 
+    CPhotoPropertiesExtended() : CPhotoProperties() {    }
+    CPhotoPropertiesExtended( const CPhotoPropertiesExtended & );
+    CPhotoPropertiesExtended( const QDomNode & node );
+    CPhotoPropertiesExtended & operator=( const CPhotoPropertiesExtended & );
+    ~CPhotoPropertiesExtended( void ){ }
+    bool operator==( const CPhotoPropertiesExtended &) const;
+    bool isEquivalent( const CPhotoPropertiesExtended & ) const; //Ne compare que les champs intressants 
     void setLastModificationTime( const QDateTime & );
     QDateTime lastModificationTime( ) const;
 

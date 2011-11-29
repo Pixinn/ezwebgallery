@@ -18,44 +18,42 @@
 
 
 
-#include "CPhotoExtendedProperties.h"
-
+#include "CPhotoPropertiesExtended.h"
 
 
 ///////////////////////////////////////////////////////////////////
-//////////////////// CLASSE CPhotoExtendedProperties //////////////////////
+//////////////////// CLASSE CPhotoPropertiesExtended //////////////////////
 ///////////////////////////////////////////////////////////////////
 
-/*******************************************************************
-* CPhotoExtendedProperties( )
-* ---------
-* Constructeur par dfaut
-********************************************************************/
-CPhotoExtendedProperties::CPhotoExtendedProperties()
-    : CPhotoProperties()
-{
-
-}
-
 
 /*******************************************************************
-* CPhotoExtendedProperties( const CPhotoExtendedProperties &)
+* CPhotoPropertiesExtended( const CPhotoPropertiesExtended &)
 * ---------
 * Constructeur par recopie, ncessaire pour les classes qui drivent de QObject
 ********************************************************************/
-CPhotoExtendedProperties::CPhotoExtendedProperties( const CPhotoExtendedProperties &other )
+CPhotoPropertiesExtended::CPhotoPropertiesExtended( const CPhotoPropertiesExtended &other )
     : CPhotoProperties( static_cast<CPhotoProperties>(other) )
 {
     this->m_lastModificationTime = other.m_lastModificationTime;
 }
 
+/*******************************************************************
+* CPhotoPropertiesExtended( const QDomNode &)
+* ---------
+* Constructs from an xml node
+********************************************************************/
+CPhotoPropertiesExtended::CPhotoPropertiesExtended( const QDomNode & node ):
+        CPhotoProperties( node )
+{
+
+}
 
 /*******************************************************************
-* CPhotoExtendedProperties( const CPhotoExtendedProperties &)
+* CPhotoPropertiesExtended( const CPhotoPropertiesExtended &)
 * ---------
 * Constructeur par recopie, ncessaire pour les classes qui drivent de QObject
 ********************************************************************/
-CPhotoExtendedProperties & CPhotoExtendedProperties::operator=( const CPhotoExtendedProperties &other )
+CPhotoPropertiesExtended & CPhotoPropertiesExtended::operator=( const CPhotoPropertiesExtended &other )
 {
     if( this != &other ) {
         CPhotoProperties::operator=( other );
@@ -71,7 +69,7 @@ CPhotoExtendedProperties & CPhotoExtendedProperties::operator=( const CPhotoExte
 * ---------
 * Ncessaire pour tre utilis dans un QMap
 ********************************************************************/
-bool CPhotoExtendedProperties::operator==( const CPhotoExtendedProperties &toCompare ) const
+bool CPhotoPropertiesExtended::operator==( const CPhotoPropertiesExtended &toCompare ) const
 {
     bool f_result;
     if(     static_cast<CPhotoProperties>(*this) == static_cast<CPhotoProperties>(toCompare)
@@ -89,14 +87,14 @@ bool CPhotoExtendedProperties::operator==( const CPhotoExtendedProperties &toCom
 
 
 /*******************************************************************
-* isEquivalent( const CPhotoExtendedProperties &toCompare )
+* isEquivalent( const CPhotoPropertiesExtended &toCompare )
 * ---------
 * Ne compare que certains champs pertinants.
 * En effet, certains tels m_exifTags, changent à la premire génération
 * mais ne sont pas sauvés dans le fichier projet, faisant apparatre la fentre
 * de "projet modifié" à mauvais essient.
 ********************************************************************/
-bool CPhotoExtendedProperties::isEquivalent( const CPhotoExtendedProperties &toCompare ) const
+bool CPhotoPropertiesExtended::isEquivalent( const CPhotoPropertiesExtended &toCompare ) const
 {
         bool f_result;
         if(   static_cast<CPhotoProperties>(*this).isEquivalent( static_cast<CPhotoProperties>(toCompare) )
@@ -121,7 +119,7 @@ bool CPhotoExtendedProperties::isEquivalent( const CPhotoExtendedProperties &toC
 * Mise  jour de la date de dernire modification du fichier
 * In : (QDateTime) lastModificationTime
 ********************************************************************/
-void CPhotoExtendedProperties::setLastModificationTime( const QDateTime &lastModificationTime )
+void CPhotoPropertiesExtended::setLastModificationTime( const QDateTime &lastModificationTime )
 {
     m_lastModificationTime = lastModificationTime;
 }
@@ -132,7 +130,7 @@ void CPhotoExtendedProperties::setLastModificationTime( const QDateTime &lastMod
 * Renvoie la date de dernire modification de la photo
 * Retour (QDateTime) date dedernire modification
 ********************************************************************/
-QDateTime CPhotoExtendedProperties::lastModificationTime( ) const
+QDateTime CPhotoPropertiesExtended::lastModificationTime( ) const
 {
     return m_lastModificationTime;
 }

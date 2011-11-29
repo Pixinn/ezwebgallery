@@ -128,7 +128,7 @@ void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, 
     if( !this->isGenerationInProgress() )
     {
         CCaption emptyCaption;
-        CPhotoExtendedProperties photoProperties;
+        CPhotoPropertiesExtended photoProperties;
 		QDir inputDir;
         QFileInfo fileInfo;
         int id = 1;
@@ -172,7 +172,7 @@ void CGalleryGenerator::abordGeneration( )
     m_p_ui = ui;
     connect( this, SIGNAL( debugSignal(QString) ), m_p_ui, SLOT( onLogMsg(QString) ) );
     connect( this, SIGNAL( progressBarSignal( int, QString, QString ) ), m_p_ui, SLOT( onProgressBar( int, QString, QString ) ) );
-    connect( this, SIGNAL( generationFinishedSignal(QList<CPhotoExtendedProperties> ) ), m_p_ui, SLOT( onGalleryGenerationFinished( QList<CPhotoExtendedProperties> ) ) );
+    connect( this, SIGNAL( generationFinishedSignal(QList<CPhotoPropertiesExtended> ) ), m_p_ui, SLOT( onGalleryGenerationFinished( QList<CPhotoPropertiesExtended> ) ) );
     connect( this, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), m_p_ui, SLOT( onForceStoppedFinished( QStringList ) ) );
 }
 */
@@ -286,13 +286,13 @@ bool CGalleryGenerator::generateFileStructure( )
     QDir srcPath( CPlatform::applicationDirPath()  );
 
     if ( !outPath.mkpath( thumbsFilesPath ) ){
-        m_msgErrorList.append( CErrorMessages::error(DirectoryCreation) + thumbsFilesPath );
+        m_msgErrorList.append( CError::error(CError::DirectoryCreation) + thumbsFilesPath );
         emit abordGenerationSignal( );
         return false;
     }
     for(int i = 1; i <= m_parameters.m_photosConfig.nbIntermediateResolutions; i++){
         if( !outPath.mkpath( photosFilesPath + QString::number(i) ) ){
-            m_msgErrorList.append( CErrorMessages::error(DirectoryCreation) + photosFilesPath + QString::number(i) );
+            m_msgErrorList.append( CError::error(CError::DirectoryCreation) + photosFilesPath + QString::number(i) );
             emit abordGenerationSignal( );
             return false;
         }
@@ -302,7 +302,7 @@ bool CGalleryGenerator::generateFileStructure( )
     outPath = QDir( m_parameters.m_galleryConfig.outputDir );
     srcPath = CPlatform::applicationDirPath();
     if( !srcPath.cd( QString(RESSOURCES) ) ){
-        m_msgErrorList.append(  CErrorMessages::error(SourceFileNotFound) );
+        m_msgErrorList.append(  CError::error(CError::SourceFileNotFound) );
         emit abordGenerationSignal( );
         return false;
     }
@@ -372,7 +372,7 @@ int CGalleryGenerator::generatePhotos( )
             watermarkImage.setImage( watermarkParams.imageFile );
             //Vrification de la validit du watermark
             if( !watermarkImage.isValid() ){
-                m_msgErrorList.append( CErrorMessages::error(WatermarkInvalid) + watermarkImage.error() );
+                m_msgErrorList.append( CError::error(CError::WatermarkInvalid) + watermarkImage.error() );
                 emit abordGenerationSignal( );
                 return false;
             }
@@ -441,7 +441,7 @@ int CGalleryGenerator::generatePhotos( )
     displayProgressBar( 0, "green", tr("Generating the photos : ")+QString::number(0)+"%" );
     m_mutexControlProcessors.lock(); //Pour ne pas que les threads dmarrent trop tt
 
-    foreach( CPhotoExtendedProperties photoProperties, m_photoPropertiesList )
+    foreach( CPhotoPropertiesExtended photoProperties, m_photoPropertiesList )
     {
         photoToProcess = new CPhotoProcessor( photoProperties,
                                               outPath,
@@ -490,7 +490,7 @@ bool CGalleryGenerator::generateJsFiles( )
     path.cd( JSPATH );
     QFile file_jsGalleryConfiguration( path.absoluteFilePath( jsGalleryConfigurationFileName ) );
     if (!file_jsGalleryConfiguration.open(QIODevice::WriteOnly | QIODevice::Text)){
-         m_msgErrorList.append( CErrorMessages::error(FileOpening) +  file_jsGalleryConfiguration.fileName() );
+         m_msgErrorList.append( CError::error(CError::FileOpening) +  file_jsGalleryConfiguration.fileName() );
          emit abordGenerationSignal( );
          return false;
     }
@@ -553,7 +553,7 @@ bool CGalleryGenerator::generateJsFiles( )
     int iteratorCaptions;
     CCaption caption;
     QString renderedCaption;
-    CPhotoExtendedProperties photoProperties;
+    CPhotoPropertiesExtended photoProperties;
     jsGalleryConfigurationStream << "listeCaptions =  {" << endl;
     for( iteratorCaptions = 1; iteratorCaptions < m_photoPropertiesList.size(); iteratorCaptions++ ) {
         photoProperties = m_photoPropertiesList.at( iteratorCaptions - 1);
@@ -581,7 +581,7 @@ bool CGalleryGenerator::generateJsFiles( )
     //---- Ouverture du fichier
     QFile file_jsGalleryPresentation( path.absoluteFilePath( jsGalleryPresentationFileName ) );
     if (!file_jsGalleryPresentation.open(QIODevice::WriteOnly | QIODevice::Text)){
-         m_msgErrorList.append( CErrorMessages::error(FileOpening) +  file_jsGalleryPresentation.fileName() );
+         m_msgErrorList.append( CError::error(CError::FileOpening) +  file_jsGalleryPresentation.fileName() );
          emit abordGenerationSignal( );
          return false;
     }
@@ -626,7 +626,7 @@ bool CGalleryGenerator::skinning( )
         //---------- COPIE DES FICHIERS RESSOURCES --------//
         outSkinPath = QDir( m_parameters.m_galleryConfig.outputDir );        
         if( !outSkinPath.mkpath( RESIMGPATH ) ){
-            m_msgErrorList.append( CErrorMessages::error(FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(RESIMGPATH) );
+            m_msgErrorList.append( CError::error(CError::FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(RESIMGPATH) );
             emit abordGenerationSignal( );
             return false;
         }
@@ -645,14 +645,14 @@ bool CGalleryGenerator::skinning( )
         //--- Ouverture du fichier
         outSkinPath = QDir( m_parameters.m_galleryConfig.outputDir );
         if( !outSkinPath.mkpath( CSSPATH ) ){
-            m_msgErrorList.append( CErrorMessages::error(FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(CSSPATH) );
+            m_msgErrorList.append( CError::error(CError::FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(CSSPATH) );
             emit abordGenerationSignal( );
             return false;
         }
         outSkinPath.cd( CSSPATH );
         QFile skinCssFile( outSkinPath.absoluteFilePath( CSSSKINFILENAME ) );
         if (!skinCssFile.open(QIODevice::WriteOnly | QIODevice::WriteOnly | QIODevice::Text)){
-                m_msgErrorList.append( CErrorMessages::error(FileOpening) +  skinCssFile.fileName() );
+                m_msgErrorList.append( CError::error(CError::FileOpening) +  skinCssFile.fileName() );
                 emit abordGenerationSignal( );
                 return false;
         }
@@ -724,7 +724,7 @@ bool CGalleryGenerator::skinning( )
     	//---- Ouverture du fichier
     	QFile file_jsGalleryPresentation( outSkinPath.absoluteFilePath( jsGalleryPresentationFileName ) );
         if (!file_jsGalleryPresentation.open(QIODevice::Append | QIODevice::WriteOnly | QIODevice::Text)){
-                m_msgErrorList.append( CErrorMessages::error(FileOpening) +  file_jsGalleryPresentation.fileName() );
+                m_msgErrorList.append( CError::error(CError::FileOpening) +  file_jsGalleryPresentation.fileName() );
                 emit abordGenerationSignal( );
          	return false;
     	}
@@ -847,7 +847,7 @@ bool CGalleryGenerator::skinning( )
 
         } //fin modifications html
         else{
-            m_msgErrorList.append( CErrorMessages::error(FileOpening) +  htmlFile.fileName() );
+            m_msgErrorList.append( CError::error(CError::FileOpening) +  htmlFile.fileName() );
             emit abordGenerationSignal( );
             return false;
         }
@@ -880,7 +880,7 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
     m_mutex.lock();
     f_wip = m_f_WorkInProgress;
     m_mutex.unlock();
-    CPhotoExtendedProperties photoProperties;
+    CPhotoPropertiesExtended photoProperties;
 
     switch( generatedPhotoParams.exitStatus() )
     {

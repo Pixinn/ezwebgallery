@@ -215,7 +215,7 @@ bool WinSkinDesigner::saveSkinFile( QString skinFileName )
             }
 
             QMessageBox* alertBox = new QMessageBox( QMessageBox::Critical, tr("Error"),
-                                                     CErrorMessages::error(FileSaving),
+                                                     CError::error(CError::FileSaving),
                                                      QMessageBox::Close );
             alertBox->setDetailedText( errorsDetail );
             alertBox->exec();

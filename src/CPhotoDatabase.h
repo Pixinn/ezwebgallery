@@ -28,8 +28,9 @@
 #include <QSize>
 #include <QDomElement>
 
-#include "CPhotoExtendedProperties.h"
+#include "CPhotoPropertiesExtended.h"
 #include "CCaption.h"
+#include "CError.h"
 
 
 
@@ -44,20 +45,21 @@
     
  private:
     //Private type of element to store in the DB
-    class CPhotoDatabaseElem : public CPhotoExtendedProperties
+    class CPhotoDatabaseElem : public CPhotoPropertiesExtended
     {
         public:
             CPhotoDatabaseElem( void ) : 
-                CPhotoExtendedProperties( )
+                CPhotoPropertiesExtended( )
             {     }
             CPhotoDatabaseElem( const CPhotoDatabaseElem & other ) :
-                CPhotoExtendedProperties( other ),
+                CPhotoPropertiesExtended( other ),
                 m_thumbnail( other.m_thumbnail )
             {     }               
             ~CPhotoDatabaseElem( void ){  }
             CPhotoDatabaseElem & operator=( const CPhotoDatabaseElem &  source)
             {
                 m_thumbnail = source.m_thumbnail;
+                return *this;
             }            
         public:
             QImage m_thumbnail;
@@ -65,9 +67,11 @@
     
  public:
         CPhotoDatabase( void ) :
+            QObject(),
             m_thumbnailsSize( QSize(320,200) )
         {    }
         CPhotoDatabase( const CPhotoDatabase &  other) :
+            QObject(),
             m_db( other.m_db ),
             m_orderedKeys( other.m_orderedKeys )
         {   }
@@ -77,7 +81,6 @@
         QStringList& build( const QDomElement & ); //from Xml. Returns the list of invalid files
         QStringList& build( const QStringList & ); //from a list of absolute file paths. Returns the list of invalid files
         
-        QStringList checkPhotosOnDisk( void ) const; //Returns the absolutepath of invalid or inexistant files
         inline QStringList checkPhotosInDb( void ); //Returns a list of the photos present in the DB but not on the disk
         QStringList photosModified( void ) const; //List of the added or modified files since the last call of the constructors, buil or photosModified
         QStringList setPhotoList( const QStringList & ); //Add new pictures to the db. Signal all photos present in the db but not in the list.
@@ -97,7 +100,7 @@
         QList<CPhotoProperties> properties( void ) const; //Returns an ordered list of base properties
 
     signals:
-        void error( QString );
+        void error( CError );
         void somePhotosAreMissing( QStringList ); //signals photos present on the database but not on the disk
 
     public slots:

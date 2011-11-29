@@ -221,11 +221,11 @@ void MainWin::onForceStoppedFinished( QStringList errorMessages )
 //--------------------------------
 //------ Gallerie générée
 //--------------------------------
-void MainWin::onGalleryGenerationFinished( QList<CPhotoExtendedProperties> propertiesList )
+void MainWin::onGalleryGenerationFinished( QList<CPhotoPropertiesExtended> propertiesList )
 {
     //QStringList nonProcessedFiles;
     
-    foreach( CPhotoExtendedProperties photoProperties, propertiesList )
+    foreach( CPhotoPropertiesExtended photoProperties, propertiesList )
     {
         //Mise à jour des propriétés des photos
         m_projectParameters.m_photoPropertiesMap.insert( photoProperties.fileName(), photoProperties ); // STILL USEFUL ???
@@ -272,7 +272,7 @@ MainWin::MainWin( IPhotoFeeder &photoFeeder, CPhotoDatabase &photoDatase, CGalle
 {
 
     //Pour pouvoir utiliser dans les signaux/slots:
-    qRegisterMetaType<CPhotoExtendedProperties>("CPhotoExtendedProperties");
+    qRegisterMetaType<CPhotoPropertiesExtended>("CPhotoPropertiesExtended");
 
     setWindowIcon( QIcon(":/icons/app_icon") );
     m_ui->setupUi(this); //"this" hérite de QMainWindow via IUserInterface
@@ -583,7 +583,7 @@ void MainWin::openSession( const QString &sessionFile )
                 if( alertBox.exec() ==  QMessageBox::Yes ){
                     //Boite de dialogue pour relocaliser les photos
                     m_lastSelectedDir  = QFileDialog::getExistingDirectory( this,
-                                             tr("Please select the directory containing the project's photos.","RElocalisation des photos"),
+                                             tr("Please select the directory containing the project's photos.","Relocalisation des photos"),
                                              m_lastSelectedDir,
                                              QFileDialog::ShowDirsOnly );
                     if( !m_lastSelectedDir.isEmpty() ){
@@ -627,7 +627,7 @@ void MainWin::openSession( const QString &sessionFile )
     else //Erreur de chargement de la session
     {   
         onLogMsg( "[Session]. Error: " + sessionFile + "not loaded" );
-        QMessageBox* alertBox = new QMessageBox( QMessageBox::Critical, tr("Error"), CErrorMessages::error(FileOpening), QMessageBox::Close);
+        QMessageBox* alertBox = new QMessageBox( QMessageBox::Critical, tr("Error"), CError::error(CError::FileOpening), QMessageBox::Close);
         alertBox->setDetailedText( sessionFile );
         alertBox->exec();
         delete alertBox;
@@ -1060,6 +1060,14 @@ void MainWin::displayCaption( QString text )
     this->m_ui->lineEdit_Caption->setText( text );
 }
 
+void MainWin::error( CError err )
+{
+    QMessageBox modalErrorBox( this );
+    modalErrorBox.setText( err.summary() );
+    modalErrorBox.setInformativeText( err.details() );
+    modalErrorBox.setIcon( QMessageBox::Critical );
+    modalErrorBox.exec();
+}
 
 void MainWin::openSkinDesigner( )
 {        
@@ -1215,7 +1223,7 @@ int MainWin::displayMoreRecentMsgBox( )
 *----------------------
 * Vérifie la présence d'une liste de photos dans un répertoire
 * Retourne true même si des photos supplémentaires sont présentes
-* Retourne false si il manque une photo
+* Retourne la liste des photos manquantes
 **************************/
 QStringList MainWin::checkPhotosInDir( const QStringList& photosInConfig, const QDir &dir )
 {
@@ -1241,8 +1249,8 @@ QStringList MainWin::checkPhotosInDir( const QStringList& photosInConfig, const 
 * buildPhotoLists
 *----------------------
 * Parcourt le répertoire d'entrée pour y trouver les photos à traiter et
-* met à jour le QMap de CPhotoExtendedProperties avec les données disponibles :
-* CPhotoExtendedProperties actuelles, légendes renseignées et nouvelles photos
+* met à jour le QMap de CPhotoPropertiesExtended avec les données disponibles :
+* CPhotoPropertiesExtended actuelles, légendes renseignées et nouvelles photos
 *
 * 1 - Création de la liste des photos dipos dans le répertoire d'entrée.
 *     Ajout d'une entrée dans le QMap des propriétés si nouvelle photo, suppression si photo introuvable.
@@ -1275,7 +1283,7 @@ int MainWin::buildPhotoLists( )
         //Si les paramètres de la galerie ne comportaient pas le fichier, on met à jour et on demande la regénération
         if( !m_projectParameters.m_photoPropertiesMap.contains( photoName ) )
         {
-            CPhotoExtendedProperties newProperties;
+            CPhotoPropertiesExtended newProperties;
             newProperties.setFileInfo( *p_photoFileInfo );
             newProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
             m_projectParameters.m_photoPropertiesMap.insert( photoName, newProperties );
@@ -1285,7 +1293,7 @@ int MainWin::buildPhotoLists( )
         //Si les infos de date du fichier sont différentes => on update et on demande la regénération également
         else
         {
-            CPhotoExtendedProperties deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
+            CPhotoPropertiesExtended deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
             if(  deprecatedProperties.lastModificationTime().toString() != p_photoFileInfo->lastModified().toString() ) { //Les QDateTime non convertis ne semblent pas bien se comparer ???
                 deprecatedProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
                 //deprecatedProperties.setProcessed( false );
@@ -1315,7 +1323,7 @@ int MainWin::buildPhotoLists( )
     //3 - Récupération des légendes
 	QMap<QString,CCaption> captionMap = m_captionManager.captionMap();
 	foreach( photoName, captionMap.keys() ) {
-                        CPhotoExtendedProperties photoProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
+                        CPhotoPropertiesExtended photoProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
 			photoProperties.setCaption( captionMap.value( photoName ) );
 			m_projectParameters.m_photoPropertiesMap.insert( photoName, photoProperties );
 	}
@@ -1337,7 +1345,7 @@ int MainWin::buildPhotoLists( )
 }
 
 /*************************
-* checkCreateDir
+* previewCaption
 *----------------------
 * Affiche une prévisualisation de la légende
 * In : (QString) caption - légende à afficher
@@ -1381,7 +1389,7 @@ bool MainWin::checkCreateDir( QString & dir ){
             }
             else{ //Création échouée
                 QMessageBox* alertBox = new QMessageBox ( QMessageBox::Critical, tr("Error"),
-                                                          CErrorMessages::error(DirectoryCreation) );
+                                                          CError::error(CError::DirectoryCreation) );
                 alertBox->exec();
                 delete alertBox;
                 return false;

@@ -18,6 +18,7 @@
  
 #include "IPhotoFeeder.h"
 #include "CPhotoFeederDirectory.h"
+#include "CError.h"
 
 //IPhotoFeeder::IPhotoFeeder(){}
 
@@ -28,10 +29,16 @@
 // In:      (QString)directoryPath
 // Returns: (bool) true if the directory exists, false otherwise
 //----------------------
- bool CPhotoFeederDirectory::setDirectory( QString directoryPath )
+ bool CPhotoFeederDirectory::setDirectory( const QString& directoryPath )
 {
-    m_directory.setPath( directoryPath );
-    emit newPhotoList( getPhotoList() );
+    if( QDir( directoryPath ).exists() ) {
+        m_directory.setPath( directoryPath );
+        emit feed( getPhotoList() );
+    }
+    else {
+        emit error(  CError::error( CError::DirectoryCreation ) + directoryPath );
+    }
+
     return m_directory.exists();
 }
 
@@ -45,8 +52,14 @@
 //----------------------
  bool CPhotoFeederDirectory::setDirectory( const QDir& directory )
 {
-    m_directory = directory;
-    emit newPhotoList( getPhotoList() );
+    if( directory.exists() ) {
+        m_directory = directory;
+        emit feed( getPhotoList() );
+    }
+    else {
+        emit error( CError::error( CError::DirectoryCreation ) + directory.absolutePath() );
+    }
+
     return m_directory.exists();
 }
 

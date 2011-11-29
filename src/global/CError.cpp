@@ -20,24 +20,16 @@
 
 #include <QObject>
 
-#include "CErrorMessages.h"
+#include "CError.h"
 #include "GlobalDefinitions.h"
 
-
-CErrorMessages::CErrorMessages()
-{
-    
-}
 
 /*******************************************************************
 * error( e_errors error )
 * ------------------------
-* retourne la traduction de l'erreur passe en paramtre
-* NB: on est oblig de pass par une fonction, car lupdate parse les
-* fonctions  la recherche de tr("") afin de construire les fichiers ls.
-* Donc on ne peut pas traduire de static const QSTRING ou de #define !
+* Returns a properly translated error
 ********************************************************************/
-QString CErrorMessages::error( e_errors error )
+QString CError::error( e_errors error )
 {
     QString returnedError;
     switch( error )
@@ -54,11 +46,17 @@ QString CErrorMessages::error( e_errors error )
         case DirectoryCreation:
             returnedError = QObject::tr("Unspecified error while creating the directory: ");
             break;
+        case InvalidDirectory:
+            returnedError = QObject::tr("Invalid directory: ");
+            break;
         case SourceFileNotFound:
             returnedError = QObject::tr("Ressource files not found.");
             break;
         case WatermarkInvalid:
             returnedError = QObject::tr("Watermark not valid: ");
+            break;
+        case missingFiles:
+            returnedError = QObject::tr("Some files are missing. They will be removed from the project.");
             break;
         default:
             returnedError = QObject::tr("Unknown error.");

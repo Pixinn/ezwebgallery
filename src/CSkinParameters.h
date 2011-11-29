@@ -29,7 +29,7 @@
 
 #include "IParameters.h"
 #include "CCss.h"
-#include "CErrorMessages.h"
+#include "CError.h"
 
 #include "ui_WinSkinDesigner.h" //Gnr par qmake. Ncessaire pour accs  la classe gnre par le formulaire .ui
 

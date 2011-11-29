@@ -74,10 +74,10 @@ void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
     emit done();
 }
 
-void CTerminalUi::onGalleryGenerationFinished( /*bool success*/QList<CPhotoExtendedProperties> propertiesList )
+void CTerminalUi::onGalleryGenerationFinished( /*bool success*/QList<CPhotoPropertiesExtended> propertiesList )
 {
   /*  bool success = true;
-    foreach( CPhotoExtendedProperties photoProperties, propertiesList ){
+    foreach( CPhotoPropertiesExtended photoProperties, propertiesList ){
         if( !photoProperties.processed() ){
             success = false;
         }
@@ -182,7 +182,7 @@ void CTerminalUi::run( )
         //Si les paramtres de la galerie ne comportaient le fichier, on met  jour et on demande la regnration
         if( !m_projectParameters.m_photoPropertiesMap.contains( photoName ) )
         {
-            CPhotoExtendedProperties newProperties;
+            CPhotoPropertiesExtended newProperties;
 //          newProperties.setFileName( photoName );
             newProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
             m_projectParameters.m_photoPropertiesMap.insert( photoName, newProperties );
@@ -191,7 +191,7 @@ void CTerminalUi::run( )
         }
         //Si les infos de date du fichier sont diffrentes => on update et on demande la regration galement
         else{
-            CPhotoExtendedProperties deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
+            CPhotoPropertiesExtended deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
             if(  deprecatedProperties.lastModificationTime().toString() != p_photoFileInfo->lastModified().toString() ) { //Les QDateTime non convertis ne semblent pas bien se comparer ???
                 deprecatedProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
                 m_projectParameters.m_photosConfig.f_regeneration = true;

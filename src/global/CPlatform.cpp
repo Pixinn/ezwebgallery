@@ -192,7 +192,7 @@ QRegExp CPlatform::forbiddenCharacters()
 
 /***************************** OUTILS *******************************/
 
-#include "CErrorMessages.h"
+#include "CError.h"
 
 //Outils suceptibles d'être utilisés par plusieurs classes
 
@@ -251,7 +251,7 @@ bool CPlatform::copyDirectory( QDir source, QDir destination, QString &errorMsg 
             QFileInfo destDirInfo( destination.absoluteFilePath(fileInfo.fileName()) );
             if( !destDirInfo.exists() ){ //Si le répertoire n'existe pas déjà, on le créé
                 if ( !destination.mkdir( fileInfo.fileName() ) ){ //Erreur lors de la création du rep
-                    errorMsg = CErrorMessages::error(DirectoryCreation) + destination.absolutePath() + "/" + fileInfo.fileName();
+                    errorMsg = CError::error(CError::DirectoryCreation) + destination.absolutePath() + "/" + fileInfo.fileName();
                     return false;
                 }
             }
@@ -265,12 +265,12 @@ bool CPlatform::copyDirectory( QDir source, QDir destination, QString &errorMsg 
             QFileInfo destFileInfo( destination.absoluteFilePath(fileInfo.fileName()) );
             if( destFileInfo.exists() ){
                 if( !destination.remove( destFileInfo.fileName() ) ){//Impossible de supprimer le fichier
-                    errorMsg = CErrorMessages::error(FileCreation) + source.absoluteFilePath(fileInfo.fileName());
+                    errorMsg = CError::error(CError::FileCreation) + source.absoluteFilePath(fileInfo.fileName());
                     return false;
                 }
             }
             if(!QFile::copy( fileInfo.absoluteFilePath(), destination.absoluteFilePath(fileInfo.fileName()) ) ){
-                errorMsg = CErrorMessages::error(FileCreation) + source.absoluteFilePath(fileInfo.fileName());
+                errorMsg = CError::error(CError::FileCreation) + source.absoluteFilePath(fileInfo.fileName());
                 return false;
             }
 

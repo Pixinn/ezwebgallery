@@ -83,7 +83,7 @@ private:
     int displayMoreRecentMsgBox( ); //Affiche une alerte si on essaie d'ouvrir un projet gnr avec une version d'EZWG plus rcente
     void swapButtons( ); //swap certains boutons pour cause de génération de galerie
     bool checkForGeneration( QString & );//Vérifie les paramètres fournis pour la génération
-    QStringList checkPhotosInDir( const QStringList&, const QDir & ); //Vérifie la prsence des photos de la liste dans le répertoire
+    QStringList checkPhotosInDir( const QStringList&, const QDir & ); //Vérifie la présence des photos de la liste dans le répertoire
     bool checkCreateDir( QString & ); //Vérifie l'existance d'un répertoire et propose sa création via msgBox le cas échant
 
 /********* SLOTS ********/
@@ -118,7 +118,7 @@ public slots:
     //Photo DB
     void missingPhotos( QStringList ); //Some photos are present in the DB but not on the disk
     //Légendes
-    int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoExtendedProperties avec les donnes disponibles
+    int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoPropertiesExtended avec les donnes disponibles
     void previewCaption( QString );  //Affiche un prrendu de la lgende.
     //skinning
     void openSkinDesigner( );
@@ -129,11 +129,12 @@ public slots:
     //-- externes
     void onLogMsg( QString );
     void onProgressBar( int completion, QString color, QString message, int timeout = 0 );
-    void onGalleryGenerationFinished( QList<CPhotoExtendedProperties>  );
+    void onGalleryGenerationFinished( QList<CPhotoPropertiesExtended>  );
     void onForceStoppedFinished( QStringList );
     void displayThumbnail( QModelIndex ); //Affiche la vignette  lgender correspondant  l'index
     void thumnailChanged( int ); //Une photo a t choisie pour devenir vignette de la galerie
     void displayCaption( QString );        //Affiche le texte dans le lineEdit de la lgende
+    void error( CError );           //An error occured
 
 /******** ATTRIBUTS *********/
 private:
