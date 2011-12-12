@@ -39,7 +39,8 @@
 #include "CTerminalUi.h"
 #include "CPlatform.h"
 #include "CGalleryGenerator.h"
-#include "CError.h"
+#include "CProjectParameters.h"
+#include "CMessage.h"
 
 
 using namespace Magick;
@@ -52,36 +53,38 @@ int main(int argc, char *argv[])
 
     //Init Magick++
     InitializeMagick(*argv);
-
-    //Instanciation appli
     QApplication appli(argc, argv); //A INSTANCIER LE PLUS TOT POSSIBLE !
     QCoreApplication::setOrganizationName("EZWebGallery"); //Utile pour le stockage des QSettings
     QCoreApplication::setOrganizationDomain("ezwebgallery.org");
-    QCoreApplication::setApplicationName("Gallery Designer");
+    QCoreApplication::setApplicationName("EZWebGallery");
 
     //Instanciations
-    CGalleryGenerator* galleryGenerator = new CGalleryGenerator( );  //gallery generator
-    CPhotoFeederDirectory* photoFeeder = new  CPhotoFeederDirectory();  //photo feeder 
-    CPhotoDatabase* photoDatabase = new CPhotoDatabase();
+    //CPhotoFeederDirectory& photoFeeder = CPhotoFeederDirectory::getInstance();
+    CPhotoDatabase& photoDatabase = CPhotoDatabase::getInstance();
+    CProjectParameters& projectParameters = *new CProjectParameters( );
+    CGalleryGenerator& galleryGenerator = *new CGalleryGenerator();
+
     
     //Connections
-    QObject::connect( photoFeeder, SIGNAL( newPhotoList( QStringList ) ), photoDatabase, SLOT( feed(QStringList ) ) );
+    //QObject::connect( photoFeeder, SIGNAL( update( QStringList ) ), photoDatabase, SLOT( update(QStringList ) ) );
 
     //Deux possibilités : ouverture de la fenêtre ou éxecution à partir d'un terminal
     // ----------------- MODE FENETRE
     if( argc == 1 )
     {
         //Instanciation fentre
-        MainWin* appWindow = new MainWin( *photoFeeder, *photoDatabase, galleryGenerator  );
+        MainWin* appWindow = new MainWin( galleryGenerator, projectParameters  );
 
         //Connections UI<->Générateur
-        QObject::connect( galleryGenerator, SIGNAL( debugSignal(QString)), appWindow, SLOT(onLogMsg(QString)) );
-        QObject::connect( galleryGenerator, SIGNAL( progressBarSignal( int, QString, QString ) ), appWindow, SLOT( onProgressBar( int, QString, QString ) ) );
-        QObject::connect( galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoPropertiesExtended> ) ), appWindow, SLOT( onGalleryGenerationFinished( QList<CPhotoPropertiesExtended> ) ) );
-        QObject::connect( galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appWindow, SLOT( onForceStoppedFinished( QStringList ) ) );
+        QObject::connect( &galleryGenerator, SIGNAL( debugSignal(QString)), appWindow, SLOT(onLogMsg(QString)) );
+        QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, QString ) ), appWindow, SLOT( onProgressBar( int, QString, QString ) ) );
+        QObject::connect( &galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoPropertiesExtended> ) ), appWindow, SLOT( onGalleryGenerationFinished( QList<CPhotoPropertiesExtended> ) ) );
+        QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appWindow, SLOT( onForceStoppedFinished( QStringList ) ) );
         // UI <-> DB
-        QObject::connect( photoDatabase, SIGNAL( missingPhotos( QStringList ) ), appWindow, SLOT( missingPhotos( QStringList ) ) );
-        QObject::connect( photoDatabase, SIGNAL( error( CError ) ), appWindow, SLOT( error( CError ) ) );
+        //QObject::connect( photoDatabase, SIGNAL( missingPhotos( QStringList ) ), appWindow, SLOT( missingPhotos( QStringList ) ) );
+        QObject::connect( &photoDatabase, SIGNAL( error( CMessage ) ), appWindow, SLOT( error( CMessage ) ) );
+        QObject::connect( &photoDatabase, SIGNAL( warning( CMessage ) ), appWindow, SLOT( warning( CMessage ) ) );
+        QObject::connect( &photoDatabase, SIGNAL( message( CMessage ) ), appWindow, SLOT( information( CMessage ) ) );
 
         //appWindow->setGenerator( galleryGenerator );
 
@@ -96,16 +99,13 @@ int main(int argc, char *argv[])
     else
     {
         //Instanciation UI
-        CTerminalUi* appCLI = new CTerminalUi( appli.arguments().at(1) );
+        CTerminalUi* appCLI = new CTerminalUi( galleryGenerator, appli.arguments().at(1) );
 
         //Connections UI<->Gnrateur
-        QObject::connect( galleryGenerator, SIGNAL(debugSignal(QString)), appCLI, SLOT(onLogMsg(QString)) );
-        QObject::connect( galleryGenerator, SIGNAL( progressBarSignal( int, QString, QString ) ), appCLI, SLOT( onProgressBar( int, QString, QString ) ) );
-        QObject::connect( galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoPropertiesExtended> ) ), appCLI, SLOT( onGalleryGenerationFinished( QList<CPhotoPropertiesExtended> ) ) );
-        QObject::connect( galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appCLI, SLOT( onForceStoppedFinished( QStringList ) ) );
-
-        appCLI->setGenerator( galleryGenerator );
- //       galleryGenerator->connectToUi( appCLI );
+        QObject::connect( &galleryGenerator, SIGNAL( debugSignal(QString)), appCLI, SLOT(onLogMsg(QString)) );
+        QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, QString ) ), appCLI, SLOT( onProgressBar( int, QString, QString ) ) );
+        QObject::connect( &galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoPropertiesExtended> ) ), appCLI, SLOT( onGalleryGenerationFinished( QList<CPhotoPropertiesExtended> ) ) );
+        QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appCLI, SLOT( onForceStoppedFinished( QStringList ) ) );
 
         //Excution
         QObject::connect( appCLI, SIGNAL(done()), &appli, SLOT(quit()));
@@ -114,10 +114,10 @@ int main(int argc, char *argv[])
 
     }
 
-    galleryGenerator->quit();
-    galleryGenerator->deleteLater();
-    delete photoFeeder;
-    delete photoDatabase;
+    galleryGenerator.quit();
+    galleryGenerator.deleteLater();
+//    delete &photoFeeder;
+    delete &projectParameters;
     
     return exitValue;
 }

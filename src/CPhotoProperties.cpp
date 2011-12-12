@@ -40,9 +40,10 @@ const QString CPhotoProperties::CAPTIONENDING("CaptionEnding");
 ********************************************************************/
 CPhotoProperties::CPhotoProperties( const QDomNode & node ) :
     QObject(),
+    m_id(-1),
     m_fileInfo(),
     m_exifTags(),
-    m_id(-1)
+    m_caption()
 {   
     m_caption.setBody( node.firstChildElement(CAPTION).text() );
     m_caption.setHeader( node.firstChildElement(CAPTIONHEADER).text() );

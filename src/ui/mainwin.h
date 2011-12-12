@@ -50,6 +50,7 @@
 #include "CLanguageManager.h"
 #include "CPhotoFeederDirectory.h"
 #include "CPhotoDatabase.h"
+#include "CMessage.h"
 
 namespace Ui { //Pour diffrencier de la classe MainWin de mainwin.h et accder  la *vraie* ui
     class MainWin;
@@ -66,7 +67,7 @@ class MainWin : public QMainWindow, IUserInterface
     Q_OBJECT
 /************ METODES *************/
 public:
-    MainWin( IPhotoFeeder &, CPhotoDatabase &, CGalleryGenerator*, QWidget *parent = 0);
+    MainWin( CGalleryGenerator &/*, IPhotoFeeder &*/, CProjectParameters &, QWidget *parent = 0);
     ~MainWin();
     //void setGenerator( CGalleryGenerator* );
 
@@ -115,8 +116,6 @@ public slots:
     void watermarkTypeChanged( int );
     void watermarkGroupChecked( bool );
     void watermarkAutoColorChecked( int );
-    //Photo DB
-    void missingPhotos( QStringList ); //Some photos are present in the DB but not on the disk
     //Légendes
     int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoPropertiesExtended avec les donnes disponibles
     void previewCaption( QString );  //Affiche un prrendu de la lgende.
@@ -134,7 +133,9 @@ public slots:
     void displayThumbnail( QModelIndex ); //Affiche la vignette  lgender correspondant  l'index
     void thumnailChanged( int ); //Une photo a t choisie pour devenir vignette de la galerie
     void displayCaption( QString );        //Affiche le texte dans le lineEdit de la lgende
-    void error( CError );           //An error occured
+    void error( CMessage );           //An error occured
+    void warning( CMessage );         //A warning occured
+    void information( CMessage );     //Display an iformative message
 
 /******** ATTRIBUTS *********/
 private:
@@ -153,7 +154,7 @@ private:
     //conf    
     CCaptionManager m_captionManager;
     CProjectParameters m_newProjectParameters;
-    CProjectParameters m_projectParameters;
+    CProjectParameters& m_projectParameters;
     CProjectParameters m_referenceProjectParameters;
     CSkinParameters m_skinParameters;
     QString m_lastSelectedDir;
@@ -162,7 +163,7 @@ private:
     //Photo Database
     CPhotoDatabase &m_photoDatabase;
     //Generation
-    CGalleryGenerator* m_p_galleryGenerator;
+    CGalleryGenerator& m_galleryGenerator;
 
 };
 

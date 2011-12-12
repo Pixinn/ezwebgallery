@@ -44,7 +44,6 @@ public /*slots*/:
 // !!! Fonctions  implmenter comme SLOTS !!!
 // C'est impossible dans cette interface, car il faudrait hriter de QObject. Hors il est interdit
 // d'hriter deux fois indirectement de QObject. Ce qui est embtant pour les UI qui doivent ventuellement elles mme hriter d'un QWidget
-   virtual void missingPhotos( QStringList ) = 0; //Some photos are present in the DB but not on the disk
 public:
    virtual void onLogMsg( QString ) = 0; //Rception d'un message de DEBUG
    virtual void onProgressBar( int completion, QString color, QString message, int timeout = 0 ) = 0; //Affiche un % d'avancement sur la progressBar et un message assi dans la statusbar

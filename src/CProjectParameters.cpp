@@ -24,6 +24,8 @@
 
 #include "CPlatform.h"
 #include "CTaggedString.h"
+#include "CPhotoDatabase.h"
+
 
 /*********************** STRUCTURES DE DONNEES ************************/
 //--- BIEN METTRE A JOURS LES operator== EN CAS DE MODIFICATION DE CES CHAMPS ---//
@@ -108,19 +110,11 @@ bool t_photosConf::operator!=(const t_photosConf& source)
 
 
 
-
-CProjectParameters::CProjectParameters( )
-    : QObject()
-{
-    m_galleryConfig.f_regeneration = true;
-    m_photosConfig.f_regeneration = true;
-    m_thumbsConfig.f_regeneration = true;
-}
-
-
 // !!! ATTENTION : BIEN METTRE A JOUR CETTE FONCTION EN CAS D'AJOUTS D'ATTRIBUTS !!!!
-CProjectParameters::CProjectParameters(const CProjectParameters &source)
-    : QObject()
+CProjectParameters::CProjectParameters(const CProjectParameters &source) :
+    QObject(),
+    m_feeder( source.m_feeder )
+
 {
     this->m_galleryConfig = source.m_galleryConfig;
     this->m_photosConfig = source.m_photosConfig;
@@ -156,6 +150,7 @@ CProjectParameters& CProjectParameters::operator=(const CProjectParameters &sour
         this->m_p_ui = source.m_p_ui;
         this->m_version = source.m_version;
         this->m_photoPropertiesMap = source.m_photoPropertiesMap;
+        this->m_feeder = source.m_feeder;
     }
     return *this;
 }
@@ -167,7 +162,7 @@ CProjectParameters& CProjectParameters::operator=(const CProjectParameters &sour
 *****************************************************/
 
 // !!! ATTENTION : BIEN METTRE A JOUR CETTE FONCTION EN CAS D'AJOUTS D'ATTRIBUTS !!!!
-bool  CProjectParameters::operator==(const CProjectParameters &source)
+bool CProjectParameters::operator==(const CProjectParameters &source)
 {
     bool f_result = true;
     if( /*m_photosList != source.m_photosList      <<-- Renvoie toujours false !!?
@@ -178,6 +173,7 @@ bool  CProjectParameters::operator==(const CProjectParameters &source)
         || m_p_captionManager != source.m_p_captionManager
         || m_p_skin != source.m_p_skin
         || m_version != source.m_version
+        || m_feeder != source.m_feeder
        )
     {
         f_result =  false;
@@ -308,6 +304,7 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     QDomElement watermarkConfElem = root.firstChildElement( "WatermarkConfig" );
     QDomElement photoListElem = root.firstChildElement( "PhotoList" );
 
+
 //    m_photosList.clear();
     m_photoPropertiesMap.clear();
     //--- CONFIG GALLERY
@@ -317,12 +314,19 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     m_galleryConfig.prefetchCacheSize = galleryConfElem.firstChildElement( "prefetchCacheSize" ).text().toInt();
     m_galleryConfig.f_rightClickEnabled = galleryConfElem.firstChildElement( "rightClickEnabled" ).text().toInt();
     QString inputFolder =  galleryConfElem.firstChildElement( "inputFolder" ).text();
-    if( QFileInfo(inputFolder).exists() ){ 
+    if( m_feeder.setDirectory( inputFolder ) ) {
+        m_galleryConfig.inputDir = inputFolder;
+    }
+    else {
+        m_galleryConfig.inputDir.clear();
+        emit message( inputFolder + tr(" doesn't exists") );
+    }
+    /*if( QFileInfo(inputFolder).exists() ){ 
         m_galleryConfig.inputDir = inputFolder;
     }else{
         m_galleryConfig.inputDir.clear();
         emit message( inputFolder + tr(" doesn't exists") );
-    }
+    }*/
     QString outputFolder =  galleryConfElem.firstChildElement( "outputFolder" ).text();
     if( QFileInfo(outputFolder).exists() ){ 
         m_galleryConfig.outputDir = outputFolder;
@@ -396,13 +400,16 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     }
     m_p_captionManager->setCaptionMap( captionMap );
 
+
+    CPhotoDatabase::getInstance().build( photoListElem );
+
 }
 
 
 /*************************
 * toDomDocument
 *----------------------
-* Retourn un document XML/DOM correspondant aux paramtres
+* Retourn un document XML/DOM correspondant aux parametres
 **************************/
 QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
 {
@@ -432,7 +439,7 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
     rightClickEnabled.appendChild( document.createTextNode( QString::number(m_galleryConfig.f_rightClickEnabled) ) );
     QDomElement inputFolder = document.createElement( "inputFolder" );
     galleryConfig.appendChild( inputFolder );
-    inputFolder.appendChild( document.createTextNode( m_galleryConfig.inputDir ) );
+    inputFolder.appendChild( document.createTextNode( m_feeder.getDirectoryPath() ) );
     QDomElement outputFolder = document.createElement( "outputFolder" );
     galleryConfig.appendChild( outputFolder );
     outputFolder.appendChild( document.createTextNode(  m_galleryConfig.outputDir ) );
@@ -624,8 +631,8 @@ void CProjectParameters::toUi( )
     m_p_ui->comboBox_WatermarkPosition->setCurrentIndex( m_photosConfig.watermark.position );
     m_p_ui->groupBox_Watermark->setChecked( m_photosConfig.watermark.enabled ); //A mettre en dernire position des proprits watermark pour bien enable/disable les widgets
 
-    //Lgendes
-    //REM: le body est affich via un signal du caption manager, car il dpend du num de la photo  l'cran
+    //Legendes
+    //REM: le body est affiche via un signal du caption manager, car il depend du num de la photo a l'ecran
     QMap<QString,CCaption> captionMap = m_p_captionManager->captionMap();
     if( !captionMap.isEmpty() ){
         CCaption caption = captionMap.begin().value();

@@ -36,9 +36,7 @@
  * Permet de centraliser toutes ces infos
  ********************************************/
 class CPhotoPropertiesExtended : public CPhotoProperties
-{        
-
-    Q_OBJECT
+{            
 
 public:
     CPhotoPropertiesExtended() : CPhotoProperties() {    }

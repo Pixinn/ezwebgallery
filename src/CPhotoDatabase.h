@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -30,14 +30,15 @@
 
 #include "CPhotoPropertiesExtended.h"
 #include "CCaption.h"
-#include "CError.h"
+#include "CMessage.h"
 
 
 
 /***************************************************************************
  * CPhotoDatabase
  * ----------------------
-* Database including the properties of all the photos to process
+ * Database including the properties of all the photos to process
+ * Pattern singleton
  **************************************************************************/
  class CPhotoDatabase : public QObject
  {
@@ -54,7 +55,10 @@
             CPhotoDatabaseElem( const CPhotoDatabaseElem & other ) :
                 CPhotoPropertiesExtended( other ),
                 m_thumbnail( other.m_thumbnail )
-            {     }               
+            {     }
+            CPhotoDatabaseElem( const CPhotoPropertiesExtended & other ) :
+                CPhotoPropertiesExtended( other )
+            {     }     
             ~CPhotoDatabaseElem( void ){  }
             CPhotoDatabaseElem & operator=( const CPhotoDatabaseElem &  source)
             {
@@ -65,26 +69,25 @@
             QImage m_thumbnail;
     };//class end
     
- public:
+ private:
+        //Private constructor
         CPhotoDatabase( void ) :
             QObject(),
             m_thumbnailsSize( QSize(320,200) )
         {    }
-        CPhotoDatabase( const CPhotoDatabase &  other) :
-            QObject(),
-            m_db( other.m_db ),
-            m_orderedKeys( other.m_orderedKeys )
-        {   }
         ~CPhotoDatabase( ){    }
-        
-        QDomElement toXml( void ); //serialize
-        QStringList& build( const QDomElement & ); //from Xml. Returns the list of invalid files
-        QStringList& build( const QStringList & ); //from a list of absolute file paths. Returns the list of invalid files
-        
-        inline QStringList checkPhotosInDb( void ); //Returns a list of the photos present in the DB but not on the disk
+ 
+ public:
+        static CPhotoDatabase& getInstance( void ) { return s_instance; }
+    
+        QStringList checkPhotosInDb( void ); //Returns a list of the photos present in the DB but not on the disk
         QStringList photosModified( void ) const; //List of the added or modified files since the last call of the constructors, buil or photosModified
-        QStringList setPhotoList( const QStringList & ); //Add new pictures to the db. Signal all photos present in the db but not in the list.
-                
+        
+        QStringList appendPhotoList( const QStringList & ); //Add new properties to the db. Return a list of invalid files.
+        QStringList appendPhotoList( const CPhotoPropertiesExtended & ); //Add new properties to the db. Return a list of invalid files.
+
+        QStringList refresh( const QStringList & ); //Update the database using this new list of files.
+
         void remove( int );
         void remove( const QString &);
         
@@ -97,29 +100,42 @@
         const QImage& thumbnail( int ) const; //Returns a thumbnail
         const QImage& thumbnail( const QString & ) const; //Returns a thumbnail
         
-        QList<CPhotoProperties> properties( void ) const; //Returns an ordered list of base properties
+        //QList<CPhotoProperties> properties( void ) const; //Returns an ordered list of base properties
 
     signals:
-        void error( CError );
-        void somePhotosAreMissing( QStringList ); //signals photos present on the database but not on the disk
+        void warning( CMessage );   //a warning occured
+        void error( CMessage );   //an error occured
+        void message( CMessage );   //send an informative message
+        //void updatedProperties( QList<CPhotoPropertiesExtended> ); //the db was updated
 
     public slots:
-        void feed( QStringList photoList ) { 
-            clear();
-            setPhotoList(photoList);
-        }
+        QStringList build( const QDomElement & ); //from Xml. Returns the list of invalid files
+        QStringList build( const QStringList & ); //from a list of absolute file paths. Returns the list of invalid files
+        void xml( QDomDocument& document ) const; //Returns an Xml representation of the database
      
-    private:
+    private: //nb private memebers do not emit updatedProperties()
         void clear( void );
-        void add( const QString& photoPath ); //adds a photo at the end of the ordered list
+        bool add( const QString& photoPath ); //adds a photo photoproperties at the end of the ordered list
+        bool add( const CPhotoPropertiesExtended& ); //adds a photo photoproperties at the end of the ordered list
+        void consolidate( void ); //Removes files present in the db but not on the disk
+        //QList<CPhotoPropertiesExtended> propertiesList( void ) const;
         
     private:
+         static const QString XMLTAG_PHOTOSDB;
+         static const QString XMLTAG_PHOTOS;
+         static const QString XMLTAG_LASTMODIFICATIONTIME;
+         static const QString XMLTAG_FILEPATH;
+         static const QString XMLTAG_CAPTIONBODY;
+         static const QString XMLTAG_CAPTIONHEADER;
+         static const QString XMLTAG_CAPTIONENDING;
          //The two containers that must be in sync form the DB.
          //Allowing access by filename and number.
-         QMap<QString,CPhotoDatabaseElem*> m_db; //key : filename
-         QStringList m_orderedKeys;//element: filename. Allows an ordered search of elements in m_db;
+         QMap<QString,CPhotoDatabaseElem*> m_db; //key : FILENAME
+         QStringList m_orderedKeys;//element: FILENAME. Allows an ordered search of elements in m_db;
          const static QImage s_defaultThumbnail; //Thumbnail for a not yet loaded photo
          QSize m_thumbnailsSize;
+         //Static instance for singleton
+         static CPhotoDatabase s_instance;
  };
  
 #endif

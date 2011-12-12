@@ -55,8 +55,8 @@ QString CError::error( e_errors error )
         case WatermarkInvalid:
             returnedError = QObject::tr("Watermark not valid: ");
             break;
-        case missingFiles:
-            returnedError = QObject::tr("Some files are missing. They will be removed from the project.");
+        case InvalidFiles:
+            returnedError = QObject::tr("Some photos cannot be read from the disk. ");
             break;
         default:
             returnedError = QObject::tr("Unknown error.");

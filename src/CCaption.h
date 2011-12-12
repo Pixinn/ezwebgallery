@@ -32,7 +32,12 @@
 class CCaption
 {
 public:
-    CCaption( );
+    CCaption( void );
+    CCaption( const QString & header, const QString & body, const QString & ending) :
+        m_header( header ),
+        m_body( body ),
+        m_ending( ending )
+    {   }
     bool operator==( const CCaption & ) const;
     QString render( int preview = CTaggedString::NOPREVIEW );          //Calcule la lgende sous forme de QString
     void setHeader( const CTaggedString& );
@@ -50,8 +55,8 @@ public:
 
 private:
     CTaggedString m_header;
-    CTaggedString m_ending;
-    CTaggedString m_body;    
+    CTaggedString m_body;
+    CTaggedString m_ending;    
 };
 
 

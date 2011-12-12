@@ -35,7 +35,7 @@ using namespace std;
 
 //--- Variable statique
 QMutex CPhotoProcessor::m_mutexFileReading;  //Mutex partag pour viter les acces disques concurrents
-const CError CPhotoProcessor::MsgError;
+const CError CPhotoProcessor::MsgError; //Shared?!!???
 
 
 

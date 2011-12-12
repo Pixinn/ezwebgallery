@@ -21,12 +21,16 @@
 
 #include <QStringList>
 
+#include "CPhotoPropertiesExtended.h"
+#include "CMessage.h"
+
 
 /*****************************************
  * IPhotoFeeder
  * ----------------------
  * Abstract class feeding the application
  * with photos
+ * Pattern singleton
  *****************************************/
 class IPhotoFeeder : public QObject
 {
@@ -35,12 +39,18 @@ class IPhotoFeeder : public QObject
 public:
     IPhotoFeeder( void ){ }
     virtual ~IPhotoFeeder( void ){ }
-    virtual bool isValid( void ) = 0;               //Is the feeder set and valid?
+    virtual IPhotoFeeder& operator=( const IPhotoFeeder& other){ return (*this = other); }
+    virtual bool operator==( const IPhotoFeeder& ){ return true; }
+    virtual bool operator!=( const IPhotoFeeder& ){ return true; }
+    virtual void clear( void ) = 0;                   //Clears the feeder srouce
+    virtual bool isValid( void ) = 0;                //Is the feeder set and valid?
     virtual QStringList getPhotoList( void ) = 0;    //Returns an alphabetically ordered list of the
-                                                    //absolute filepath of ALL the photos passed to EZWG                                                    
+                                                     //absolute filepath of ALL the photos passed to EZWG                                                    
 signals:
-     void feed( QStringList );  //Emit a list containing  the absolute filepath of ALL the photos passed to EZWG, usually when it has been updated
-     void error( QString ); //An error happened
+     void build( QList<CPhotoPropertiesExtended> ); //Build from scratch using a list of photoproperties
+     void build( QStringList );  //Build from scratch using a list containing  absolute filepaths     
+     void update( QStringList );  //Update a list containing absolute filepaths     
+     void error( CMessage );       //An error occured
 };
 
 #endif

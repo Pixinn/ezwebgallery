@@ -31,6 +31,7 @@
 #include "CSkinParameters.h"
 #include "CPhotoPropertiesExtended.h"
 #include "CTaggedString.h"
+#include "CPhotoFeederDirectory.h"
 
 namespace Ui { //Pour diffrencier de la classe MainWin de mainwin.h et accder  la *vraie* ui
     class MainWin;
@@ -148,11 +149,27 @@ class CProjectParameters :  public QObject, public IParameters<Ui::MainWin>
     Q_OBJECT
 
 public:
-    CProjectParameters( );
+    CProjectParameters( void ) :
+        QObject( ),
+            m_feeder( CPhotoFeederDirectory::getInstance() )
+    {           
+        m_galleryConfig.f_regeneration = true;
+        m_photosConfig.f_regeneration = true;
+        m_thumbsConfig.f_regeneration = true;
+    }
+  /*  CProjectParameters( CPhotoFeederDirectory& feeder ) :
+            QObject(),
+            m_feeder( feeder )
+    {
+        m_galleryConfig.f_regeneration = true;
+        m_photosConfig.f_regeneration = true;
+        m_thumbsConfig.f_regeneration = true;
+    }*/
     CProjectParameters( const CProjectParameters & );
     CProjectParameters& operator=(const CProjectParameters & );  //Ncessit de surcharger l'oprateur d'assignement lorsqu'on hrite de QObject
     bool operator==(const CProjectParameters & );
     bool operator!=(const CProjectParameters & );
+    
     void fromUi( );                                              //Rcupre les donnes provenant de l'UI
     void fromDomDocument( QDomDocument & );                      //Rcupre les donnes provenant d'un QDomDocument
     void toUi(  );                                               //Rempli l'UI
@@ -172,11 +189,16 @@ signals:
     void loaded(QString);
     void saved(QString);
     void message(QString);
+
+/*public slots:
+    void updatePhotoProperties( QList<CPhotoPropertiesExtended> properties )   {
+        m_photoPropertiesList = properties;
+    }*/
     
 // !! BIEN METTRE A JOUR operator= , == et != en cas d'ajout d'attribut !! //
 public:
 //    QMap<QString,QDateTime> m_photosList;
-    QMap<QString,CPhotoPropertiesExtended> m_photoPropertiesMap;
+    QMap<QString,CPhotoPropertiesExtended> m_photoPropertiesMap; //to deprecate
     t_galleryConf m_galleryConfig;
     t_thumbsConf m_thumbsConfig;
     t_photosConf m_photosConfig;
@@ -185,6 +207,8 @@ private:
     CCaptionManager* m_p_captionManager;
     CSkinParameters* m_p_skin;
     int m_version;
+    CPhotoFeederDirectory& m_feeder;
+//    QList<CPhotoPropertiesExtended> m_photoPropertiesList;
 };
 
 #endif // CPROJECTPARAMETERS_H

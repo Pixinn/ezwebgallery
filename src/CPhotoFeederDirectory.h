@@ -33,18 +33,16 @@
  class CPhotoFeederDirectory : public IPhotoFeeder
  {
  public:
-    //constructor and destructor
-    CPhotoFeederDirectory( void ) :
-        IPhotoFeeder(),
-        m_directory("")
-    {   }
-    CPhotoFeederDirectory( const QString& directoryPath ) :
-        IPhotoFeeder(),
-        m_directory( directoryPath )
-    {   }
-    ~CPhotoFeederDirectory( void ) { }
+   
+    static CPhotoFeederDirectory& getInstance( void ) { return s_instance; }
+    CPhotoFeederDirectory& operator=( const CPhotoFeederDirectory& source)  {
+        m_directory = source.m_directory;
+        return *this;
+    }
+    bool operator==( const CPhotoFeederDirectory& other ) { return m_directory == other.m_directory; }
+    bool operator!=( const CPhotoFeederDirectory& other ) { return m_directory != other.m_directory; }
     //public functions
-    void refresh( void );
+    void clear( void ) { m_directory = QDir(); }
     bool isValid( void ) { return m_directory.exists(); }
     //accessors
     bool setDirectory( const QString& directoryPath );
@@ -53,12 +51,22 @@
     QDir& getDirectory( void ){ return m_directory; }
     QString getDirectoryPath( void ){ return m_directory.absolutePath(); }
 
+ private:
+    //constructor and destructor
+    CPhotoFeederDirectory( void ) :
+        IPhotoFeeder(),
+        m_directory( QDir::homePath() )
+    {   }
+    CPhotoFeederDirectory( const QString& directoryPath ) :
+        IPhotoFeeder(),
+        m_directory( directoryPath )
+    {   }
+    ~CPhotoFeederDirectory( void ) { }
 
 private:
-    //static members
-    
     //members
     QDir m_directory;
+    static CPhotoFeederDirectory s_instance;
     
  };
  

@@ -45,16 +45,18 @@ using namespace Magick;
 //////////////////// CLASSE CGalleryGenerator /////////////////////
 ///////////////////////////////////////////////////////////////////
 
+
 //------------------ DEFINITIONS ----------------------//
 
 #define CSSSKINFILENAME     "skin.css"
-#define SHARPENINGTHRESHOLD 0.04        /* quivalent  10 */
+#define SHARPENINGTHRESHOLD 0.04        /* équivalent à 10 */
+
 
 //-------------------- FONCTIONS -----------------------//
 
-//CA_Interface_GalleryGenerator::~CA_Interface_GalleryGenerator(){ }// Implmentation du destructeur virtuel obligatoire
 
-CGalleryGenerator::CGalleryGenerator( )
+CGalleryGenerator::CGalleryGenerator( ) :
+    QThread()
 {
     qRegisterMetaType<CGeneratedPhotoSetParameters> ( "CGeneratedPhotoSetParameters" );
 

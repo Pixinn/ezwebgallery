@@ -53,10 +53,6 @@ using namespace std;
 /********************************************** PUBLIC MEMBERS ********************************************/
 
 
-/*
-void MainWin::setGenerator( CGalleryGenerator* interface){
-    this->m_p_galleryGenerator = interface;
-}*/
 
 //--- SLOTS ---//
 
@@ -160,13 +156,6 @@ void MainWin::watermarkAutoColorChecked( int state )
 }
 
 
-
-void MainWin::missingPhotos( QStringList )
-{
-
-}
-
-
 void MainWin::onProgressBar( int completion, QString color, QString message, int timeout )
 {
     //La couleur de la barre ne change pas..
@@ -263,12 +252,13 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoPropertiesExtended> prope
 /***************************************************************************************************/
 
 
-MainWin::MainWin( IPhotoFeeder &photoFeeder, CPhotoDatabase &photoDatase, CGalleryGenerator* galleryGenerator, QWidget *parent ) :
+MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeeder*/, CProjectParameters& projectParameters, QWidget *parent ) :
     QMainWindow( parent ),
-    m_ui(new Ui::MainWin),
-    m_photoFeeder( static_cast<CPhotoFeederDirectory&>(photoFeeder) ),
-    m_photoDatabase(  photoDatase ),
-    m_p_galleryGenerator(  galleryGenerator )
+    m_ui(new Ui::MainWin),    
+    m_projectParameters( projectParameters ),
+    m_photoFeeder( static_cast<CPhotoFeederDirectory&>(CPhotoFeederDirectory::getInstance()) ),
+    m_photoDatabase( CPhotoDatabase::getInstance() ),
+    m_galleryGenerator( galleryGenerator )
 {
 
     //Pour pouvoir utiliser dans les signaux/slots:
@@ -278,7 +268,6 @@ MainWin::MainWin( IPhotoFeeder &photoFeeder, CPhotoDatabase &photoDatase, CGalle
     m_ui->setupUi(this); //"this" hérite de QMainWindow via IUserInterface
 
     m_lastSelectedDir = QDir::homePath();
-    m_p_galleryGenerator = NULL;
     
     m_stateGeneration = eGenerating;  
     
@@ -492,6 +481,7 @@ void MainWin::newSession( )
         m_projectParameters.m_galleryConfig.skinPath = CSkinParameters::defaultSkin();
         m_skinParameters.load( m_projectParameters.m_galleryConfig.skinPath  );         
         m_projectParameters.toUi( );                             //Maj UI
+        m_photoFeeder.clear();
         buildPhotoLists();                                       //Construction liste des photos (vide...)
         m_referenceProjectParameters = m_projectParameters;
         //UI
@@ -561,7 +551,9 @@ void MainWin::openSession( const QString &sessionFile )
             //Le contenu du répertoire d'entrée est-il toujours valable depuis la dernière sauvegarde ?
             //ie : les photos source ont-elles changé de place depuis ??
             if( m_photoFeeder.isValid() ){               
-                missingPhotos = checkPhotosInDir( m_projectParameters.m_photoPropertiesMap.keys(), m_photoFeeder.getDirectory() );
+                //missingPhotos = checkPhotosInDir( m_projectParameters.m_photoPropertiesMap.keys(), m_photoFeeder.getDirectory() );
+                m_photoDatabase.build( m_photoFeeder.getPhotoList() );
+                missingPhotos = m_photoDatabase.checkPhotosInDb();
             }
             else {
                 missingPhotos << tr("Input folder does not exist.");
@@ -791,6 +783,7 @@ void MainWin::sessionLoaded( QString fileLoaded )
     m_referenceProjectParameters = m_projectParameters;
     m_captionManager.captionsEditedReset();
     m_photoFeeder.setDirectory( m_projectParameters.m_galleryConfig.inputDir );
+    m_photoDatabase.build( m_photoFeeder.getPhotoList() );
     //Affichage
     m_ui->action_SaveSession->setDisabled( false );
     m_projectParameters.toUi( );   
@@ -833,6 +826,7 @@ void MainWin::choosePhotosDir()
     {
         m_projectParameters.m_galleryConfig.inputDir = dir;
         m_photoFeeder.setDirectory( dir );
+        m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
         m_lastSelectedDir = dir;
         m_ui->lineEdit_SourceFolder->setText( dir );//Affichage
         //On créé la liste des jpegs ici pour qu'elle soit dispo sous l'onglet "Légendes"
@@ -848,6 +842,7 @@ void MainWin::choosePhotosDirManually()
         if( sourceFolder.absolutePath() != m_photoFeeder.getDirectoryPath() ){
             m_projectParameters.m_galleryConfig.inputDir = sourceFolder.absolutePath();
             m_photoFeeder.setDirectory( sourceFolder );
+            m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
             m_lastSelectedDir =  m_photoFeeder.getDirectoryPath();
             //On créé la liste des jpegs ici pour qu'elle soit dispo sous l'onglet "Légendes"
             buildPhotoLists( );
@@ -857,6 +852,7 @@ void MainWin::choosePhotosDirManually()
         m_ui->lineEdit_SourceFolder->setText( tr("Invalid directory.") );
         m_projectParameters.m_galleryConfig.inputDir.clear(); //Sinon bug lorsque l'on rechoisi le répertoire d'avant
         m_photoFeeder.setDirectory( QDir::home() );
+        m_photoDatabase.build( m_photoFeeder.getPhotoList() );
     }
 }
 //--------------------------------
@@ -897,7 +893,7 @@ void MainWin::generateGallery( )
     info.setIcon( QMessageBox::Information );
 
     //La génération n'est pas en cours -> la lancer
-    if( !m_p_galleryGenerator->isGenerationInProgress() )
+    if( !m_galleryGenerator.isGenerationInProgress() )
     {
         //Check des champs obligatoires
         if( !checkForGeneration( errorMsg ) )
@@ -952,9 +948,7 @@ void MainWin::generateGallery( )
                 swapButtons( );
 
                 //Génération
-                m_p_galleryGenerator->generateGallery(  m_projectParameters,
-                                                        m_skinParameters/*, 
-                                                        m_captionManager.captionMap()*/ );
+                m_galleryGenerator.generateGallery( m_projectParameters, m_skinParameters );
             }
             else
             {
@@ -968,7 +962,7 @@ void MainWin::generateGallery( )
     {
     	m_ui->pushButton_Generation->setDisabled( true );
         m_ui->statusbar->showMessage( tr("Canceling...") );
-        m_p_galleryGenerator->abordGeneration( );
+        m_galleryGenerator.abordGeneration( );
     }
 
 
@@ -1060,14 +1054,39 @@ void MainWin::displayCaption( QString text )
     this->m_ui->lineEdit_Caption->setText( text );
 }
 
-void MainWin::error( CError err )
+void MainWin::error( CMessage err )
 {
     QMessageBox modalErrorBox( this );
     modalErrorBox.setText( err.summary() );
-    modalErrorBox.setInformativeText( err.details() );
+    modalErrorBox.setInformativeText( err.informativeText() );
+    modalErrorBox.setDetailedText( err.details() );
     modalErrorBox.setIcon( QMessageBox::Critical );
     modalErrorBox.exec();
 }
+
+
+void MainWin::warning( CMessage warning )
+{
+    QMessageBox modalErrorBox( this );
+    modalErrorBox.setText( warning.summary() );
+    modalErrorBox.setInformativeText( warning.informativeText() );
+    modalErrorBox.setDetailedText( warning.details() );
+    modalErrorBox.setIcon( QMessageBox::Warning );
+    modalErrorBox.exec();
+}
+
+
+void MainWin::information( CMessage info )
+{
+    QMessageBox modalErrorBox( this );
+    modalErrorBox.setText( info.summary() );
+    modalErrorBox.setInformativeText( info.informativeText() );
+    modalErrorBox.setDetailedText( info.details() );
+    modalErrorBox.setIcon( QMessageBox::Information );
+    modalErrorBox.exec();
+}
+
+
 
 void MainWin::openSkinDesigner( )
 {        
@@ -1339,6 +1358,12 @@ int MainWin::buildPhotoLists( )
     }
 
     onLogMsg( QString("[Photolist]. Nb photos found: ") + QString::number( photoList.size() ) );
+
+
+    //NEW: Use of photofeeder and database
+    m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
+
+
 
     delete p_photoListIterator;   
     return nbPhotoNotFound;

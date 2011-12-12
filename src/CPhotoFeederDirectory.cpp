@@ -20,6 +20,10 @@
 #include "CPhotoFeederDirectory.h"
 #include "CError.h"
 
+
+CPhotoFeederDirectory CPhotoFeederDirectory::s_instance( QDir::homePath() );
+
+
 //IPhotoFeeder::IPhotoFeeder(){}
 
 //-----------------------
@@ -33,10 +37,10 @@
 {
     if( QDir( directoryPath ).exists() ) {
         m_directory.setPath( directoryPath );
-        emit feed( getPhotoList() );
+//        emit update( getPhotoList() );
     }
     else {
-        emit error(  CError::error( CError::DirectoryCreation ) + directoryPath );
+        emit error( CMessage( CError::error( CError::DirectoryCreation ), directoryPath) );
     }
 
     return m_directory.exists();
@@ -54,10 +58,10 @@
 {
     if( directory.exists() ) {
         m_directory = directory;
-        emit feed( getPhotoList() );
+        emit update( getPhotoList() );
     }
     else {
-        emit error( CError::error( CError::DirectoryCreation ) + directory.absolutePath() );
+        emit error(CMessage( CError::error( CError::DirectoryCreation ), directory.absolutePath() ));
     }
 
     return m_directory.exists();

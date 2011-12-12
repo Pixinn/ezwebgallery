@@ -41,7 +41,9 @@ QTextStream CTerminalUi::cerr( stderr, QIODevice::WriteOnly );
 //IUserInterface::IUserInterface( ){}
 
 
-CTerminalUi::CTerminalUi( const QString &projectFile )/* :  IUserInterface( parent )*/
+CTerminalUi::CTerminalUi( CGalleryGenerator & galleryGenerator, const QString &projectFile ) :
+    QObject(),    
+    m_galleryGenerator( galleryGenerator )
 {
     m_projectFile = projectFile;
 
@@ -85,6 +87,7 @@ void CTerminalUi::onGalleryGenerationFinished( /*bool success*/QList<CPhotoPrope
     if( success ){
         cout << tr("Generation successfully completed.") << endl;
     }*/
+    propertiesList;
     cout << tr("Generation successfully completed.") << endl;
     emit done();
 }
@@ -138,35 +141,6 @@ void CTerminalUi::run( )
             return;
         }
     }
- /*   //Mise  jour de la liste des photos : le contenu du rep a peut-tre chang depuis la sauvegarde
-    QDir inputDir( m_projectParameters.m_galleryConfig.inputDir );
-	QStringList photoFileTypes = (QStringList() << "*.jpeg" << "*.jpg" << "*.tiff" << "*.tif"); //Formats d'image supports en entre
-    QStringList photoList = CPlatform::getImagesInDir( inputDir, photoFileTypes );
-    QStringListIterator* p_photoListIterator = new QStringListIterator( photoList );
-    m_projectParameters.m_photosList.clear();
-    while( p_photoListIterator->hasNext() ){    //Construction du QMap<photoName,lastModified>
-        QString photoName = p_photoListIterator->next();
-        QFileInfo* p_photoFileInfo = new QFileInfo( inputDir.absoluteFilePath(photoName) );
-        m_projectParameters.m_photosList.insert( photoName, p_photoFileInfo->lastModified() );
-        onLogMsg( photoName + QString(": ") + p_photoFileInfo->lastModified().toString() );
-        delete p_photoFileInfo;
-    }
-    delete p_photoListIterator;
-    //Cration du QStringList de lgendes
-    QMap<QString,CCaption> projectCaptionMap = m_captionManager.captionMap(); //List de lgende telle que lue  partir du fichier projet
-    QList<CCaption> captionList;
-    CCaption emptyCaption;
-  //La liste des lgendes sera dans le mme ordre que la liste de photos : alphabtique
-    foreach( QString photo, photoList ){
-        if( projectCaptionList.contains( photo ) ){
-            captionList << projectCaptionList.value( photo ) ;
-        }
-        //La photo n'tait pas auparavant dans le rpertoire. On met une lgende vide
-        else{
-            captionList << emptyCaption;
-        }
-    }
-*/
 
    //Reconstruction de la liste des photos rellement prsentes dans le rpertoire d'entre
 	//REM: copier/coller adapt de mainwin::buildPhotoList() -> voir les commentaires de cette fonction pour explication
@@ -183,7 +157,6 @@ void CTerminalUi::run( )
         if( !m_projectParameters.m_photoPropertiesMap.contains( photoName ) )
         {
             CPhotoPropertiesExtended newProperties;
-//          newProperties.setFileName( photoName );
             newProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
             m_projectParameters.m_photoPropertiesMap.insert( photoName, newProperties );
             m_projectParameters.m_photosConfig.f_regeneration = true;
@@ -208,8 +181,7 @@ void CTerminalUi::run( )
 	}
 
     //Lancement de la gnration
-    m_p_galleryGenerator->generateGallery(  m_projectParameters,
-                                            m_skinParameters  );
+    m_galleryGenerator.generateGallery(  m_projectParameters, m_skinParameters  );
 
 }
 
@@ -220,7 +192,7 @@ void CTerminalUi::keyPressEvent ( QKeyEvent * event )
 {
     if( event->key() == Qt::Key_Escape ){
         cout << tr("Canceling...") << endl;
-        m_p_galleryGenerator->abordGeneration( );
+        m_galleryGenerator.abordGeneration( );
     }
 }
 
@@ -230,7 +202,3 @@ void CTerminalUi::keyPressEvent ( QKeyEvent * event )
 
 void CTerminalUi::show(){}
 
-void CTerminalUi::setGenerator( CGalleryGenerator *generator )
-{
-    m_p_galleryGenerator = generator;
-}
