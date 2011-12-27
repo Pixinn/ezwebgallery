@@ -287,7 +287,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     //Fenêtre de Configuration
     m_p_configureWindow = new WinConfigure( this );
     //Légendes
-    m_ui->listView_Photos->setModel( &m_photosListModel );
+    m_ui->listView_Photos->setModel( &(m_photoDatabase.getModel()) );
 
     /**** Connections SIGNAUX/SLOTS ******/  
     //Ouvrir/Fermer/Sauver Session
@@ -328,7 +328,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     connect( &m_skinParameters, SIGNAL(skinOpened(QString)), this, SLOT(skinPathChanged(QString)) );
     connect( &m_skinParameters, SIGNAL(skinSaved(QString)), this, SLOT(skinPathChanged(QString)) );
     //Navigation dans les Thumnail de "tab Légendes"
-    connect( this->m_ui->pushButton_UpdatePhotoList, SIGNAL(clicked()), this, SLOT( buildPhotoLists() ) );
+    connect( this->m_ui->pushButton_UpdatePhotoList, SIGNAL(clicked()), this, SLOT( refresh() ) );
     connect( this->m_ui->checkBox_GalleryThumb, SIGNAL(stateChanged(int)), this, SLOT(thumnailChanged(int)));
     connect( this->m_ui->pushButton_PrevPhoto, SIGNAL(clicked( )), &(this->m_captionManager), SLOT( onPrevious() ) );
     connect( this->m_ui->pushButton_nextPhoto, SIGNAL(clicked( )), &(this->m_captionManager), SLOT( onNext() ) );
@@ -552,7 +552,7 @@ void MainWin::openSession( const QString &sessionFile )
             //ie : les photos source ont-elles changé de place depuis ??
             if( m_photoFeeder.isValid() ){               
                 //missingPhotos = checkPhotosInDir( m_projectParameters.m_photoPropertiesMap.keys(), m_photoFeeder.getDirectory() );
-                m_photoDatabase.build( m_photoFeeder.getPhotoList() );
+//                m_photoDatabase.build( m_photoFeeder.getPhotoList() );
                 missingPhotos = m_photoDatabase.checkPhotosInDb();
             }
             else {
@@ -783,7 +783,7 @@ void MainWin::sessionLoaded( QString fileLoaded )
     m_referenceProjectParameters = m_projectParameters;
     m_captionManager.captionsEditedReset();
     m_photoFeeder.setDirectory( m_projectParameters.m_galleryConfig.inputDir );
-    m_photoDatabase.build( m_photoFeeder.getPhotoList() );
+//    m_photoDatabase.build( m_photoFeeder.getPhotoList() );
     //Affichage
     m_ui->action_SaveSession->setDisabled( false );
     m_projectParameters.toUi( );   
@@ -974,7 +974,7 @@ void MainWin::generateGallery( )
 //--------------------------------
 void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 {
-    QVariant photoSelected = m_photosListModel.data( indexPhotoName, Qt::DisplayRole );
+    QVariant photoSelected = m_photoDatabase.getModel().data( indexPhotoName, Qt::DisplayRole );
     QString photoFilename = photoSelected.toString();
     QFileInfo photoFileInfo( m_photoFeeder.getDirectory(), photoFilename );
     onLogMsg( QString("[Thumbnail]. Affichage Vignette: ") + photoFilename  );
@@ -1264,6 +1264,21 @@ QStringList MainWin::checkPhotosInDir( const QStringList& photosInConfig, const 
     return missingPhotos;
 }
 
+
+
+/*************************
+* refresh
+*----------------------
+* Updates the database with a fresh list from the feeder
+**************************/
+void MainWin::refresh( void )
+{
+    m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
+    buildPhotoLists();  //DEPRECATED
+}
+
+
+
 /*************************
 * buildPhotoLists
 *----------------------
@@ -1335,7 +1350,7 @@ int MainWin::buildPhotoLists( )
 
     //2 - Maj du Caption Manager et affichage dans TAB "Légendes"
     //- Mise à jour du Modèle avec la liste des photos trouvées
-    m_photosListModel.setStringList( m_projectParameters.m_photoPropertiesMap.keys() /*photoList*/ ); //Mise  jour du Modèle pour affichage
+    //m_photosListModel.setStringList( m_projectParameters.m_photoPropertiesMap.keys() /*photoList*/ ); //Mise  jour du Modèle pour affichage
     //Mise  jour du gestionnaire de légendes : association avec le modèle mis à jour
     m_captionManager.setPhotoList( m_ui->listView_Photos );
 	

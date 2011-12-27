@@ -157,14 +157,7 @@ public:
         m_photosConfig.f_regeneration = true;
         m_thumbsConfig.f_regeneration = true;
     }
-  /*  CProjectParameters( CPhotoFeederDirectory& feeder ) :
-            QObject(),
-            m_feeder( feeder )
-    {
-        m_galleryConfig.f_regeneration = true;
-        m_photosConfig.f_regeneration = true;
-        m_thumbsConfig.f_regeneration = true;
-    }*/
+
     CProjectParameters( const CProjectParameters & );
     CProjectParameters& operator=(const CProjectParameters & );  //Ncessit de surcharger l'oprateur d'assignement lorsqu'on hrite de QObject
     bool operator==(const CProjectParameters & );
@@ -183,6 +176,7 @@ public:
     bool save( const QString & );                                //Sauvegarde d'un fichier de paramtres
     int version( );                                               //Retoune le status du projet
 private:
+    static const unsigned int s_versionFilePath = 20111217;
     QDomDocument convertFromOldVersion( const QDomDocument &document, const int version );    //Convertion du projet d'une version prcdante en la version actuelle
 
 signals:

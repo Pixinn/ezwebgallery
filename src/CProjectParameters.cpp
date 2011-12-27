@@ -400,8 +400,15 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     }
     m_p_captionManager->setCaptionMap( captionMap );
 
-
-    CPhotoDatabase::getInstance().build( photoListElem );
+    //deprecated fileformat
+    if( m_version < s_versionFilePath ) {
+        CPhotoDatabase::getInstance().importDeprecated( photoListElem, inputFolder );
+    }
+    //current file format
+    else
+    {
+        CPhotoDatabase::getInstance().build( photoListElem );
+    }
 
 }
 
@@ -543,7 +550,8 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
     watermarkConfig.appendChild( watermarkRelativeSize );
     watermarkRelativeSize.appendChild( document.createTextNode(  QString::number(m_photosConfig.watermark.relativeSize)) );
 
-    //--- PHOTOS et LEGENDES associes  
+    //--- PHOTOS et LEGENDES associes
+    /*
     QMap<QString,CCaption> captionMap = m_p_captionManager->captionMap();
     CPhotoPropertiesExtended photoProperties;
     foreach( QString photoName, captionMap.keys() ){
@@ -585,6 +593,8 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
         photoElement.appendChild( captionEndingElem );
         captionEndingElem.appendChild( document.createTextNode( photoProperties.caption().ending() ) );
     }
+*/
+    root.appendChild( CPhotoDatabase::getInstance().xml(document));
 
     return document;
 }

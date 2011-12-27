@@ -24,8 +24,6 @@
 CPhotoFeederDirectory CPhotoFeederDirectory::s_instance( QDir::homePath() );
 
 
-//IPhotoFeeder::IPhotoFeeder(){}
-
 //-----------------------
 // setDirectory( QString directoryPath )
 // ----------------

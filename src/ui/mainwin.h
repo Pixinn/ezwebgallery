@@ -31,7 +31,6 @@
 #include <QTextEdit>
 #include <QString>
 #include <QStringList>
-#include <QStringListModel>
 #include <QModelIndex>
 #include <QDir>
 #include <QMap>
@@ -118,7 +117,8 @@ public slots:
     void watermarkAutoColorChecked( int );
     //Légendes
     int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoPropertiesExtended avec les donnes disponibles
-    void previewCaption( QString );  //Affiche un prrendu de la lgende.
+    void previewCaption( QString );  //Affiche un prrendu de la légende.
+    void refresh( void );
     //skinning
     void openSkinDesigner( );
     void skinNameChanged( QString );
@@ -145,7 +145,6 @@ private:
     QTextEdit* m_p_tagsWindow;
     WinSkinDesigner* m_p_skinDesignerWindow;
     WinConfigure* m_p_configureWindow;
-    QStringListModel m_photosListModel;
     enum { eGenerating, eNotGenerating } m_stateGeneration;
     QStringList m_debugMessages;
     QStringList m_recentSessions;           //Liste contenant les NBMAXRECENTFILES derniers fichiers projets ouverts

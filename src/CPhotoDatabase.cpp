@@ -30,6 +30,7 @@ const QString CPhotoDatabase::XMLTAG_FILEPATH("FilePath");
 const QString CPhotoDatabase::XMLTAG_CAPTIONBODY("Caption");
 const QString CPhotoDatabase::XMLTAG_CAPTIONHEADER("CaptionHeader");
 const QString CPhotoDatabase::XMLTAG_CAPTIONENDING("CaptionEnding");
+const QString CPhotoDatabase::XMLTAG_DEPRECATED_FILENAME("PhotoName");
 
 //SINGLE STATIC INSTANCE
 CPhotoDatabase CPhotoDatabase::s_instance;
@@ -45,9 +46,13 @@ CPhotoDatabase CPhotoDatabase::s_instance;
 ********************************************************************/
 QStringList CPhotoDatabase::build( const QStringList& photoList )
 {
+    
     clear();
-    return appendPhotoList( photoList );            
+    QStringList invalidFiles = appendPhotoList( photoList );
+    //m_model.setStringList( m_orderedKeys );
+    return invalidFiles;
 }
+
 
 
 /*******************************************************************
@@ -70,16 +75,55 @@ QStringList CPhotoDatabase::build( const QDomElement & xmlElem )
         properties.setFileInfo( QFileInfo( node.firstChildElement( XMLTAG_FILEPATH ).text() ) );
         properties.setId( iteratorDomList );
         //caption
-        /*QString body = node.firstChildElement(XMLTAG_CAPTIONBODY).text();
+        QString body = node.firstChildElement(XMLTAG_CAPTIONBODY).text();
         QString header = node.firstChildElement(XMLTAG_CAPTIONHEADER).text();
         QString ending = node.firstChildElement(XMLTAG_CAPTIONENDING).text();
         CCaption caption( header, body, ending );
-        properties.setCaption( caption );*/
+        properties.setCaption( caption );
         if ( !add( properties ) )   {
             invalidFiles << properties.fileInfo().absoluteFilePath();
         }
     } 
 //    emit updatedProperties( propertiesList() );
+    //m_model.setStringList( m_orderedKeys );
+    return invalidFiles;
+}
+
+
+/*******************************************************************
+* importDeprecated( const QDomElement &, const QString & )
+* ---------
+* Build from a deprecated xml element
+* In (QDomElement) dom element to parse
+* In (QString) input directpory containing the photos
+* Return (QStringList) list of invalid files
+********************************************************************/
+QStringList CPhotoDatabase::importDeprecated( const QDomElement & xmlElem, const QString & inDir )
+{
+    clear();
+    QStringList invalidFiles;
+    QDomNodeList photosNode = xmlElem.elementsByTagName( XMLTAG_PHOTOS );
+    QDir inputDir( inDir );
+    for( unsigned int iteratorDomList = 0; iteratorDomList < photosNode.length() ; iteratorDomList++ )
+    {        
+        QDomNode node = photosNode.item( iteratorDomList );
+        CPhotoPropertiesExtended properties( node ); //this constructor sets the caption
+        //file properties
+        properties.setLastModificationTime( QDateTime::fromString( node.firstChildElement( XMLTAG_LASTMODIFICATIONTIME ).text() ));        
+        properties.setFileInfo( QFileInfo( inputDir.absoluteFilePath( node.firstChildElement( XMLTAG_DEPRECATED_FILENAME ).text() ) ) );
+        properties.setId( iteratorDomList );
+        //caption
+        QString body = node.firstChildElement(XMLTAG_CAPTIONBODY).text();
+        QString header = node.firstChildElement(XMLTAG_CAPTIONHEADER).text();
+        QString ending = node.firstChildElement(XMLTAG_CAPTIONENDING).text();
+        CCaption caption( header, body, ending );
+        properties.setCaption( caption );
+        if ( !add( properties ) )   {
+            invalidFiles << properties.fileInfo().absoluteFilePath();
+        }
+    } 
+//    emit updatedProperties( propertiesList() );
+    //m_model.setStringList( m_orderedKeys );
     return invalidFiles;
 }
 
@@ -89,14 +133,15 @@ QStringList CPhotoDatabase::build( const QDomElement & xmlElem )
 * xml( QDomElement& document )
 * ---------
 * Builds an Xml representation of the database
-* In/Out: (QDomElement&) Xml document where to build the elements
+* In/Out: (QDomDocument&) Xml document where to build the elements
+* Return: (QDomElement) the dom element generated
 ********************************************************************/
-void CPhotoDatabase::xml( QDomDocument& document ) const
+QDomElement CPhotoDatabase::xml( QDomDocument& document ) const
 {
     QDomElement database = document.createElement( XMLTAG_PHOTOSDB );
-    QDomElement root = document.documentElement();
+  //  QDomElement root = document.documentElement();
     
-    root.appendChild( database );
+  //  root.appendChild( database );
     foreach( CPhotoPropertiesExtended* properties, m_db )
     {
         QDomElement photoElement = document.createElement( XMLTAG_PHOTOS );
@@ -120,23 +165,26 @@ void CPhotoDatabase::xml( QDomDocument& document ) const
         photoElement.appendChild( captionEndingElem );
         captionEndingElem.appendChild( document.createTextNode( properties->caption().ending() ) );
     }
+    return database;
 }
 
 
-
 /*******************************************************************
-* propertiesList( void )
+* CPhotoDatabase( )
 * ---------
-* Returns an ordered list of photo properties
+* The layout of the model has been updated outside
 ********************************************************************/
-/*QList<CPhotoPropertiesExtended> CPhotoDatabase::propertiesList( void ) const
+void CPhotoDatabase::modelLayoutChanged( void )
 {
-    QList<CPhotoPropertiesExtended> propertiesList;
-    foreach( QString file, m_orderedKeys ) {
-        propertiesList << *(m_db.value( file ));
+    CPhotoDatabaseElem* elem;
+    int id = 0;
+    QStringList orderedKeys = m_model.stringList();
+    foreach( QString key, orderedKeys ) {
+        elem = m_db.value( key );
+        elem->setId( id );
+        id++;
     }
-    return propertiesList;
-}*/
+}
 
 
 /*******************************************************************
@@ -156,6 +204,7 @@ QStringList CPhotoDatabase::appendPhotoList(const QStringList &photoList )
     }
 
     //emit updatedProperties( propertiesList() );
+    //m_model.setStringList( m_orderedKeys );
     return invalidFiles;
 }
 
@@ -164,7 +213,7 @@ QStringList CPhotoDatabase::appendPhotoList(const QStringList &photoList )
 * refresh( const QStringList &)
 * ---------
 * Refresh the db using this new set of files. Captions and ids of the
-* filesalready present are preserved. Files not present in the provided
+* files already present are preserved. Files not present in the provided
 * list are removed from the database.
 * In: (QStringList&) absolute file paths composing the new file set
 * Returns invalid files.
@@ -220,6 +269,7 @@ QStringList CPhotoDatabase::refresh( const QStringList & fileSet )
 
 
     consolidate(); //removes invalidFiles
+    //m_model.setStringList( m_orderedKeys );
     return invalidFiles;
 }
 
@@ -270,17 +320,19 @@ bool CPhotoDatabase::add( const QString& photoPath)
 
     if( returnedValue )
     {
+        QStringList orderedKeys = m_model.stringList();
         QString filename = fileInfo.fileName();
-        if( !m_orderedKeys.contains(filename)  )
+        if( !orderedKeys.contains(filename)  )
         {
             CPhotoDatabaseElem* photoElem = new CPhotoDatabaseElem();
-            int id = m_orderedKeys.size();    
+            int id = orderedKeys.size();    
 
             photoElem->setId( id );
             photoElem->setFileInfo( fileInfo );
             photoElem->setLastModificationTime( fileInfo.lastModified() );
             m_db.insert( fileInfo.fileName(), photoElem );
-            m_orderedKeys << fileInfo.fileName();
+            orderedKeys << fileInfo.fileName();
+            m_model.setStringList( orderedKeys );
         }
         else { //update of the file's properties
             CPhotoDatabaseElem* photoElem = m_db.value( filename );
@@ -310,8 +362,9 @@ bool CPhotoDatabase::add( const CPhotoPropertiesExtended& properties)
     {
         int id;
         QString filename = fileInfo.fileName();
+        QStringList orderedKeys = m_model.stringList();
         
-        if( m_orderedKeys.contains( filename ) )
+        if( orderedKeys.contains( filename ) )
         {
             CPhotoDatabaseElem* oldElem = m_db.value( filename );
             id = oldElem->id();
@@ -319,8 +372,9 @@ bool CPhotoDatabase::add( const CPhotoPropertiesExtended& properties)
             delete oldElem;
         }
         else {
-             id = m_orderedKeys.size();
-             m_orderedKeys << fileInfo.fileName();
+             id = orderedKeys.size();
+             orderedKeys << fileInfo.fileName();
+             m_model.setStringList( orderedKeys );
         }
         
         CPhotoDatabaseElem* photoElem = new CPhotoDatabaseElem( properties );
@@ -356,10 +410,12 @@ void CPhotoDatabase::consolidate( void )
 ********************************************************************/
 void CPhotoDatabase::remove( const QString & filename )
 {
-    if( m_db.contains( filename ) ) {
+    if( m_db.contains( filename ) ) 
+    {
+        QStringList orderedKeys = m_model.stringList();
         CPhotoDatabaseElem* elem = m_db.value( filename );
         int id = elem->id();
-        m_orderedKeys.removeAt( id );
+        orderedKeys.removeAt( id );
         //Removing the element from the db and decrementing subsequent ids
         QMap<QString,CPhotoDatabaseElem*>::iterator it = m_db.find( filename );        
         while( ++it != m_db.end() ){
@@ -369,6 +425,7 @@ void CPhotoDatabase::remove( const QString & filename )
         m_db.remove( filename );        
         //Deleting the element itself
         delete elem;
+        m_model.setStringList( orderedKeys );
     }
 }
 
@@ -380,7 +437,8 @@ void CPhotoDatabase::remove( const QString & filename )
 ********************************************************************/
 void CPhotoDatabase::remove( int id )
 {
-    const QString filename = m_orderedKeys.at( id );
+    QStringList orderedKeys = m_model.stringList();
+    const QString filename = orderedKeys.at( id ); //we could use m_model.data( QModelIndex ).toString() but I don't understand how to use QModelIndex
     remove( filename );
     //emit updatedProperties( propertiesList() );
 }
@@ -394,11 +452,13 @@ void CPhotoDatabase::remove( int id )
 ********************************************************************/
 void CPhotoDatabase::clear( )
 {
+    QStringList orderedKeys = m_model.stringList();
     foreach( CPhotoDatabaseElem* element, m_db) {
         delete element;
     }
     m_db.clear();
-    m_orderedKeys.clear();    
+    orderedKeys.clear();
+    m_model.setStringList( orderedKeys ); //direct use of m_model.reset() possible ??
 }
 
 /*******************************************************************
@@ -419,8 +479,10 @@ void CPhotoDatabase::swap( const QString & filename1, const QString & filename2 
         int id2 = elem2->id();
         elem1->setId( id1 );
         elem2->setId( id2 );
-        //Swaping in keylist
-        m_orderedKeys.swap( id1, id2 );
+        //Swaping in model
+        QStringList orderedKeys = m_model.stringList();
+        orderedKeys.swap( id1, id2 );
+        m_model.setStringList( orderedKeys );
      }
      //emit updatedProperties( propertiesList() );
  }
@@ -434,8 +496,9 @@ void CPhotoDatabase::swap( const QString & filename1, const QString & filename2 
 ********************************************************************/
 void CPhotoDatabase::swap( int id1, int id2 )
 {
-    const QString& filename1 = m_orderedKeys.at( id1 );
-    const QString& filename2 = m_orderedKeys.at( id2 );
+    QStringList orderedKeys = m_model.stringList();
+    const QString& filename1 = orderedKeys.at( id1 );
+    const QString& filename2 = orderedKeys.at( id2 );
      if( m_db.contains( filename1 ) && m_db.contains( filename2 )  )
      {
         //Swaping in main db
@@ -444,7 +507,8 @@ void CPhotoDatabase::swap( int id1, int id2 )
         elem1->setId( id1 );
         elem2->setId( id2 );
         //Swaping in keylist
-        m_orderedKeys.swap( id1, id2 );
+        orderedKeys.swap( id1, id2 );
+        m_model.setStringList( orderedKeys );
      }
      //emit updatedProperties( propertiesList() );
  }
@@ -500,7 +564,8 @@ bool CPhotoDatabase::loadThumbnail( const QString & filename )
 ********************************************************************/
 bool CPhotoDatabase::loadThumbnail( int id )
 {
-    const QString& filename = m_orderedKeys.at( id );
+    QStringList orderedKeys = m_model.stringList();
+    const QString& filename = orderedKeys.at( id ); //m_model.data() ??
     return loadThumbnail( filename );
 } 
  
@@ -533,14 +598,15 @@ const QImage& CPhotoDatabase::thumbnail( const QString & filename  ) const
 ********************************************************************/
 const QImage& CPhotoDatabase::thumbnail( int id  ) const
 {
-     const QString& filename = m_orderedKeys.at( id );
-     if( m_db.contains( filename ) ) {
-        CPhotoDatabaseElem* elem = m_db.value( filename );
-        return elem->m_thumbnail;
-     }
-     else {
-        return s_defaultThumbnail;
-     }
+    QStringList orderedKeys = m_model.stringList();
+    const QString& filename = orderedKeys.at( id ); //m_model.data() ???
+    if( m_db.contains( filename ) ) {
+       CPhotoDatabaseElem* elem = m_db.value( filename );
+       return elem->m_thumbnail;
+    }
+    else {
+       return s_defaultThumbnail;
+    }
 }
 
 
