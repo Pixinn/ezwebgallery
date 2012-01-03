@@ -71,14 +71,17 @@ QStringList CPhotoDatabase::build( const QDomElement & xmlElem )
         QDomNode node = photosNode.item( iteratorDomList );
         CPhotoPropertiesExtended properties( node ); //this constructor sets the caption
         //file properties
+        QFileInfo fileInfo( node.firstChildElement( XMLTAG_FILEPATH ).text() );
         properties.setLastModificationTime( QDateTime::fromString( node.firstChildElement( XMLTAG_LASTMODIFICATIONTIME ).text() ));
-        properties.setFileInfo( QFileInfo( node.firstChildElement( XMLTAG_FILEPATH ).text() ) );
+        properties.setFileInfo( fileInfo );
         properties.setId( iteratorDomList );
         //caption
         QString body = node.firstChildElement(XMLTAG_CAPTIONBODY).text();
         QString header = node.firstChildElement(XMLTAG_CAPTIONHEADER).text();
         QString ending = node.firstChildElement(XMLTAG_CAPTIONENDING).text();
         CCaption caption( header, body, ending );
+        caption.setFileInfo( fileInfo );
+        caption.setId( iteratorDomList + 1 );
         properties.setCaption( caption );
         if ( !add( properties ) )   {
             invalidFiles << properties.fileInfo().absoluteFilePath();
@@ -109,14 +112,17 @@ QStringList CPhotoDatabase::importDeprecated( const QDomElement & xmlElem, const
         QDomNode node = photosNode.item( iteratorDomList );
         CPhotoPropertiesExtended properties( node ); //this constructor sets the caption
         //file properties
+         QFileInfo fileInfo( inputDir.absoluteFilePath( node.firstChildElement( XMLTAG_DEPRECATED_FILENAME ).text() ) );
         properties.setLastModificationTime( QDateTime::fromString( node.firstChildElement( XMLTAG_LASTMODIFICATIONTIME ).text() ));        
-        properties.setFileInfo( QFileInfo( inputDir.absoluteFilePath( node.firstChildElement( XMLTAG_DEPRECATED_FILENAME ).text() ) ) );
+        properties.setFileInfo( fileInfo );
         properties.setId( iteratorDomList );
         //caption
         QString body = node.firstChildElement(XMLTAG_CAPTIONBODY).text();
         QString header = node.firstChildElement(XMLTAG_CAPTIONHEADER).text();
         QString ending = node.firstChildElement(XMLTAG_CAPTIONENDING).text();
         CCaption caption( header, body, ending );
+        caption.setFileInfo( fileInfo );
+        caption.setId( iteratorDomList + 1);
         properties.setCaption( caption );
         if ( !add( properties ) )   {
             invalidFiles << properties.fileInfo().absoluteFilePath();
@@ -182,6 +188,10 @@ void CPhotoDatabase::modelLayoutChanged( void )
     foreach( QString key, orderedKeys ) {
         elem = m_db.value( key );
         elem->setId( id );
+        //keeping the caption in sync
+        CCaption caption = elem->caption();
+        caption.setId( id + 1);
+        elem->setCaption( caption );
         id++;
     }
 }
@@ -326,7 +336,12 @@ bool CPhotoDatabase::add( const QString& photoPath)
         {
             CPhotoDatabaseElem* photoElem = new CPhotoDatabaseElem();
             int id = orderedKeys.size();    
-
+            
+            CCaption caption;
+            caption.setFileInfo( fileInfo );
+            caption.setId( id + 1);
+            
+            photoElem->setCaption( caption );
             photoElem->setId( id );
             photoElem->setFileInfo( fileInfo );
             photoElem->setLastModificationTime( fileInfo.lastModified() );
@@ -338,6 +353,10 @@ bool CPhotoDatabase::add( const QString& photoPath)
             CPhotoDatabaseElem* photoElem = m_db.value( filename );
             photoElem->setFileInfo( fileInfo );
             photoElem->setLastModificationTime( fileInfo.lastModified() );
+            //keep the caption in sync with new properties
+            CCaption caption = photoElem->caption();
+            caption.setFileInfo( fileInfo );
+            photoElem->setCaption( caption );
         }
     }
 
@@ -379,6 +398,11 @@ bool CPhotoDatabase::add( const CPhotoPropertiesExtended& properties)
         
         CPhotoDatabaseElem* photoElem = new CPhotoDatabaseElem( properties );
         photoElem->setId( id );
+        //keeping the caption in sync with new properties
+        CCaption caption = photoElem->caption();
+        caption.setId( id + 1);
+        photoElem->setCaption( caption );
+        //adding to db
         m_db.insert( filename, photoElem );        
     }
 
@@ -419,8 +443,13 @@ void CPhotoDatabase::remove( const QString & filename )
         //Removing the element from the db and decrementing subsequent ids
         QMap<QString,CPhotoDatabaseElem*>::iterator it = m_db.find( filename );        
         while( ++it != m_db.end() ){
-            int id = it.value()->id();
-            it.value()->setId( --id );
+            CPhotoPropertiesExtended* properties = it.value();
+            int id = properties->id() - 1;
+            properties->setId( id );
+            //keeping the caption in sync
+            CCaption caption = properties->caption();
+            caption.setId( id + 1);
+            properties->setCaption( caption );
         }
         m_db.remove( filename );        
         //Deleting the element itself
@@ -479,10 +508,18 @@ void CPhotoDatabase::swap( const QString & filename1, const QString & filename2 
         int id2 = elem2->id();
         elem1->setId( id1 );
         elem2->setId( id2 );
+        //Syncing the captions properties
+        CCaption caption =  elem1->caption();
+        caption.setId( id2 + 1);
+        elem1->setCaption( caption );
+        caption =  elem2->caption();
+        caption.setId( id1 + 1);
+        elem2->setCaption( caption );
         //Swaping in model
         QStringList orderedKeys = m_model.stringList();
         orderedKeys.swap( id1, id2 );
         m_model.setStringList( orderedKeys );
+
      }
      //emit updatedProperties( propertiesList() );
  }
@@ -506,6 +543,13 @@ void CPhotoDatabase::swap( int id1, int id2 )
         CPhotoDatabaseElem* elem2 = m_db.value( filename2 );
         elem1->setId( id1 );
         elem2->setId( id2 );
+        //Syncing the captions properties
+        CCaption caption =  elem1->caption();
+        caption.setId( id2 + 1);
+        elem1->setCaption( caption );
+        caption =  elem2->caption();
+        caption.setId( id1 + 1);
+        elem2->setCaption( caption );
         //Swaping in keylist
         orderedKeys.swap( id1, id2 );
         m_model.setStringList( orderedKeys );
@@ -611,18 +655,24 @@ const QImage& CPhotoDatabase::thumbnail( int id  ) const
 
 
  /*******************************************************************
-* properties(  ); 
+* properties( int ); 
 * ---------
-* Returns an ordered list of base properties
-* Returns : (QList<CPhotoProperties>)
+* Returns the properties of the specified photo
+* Returns : (CPhotoProperties*)
 ********************************************************************/
-/*QList<CPhotoProperties> CPhotoDatabase::properties( void ) const
+CPhotoProperties* CPhotoDatabase::properties( int id )
 {
-    QList<CPhotoProperties> list;
-    foreach( QString filename, m_orderedKeys ) {
-        list << *(m_db.value( filename ));
-    }
-    
-    return list;
-}*/
+    return m_db.value( m_model.data( m_model.index( id ), Qt::DisplayRole ).toString() );
+}
 
+
+/*******************************************************************
+* properties( const QString & );
+* ---------
+* Returns the properties of the specified photo
+* Returns : (CPhotoProperties*)
+********************************************************************/
+CPhotoProperties* CPhotoDatabase::properties( const QString & fileName )
+{
+   return m_db.value( fileName );
+}

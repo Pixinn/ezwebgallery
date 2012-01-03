@@ -287,7 +287,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     //Fenêtre de Configuration
     m_p_configureWindow = new WinConfigure( this );
     //Légendes
-    m_ui->listView_Photos->setModel( &(m_photoDatabase.getModel()) );
+    m_ui->listView_Photos->setModel( (QStringListModel*)( &(m_photoDatabase.model()) ) );
 
     /**** Connections SIGNAUX/SLOTS ******/  
     //Ouvrir/Fermer/Sauver Session
@@ -339,6 +339,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     connect( &(this->m_captionManager), SIGNAL(displayThumbnailSignal(QModelIndex)), this, SLOT(displayThumbnail(QModelIndex)) );
     connect( &(this->m_captionManager), SIGNAL(displayCaptionSignal(QString)), this, SLOT(displayCaption(QString)) );
     connect( &(this->m_captionManager), SIGNAL(displayPreviewSignal(QString)), this, SLOT(previewCaption(QString)) );
+    connect( &(this->m_captionManager), SIGNAL(displayHighlightIndex(QModelIndex)), this, SLOT(highlightPhoto(QModelIndex)) );
     //Onglet Présentation
     connect( this->m_ui->horizontalSlider_PhotoSharpeningRadius, SIGNAL(valueChanged(int)), this, SLOT(sharpeningRadiusChanged(int)) );
     connect( this->m_ui->doubleSpinBox_PhotoSharpeningRadius, SIGNAL(valueChanged(double)), this, SLOT(sharpeningRadiusChanged(double)) );
@@ -974,7 +975,7 @@ void MainWin::generateGallery( )
 //--------------------------------
 void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 {
-    QVariant photoSelected = m_photoDatabase.getModel().data( indexPhotoName, Qt::DisplayRole );
+    QVariant photoSelected = m_photoDatabase.model().data( indexPhotoName, Qt::DisplayRole );
     QString photoFilename = photoSelected.toString();
     QFileInfo photoFileInfo( m_photoFeeder.getDirectory(), photoFilename );
     onLogMsg( QString("[Thumbnail]. Affichage Vignette: ") + photoFilename  );
@@ -1277,6 +1278,45 @@ void MainWin::refresh( void )
     buildPhotoLists();  //DEPRECATED
 }
 
+/*************************
+* highlightPhoto( QModelIndex )
+*----------------------
+* Highlights a photo in the photo ListView
+**************************/
+void MainWin::highlightPhoto( QModelIndex modelIndex )
+{
+    m_ui->listView_Photos->setCurrentIndex( modelIndex );
+}
+
+/*
+void MainWin::onPrevious( void )
+{
+    QModelIndex modelIndex;
+    if( m_captionManager.previous( modelIndex ) ) {
+        m_ui->listView_Photos->setCurrentIndex( modelIndex ); //updating ui if success
+    }
+}
+void MainWin::onNext( void )
+{
+    QModelIndex modelIndex;
+    if( m_captionManager.next( modelIndex ) ) {
+        m_ui->listView_Photos->setCurrentIndex( modelIndex ); 
+    }
+}
+void MainWin::onListClicked( QModelIndex )
+{
+
+}
+void MainWin::onCaptionTextEdited( QString )
+{
+}
+void MainWin::onCaptionHeaderEdited(QString)
+{
+}
+void MainWin::onCaptionEndingEdited(QString)
+{
+}
+*/
 
 
 /*************************
@@ -1352,15 +1392,16 @@ int MainWin::buildPhotoLists( )
     //- Mise à jour du Modèle avec la liste des photos trouvées
     //m_photosListModel.setStringList( m_projectParameters.m_photoPropertiesMap.keys() /*photoList*/ ); //Mise  jour du Modèle pour affichage
     //Mise  jour du gestionnaire de légendes : association avec le modèle mis à jour
-    m_captionManager.setPhotoList( m_ui->listView_Photos );
+    m_captionManager.reset( );
 	
-    //3 - Récupération des légendes
+  /*  //3 - Récupération des légendes
 	QMap<QString,CCaption> captionMap = m_captionManager.captionMap();
 	foreach( photoName, captionMap.keys() ) {
                         CPhotoPropertiesExtended photoProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
 			photoProperties.setCaption( captionMap.value( photoName ) );
 			m_projectParameters.m_photoPropertiesMap.insert( photoName, photoProperties );
 	}
+*/
 
     //4 - Vignette réprésentant la galerie
     //Si elle n'est pas dans la galerie -> attribuer la première photo
@@ -1377,6 +1418,7 @@ int MainWin::buildPhotoLists( )
 
     //NEW: Use of photofeeder and database
     m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
+    
 
 
 

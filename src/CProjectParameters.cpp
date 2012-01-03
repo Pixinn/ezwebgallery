@@ -371,6 +371,7 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     m_photosConfig.watermark.relativeSize = watermarkConfElem.firstChildElement( "watermarkRelativeSize" ).text().toInt();
 
     //---LEGENDES
+    /*
     QMap<QString,CCaption> captionMap;
     QDomNodeList photosNode = photoListElem.elementsByTagName( "Photo" );
     CTaggedString captionBody;
@@ -399,6 +400,7 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
         //--
     }
     m_p_captionManager->setCaptionMap( captionMap );
+    */
 
     //deprecated fileformat
     if( m_version < s_versionFilePath ) {
@@ -416,7 +418,7 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
 /*************************
 * toDomDocument
 *----------------------
-* Retourn un document XML/DOM correspondant aux parametres
+* Retourne un document XML/DOM correspondant aux parametres
 **************************/
 QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
 {
@@ -643,9 +645,17 @@ void CProjectParameters::toUi( )
 
     //Legendes
     //REM: le body est affiche via un signal du caption manager, car il depend du num de la photo a l'ecran
-    QMap<QString,CCaption> captionMap = m_p_captionManager->captionMap();
+    /*QMap<QString,CCaption> captionMap = m_p_captionManager->captionMap();
     if( !captionMap.isEmpty() ){
         CCaption caption = captionMap.begin().value();
+        m_p_ui->lineEdit_captionHeader->setText( caption.header() );
+        m_p_ui->lineEdit_captionEnding->setText( caption.ending() );
+    }*/
+
+    //REM: le body est affiche via un signal du caption manager, car il depend du num de la photo a l'ecran
+    CPhotoDatabase& photoDb = CPhotoDatabase::getInstance();
+    if( photoDb.size() > 0 ) {
+        CCaption caption = photoDb.properties( 0 )->caption();
         m_p_ui->lineEdit_captionHeader->setText( caption.header() );
         m_p_ui->lineEdit_captionEnding->setText( caption.ending() );
     }

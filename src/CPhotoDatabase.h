@@ -79,7 +79,9 @@
             QObject(),
             m_thumbnailsSize( QSize(320,200) )
         {    }
-        ~CPhotoDatabase( ){    }
+        ~CPhotoDatabase( )  {
+            clear();
+        }
  
  public:
         static CPhotoDatabase& getInstance( void ) { return s_instance; }
@@ -103,8 +105,13 @@
         bool loadThumbnail( const QString& ); // ** In the future: a background process could load them asynconously
         const QImage& thumbnail( int ) const; //Returns a thumbnail
         const QImage& thumbnail( const QString & ) const; //Returns a thumbnail
+
+        int size( void ) const { return m_db.size(); }
+        CPhotoProperties* properties( int );
+        CPhotoProperties* properties( const QString & );
+        QString filename( int id ) const { return  m_model.data( m_model.index( id ), Qt::DisplayRole ).toString(); }
         
-        QStringListModel& getModel( void ) { return m_model; } //returns a reference to a QModel representation of the filenames
+        const QStringListModel& model( void ) const { return m_model; } //returns a reference to a QModel representation of the filenames
 
     signals:
         void warning( CMessage );   //a warning occured

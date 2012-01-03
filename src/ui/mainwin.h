@@ -88,19 +88,19 @@ private:
 
 /********* SLOTS ********/
 public slots:
-    //-- internes -> relis  des signaux de l'UI
+    //-- internes -> relie  des signaux de l'UI
     //Windows
-    void onNewSession( );
-    void onOpenSession( );
-    void onOpenRecentSession( );
-    bool onSaveSession( );
-    bool onSaveSessionAs( );
-    void showTagsWindow( );
-    void showLogWindow( );
-    void showConfigureWindow( );
-    void onlineManual( );    
-    void about( );
-    void aboutImageMagick( );
+    void onNewSession( void );
+    void onOpenSession( void );
+    void onOpenRecentSession( void );
+    bool onSaveSession( void );
+    bool onSaveSessionAs( void );
+    void showTagsWindow( void );
+    void showLogWindow( void );
+    void showConfigureWindow( void );
+    void onlineManual( void );    
+    void about( void );
+    void aboutImageMagick( void );
     //Configuration
     void choosePhotosDir(); // Choix du rpertoire contenant les photos
     void choosePhotosDirManually( );
@@ -117,8 +117,15 @@ public slots:
     void watermarkAutoColorChecked( int );
     //Légendes
     int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoPropertiesExtended avec les donnes disponibles
-    void previewCaption( QString );  //Affiche un prrendu de la légende.
+    void previewCaption( QString );  //Affiche un prérendu de la légende.
     void refresh( void );
+    void highlightPhoto( QModelIndex ); //Highlights a photo in the photoListView
+    /*void onPrevious( void );
+    void onNext( void );
+    void onListClicked( QModelIndex );
+    void onCaptionTextEdited( QString );
+    void onCaptionHeaderEdited(QString);
+    void onCaptionEndingEdited(QString);*/
     //skinning
     void openSkinDesigner( );
     void skinNameChanged( QString );

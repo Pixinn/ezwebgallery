@@ -1,4 +1,4 @@
-﻿/* 
+﻿/*
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -29,11 +29,12 @@
 #include <QMap>
 
 #include "CCaption.h"
+#include "CPhotoDatabase.h"
 
 /*****************************
  * CCaptionManager
  * ----------------------
- * Classe grant les lgendes
+ * Classe controlant les lgendes
  ******************************/
 
 
@@ -45,37 +46,39 @@ class CCaptionManager : public QObject
         CCaptionManager( );
         CCaptionManager( const CCaptionManager & );
         CCaptionManager operator=(const CCaptionManager &);
-        void setPhotoList( QListView* photoList ); //Set la liste de photos et reinitialise l'objet
+        void reset( void ); //reinit the manager
         QString photo( );                          //Retourne le nom de la photo affiche
-        QList<CCaption> captionList( );          //Retourne la liste de lgendes sous forme de QStringList
-        QMap<QString,CCaption> captionMap( );           //Retourne la liste de lgendes sous forme de QMap<QString,QString>
-        void setCaptionMap( QMap<QString,CCaption> &);   //Set la liste de lgendes 
+       // QList<CCaption> captionList( );          //Retourne la liste de lgendes sous forme de QStringList
+       // QMap<QString,CCaption> captionMap( );           //Retourne la liste de lgendes sous forme de QMap<QString,QString>
+       // void setCaptionMap( QMap<QString,CCaption> &);   //Set la liste de lgendes
         void setExifTags( const QString &, const QMap<QString,QString> & ); //Indique les <tags Exifs / metadata>  utiliser pour la légende de la photo spécifiée
         void setFileInfo( const QString &, const QFileInfo & );             //Indique les infos fichier  utiliser par la lgende de la photo spcifie
-        bool captionsEdited();    //Les légendes ont-elle été éditées depuis le dernier appel de legencaptionedReset() ?
-        void captionsEditedReset();
+        bool captionsEdited( void );    //Les légendes ont-elle été éditées depuis le dernier appel de legencaptionedReset() ?
+        void captionsEditedReset( void );
 
     private:
-        void setNumber( int nb );//Positionne la liste de photos et envoie le signal d'affichage du thumb correspondant
+        void display( int nb );//Positionne la liste de photos et envoie le signal d'affichage du thumb correspondant
         int  remapCaptionList( ); //Refabrique une map de légendes correspondant au modèle associé
 
     signals:
         void displayThumbnailSignal( QModelIndex );
         void displayCaptionSignal( QString );
         void displayPreviewSignal( QString );
+        void displayHighlightIndex( QModelIndex );
 
     public slots:
-        void onPrevious();
-        void onNext();
         void onListClicked( QModelIndex );
         void onCaptionTextEdited( QString );
         void onCaptionHeaderEdited(QString);
         void onCaptionEndingEdited(QString);
+        void onPrevious( void ); //Previous caption requested
+        void onNext( void ); //Previous caption requested 
 
     private:
+        CPhotoDatabase& m_photoDb;
         int m_photoIndex;                       //Pour déplacement dans la liste des photos, en connection avec la listView
-        QListView* m_p_photoList;               //La listView qui permet d'obtenir les lgendes
-        QMap<QString,CCaption> m_captionMap;     //La liste des légendes proprement dites <filename,lengend> (pas le path complet)
+        //QListView* m_p_listView;               //La listView qui permet d'obtenir les lgendes
+        //QMap<QString,CCaption> m_captionMap;     //La liste des légendes proprement dites <filename,lengend> (pas le path complet)
         bool m_f_captionsEdited;                //Les lgendes ont-elle t dite depuis le dernier appel de legencaptionedReset() ?
 };
 
