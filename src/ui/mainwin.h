@@ -116,7 +116,7 @@ public slots:
     void watermarkGroupChecked( bool );
     void watermarkAutoColorChecked( int );
     //Légendes
-    int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoPropertiesExtended avec les donnes disponibles
+    //int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoPropertiesExtended avec les donnes disponibles
     void previewCaption( QString );  //Affiche un prérendu de la légende.
     void refresh( void );
     void highlightPhoto( QModelIndex ); //Highlights a photo in the photoListView

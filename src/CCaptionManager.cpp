@@ -77,8 +77,21 @@ CCaptionManager CCaptionManager::operator=(const CCaptionManager & toCopy)
 void CCaptionManager::reset( )
 {
     m_photoIndex = 0;
-    remapCaptionList( );
+    //remapCaptionList( );
     display( m_photoIndex );
+    //duplicate the first header and ending to all the captions
+    if( m_photoDb.size() > 0 )
+    {
+        CCaption ref = ( m_photoDb.properties(0) )->caption();
+        for( int i = 1; i < m_photoDb.size(); i++ )
+        {
+            CPhotoProperties* properties = m_photoDb.properties( i );
+            CCaption caption = properties->caption();
+            caption.setEnding( ref.ending() );
+            caption.setHeader( ref.header() );
+            properties->setCaption( caption );
+        }
+    }
 }
 
 
@@ -160,9 +173,7 @@ void CCaptionManager::setExifTags( const QString &photoName, const QMap<QString,
     m_captionMap.insert( photoName, caption );*/
 
     CPhotoProperties* properties =  m_photoDb.properties( photoName );
-    CCaption caption = properties->caption();
-    caption.setExifTags( exifTags );
-    properties->setCaption( caption );
+    properties->setExifTags( exifTags );
 
 }
 
@@ -220,9 +231,9 @@ void CCaptionManager::display( int nb )
 // Refabrique une nouvelle Map de légendes correspondant au modèle associé
 // Retourne le nombre d'anciennes légendes n'ayant pu être gardées
 //----------------------
-int CCaptionManager::remapCaptionList( )
+/*int CCaptionManager::remapCaptionList( )
 {
-    /*
+    
     int nbCaptionsRemoved = 0;
     QStringListModel* model = (QStringListModel*)m_p_listView->model();
     QStringList photoList = model->stringList();
@@ -237,9 +248,9 @@ int CCaptionManager::remapCaptionList( )
     }
 
     return nbCaptionsRemoved;
-    */
+    
     return 0;
-}
+}*/
 
 
 //-----------------------

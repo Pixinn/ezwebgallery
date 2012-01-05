@@ -483,7 +483,9 @@ void MainWin::newSession( )
         m_skinParameters.load( m_projectParameters.m_galleryConfig.skinPath  );         
         m_projectParameters.toUi( );                             //Maj UI
         m_photoFeeder.clear();
-        buildPhotoLists();                                       //Construction liste des photos (vide...)
+        //buildPhotoLists();                                       //Construction liste des photos (vide...)
+        m_photoDatabase.build( m_photoFeeder.getPhotoList() );
+        m_captionManager.reset( );
         m_referenceProjectParameters = m_projectParameters;
         //UI
         m_ui->action_SaveSession->setDisabled( true );           //Il *faut* désactiver l'option save pour ne pas écraser le fichier le plus récent
@@ -593,7 +595,8 @@ void MainWin::openSession( const QString &sessionFile )
                     missingPhotos.clear(); //L'utilisateur a décliné: on utilise le répertoire qui était dans la sauvegarde
                 }
             }
-            buildPhotoLists( );
+            //buildPhotoLists( );
+            m_captionManager.reset();
        
             //Chargement de la skin
             QStringList errors;
@@ -831,7 +834,8 @@ void MainWin::choosePhotosDir()
         m_lastSelectedDir = dir;
         m_ui->lineEdit_SourceFolder->setText( dir );//Affichage
         //On créé la liste des jpegs ici pour qu'elle soit dispo sous l'onglet "Légendes"
-        buildPhotoLists( );
+        //buildPhotoLists( );
+        m_captionManager.reset( );
     }
 
 }
@@ -846,7 +850,8 @@ void MainWin::choosePhotosDirManually()
             m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
             m_lastSelectedDir =  m_photoFeeder.getDirectoryPath();
             //On créé la liste des jpegs ici pour qu'elle soit dispo sous l'onglet "Légendes"
-            buildPhotoLists( );
+            //buildPhotoLists( );
+            m_captionManager.reset( );
         }
     }
     else{
@@ -933,7 +938,10 @@ void MainWin::generateGallery( )
             }
             //Vérification de la liste des photos d'entrée et reconstruction des légendes si besoin
             onProgressBar( 0, "green", tr("Building photo list.") );
-            nbCaptionsRemoved = buildPhotoLists();   //Reconstruction de la liste de photos, cela peut prendre quelques secondes...
+            m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
+            m_captionManager.reset();
+            /*nbCaptionsRemoved = buildPhotoLists();   //Reconstruction de la liste de photos, cela peut prendre quelques secondes...
+
          
             if( nbCaptionsRemoved != 0)  //Certaines photos légendées ne sont plus dans le répertoire d'entrée : on informe
             {
@@ -942,6 +950,7 @@ void MainWin::generateGallery( )
                 info.setInformativeText( errorMsg );
                 info.exec();
             }
+            */
             //GENERATION !
             if( m_projectParameters.m_photoPropertiesMap.size() != 0 )
             {
@@ -1275,7 +1284,8 @@ QStringList MainWin::checkPhotosInDir( const QStringList& photosInConfig, const 
 void MainWin::refresh( void )
 {
     m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
-    buildPhotoLists();  //DEPRECATED
+    m_captionManager.reset();
+    //buildPhotoLists();  //DEPRECATED
 }
 
 /*************************
@@ -1334,97 +1344,97 @@ void MainWin::onCaptionEndingEdited(QString)
 *
 * Return : le nombre de CPhotosProperties retirées du QMap car la photo correspondante n'est plus présente dans le répertoire d'entrée.
 **************************/
-int MainWin::buildPhotoLists( )
-{
-    QDir inputDir( m_projectParameters.m_galleryConfig.inputDir );
-    QStringList photoList;
-	QStringList photoFileTypes;
-    QStringListIterator* p_photoListIterator;
-    QString photoName;
-    QFileInfo* p_photoFileInfo;
-    QMap<QString,QDateTime> oldPhotosList;
-    int nbPhotoNotFound;
-
-
-    // 1 -Reconstruction de la liste des photos réellement présentes dans le répertoire d'entrée    
-	photoFileTypes << "*.jpeg" << "*.jpg" << "*.tiff" << "*.tif"; //Formats d'image supportés en entrée
-    photoList = CPlatform::getImagesInDir( inputDir, photoFileTypes ); //Récupération de la liste des photos du répertoire d'entrée
-    p_photoListIterator = new QStringListIterator( photoList );
-    while( p_photoListIterator->hasNext() ) //On vérifie que les paramètres des photos sont toujours à jour
-    {    
-        photoName = p_photoListIterator->next();
-        p_photoFileInfo = new QFileInfo( inputDir.absoluteFilePath( photoName ) );
-        //Si les paramètres de la galerie ne comportaient pas le fichier, on met à jour et on demande la regénération
-        if( !m_projectParameters.m_photoPropertiesMap.contains( photoName ) )
-        {
-            CPhotoPropertiesExtended newProperties;
-            newProperties.setFileInfo( *p_photoFileInfo );
-            newProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
-            m_projectParameters.m_photoPropertiesMap.insert( photoName, newProperties );
-            m_projectParameters.m_photosConfig.f_regeneration = true;
-            m_projectParameters.m_thumbsConfig.f_regeneration = true;
-        }
-        //Si les infos de date du fichier sont différentes => on update et on demande la regénération également
-        else
-        {
-            CPhotoPropertiesExtended deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
-            if(  deprecatedProperties.lastModificationTime().toString() != p_photoFileInfo->lastModified().toString() ) { //Les QDateTime non convertis ne semblent pas bien se comparer ???
-                deprecatedProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
-                //deprecatedProperties.setProcessed( false );
-				m_projectParameters.m_photoPropertiesMap.insert( photoName, deprecatedProperties );
-                m_projectParameters.m_photosConfig.f_regeneration = true;
-                m_projectParameters.m_thumbsConfig.f_regeneration = true;
-            }
-        }
-        onLogMsg( QString("[Photolist]." ) + photoName + QString(": ") + p_photoFileInfo->lastModified().toString() );
-        delete p_photoFileInfo;
-    }
-	//Suppression des entrées qui ne correspondent pas à une photo trouvée dans le répertoire
-    nbPhotoNotFound = 0;
-	foreach( photoName, m_projectParameters.m_photoPropertiesMap.keys() ){
-		if( !photoList.contains( photoName ) ){
-			m_projectParameters.m_photoPropertiesMap.remove( photoName );
-            nbPhotoNotFound++;
-		}
-	}//NOTE: m_projectParameters.m_photoPropertiesMap.keys() correspond maintenant exactement aux photos trouvées dans le rep d'entrée    
-
-    //2 - Maj du Caption Manager et affichage dans TAB "Légendes"
-    //- Mise à jour du Modèle avec la liste des photos trouvées
-    //m_photosListModel.setStringList( m_projectParameters.m_photoPropertiesMap.keys() /*photoList*/ ); //Mise  jour du Modèle pour affichage
-    //Mise  jour du gestionnaire de légendes : association avec le modèle mis à jour
-    m_captionManager.reset( );
-	
-  /*  //3 - Récupération des légendes
-	QMap<QString,CCaption> captionMap = m_captionManager.captionMap();
-	foreach( photoName, captionMap.keys() ) {
-                        CPhotoPropertiesExtended photoProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
-			photoProperties.setCaption( captionMap.value( photoName ) );
-			m_projectParameters.m_photoPropertiesMap.insert( photoName, photoProperties );
-	}
-*/
-
-    //4 - Vignette réprésentant la galerie
-    //Si elle n'est pas dans la galerie -> attribuer la première photo
-    if( !photoList.contains( m_projectParameters.m_galleryConfig.thumbPhoto )
-        && !photoList.isEmpty() )
-    {
-        m_projectParameters.m_galleryConfig.thumbPhoto = photoList.at( 0 );
-        m_ui->checkBox_GalleryThumb->setChecked( true ); //Comme c'est la 1ere photo qui est affichée, on coche.
-        onLogMsg( QString("[Photolist]. New thumbnail: ") + m_projectParameters.m_galleryConfig.thumbPhoto );
-    }
-
-    onLogMsg( QString("[Photolist]. Nb photos found: ") + QString::number( photoList.size() ) );
-
-
-    //NEW: Use of photofeeder and database
-    m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
-    
-
-
-
-    delete p_photoListIterator;   
-    return nbPhotoNotFound;
-}
+//int MainWin::buildPhotoLists( )
+//{
+//    QDir inputDir( m_projectParameters.m_galleryConfig.inputDir );
+//    QStringList photoList;
+//	QStringList photoFileTypes;
+//    QStringListIterator* p_photoListIterator;
+//    QString photoName;
+//    QFileInfo* p_photoFileInfo;
+//    QMap<QString,QDateTime> oldPhotosList;
+//    int nbPhotoNotFound;
+//
+//
+//    // 1 -Reconstruction de la liste des photos réellement présentes dans le répertoire d'entrée    
+//	photoFileTypes << "*.jpeg" << "*.jpg" << "*.tiff" << "*.tif"; //Formats d'image supportés en entrée
+//    photoList = CPlatform::getImagesInDir( inputDir, photoFileTypes ); //Récupération de la liste des photos du répertoire d'entrée
+//    p_photoListIterator = new QStringListIterator( photoList );
+//    while( p_photoListIterator->hasNext() ) //On vérifie que les paramètres des photos sont toujours à jour
+//    {    
+//        photoName = p_photoListIterator->next();
+//        p_photoFileInfo = new QFileInfo( inputDir.absoluteFilePath( photoName ) );
+//        //Si les paramètres de la galerie ne comportaient pas le fichier, on met à jour et on demande la regénération
+//        if( !m_projectParameters.m_photoPropertiesMap.contains( photoName ) )
+//        {
+//            CPhotoPropertiesExtended newProperties;
+//            newProperties.setFileInfo( *p_photoFileInfo );
+//            newProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
+//            m_projectParameters.m_photoPropertiesMap.insert( photoName, newProperties );
+//            m_projectParameters.m_photosConfig.f_regeneration = true;
+//            m_projectParameters.m_thumbsConfig.f_regeneration = true;
+//        }
+//        //Si les infos de date du fichier sont différentes => on update et on demande la regénération également
+//        else
+//        {
+//            CPhotoPropertiesExtended deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
+//            if(  deprecatedProperties.lastModificationTime().toString() != p_photoFileInfo->lastModified().toString() ) { //Les QDateTime non convertis ne semblent pas bien se comparer ???
+//                deprecatedProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
+//                //deprecatedProperties.setProcessed( false );
+//				m_projectParameters.m_photoPropertiesMap.insert( photoName, deprecatedProperties );
+//                m_projectParameters.m_photosConfig.f_regeneration = true;
+//                m_projectParameters.m_thumbsConfig.f_regeneration = true;
+//            }
+//        }
+//        onLogMsg( QString("[Photolist]." ) + photoName + QString(": ") + p_photoFileInfo->lastModified().toString() );
+//        delete p_photoFileInfo;
+//    }
+//	//Suppression des entrées qui ne correspondent pas à une photo trouvée dans le répertoire
+//    nbPhotoNotFound = 0;
+//	foreach( photoName, m_projectParameters.m_photoPropertiesMap.keys() ){
+//		if( !photoList.contains( photoName ) ){
+//			m_projectParameters.m_photoPropertiesMap.remove( photoName );
+//            nbPhotoNotFound++;
+//		}
+//	}//NOTE: m_projectParameters.m_photoPropertiesMap.keys() correspond maintenant exactement aux photos trouvées dans le rep d'entrée    
+//
+//    //2 - Maj du Caption Manager et affichage dans TAB "Légendes"
+//    //- Mise à jour du Modèle avec la liste des photos trouvées
+//    //m_photosListModel.setStringList( m_projectParameters.m_photoPropertiesMap.keys() /*photoList*/ ); //Mise  jour du Modèle pour affichage
+//    //Mise  jour du gestionnaire de légendes : association avec le modèle mis à jour
+//    m_captionManager.reset( );
+//	
+//  /*  //3 - Récupération des légendes
+//	QMap<QString,CCaption> captionMap = m_captionManager.captionMap();
+//	foreach( photoName, captionMap.keys() ) {
+//                        CPhotoPropertiesExtended photoProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
+//			photoProperties.setCaption( captionMap.value( photoName ) );
+//			m_projectParameters.m_photoPropertiesMap.insert( photoName, photoProperties );
+//	}
+//*/
+//
+//    //4 - Vignette réprésentant la galerie
+//    //Si elle n'est pas dans la galerie -> attribuer la première photo
+//    if( !photoList.contains( m_projectParameters.m_galleryConfig.thumbPhoto )
+//        && !photoList.isEmpty() )
+//    {
+//        m_projectParameters.m_galleryConfig.thumbPhoto = photoList.at( 0 );
+//        m_ui->checkBox_GalleryThumb->setChecked( true ); //Comme c'est la 1ere photo qui est affichée, on coche.
+//        onLogMsg( QString("[Photolist]. New thumbnail: ") + m_projectParameters.m_galleryConfig.thumbPhoto );
+//    }
+//
+//    onLogMsg( QString("[Photolist]. Nb photos found: ") + QString::number( photoList.size() ) );
+//
+//
+//    //NEW: Use of photofeeder and database
+//    m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
+//    
+//
+//
+//
+//    delete p_photoListIterator;   
+//    return nbPhotoNotFound;
+//}
 
 /*************************
 * previewCaption
