@@ -34,11 +34,12 @@
 //#include "IUserInterface.h"
 #include "CPhotoProcessor.h"
 #include "CProjectParameters.h"
-#include "CPhotoPropertiesExtended.h"
+#include "CPhotoProperties.h"
 #include "CSkinParameters.h"
 #include "CCaptionManager.h"
 #include "CCaption.h"
 #include "CMessage.h"
+#include "CPhotoProperties.h"
 
 /*****************************
  * CGalleryGenerator
@@ -56,7 +57,7 @@ class CGalleryGenerator : public QThread
 signals:
     void debugSignal( QString );		      //Ecrire dans une fentre de Debug
     void progressBarSignal( int completion, QString color, QString message ); //Faire voluer la progressBar
-    void generationFinishedSignal( /*bool success*/ QList<CPhotoPropertiesExtended> );   //Gnration de toutes les photos termine
+    void generationFinishedSignal( /*bool success*/ QList<CPhotoProperties> );   //Gnration de toutes les photos termine
     void forceStoppedFinishedSignal( QStringList );        //L'arrt forc des thread est termin. Passage des messages d'erreur.
     void abordGenerationSignal( );
     void startGenerationSignal( );
@@ -80,7 +81,7 @@ public:
     CGalleryGenerator( void );
     ~CGalleryGenerator( void );
     //Interface avec UI
-    void generateGallery( CProjectParameters &, const CSkinParameters & );
+    void generateGallery( CProjectParameters &, const CSkinParameters &, const QList<CPhotoProperties*> );
     bool isGenerationInProgress( void );
     void abordGeneration( void );
     
@@ -116,7 +117,7 @@ private:
     QStringList m_captionsList;
     CSkinParameters m_skinParameters;
     //Gnration photos
-    QList<CPhotoPropertiesExtended> m_photoPropertiesList;
+    QList<CPhotoProperties> m_photoPropertiesList;
     QThreadPool* m_p_photoProcessorPool;    //Pool des threads effectuant les traitements. Un thread par photo
     QStringList m_msgErrorList;
     QMap<int, QQueue<QSize> > m_photoSizes;            //Contient les files des tailles des photos gnres <id,file>

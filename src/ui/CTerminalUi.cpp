@@ -76,7 +76,7 @@ void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
     emit done();
 }
 
-void CTerminalUi::onGalleryGenerationFinished( /*bool success*/QList<CPhotoPropertiesExtended> propertiesList )
+void CTerminalUi::onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties> propertiesList )
 {
   /*  bool success = true;
     foreach( CPhotoPropertiesExtended photoProperties, propertiesList ){
@@ -181,7 +181,7 @@ void CTerminalUi::run( )
 	}
 
     //Lancement de la gnration
-    m_galleryGenerator.generateGallery(  m_projectParameters, m_skinParameters  );
+//    m_galleryGenerator.generateGallery(  m_projectParameters, m_skinParameters  ); A AJOUTER !!!!!!
 
 }
 

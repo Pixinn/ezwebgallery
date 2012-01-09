@@ -46,7 +46,7 @@ public slots:
     void run( void );                        //Contient le code  xcuter pour lancer la gnration
     void onLogMsg( QString );
     void onProgressBar( int completion, QString color, QString message, int timeout = 0 ); //Affiche un % d'avancement
-    void onGalleryGenerationFinished( /*bool success*/QList<CPhotoPropertiesExtended>);
+    void onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties>);
     void onForceStoppedFinished( QStringList );
     //Photo DB
     void missingPhotos( QStringList ){}; //Some photos are present in the DB but not on the disk

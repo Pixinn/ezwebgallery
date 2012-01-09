@@ -29,7 +29,7 @@
 #include <QMutex>
 
 #include "CPhoto.h"
-#include "CPhotoPropertiesExtended.h"
+#include "CPhotoProperties.h"
 #include "CError.h"
 #include "CProjectParameters.h"
 
@@ -99,7 +99,7 @@ class CPhotoProcessor : public QObject, public QRunnable
         void processCompleted( CGeneratedPhotoSetParameters );
 	
     public:
-        CPhotoProcessor( CPhotoPropertiesExtended photoProperties, //Proprits de la photo  traiter
+        CPhotoProcessor( CPhotoProperties photoProperties, //Proprits de la photo  traiter
                          QDir outPath,           //Path de la gallerie gnre
                          QQueue<QSize> &sizes,   //Fifo des tailles  gnrer. Au moins deux: thumb + 1 taille de sortie
                          QQueue<int> &quality,   //Qualit des Jpegs gnrs. Au moins deux: thumb + 1 jpeg de sortie
@@ -112,7 +112,7 @@ class CPhotoProcessor : public QObject, public QRunnable
      
     private:        
         QMutex* m_p_mutexRemoteControl; //Mutex permettant de protger les arrts "forcs" des threads
-        CPhotoPropertiesExtended m_photoProperties;
+        CPhotoProperties m_photoProperties;
         QString m_inFilePath;
         QDir m_outPath;
         QQueue<QSize> m_sizesQueue;

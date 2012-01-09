@@ -54,6 +54,9 @@ public:
     CTaggedString ending();
 
 private:
+    int m_id;
+    QMap<QString,QString> m_exifTags;
+    QFileInfo m_fileInfo;
     CTaggedString m_header;
     CTaggedString m_body;
     CTaggedString m_ending;    

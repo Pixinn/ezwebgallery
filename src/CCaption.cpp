@@ -117,6 +117,9 @@ void CCaption::setEnding( const QString &ending )
 ********************************************************************/
 CTaggedString CCaption::header(  )
 {   
+    m_header.setId( m_id );
+    m_header.setExifTags( m_exifTags );
+    m_header.setFileInfo( m_fileInfo );
     return m_header;
 }
 
@@ -128,6 +131,9 @@ CTaggedString CCaption::header(  )
 ********************************************************************/
 CTaggedString CCaption::body( )
 {   
+    m_body.setId( m_id );
+    m_body.setExifTags( m_exifTags );
+    m_body.setFileInfo( m_fileInfo );
     return m_body;
 }
 
@@ -139,6 +145,9 @@ CTaggedString CCaption::body( )
 ********************************************************************/
 CTaggedString CCaption::ending(  )
 {   
+    m_ending.setId( m_id );
+    m_ending.setExifTags( m_exifTags );
+    m_ending.setFileInfo( m_fileInfo );
     return m_ending;
 }
 
@@ -151,6 +160,7 @@ CTaggedString CCaption::ending(  )
 ********************************************************************/
 void CCaption::setExifTags( const QMap<QString,QString> &exifTags )
 {   
+    m_exifTags = exifTags;
     m_header.setExifTags( exifTags );
     m_body.setExifTags( exifTags );
     m_ending.setExifTags( exifTags );
@@ -164,6 +174,7 @@ void CCaption::setExifTags( const QMap<QString,QString> &exifTags )
 ********************************************************************/
 void CCaption::setFileInfo( const QFileInfo &fileInfo )
 {
+    m_fileInfo = fileInfo;
     m_header.setFileInfo( fileInfo );
     m_body.setFileInfo( fileInfo );
     m_ending.setFileInfo( fileInfo );
@@ -178,6 +189,7 @@ void CCaption::setFileInfo( const QFileInfo &fileInfo )
 ********************************************************************/
 void CCaption::setId( int id )
 {
+    m_id = id;
     m_header.setId( id );
     m_body.setId( id );
     m_ending.setId( id );

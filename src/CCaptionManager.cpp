@@ -89,6 +89,7 @@ void CCaptionManager::reset( )
             CCaption caption = properties->caption();
             caption.setEnding( ref.ending() );
             caption.setHeader( ref.header() );
+            //caption.setId( properties->id() ); //Caption's id was destroyed by setEnding and setHeader
             properties->setCaption( caption );
         }
     }

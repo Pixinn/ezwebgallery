@@ -39,7 +39,7 @@ const CError CPhotoProcessor::MsgError; //Shared?!!???
 
 
 
-CPhotoProcessor::CPhotoProcessor(   CPhotoPropertiesExtended photoProperties,
+CPhotoProcessor::CPhotoProcessor(   CPhotoProperties photoProperties,
                                     QDir outPath,           //Path de la gallerie gnre
                                     QQueue<QSize> &sizes,   //Fifo des tailles  gnrer. Au moins deux: thumb + 1 taille de sortie
                                     QQueue<int> &quality,   //Qualit des Jpegs gnrs. Au moins deux: thumb + 1 jpeg de sortie                                    

@@ -70,19 +70,20 @@ QStringList CPhotoDatabase::build( const QDomElement & xmlElem )
     {        
         QDomNode node = photosNode.item( iteratorDomList );
         CPhotoPropertiesExtended properties( node ); //this constructor sets the caption
-        //file properties
-        QFileInfo fileInfo( node.firstChildElement( XMLTAG_FILEPATH ).text() );
-        properties.setLastModificationTime( QDateTime::fromString( node.firstChildElement( XMLTAG_LASTMODIFICATIONTIME ).text() ));
-        properties.setFileInfo( fileInfo );
-        properties.setId( iteratorDomList );
         //caption
+        /*
         QString body = node.firstChildElement(XMLTAG_CAPTIONBODY).text();
         QString header = node.firstChildElement(XMLTAG_CAPTIONHEADER).text();
         QString ending = node.firstChildElement(XMLTAG_CAPTIONENDING).text();
         CCaption caption( header, body, ending );
-        caption.setFileInfo( fileInfo );
-        caption.setId( iteratorDomList + 1 );
-        properties.setCaption( caption );
+//      caption.setFileInfo( fileInfo );
+//      caption.setId( iteratorDomList + 1 );
+        properties.setCaption( caption );*/
+        //file properties - after setCaption because caption will also be modified
+        QFileInfo fileInfo( node.firstChildElement( XMLTAG_FILEPATH ).text() );
+        properties.setLastModificationTime( QDateTime::fromString( node.firstChildElement( XMLTAG_LASTMODIFICATIONTIME ).text() ));
+        properties.setFileInfo( fileInfo );
+        properties.setId( iteratorDomList );
         if ( !add( properties ) )   {
             invalidFiles << properties.fileInfo().absoluteFilePath();
         }
@@ -394,14 +395,14 @@ bool CPhotoDatabase::add( const CPhotoPropertiesExtended& properties)
              id = orderedKeys.size();
              orderedKeys << fileInfo.fileName();
              m_model.setStringList( orderedKeys );
-        }
-        
+        }       
+
         CPhotoDatabaseElem* photoElem = new CPhotoDatabaseElem( properties );
         photoElem->setId( id );
         //keeping the caption in sync with new properties
-        CCaption caption = photoElem->caption();
+       /* CCaption caption = photoElem->caption();
         caption.setId( id + 1);
-        photoElem->setCaption( caption );
+        photoElem->setCaption( caption );*/
         //adding to db
         m_db.insert( filename, photoElem );        
     }

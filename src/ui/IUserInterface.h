@@ -47,7 +47,7 @@ public /*slots*/:
 public:
    virtual void onLogMsg( QString ) = 0; //Rception d'un message de DEBUG
    virtual void onProgressBar( int completion, QString color, QString message, int timeout = 0 ) = 0; //Affiche un % d'avancement sur la progressBar et un message assi dans la statusbar
-   virtual void onGalleryGenerationFinished( QList<CPhotoPropertiesExtended>  ) = 0; //Fin nominale de la gnration de la galerie
+   virtual void onGalleryGenerationFinished( QList<CPhotoProperties>  ) = 0; //Fin nominale de la gnration de la galerie
    virtual void onForceStoppedFinished( QStringList ) = 0; //Fin prmature de la gnration de la galerie
 
 public:

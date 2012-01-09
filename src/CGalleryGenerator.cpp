@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -49,7 +49,7 @@ using namespace Magick;
 //------------------ DEFINITIONS ----------------------//
 
 #define CSSSKINFILENAME     "skin.css"
-#define SHARPENINGTHRESHOLD 0.04        /* équivalent à 10 */
+#define SHARPENINGTHRESHOLD 0.04        /* Ã©quivalent Ã  10 */
 
 
 //-------------------- FONCTIONS -----------------------//
@@ -121,7 +121,7 @@ CGalleryGenerator::~CGalleryGenerator( )
 * des photos  traiter, qui donnera l'ordre d'affichage
 * des photos de la galerie
 ************************************/
-void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, const CSkinParameters &skinParameters )
+void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, const CSkinParameters &skinParameters, QList<CPhotoProperties*> photoProperties )
 {
 	QStringList photoList;
 	QString photoName;
@@ -130,10 +130,10 @@ void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, 
     if( !this->isGenerationInProgress() )
     {
         CCaption emptyCaption;
-        CPhotoPropertiesExtended photoProperties;
+        //CPhotoProperties photoProperties;
 		QDir inputDir;
         QFileInfo fileInfo;
-        int id = 1;
+//        int id = 1;
 
         //-- Init
         m_parameters = projectParameters;
@@ -147,7 +147,7 @@ void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, 
         //Cration de la liste ordone des proprits des photos  utiliser
         //REMARQUE : pour le moment, la liste sera ordonne selon l'ordre alphabtique du nom des photos !
         //Dans le futur, il faudra que ce soit le Caption Manager qui ordonne les photos. Avec un rle tendu, changement de nom?
-        m_photoPropertiesList.clear();
+        /*m_photoPropertiesList.clear();
         photoList = m_parameters.m_photoPropertiesMap.keys();
 	    qSort( photoList.begin(), photoList.end() ); //Le tri de la liste de photos !            
         foreach( photoName, photoList )
@@ -157,6 +157,11 @@ void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, 
 			photoProperties.setFileInfo( fileInfo );
             photoProperties.setId( id++ );
             m_photoPropertiesList.append( photoProperties );
+        }
+        */
+        m_photoPropertiesList.clear();
+        foreach( CPhotoProperties* properties, photoProperties )    {
+            m_photoPropertiesList << *properties;
         }
     
         emit startGenerationSignal(); //Dmarrage des traitements
@@ -443,7 +448,7 @@ int CGalleryGenerator::generatePhotos( )
     displayProgressBar( 0, "green", tr("Generating the photos : ")+QString::number(0)+"%" );
     m_mutexControlProcessors.lock(); //Pour ne pas que les threads dmarrent trop tt
 
-    foreach( CPhotoPropertiesExtended photoProperties, m_photoPropertiesList )
+    foreach( CPhotoProperties photoProperties, m_photoPropertiesList )
     {
         photoToProcess = new CPhotoProcessor( photoProperties,
                                               outPath,
@@ -535,7 +540,7 @@ bool CGalleryGenerator::generateJsFiles( )
             localSize = localSizeQueue.dequeue();
             if( numRes < nbRes){
                 jsGalleryConfigurationStream << QString::number(numRes++) << " : {width:" << QString::number(localSize.width()) << ",\theight:" << QString::number(localSize.height()) << "},\t";
-            }
+       }
 
        }//fin while
 
@@ -555,7 +560,7 @@ bool CGalleryGenerator::generateJsFiles( )
     int iteratorCaptions;
     CCaption caption;
     QString renderedCaption;
-    CPhotoPropertiesExtended photoProperties;
+    CPhotoProperties photoProperties;
     jsGalleryConfigurationStream << "listeCaptions =  {" << endl;
     for( iteratorCaptions = 1; iteratorCaptions < m_photoPropertiesList.size(); iteratorCaptions++ ) {
         photoProperties = m_photoPropertiesList.at( iteratorCaptions - 1);
@@ -608,8 +613,8 @@ bool CGalleryGenerator::generateJsFiles( )
 
 
 
-///////////////////////////////////////////////////
-///////////////// cssSkinning /////////////////////
+////////////////////////////////////////////////////
+///////////////// css Skinning /////////////////////
 ///////////////////////////////////////////////////
 
 // -> Fin du process de skinning aprs 
@@ -882,7 +887,7 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
     m_mutex.lock();
     f_wip = m_f_WorkInProgress;
     m_mutex.unlock();
-    CPhotoPropertiesExtended photoProperties;
+    CPhotoProperties photoProperties;
 
     switch( generatedPhotoParams.exitStatus() )
     {
@@ -901,12 +906,12 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
         
         idPhotoDone = generatedPhotoParams.idPhoto();
         //Rcupration des tailles gnres par le process
-        m_photoSizes.insert( idPhotoDone, generatedPhotoParams.generatedSizesQueue() );
-        //Mise  jour des proprits de la photo
-        photoProperties = m_photoPropertiesList.at( idPhotoDone - 1 );
+        m_photoSizes.insert( idPhotoDone + 1, generatedPhotoParams.generatedSizesQueue() );
+        //Updating photoproperties to insert the read ExifTags
+        photoProperties = m_photoPropertiesList.at( idPhotoDone );
         photoProperties.setExifTags( generatedPhotoParams.exifTags() );
         //photoProperties.setProcessed( true );
-        m_photoPropertiesList.replace( idPhotoDone - 1, photoProperties );
+        m_photoPropertiesList.replace( idPhotoDone, photoProperties );
 
         //Fin nominale du process des photos??
         if( nbPhotosProcessed + nbPhotoProcessFailed == m_nbPhotosToProcess)

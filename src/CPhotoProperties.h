@@ -62,7 +62,7 @@ public:
     
     void setId( int id ){
         m_id = id;
-        m_caption.setId( id );
+        m_caption.setId( id + 1 );
     }
     /*void setProcessed( bool processed ){
         m_f_processed = processed;
@@ -78,6 +78,9 @@ public:
 
     void setCaption( const CCaption & caption){
         m_caption = caption;
+        //Linking the caption with the properties
+        m_caption.setId( m_id + 1);
+        m_caption.setFileInfo( m_fileInfo );
         m_caption.setExifTags( m_exifTags );
     }
     

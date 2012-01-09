@@ -210,14 +210,19 @@ void MainWin::onForceStoppedFinished( QStringList errorMessages )
 //--------------------------------
 //------ Gallerie générée
 //--------------------------------
-void MainWin::onGalleryGenerationFinished( QList<CPhotoPropertiesExtended> propertiesList )
+void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesList )
 {
+
+    //PAS MAL DE BOULOT A FAIRE ICI !!!
+
     //QStringList nonProcessedFiles;
     
-    foreach( CPhotoPropertiesExtended photoProperties, propertiesList )
+    foreach( CPhotoProperties photoProperties, propertiesList )
     {
         //Mise à jour des propriétés des photos
-        m_projectParameters.m_photoPropertiesMap.insert( photoProperties.fileName(), photoProperties ); // STILL USEFUL ???
+        //m_projectParameters.m_photoPropertiesMap.insert( photoProperties.fileName(), photoProperties ); // STILL USEFUL ???
+       
+        
         /*//La génération a-t-elle abouti pour cette photo ?
         if( !photoProperties.processed() ){
             nonProcessedFiles << photoProperties.fileName();
@@ -891,7 +896,6 @@ void MainWin::chooseDestDirManually()
 //--------------------------------
 void MainWin::generateGallery( )
 {    
-    int nbCaptionsRemoved;
     QString errorMsg;
     QMessageBox info(this);
 
@@ -940,30 +944,27 @@ void MainWin::generateGallery( )
             onProgressBar( 0, "green", tr("Building photo list.") );
             m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
             m_captionManager.reset();
-            /*nbCaptionsRemoved = buildPhotoLists();   //Reconstruction de la liste de photos, cela peut prendre quelques secondes...
 
-         
-            if( nbCaptionsRemoved != 0)  //Certaines photos légendées ne sont plus dans le répertoire d'entrée : on informe
-            {
-                info.setText( tr("The input directory changed.\nThe captions have been automatically reassociated, but the process failed for %n caption(s).",
-                                 "Some captions couldn't be remapped", nbCaptionsRemoved) );
-                info.setInformativeText( errorMsg );
-                info.exec();
-            }
-            */
+            
             //GENERATION !
-            if( m_projectParameters.m_photoPropertiesMap.size() != 0 )
+            if( m_photoDatabase.size() != 0 )
             {
-                //Affichage bouton annulation et déscativation de certaines actions
+                //Affichage bouton annulation et désativation de certaines actions
                 swapButtons( );
 
+                //Generating a list of the photo properties
+                QList<CPhotoProperties*> propertyList;
+                for( int i = 0; i < m_photoDatabase.size(); i++ ) {
+                    propertyList << m_photoDatabase.properties(i);
+                }
+
                 //Génération
-                m_galleryGenerator.generateGallery( m_projectParameters, m_skinParameters );
+                m_galleryGenerator.generateGallery( m_projectParameters, m_skinParameters, propertyList );
             }
             else
             {
                 this->m_ui->statusbar->clearMessage();
-                info.setText( tr("The input directory is empty !") );
+                info.setText( tr("No photo to process!") );
                 info.exec();
             }
         }
