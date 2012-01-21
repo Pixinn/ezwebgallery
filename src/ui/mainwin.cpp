@@ -219,8 +219,12 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
     
     foreach( CPhotoProperties photoProperties, propertiesList )
     {
-        //Mise à jour des propriétés des photos
+        //Mise à jour des propriétés avec les Tags exifs lus lors de la génération
+        CPhotoProperties* localProperties = m_photoDatabase.properties( photoProperties.fileName() );
+        localProperties->setExifTags( photoProperties.exifTags() );
         //m_projectParameters.m_photoPropertiesMap.insert( photoProperties.fileName(), photoProperties ); // STILL USEFUL ???
+        //Updatating files properties
+        m_photoDatabase.updateFileInfo( photoProperties.fileName() );
        
         
         /*//La génération a-t-elle abouti pour cette photo ?
@@ -332,7 +336,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     connect( &m_skinParameters, SIGNAL(nameChanged(QString)), this, SLOT(skinNameChanged(QString)) );
     connect( &m_skinParameters, SIGNAL(skinOpened(QString)), this, SLOT(skinPathChanged(QString)) );
     connect( &m_skinParameters, SIGNAL(skinSaved(QString)), this, SLOT(skinPathChanged(QString)) );
-    //Navigation dans les Thumnail de "tab Légendes"
+    //Navigation dans les Thumbnail de "tab Légendes"
     connect( this->m_ui->pushButton_UpdatePhotoList, SIGNAL(clicked()), this, SLOT( refresh() ) );
     connect( this->m_ui->checkBox_GalleryThumb, SIGNAL(stateChanged(int)), this, SLOT(thumnailChanged(int)));
     connect( this->m_ui->pushButton_PrevPhoto, SIGNAL(clicked( )), &(this->m_captionManager), SLOT( onPrevious() ) );
@@ -589,7 +593,7 @@ void MainWin::openSession( const QString &sessionFile )
                     if( !m_lastSelectedDir.isEmpty() ){
                         m_projectParameters.m_galleryConfig.inputDir = m_lastSelectedDir;
                         m_ui->lineEdit_SourceFolder->setText( m_photoFeeder.getDirectoryPath() );
-                        missingPhotos = checkPhotosInDir( m_projectParameters.m_photoPropertiesMap.keys(),  m_photoFeeder.getDirectory() );
+                        missingPhotos = checkPhotosInDir( m_photoFeeder.getDirectory() );
                     }
                     else{ //L'utilisateur a annulé le choix d'un répertoire
                          m_lastSelectedDir = QDir::homePath();
@@ -942,9 +946,10 @@ void MainWin::generateGallery( )
             }
             //Vérification de la liste des photos d'entrée et reconstruction des légendes si besoin
             onProgressBar( 0, "green", tr("Building photo list.") );
-            m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
+            QStringList photosModified = m_photoDatabase.photosModified(); //tobe executed before refresh() or you'll miss when some photo are removed
+            QStringList newPhotos = m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
             m_captionManager.reset();
-
+            m_projectParameters.m_photosConfig.f_regeneration |= ( !photosModified.isEmpty() || !newPhotos.isEmpty() );
             
             //GENERATION !
             if( m_photoDatabase.size() != 0 )
@@ -1040,7 +1045,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
     }
 
     //Thumbnail checkbox : cocher la case si la photo est la vignette de la galerie
-    if( photoFilename == m_projectParameters.m_galleryConfig.thumbPhoto ){
+    if( photoFilename == QFileInfo (m_projectParameters.m_galleryConfig.thumbPhoto).fileName() ){
         m_ui->checkBox_GalleryThumb->setCheckState( Qt::Checked );
     }else{
         m_ui->checkBox_GalleryThumb->setCheckState( Qt::Unchecked );
@@ -1056,7 +1061,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 void MainWin::thumnailChanged( int state )
 {
     if( state == Qt::Checked ) {
-        m_projectParameters.m_galleryConfig.thumbPhoto = m_captionManager.photo();
+        m_projectParameters.m_galleryConfig.thumbPhoto = m_photoDatabase.properties( m_captionManager.displayedPhoto() )->fileInfo().absoluteFilePath();
     }
 }
 
@@ -1251,11 +1256,10 @@ int MainWin::displayMoreRecentMsgBox( )
 /*************************
 * checkPhotosInDir( const QDir &dir )
 *----------------------
-* Vérifie la présence d'une liste de photos dans un répertoire
-* Retourne true même si des photos supplémentaires sont présentes
+* Vérifie la présence des photos de la base dans le répertoire fourni
 * Retourne la liste des photos manquantes
 **************************/
-QStringList MainWin::checkPhotosInDir( const QStringList& photosInConfig, const QDir &dir )
+QStringList MainWin::checkPhotosInDir( const QDir &dir )
 {
     QStringList photosInDir;
 	QStringList photoFileTypes;
@@ -1265,9 +1269,9 @@ QStringList MainWin::checkPhotosInDir( const QStringList& photosInConfig, const 
 	photoFileTypes << "*.jpeg" << "*.jpg" << "*.tiff" << "*.tif"; //Formats d'image supportés en entrée
     photosInDir = CPlatform::getImagesInDir( dir, photoFileTypes );
 
-    foreach( photo, photosInConfig)
-    {
-        if( !photosInDir.contains( photo, Qt::CaseSensitive ) ) {
+    for( int i = 0; i < m_photoDatabase.size(); i++ )
+    {   
+        if( !photosInDir.contains( m_photoDatabase.properties(i)->fileName(), Qt::CaseSensitive ) ) {
             missingPhotos << photo;
         }
     }

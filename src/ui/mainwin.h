@@ -83,7 +83,7 @@ private:
     int displayMoreRecentMsgBox( ); //Affiche une alerte si on essaie d'ouvrir un projet gnr avec une version d'EZWG plus rcente
     void swapButtons( ); //swap certains boutons pour cause de génération de galerie
     bool checkForGeneration( QString & );//Vérifie les paramètres fournis pour la génération
-    QStringList checkPhotosInDir( const QStringList&, const QDir & ); //Vérifie la présence des photos de la liste dans le répertoire
+    QStringList checkPhotosInDir( const QDir & ); //Vérifie la présence des photos de la base dans le répertoire fourni
     bool checkCreateDir( QString & ); //Vérifie l'existance d'un répertoire et propose sa création via msgBox le cas échant
 
 /********* SLOTS ********/

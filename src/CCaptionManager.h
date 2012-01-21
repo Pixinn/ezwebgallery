@@ -47,7 +47,7 @@ class CCaptionManager : public QObject
         CCaptionManager( const CCaptionManager & );
         CCaptionManager operator=(const CCaptionManager &);
         void reset( void ); //reinit the manager
-        QString photo( );                          //Retourne le nom de la photo affiche
+        QString displayedPhoto( );                          //Retourne le nom de la photo affiche
        // QList<CCaption> captionList( );          //Retourne la liste de lgendes sous forme de QStringList
        // QMap<QString,CCaption> captionMap( );           //Retourne la liste de lgendes sous forme de QMap<QString,QString>
        // void setCaptionMap( QMap<QString,CCaption> &);   //Set la liste de lgendes

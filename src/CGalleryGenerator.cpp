@@ -159,6 +159,7 @@ void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, 
             m_photoPropertiesList.append( photoProperties );
         }
         */
+
         m_photoPropertiesList.clear();
         foreach( CPhotoProperties* properties, photoProperties )    {
             m_photoPropertiesList << *properties;
@@ -212,7 +213,7 @@ bool CGalleryGenerator::photosAlreadyExist(  )
     int nbRes = m_parameters.m_photosConfig.nbIntermediateResolutions;
 
     photosDir.cd( PHOTOSPATH );
-    for( int i = 1; i <= m_parameters.m_photoPropertiesMap.size(); i++)
+    for( int i = 1; i <= m_photoPropertiesList.size(); i++)
     {
         QString photoName = PHOTOPREFIXE + QString::number(i) + ".jpg";
         for(int res=1; res <= nbRes; res++)
@@ -235,7 +236,7 @@ bool CGalleryGenerator::thumbsAlreadyExist()
     QFile thumbFile;
 
     thumbsDir.cd( THUMBSPATH );
-    for( int i = 1; i <= m_parameters.m_photoPropertiesMap.size(); i++)
+    for( int i = 1; i <=  m_photoPropertiesList.size(); i++)
     {
         QString thumbName = QString(THUMBPREFIXE) + QString(PHOTOPREFIXE) + QString::number(i) + QString(".jpg");
         thumbFile.setFileName( thumbsDir.absoluteFilePath( thumbName ) );
@@ -347,24 +348,26 @@ int CGalleryGenerator::generatePhotos( )
     QQueue<QSize> sizesList;
     QQueue<int> qualityList;
     QDir outPath( m_parameters.m_galleryConfig.outputDir );
-    QDir inPath( m_parameters.m_galleryConfig.inputDir );
-
 
     //Gnration de la vignette reprsentant la galerie
     //Cette gnration est effectue  part de celle des autres vignettes et des photos
-    if( !m_parameters.m_galleryConfig.thumbPhoto.isEmpty() )
-    {
-        QImage photo;
-        QImage thumbnail;
-        QString photoName = inPath.absoluteFilePath( m_parameters.m_galleryConfig.thumbPhoto );
-        outPath.cd( PHOTOSPATH );
-        if( photo.load( photoName )){
-            thumbnail = photo.scaled( QSize(250,250),
-                                      Qt::KeepAspectRatio,
-                                      Qt::SmoothTransformation );
-            thumbnail.save( outPath.absoluteFilePath( GALLERYTHUMBFILENAME ), 0, 77 );
-        }
+    QImage photo;
+    QImage thumbnail;
+    QString galleryThumbnailFile =  m_parameters.m_galleryConfig.thumbPhoto;
+    if( !QFileInfo( m_parameters.m_galleryConfig.thumbPhoto ).exists() )  {
+        galleryThumbnailFile = m_photoPropertiesList.at(0).fileInfo().absoluteFilePath();
     }
+    outPath.cd( PHOTOSPATH );
+    if( photo.load( galleryThumbnailFile )){
+        thumbnail = photo.scaled( QSize(250,250),
+                                  Qt::KeepAspectRatio,
+                                  Qt::SmoothTransformation );
+        thumbnail.save( outPath.absoluteFilePath( GALLERYTHUMBFILENAME ), 0, 85 );
+    }
+    else {
+        //TODO : log an error
+    }
+    
 
     //Gnration du watermark si besoin
     CWatermark watermarkImage;
@@ -447,7 +450,7 @@ int CGalleryGenerator::generatePhotos( )
     outPath = m_parameters.m_galleryConfig.outputDir;
     displayProgressBar( 0, "green", tr("Generating the photos : ")+QString::number(0)+"%" );
     m_mutexControlProcessors.lock(); //Pour ne pas que les threads dmarrent trop tt
-
+    
     foreach( CPhotoProperties photoProperties, m_photoPropertiesList )
     {
         photoToProcess = new CPhotoProcessor( photoProperties,
@@ -882,13 +885,15 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
     int completion = 0;
     int nbPhotosProcessed;
     int nbPhotoProcessFailed;
-    int idPhotoDone;
+    //int idPhotoDone;
     bool f_wip;
+
     m_mutex.lock();
     f_wip = m_f_WorkInProgress;
     m_mutex.unlock();
-    CPhotoProperties photoProperties;
+    //CPhotoProperties photoProperties;
 
+    CPhotoProperties photoProperties = generatedPhotoParams.photoProperties();
     switch( generatedPhotoParams.exitStatus() )
     {
 	
@@ -903,21 +908,20 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
         if( nbPhotoProcessFailed == 0 && f_wip ){
             displayProgressBar( completion, "green", tr("Generating the photos : ")+QString::number(completion)+"%" );
         }
-        
-        idPhotoDone = generatedPhotoParams.idPhoto();
+       
+        //idPhotoDone = generatedPhotoParams.idPhoto();
         //Rcupration des tailles gnres par le process
-        m_photoSizes.insert( idPhotoDone + 1, generatedPhotoParams.generatedSizesQueue() );
+        m_photoSizes.insert( photoProperties.id() + 1, generatedPhotoParams.generatedSizesQueue() );
         //Updating photoproperties to insert the read ExifTags
-        photoProperties = m_photoPropertiesList.at( idPhotoDone );
-        photoProperties.setExifTags( generatedPhotoParams.exifTags() );
-        //photoProperties.setProcessed( true );
-        m_photoPropertiesList.replace( idPhotoDone, photoProperties );
+        //photoProperties = m_photoPropertiesList.at( photoProperties.id() );
+        //photoProperties.setExifTags( generatedPhotoParams.exifTags() );
+        m_photoPropertiesList.replace( photoProperties.id(), photoProperties );
 
         //Fin nominale du process des photos??
         if( nbPhotosProcessed + nbPhotoProcessFailed == m_nbPhotosToProcess)
         {
             if( nbPhotoProcessFailed == 0){
-                emit jobDone();
+                emit jobDone( );
             }
             else{
                 this->debugDisplay("UNSPECIFIED FAILURE !!!");

@@ -102,7 +102,7 @@ public:
 
     bool isEquivalent( const CPhotoProperties & );
 
-    QString fileName( void ) const { return m_fileInfo.fileName(); } //A RETIRER !!!
+    inline QString fileName( void ) const { return m_fileInfo.fileName(); }
     
 private:
     static const QString CAPTION;

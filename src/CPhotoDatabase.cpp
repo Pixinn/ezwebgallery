@@ -113,7 +113,7 @@ QStringList CPhotoDatabase::importDeprecated( const QDomElement & xmlElem, const
         QDomNode node = photosNode.item( iteratorDomList );
         CPhotoPropertiesExtended properties( node ); //this constructor sets the caption
         //file properties
-         QFileInfo fileInfo( inputDir.absoluteFilePath( node.firstChildElement( XMLTAG_DEPRECATED_FILENAME ).text() ) );
+        QFileInfo fileInfo( inputDir.absoluteFilePath( node.firstChildElement( XMLTAG_DEPRECATED_FILENAME ).text() ) );
         properties.setLastModificationTime( QDateTime::fromString( node.firstChildElement( XMLTAG_LASTMODIFICATIONTIME ).text() ));        
         properties.setFileInfo( fileInfo );
         properties.setId( iteratorDomList );
@@ -232,6 +232,7 @@ QStringList CPhotoDatabase::appendPhotoList(const QStringList &photoList )
 QStringList CPhotoDatabase::refresh( const QStringList & fileSet )
 {
     QStringList invalidFiles;
+    QStringList newFiles;
     QStringList removedfiles;
     QStringList fileNameSet;
 
@@ -250,7 +251,12 @@ QStringList CPhotoDatabase::refresh( const QStringList & fileSet )
     }
     //2 - adding provided files. Some properties of preexisting files are preserved.
     //    see add( QString ) definition.  
-    foreach( QString filePath, fileSet )    {
+    foreach( QString filePath, fileSet )
+    {
+        QString fileName = QFileInfo( filePath ).fileName( );
+        if( !m_db.contains( fileName ) ) {
+            newFiles << fileName;
+        }
         if( !add( filePath) ) {
             invalidFiles << filePath;
         }
@@ -281,7 +287,30 @@ QStringList CPhotoDatabase::refresh( const QStringList & fileSet )
 
     consolidate(); //removes invalidFiles
     //m_model.setStringList( m_orderedKeys );
-    return invalidFiles;
+    return newFiles;
+}
+
+
+
+/*******************************************************************
+*  updateFileInfo( const QString & )
+* ---------
+* Updates the file info of the specified element.
+* Returns true if success, false otherwise (ie element not present in db)
+********************************************************************/
+bool CPhotoDatabase::updateFileInfo( const QString & filename )
+{
+    bool f_result = false;
+
+    if( m_db.contains( filename ) ) {
+        CPhotoDatabaseElem* elem = m_db.value( filename );
+        QFileInfo fileInfo(elem->fileInfo().absoluteFilePath());
+        elem->setFileInfo( fileInfo ); //maybe unnecessary
+        elem->setLastModificationTime( fileInfo.lastModified() );
+        f_result = true;
+    }
+
+    return f_result;
 }
 
 
@@ -313,6 +342,32 @@ QStringList CPhotoDatabase::checkPhotosInDb( void )
     }
     
     return missingPhotos;
+}
+
+
+
+/*******************************************************************
+* photosModified( void )
+* ---------
+* Returns a list of the photos removed or modified
+* Return : (QStringList)
+********************************************************************/
+QStringList CPhotoDatabase::photosModified( void ) const
+{
+    QStringList modifiedPhotos;
+
+    //Missing and modified photos
+    foreach( CPhotoPropertiesExtended* properties, m_db )
+    {
+        QFileInfo fileInfo( properties->fileInfo().absoluteFilePath() );            
+        if( !fileInfo.exists()  ||                                                                 //File removed
+            ( fileInfo.lastModified().toString() != properties->lastModificationTime().toString() ) )  //File modified
+        {
+            modifiedPhotos << fileInfo.fileName();
+        }
+    }
+    
+    return modifiedPhotos;
 }
 
 
@@ -351,13 +406,13 @@ bool CPhotoDatabase::add( const QString& photoPath)
             m_model.setStringList( orderedKeys );
         }
         else { //update of the file's properties
-            CPhotoDatabaseElem* photoElem = m_db.value( filename );
+            /*CPhotoDatabaseElem* photoElem = m_db.value( filename );
             photoElem->setFileInfo( fileInfo );
             photoElem->setLastModificationTime( fileInfo.lastModified() );
             //keep the caption in sync with new properties
             CCaption caption = photoElem->caption();
             caption.setFileInfo( fileInfo );
-            photoElem->setCaption( caption );
+            photoElem->setCaption( caption );*/
         }
     }
 

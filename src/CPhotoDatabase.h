@@ -87,12 +87,13 @@
         static CPhotoDatabase& getInstance( void ) { return s_instance; }
     
         QStringList checkPhotosInDb( void ); //Returns a list of the photos present in the DB but not on the disk
-        QStringList photosModified( void ) const; //List of the added or modified files since the last call of the constructors, buil or photosModified
+        QStringList photosModified( void ) const; //List of the removed or modified files
         
         QStringList appendPhotoList( const QStringList & ); //Add new properties to the db. Return a list of invalid files.
         QStringList appendPhotoList( const CPhotoPropertiesExtended & ); //Add new properties to the db. Return a list of invalid files.
 
-        QStringList refresh( const QStringList & ); //Update the database using this new list of files.
+        QStringList refresh( const QStringList & ); //Updates the database using this new list of files.
+        bool updateFileInfo( const QString & ); //Updates the file info of the element
 
         void remove( int );
         void remove( const QString &);

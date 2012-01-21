@@ -124,7 +124,7 @@ CProjectParameters::CProjectParameters(const CProjectParameters &source) :
     this->m_p_skin = source.m_p_skin;
     this->m_p_ui = source.m_p_ui;
     this->m_version = source.m_version;
-    this->m_photoPropertiesMap = source.m_photoPropertiesMap;
+ //   this->m_photoPropertiesMap = source.m_photoPropertiesMap;
 }
 
 
@@ -149,7 +149,7 @@ CProjectParameters& CProjectParameters::operator=(const CProjectParameters &sour
         this->m_p_skin = source.m_p_skin;
         this->m_p_ui = source.m_p_ui;
         this->m_version = source.m_version;
-        this->m_photoPropertiesMap = source.m_photoPropertiesMap;
+//        this->m_photoPropertiesMap = source.m_photoPropertiesMap;
         this->m_feeder = source.m_feeder;
     }
     return *this;
@@ -180,7 +180,7 @@ bool CProjectParameters::operator==(const CProjectParameters &source)
     }
 
     //Comparaison du Map de proprits
-    if( m_photoPropertiesMap.size() == source.m_photoPropertiesMap.size() )
+/*    if( m_photoPropertiesMap.size() == source.m_photoPropertiesMap.size() )
     {
         QMapIterator<QString,CPhotoPropertiesExtended> i( this->m_photoPropertiesMap );
         while( f_result == true && i.hasNext() ){
@@ -195,7 +195,7 @@ bool CProjectParameters::operator==(const CProjectParameters &source)
     else{ //Si la taille n'est pas gale, c'est tout de suite faux...
         f_result = false;
     }
-
+*/
     return f_result;
     
 }
@@ -306,7 +306,7 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
 
 
 //    m_photosList.clear();
-    m_photoPropertiesMap.clear();
+//    m_photoPropertiesMap.clear();
     //--- CONFIG GALLERY
     m_galleryConfig.title = galleryConfElem.firstChildElement( "title" ).text();
     m_galleryConfig.description = galleryConfElem.firstChildElement( "description" ).text();

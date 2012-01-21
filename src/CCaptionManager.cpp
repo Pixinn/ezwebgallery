@@ -102,7 +102,7 @@ void CCaptionManager::reset( )
 // ----------------
 // Retourne le nom de la photo affichée actuellement
 //----------------------
-QString CCaptionManager::photo( )
+QString CCaptionManager::displayedPhoto( )
 {
 /*    QStringListModel* model = (QStringListModel*)m_p_listView->model();
     QModelIndex indexPhotoSelected = model->index( m_photoIndex );

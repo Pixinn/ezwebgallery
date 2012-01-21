@@ -37,42 +37,7 @@ namespace Ui { //Pour diffrencier de la classe MainWin de mainwin.h et accder  l
     class MainWin;
 }
 
-/***** enumerations *****/
-
-
-/**** Classes de paramtres ****/
-
-
-
-class t_galleryConf{
-public:
-    bool operator==(const t_galleryConf& ); //<- METTRE A JOUR SI ON AJOUTE DES CHAMPS !!
-    bool operator!=(const t_galleryConf& );
-    QString title;
-    QString description;
-    QString inputDir;
-    QString outputDir;
-    QString url;
-    int nbPhotosToPrefetch;
-    int prefetchCacheSize;    
-    bool f_rightClickEnabled;
-    bool f_regeneration;
-    QString skinPath;
-    QString thumbPhoto;
-    bool f_shareOnSocialNetworks;
-}; //Configuration gnrale de la gallerie
-
-class t_thumbsConf{
-public:
-    bool operator==(const t_thumbsConf& ); //<- METTRE A JOUR SI ON AJOUTE DES CHAMPS !!
-    bool operator!=(const t_thumbsConf& );
-    int nbRows;
-    int nbColumns;
-    int size;
-    int quality;
-    bool f_regeneration;
-}; //Configuration des vignettes
-
+/***** Types *****/
 typedef struct
 {
     //Text
@@ -114,6 +79,45 @@ typedef struct
     };
 
 }t_watermark;
+
+
+/**** Classes de paramtres ****/
+
+
+
+class t_galleryConf{
+public:
+    bool operator==(const t_galleryConf& ); //<- METTRE A JOUR SI ON AJOUTE DES CHAMPS !!
+    bool operator!=(const t_galleryConf& );
+
+    QString title;
+    QString description;
+    QString inputDir;
+    QString outputDir;
+    QString skinPath;
+    QString thumbPhoto;
+    QString url;
+    int nbPhotosToPrefetch;
+    int prefetchCacheSize;     
+    bool f_rightClickEnabled;    
+    bool f_shareOnSocialNetworks;
+
+    bool f_regeneration;
+}; //Configuration gnrale de la gallerie
+
+class t_thumbsConf{
+public:
+    bool operator==(const t_thumbsConf& ); //<- METTRE A JOUR SI ON AJOUTE DES CHAMPS !!
+    bool operator!=(const t_thumbsConf& );
+
+    int nbRows;
+    int nbColumns;
+    int size;
+    int quality;
+
+    bool f_regeneration;
+}; //Configuration des vignettes
+
 class t_photosConf{
 public:
     bool operator==(const t_photosConf& ); //<- METTRE A JOUR SI ON AJOUTE DES CHAMPS !!
@@ -130,13 +134,14 @@ public:
     t_watermark watermark;
     bool f_regeneration;
 
-    //Ces numrations doivent correspondre  la position des items dans les comboboxs
+    //Ces énumrations doivent correspondre à la position des items dans les comboboxs
     enum e_optimizationStrategy
     {
         OPTIMIZE_QUALITY = 0,
         OPTIMIZE_SCREENUSAGE
     };
 }; //Configuration des photos
+
 
 /*****************************
  * CProjectParameters
@@ -192,7 +197,7 @@ signals:
 // !! BIEN METTRE A JOUR operator= , == et != en cas d'ajout d'attribut !! //
 public:
 //    QMap<QString,QDateTime> m_photosList;
-    QMap<QString,CPhotoPropertiesExtended> m_photoPropertiesMap; //to deprecate
+    //QMap<QString,CPhotoPropertiesExtended> m_photoPropertiesMap; //to deprecate
     t_galleryConf m_galleryConfig;
     t_thumbsConf m_thumbsConfig;
     t_photosConf m_photosConfig;

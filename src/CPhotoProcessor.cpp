@@ -50,8 +50,8 @@ CPhotoProcessor::CPhotoProcessor(   CPhotoProperties photoProperties,
 {
     m_photoProperties = photoProperties,
 //    m_idPhoto = photoProperties.id();
-    m_generatedParameters.setIdPhoto( photoProperties.id() );
-    m_inFilePath = photoProperties.fileInfo().absoluteFilePath();
+    //m_generatedParameters.setIdPhoto( photoProperties.id() );
+    //m_inFilePath = photoProperties.fileInfo().absoluteFilePath();
     m_outPath = outPath;
     m_qualityQueue = quality;
     m_sizesQueue = sizes;
@@ -89,27 +89,29 @@ void CPhotoProcessor::run()
     QString fileToWrite;
     QSize size;
     int saveQuality;
-    int i = 0;
-    
+    int i = 0;    
+
     //Annulation de la tche si demand
     m_p_mutexRemoteControl->lock();
     fCancel = *m_fStopRequested;
     m_p_mutexRemoteControl->unlock();
     if( fCancel ) { 
         m_generatedParameters.setExitStatus( stopped );
+        m_generatedParameters.setPhotoProperties( m_photoProperties);
         emit processCompleted( m_generatedParameters );
         return;
     }
 
     //Ouverture du fichier
     m_mutexFileReading.lock(); //On locke pour optimiser les accs disque
-    f_fileReadingSuccess = photoOriginal.load( m_inFilePath );
+    f_fileReadingSuccess = photoOriginal.load( m_photoProperties.fileInfo().absoluteFilePath() );
     m_mutexFileReading.unlock();
     if( !f_fileReadingSuccess ) //Si echec de la lecture du fichier
     {
-        m_generatedParameters.setMessage( tr("Unable to open the file: ") + m_inFilePath + QString(" ")
+        m_generatedParameters.setMessage( tr("Unable to open the file: ") + m_photoProperties.fileInfo().absoluteFilePath() + QString(" ")
                                         + tr("Error: ") + photoOriginal.error() );
         m_generatedParameters.setExitStatus( failure );
+        m_generatedParameters.setPhotoProperties( m_photoProperties);
         emit processCompleted( m_generatedParameters );
         
     	return;
@@ -136,6 +138,7 @@ void CPhotoProcessor::run()
         //Annulation de la tche
         if( fCancel ) {
             m_generatedParameters.setExitStatus( stopped );
+            m_generatedParameters.setPhotoProperties( m_photoProperties);
             emit processCompleted( m_generatedParameters );
             return;
         }
@@ -174,7 +177,7 @@ void CPhotoProcessor::run()
 
             photoMaster = photoResized; //Il est essentiel de sauver le master AVANT sharpening afin de maximiser la qualit d'image
             f_refPictureComputed = true;
-            m_generatedParameters.setExifTags( photoMaster.exifTags( ) );
+            m_photoProperties.setExifTags( photoMaster.exifTags( ) );
         }
 
         //sharpening
@@ -183,7 +186,7 @@ void CPhotoProcessor::run()
         //Sauvegarde
         saveQuality = m_qualityQueue.dequeue();
         fileOutPath.cd( photosPath + QString::number(++i) );
-        filename = PHOTOPREFIXE + QString::number( m_photoProperties.id() );
+        filename = PHOTOPREFIXE + QString::number( m_photoProperties.id() + 1 );
         fileToWrite =  fileOutPath.absoluteFilePath( filename ) + ".jpg";
         if( photoResized.save( fileToWrite, saveQuality ) ){
             m_generatedParameters.enqueueSize( QSize( photoResized.size().width(), photoResized.size().height() ) );
@@ -191,6 +194,7 @@ void CPhotoProcessor::run()
         else{ //Echec de la sauvegarde !
             m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
             m_generatedParameters.setExitStatus( failure );
+            m_generatedParameters.setPhotoProperties( m_photoProperties);
             emit processCompleted( m_generatedParameters );
     	    return;
         }
@@ -200,7 +204,7 @@ void CPhotoProcessor::run()
             
     //Gnration de la vignette
     size = m_sizesQueue.dequeue();
-    filename = thumbPrefix + QString::number( m_photoProperties.id() );
+    filename = thumbPrefix + QString::number( m_photoProperties.id() + 1 );
 
     photoResized = photoThumbMaster;
     photoResized.zoom( size );
@@ -215,11 +219,13 @@ void CPhotoProcessor::run()
     { //Echec de la sauvegarde !
         m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
         m_generatedParameters.setExitStatus( failure );
+        m_generatedParameters.setPhotoProperties( m_photoProperties);
         emit processCompleted( m_generatedParameters );
         return;
     }
 
     m_generatedParameters.setExitStatus( success );
+    m_generatedParameters.setPhotoProperties( m_photoProperties);
     emit processCompleted( m_generatedParameters );
 
     return;
@@ -240,10 +246,11 @@ CGeneratedPhotoSetParameters::CGeneratedPhotoSetParameters( const CGeneratedPhot
     QObject( )
 {
     this->m_generatedSizesQueue = other.m_generatedSizesQueue;
-    this->m_idPhoto = other.m_idPhoto;
+//    this->m_idPhoto = other.m_idPhoto;
+    this->m_photoProperties = other.m_photoProperties;
     this->m_exitStatus = other.m_exitStatus;
     this->m_message = other.m_message;
-    this->m_exifTags = other.m_exifTags;
+//    this->m_exifTags = other.m_exifTags;
 }
 
 CGeneratedPhotoSetParameters::~CGeneratedPhotoSetParameters( ){
@@ -253,15 +260,16 @@ void CGeneratedPhotoSetParameters::enqueueSize( QSize toQueue ){
     m_generatedSizesQueue.enqueue( toQueue );
 }
 
-void CGeneratedPhotoSetParameters::setIdPhoto( int id ){
+/*void CGeneratedPhotoSetParameters::setIdPhoto( int id ){
     m_idPhoto = id;
-}
+}*/
 void CGeneratedPhotoSetParameters::setMessage( const QString & message ){
     m_message = message;
 }
-void CGeneratedPhotoSetParameters::setExifTags( const QMap<QString,QString> & exifTags ){
+/*void CGeneratedPhotoSetParameters::setExifTags( const QMap<QString,QString> & exifTags ){
     m_exifTags = exifTags;
-}
+    m_photoProperties.setExifTags( exifTags );
+}*/
 void CGeneratedPhotoSetParameters::setExitStatus( const e_photoProcessStatus exitStatus ){
     m_exitStatus = exitStatus;
 }
@@ -269,15 +277,15 @@ void CGeneratedPhotoSetParameters::setExitStatus( const e_photoProcessStatus exi
 QQueue<QSize> CGeneratedPhotoSetParameters::generatedSizesQueue(){
     return m_generatedSizesQueue;
 }
-int CGeneratedPhotoSetParameters::idPhoto(){
+/*int CGeneratedPhotoSetParameters::idPhoto(){
     return m_idPhoto;
-}
+}*/
 e_photoProcessStatus CGeneratedPhotoSetParameters::exitStatus( ){
     return m_exitStatus;
 }
 QString CGeneratedPhotoSetParameters::message( ){
     return m_message;
 }
-QMap<QString,QString> CGeneratedPhotoSetParameters::exifTags( ){
+/*QMap<QString,QString> CGeneratedPhotoSetParameters::exifTags( ){
     return m_exifTags;
-}
+}*/

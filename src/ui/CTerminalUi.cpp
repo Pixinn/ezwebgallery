@@ -142,6 +142,9 @@ void CTerminalUi::run( )
         }
     }
 
+    /* 
+            A REVOIR !!!!!
+
    //Reconstruction de la liste des photos rellement prsentes dans le rpertoire d'entre
 	//REM: copier/coller adapt de mainwin::buildPhotoList() -> voir les commentaires de cette fonction pour explication
 	QString photoName;
@@ -181,8 +184,8 @@ void CTerminalUi::run( )
 	}
 
     //Lancement de la gnration
-//    m_galleryGenerator.generateGallery(  m_projectParameters, m_skinParameters  ); A AJOUTER !!!!!!
-
+    m_galleryGenerator.generateGallery(  m_projectParameters, m_skinParameters  ); A AJOUTER !!!!!!
+*/
 }
 
 /****************************************** Fonctions protges **************************************/
