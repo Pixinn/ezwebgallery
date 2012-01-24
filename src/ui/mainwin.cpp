@@ -208,53 +208,35 @@ void MainWin::onForceStoppedFinished( QStringList errorMessages )
 
 
 //--------------------------------
-//------ Gallerie générée
+//------ Gallery successfully generated
 //--------------------------------
 void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesList )
 {
-
-    //PAS MAL DE BOULOT A FAIRE ICI !!!
-
-    //QStringList nonProcessedFiles;
     
     foreach( CPhotoProperties photoProperties, propertiesList )
     {
         //Mise à jour des propriétés avec les Tags exifs lus lors de la génération
         CPhotoProperties* localProperties = m_photoDatabase.properties( photoProperties.fileName() );
         localProperties->setExifTags( photoProperties.exifTags() );
-        //m_projectParameters.m_photoPropertiesMap.insert( photoProperties.fileName(), photoProperties ); // STILL USEFUL ???
-        //Updatating files properties
-        m_photoDatabase.updateFileInfo( photoProperties.fileName() );
-       
-        
-        /*//La génération a-t-elle abouti pour cette photo ?
-        if( !photoProperties.processed() ){
-            nonProcessedFiles << photoProperties.fileName();
-        }*/
+        //Updatating files properties in order not to regenerate non-updated photos
+        m_photoDatabase.refreshFileInfo( photoProperties.fileName() );
+    }
+    
+    //By default, we consider that the generation was sucessfull for all the photos
+    m_projectParameters.m_galleryConfig.f_regeneration = false;
+    m_projectParameters.m_photosConfig.f_regeneration = false;
+    m_projectParameters.m_thumbsConfig.f_regeneration = false;
+
+    swapButtons( ); //Bouton "cancel" redevient "generate" et réactivation des actions
+    m_ui->statusbar->showMessage( tr("Generation successfully completed."), 7000 );
+    
+    //Ouverture de la galerie
+    if( m_p_configureWindow->openGeneratedGallery() ) {
+        QUrl url;
+        QString indexPath = QDir(m_projectParameters.m_galleryConfig.outputDir).absoluteFilePath("index.html");
+        QDesktopServices::openUrl( url.fromLocalFile( indexPath ) );
     }
 
-    //La génération a abouti pour toutes les photos
-    /*if( nonProcessedFiles.isEmpty() )
-    {*/
-        m_projectParameters.m_galleryConfig.f_regeneration = false;
-        m_projectParameters.m_photosConfig.f_regeneration = false;
-        m_projectParameters.m_thumbsConfig.f_regeneration = false;
-
-        swapButtons( ); //Bouton "cancel" redevient "generate" et réactivation des actions
-        m_ui->statusbar->showMessage( tr("Generation successfully completed."), 7000 );
-
-        //Ouverture de la galerie
-        if( m_p_configureWindow->openGeneratedGallery() ) {
-            QUrl url;
-            QString indexPath = QDir(m_projectParameters.m_galleryConfig.outputDir).absoluteFilePath("index.html");
-            QDesktopServices::openUrl( url.fromLocalFile( indexPath ) );
-        }
-  /*  }
-    else
-    {
-        swapButtons( ); //Bouton "cancel" redevient "generate" et réactivation des actions
-        m_ui->statusbar->showMessage( tr("A problem occured."), 7000 );
-    }*/
 }
 
 
@@ -271,7 +253,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
 {
 
     //Pour pouvoir utiliser dans les signaux/slots:
-    qRegisterMetaType<CPhotoPropertiesExtended>("CPhotoPropertiesExtended");
+    qRegisterMetaType<CPhotoProperties>("CPhotoProperties");
 
     setWindowIcon( QIcon(":/icons/app_icon") );
     m_ui->setupUi(this); //"this" hérite de QMainWindow via IUserInterface
@@ -1303,143 +1285,6 @@ void MainWin::highlightPhoto( QModelIndex modelIndex )
     m_ui->listView_Photos->setCurrentIndex( modelIndex );
 }
 
-/*
-void MainWin::onPrevious( void )
-{
-    QModelIndex modelIndex;
-    if( m_captionManager.previous( modelIndex ) ) {
-        m_ui->listView_Photos->setCurrentIndex( modelIndex ); //updating ui if success
-    }
-}
-void MainWin::onNext( void )
-{
-    QModelIndex modelIndex;
-    if( m_captionManager.next( modelIndex ) ) {
-        m_ui->listView_Photos->setCurrentIndex( modelIndex ); 
-    }
-}
-void MainWin::onListClicked( QModelIndex )
-{
-
-}
-void MainWin::onCaptionTextEdited( QString )
-{
-}
-void MainWin::onCaptionHeaderEdited(QString)
-{
-}
-void MainWin::onCaptionEndingEdited(QString)
-{
-}
-*/
-
-
-/*************************
-* buildPhotoLists
-*----------------------
-* Parcourt le répertoire d'entrée pour y trouver les photos à traiter et
-* met à jour le QMap de CPhotoPropertiesExtended avec les données disponibles :
-* CPhotoPropertiesExtended actuelles, légendes renseignées et nouvelles photos
-*
-* 1 - Création de la liste des photos dipos dans le répertoire d'entrée.
-*     Ajout d'une entrée dans le QMap des propriétés si nouvelle photo, suppression si photo introuvable.
-* 2 - MAJ du gestionnaire des légendes. Maj UI, et récupération du nombre de photos introuvables dans le rep d'entrée.
-* 3 - Récupération des légendes reseignées pour MAJ du QMap de properties.
-* 4 - MAJ de la vignette représentant la galerie.
-*
-* Return : le nombre de CPhotosProperties retirées du QMap car la photo correspondante n'est plus présente dans le répertoire d'entrée.
-**************************/
-//int MainWin::buildPhotoLists( )
-//{
-//    QDir inputDir( m_projectParameters.m_galleryConfig.inputDir );
-//    QStringList photoList;
-//	QStringList photoFileTypes;
-//    QStringListIterator* p_photoListIterator;
-//    QString photoName;
-//    QFileInfo* p_photoFileInfo;
-//    QMap<QString,QDateTime> oldPhotosList;
-//    int nbPhotoNotFound;
-//
-//
-//    // 1 -Reconstruction de la liste des photos réellement présentes dans le répertoire d'entrée    
-//	photoFileTypes << "*.jpeg" << "*.jpg" << "*.tiff" << "*.tif"; //Formats d'image supportés en entrée
-//    photoList = CPlatform::getImagesInDir( inputDir, photoFileTypes ); //Récupération de la liste des photos du répertoire d'entrée
-//    p_photoListIterator = new QStringListIterator( photoList );
-//    while( p_photoListIterator->hasNext() ) //On vérifie que les paramètres des photos sont toujours à jour
-//    {    
-//        photoName = p_photoListIterator->next();
-//        p_photoFileInfo = new QFileInfo( inputDir.absoluteFilePath( photoName ) );
-//        //Si les paramètres de la galerie ne comportaient pas le fichier, on met à jour et on demande la regénération
-//        if( !m_projectParameters.m_photoPropertiesMap.contains( photoName ) )
-//        {
-//            CPhotoPropertiesExtended newProperties;
-//            newProperties.setFileInfo( *p_photoFileInfo );
-//            newProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
-//            m_projectParameters.m_photoPropertiesMap.insert( photoName, newProperties );
-//            m_projectParameters.m_photosConfig.f_regeneration = true;
-//            m_projectParameters.m_thumbsConfig.f_regeneration = true;
-//        }
-//        //Si les infos de date du fichier sont différentes => on update et on demande la regénération également
-//        else
-//        {
-//            CPhotoPropertiesExtended deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
-//            if(  deprecatedProperties.lastModificationTime().toString() != p_photoFileInfo->lastModified().toString() ) { //Les QDateTime non convertis ne semblent pas bien se comparer ???
-//                deprecatedProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
-//                //deprecatedProperties.setProcessed( false );
-//				m_projectParameters.m_photoPropertiesMap.insert( photoName, deprecatedProperties );
-//                m_projectParameters.m_photosConfig.f_regeneration = true;
-//                m_projectParameters.m_thumbsConfig.f_regeneration = true;
-//            }
-//        }
-//        onLogMsg( QString("[Photolist]." ) + photoName + QString(": ") + p_photoFileInfo->lastModified().toString() );
-//        delete p_photoFileInfo;
-//    }
-//	//Suppression des entrées qui ne correspondent pas à une photo trouvée dans le répertoire
-//    nbPhotoNotFound = 0;
-//	foreach( photoName, m_projectParameters.m_photoPropertiesMap.keys() ){
-//		if( !photoList.contains( photoName ) ){
-//			m_projectParameters.m_photoPropertiesMap.remove( photoName );
-//            nbPhotoNotFound++;
-//		}
-//	}//NOTE: m_projectParameters.m_photoPropertiesMap.keys() correspond maintenant exactement aux photos trouvées dans le rep d'entrée    
-//
-//    //2 - Maj du Caption Manager et affichage dans TAB "Légendes"
-//    //- Mise à jour du Modèle avec la liste des photos trouvées
-//    //m_photosListModel.setStringList( m_projectParameters.m_photoPropertiesMap.keys() /*photoList*/ ); //Mise  jour du Modèle pour affichage
-//    //Mise  jour du gestionnaire de légendes : association avec le modèle mis à jour
-//    m_captionManager.reset( );
-//	
-//  /*  //3 - Récupération des légendes
-//	QMap<QString,CCaption> captionMap = m_captionManager.captionMap();
-//	foreach( photoName, captionMap.keys() ) {
-//                        CPhotoPropertiesExtended photoProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
-//			photoProperties.setCaption( captionMap.value( photoName ) );
-//			m_projectParameters.m_photoPropertiesMap.insert( photoName, photoProperties );
-//	}
-//*/
-//
-//    //4 - Vignette réprésentant la galerie
-//    //Si elle n'est pas dans la galerie -> attribuer la première photo
-//    if( !photoList.contains( m_projectParameters.m_galleryConfig.thumbPhoto )
-//        && !photoList.isEmpty() )
-//    {
-//        m_projectParameters.m_galleryConfig.thumbPhoto = photoList.at( 0 );
-//        m_ui->checkBox_GalleryThumb->setChecked( true ); //Comme c'est la 1ere photo qui est affichée, on coche.
-//        onLogMsg( QString("[Photolist]. New thumbnail: ") + m_projectParameters.m_galleryConfig.thumbPhoto );
-//    }
-//
-//    onLogMsg( QString("[Photolist]. Nb photos found: ") + QString::number( photoList.size() ) );
-//
-//
-//    //NEW: Use of photofeeder and database
-//    m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
-//    
-//
-//
-//
-//    delete p_photoListIterator;   
-//    return nbPhotoNotFound;
-//}
 
 /*************************
 * previewCaption

@@ -25,6 +25,7 @@
 #include <QString>
 #include <QMap>
 #include <QFileInfo>
+#include <QDateTime>
 
 #include "CCaption.h"
 
@@ -44,13 +45,12 @@ public:
     CPhotoProperties( void ) :
         QObject(),
         m_id(-1)
-        //m_f_processed(false)
     {   }
     CPhotoProperties( const CPhotoProperties & other) :
         QObject(),
         m_id( other.m_id ),
-        //m_f_processed( other.m_f_processed ),
         m_fileInfo( other.m_fileInfo ),
+        m_lastModified( other.m_lastModified ),
         m_exifTags( other.m_exifTags ),
         m_caption( other.m_caption )
     {   }
@@ -64,13 +64,18 @@ public:
         m_id = id;
         m_caption.setId( id + 1 );
     }
-    /*void setProcessed( bool processed ){
-        m_f_processed = processed;
-    }*/
+
     void setFileInfo( const QFileInfo & fileInfo){
         m_fileInfo = fileInfo;
         m_caption.setFileInfo( fileInfo );
     }
+
+    void refreshFileInfo( void ) {
+        m_fileInfo.refresh();
+        m_caption.setFileInfo( m_fileInfo );
+        m_lastModified = m_fileInfo.lastModified();
+    }
+
     void setExifTags( const QMap<QString,QString> & exifTags){
         m_exifTags = exifTags;
         m_caption.setExifTags( exifTags );
@@ -87,12 +92,15 @@ public:
     int id( ) const {
         return m_id;
     }
-    /*bool processed( ) const {
-        return m_f_processed;
-    }*/
+
     QFileInfo fileInfo( ) const {
         return m_fileInfo;
     }
+
+    QDateTime lastModified( void ) const {
+        return m_lastModified;
+    }
+
     QMap<QString,QString> exifTags( ) const {
         return m_exifTags;
     }
@@ -108,9 +116,9 @@ private:
     static const QString CAPTION;
     static const QString CAPTIONHEADER;
     static const QString CAPTIONENDING;
-    int m_id;	//NECESSAIRE ???
-    //bool m_f_processed;
+    int m_id;
     QFileInfo m_fileInfo;
+    QDateTime m_lastModified; //Must be saved separated from m_fileInfo
     QMap<QString,QString> m_exifTags;
     CCaption m_caption;
 };

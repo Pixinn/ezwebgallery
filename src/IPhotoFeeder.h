@@ -21,7 +21,7 @@
 
 #include <QStringList>
 
-#include "CPhotoPropertiesExtended.h"
+#include "CPhotoProperties.h"
 #include "CMessage.h"
 
 
@@ -47,8 +47,8 @@ public:
     virtual QStringList getPhotoList( void ) = 0;    //Returns an alphabetically ordered list of the
                                                      //absolute filepath of ALL the photos passed to EZWG                                                    
 signals:
-     void build( QList<CPhotoPropertiesExtended> ); //Build from scratch using a list of photoproperties
-     void build( QStringList );  //Build from scratch using a list containing  absolute filepaths     
+     /*void build( QList<CPhotoProperties> ); //Build from scratch using a list of photoproperties
+     void build( QStringList );  //Build from scratch using a list containing  absolute filepaths      */
      void update( QStringList );  //Update a list containing absolute filepaths     
      void error( CMessage );       //An error occured
 };

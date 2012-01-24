@@ -78,15 +78,6 @@ void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
 
 void CTerminalUi::onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties> propertiesList )
 {
-  /*  bool success = true;
-    foreach( CPhotoPropertiesExtended photoProperties, propertiesList ){
-        if( !photoProperties.processed() ){
-            success = false;
-        }
-    }
-    if( success ){
-        cout << tr("Generation successfully completed.") << endl;
-    }*/
     propertiesList;
     cout << tr("Generation successfully completed.") << endl;
     emit done();

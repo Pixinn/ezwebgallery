@@ -62,7 +62,7 @@ QString CPlatform::revision()
 * ----------
 * Retourne le numéro de révision.
 ***************************/
-int CPlatform::revisionInt()
+unsigned int CPlatform::revisionInt()
 {
     QString buildDate( BUILD_DATE );
     buildDate.remove('-');

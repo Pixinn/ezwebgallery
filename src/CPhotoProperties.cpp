@@ -64,8 +64,8 @@ CPhotoProperties & CPhotoProperties::operator=( const CPhotoProperties &other )
         this->m_caption = other.m_caption;
         this->m_exifTags = other.m_exifTags;
         this->m_fileInfo = other.m_fileInfo;
-        this->m_id = other.m_id;
-        //this->m_f_processed = other.m_f_processed;
+        this->m_lastModified = other.m_lastModified;
+        this->m_id = other.m_id;     
     }
 
     return *this;
@@ -81,9 +81,8 @@ bool CPhotoProperties::operator==( const CPhotoProperties &toCompare ) const
 {
     bool f_result;
     if(    this->m_id == toCompare.m_id
-//        && this->m_f_processed == toCompare.m_f_processed
-//        && this->m_fileName == toCompare.m_fileName
-//        && this->m_lastModificationTime == toCompare.m_lastModificationTime
+        && this->m_fileInfo.absoluteFilePath() == toCompare.m_fileInfo.absoluteFilePath() //Doesn't work? Cache effects?
+        && this->m_lastModified.toString() == toCompare.m_lastModified.toString()
         && this->m_exifTags == toCompare.m_exifTags
         && this->m_caption == toCompare.m_caption )
     {
@@ -109,7 +108,8 @@ bool CPhotoProperties::operator==( const CPhotoProperties &toCompare ) const
 bool CPhotoProperties::isEquivalent( const CPhotoProperties &toCompare )
 {
         bool f_result;
-    if(    this->m_fileInfo == toCompare.m_fileInfo        
+    if(    this->m_fileInfo == toCompare.m_fileInfo  
+        && this->m_lastModified == toCompare.m_lastModified
         && this->m_caption == toCompare.m_caption )
     {
         f_result = true;

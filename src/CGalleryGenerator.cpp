@@ -130,10 +130,8 @@ void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, 
     if( !this->isGenerationInProgress() )
     {
         CCaption emptyCaption;
-        //CPhotoProperties photoProperties;
 		QDir inputDir;
         QFileInfo fileInfo;
-//        int id = 1;
 
         //-- Init
         m_parameters = projectParameters;
@@ -143,22 +141,6 @@ void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, 
 		inputDir = m_parameters.m_galleryConfig.inputDir;
 
         displayProgressBar( 0, "green", "0%" );
-
-        //Cration de la liste ordone des proprits des photos  utiliser
-        //REMARQUE : pour le moment, la liste sera ordonne selon l'ordre alphabtique du nom des photos !
-        //Dans le futur, il faudra que ce soit le Caption Manager qui ordonne les photos. Avec un rle tendu, changement de nom?
-        /*m_photoPropertiesList.clear();
-        photoList = m_parameters.m_photoPropertiesMap.keys();
-	    qSort( photoList.begin(), photoList.end() ); //Le tri de la liste de photos !            
-        foreach( photoName, photoList )
-        {
-            photoProperties = m_parameters.m_photoPropertiesMap.value( photoName );
-			fileInfo = QFileInfo( inputDir.absoluteFilePath( photoName ) );
-			photoProperties.setFileInfo( fileInfo );
-            photoProperties.setId( id++ );
-            m_photoPropertiesList.append( photoProperties );
-        }
-        */
 
         m_photoPropertiesList.clear();
         foreach( CPhotoProperties* properties, photoProperties )    {
@@ -176,14 +158,6 @@ void CGalleryGenerator::abordGeneration( )
     emit abordGenerationSignal( );
 }
 
-/*void CGalleryGenerator::connectToUi( IUserInterface* ui ){
-    m_p_ui = ui;
-    connect( this, SIGNAL( debugSignal(QString) ), m_p_ui, SLOT( onLogMsg(QString) ) );
-    connect( this, SIGNAL( progressBarSignal( int, QString, QString ) ), m_p_ui, SLOT( onProgressBar( int, QString, QString ) ) );
-    connect( this, SIGNAL( generationFinishedSignal(QList<CPhotoPropertiesExtended> ) ), m_p_ui, SLOT( onGalleryGenerationFinished( QList<CPhotoPropertiesExtended> ) ) );
-    connect( this, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), m_p_ui, SLOT( onForceStoppedFinished( QStringList ) ) );
-}
-*/
 
 bool CGalleryGenerator::isGenerationInProgress( )
 {
@@ -746,14 +720,6 @@ bool CGalleryGenerator::skinning( )
     	//---- Index
         jsGalleryPresentationStream << "var NBTHUMBSBYPAGE = " <<  QString::number(m_parameters.m_thumbsConfig.nbColumns * this->m_parameters.m_thumbsConfig.nbRows) << ";" << endl;
     	//---- RESIZE ET RECENTRAGE
-        /* //Lecture de la taille du bouton index
-        imgPath.cd( RESIMGPATH );
-        if( buttonIndex.load( imgPath.absoluteFilePath( m_skinParameters.buttonImage(CSkinParameters::buttonIndex) ) ) ) {
-            offset = buttonIndex.height() + 10;
-        }
-        else { 
-            offset = 75;
-        }*/
     	jsGalleryPresentationStream << "var NBOFFSETHAUT = " << QString::number( offset ) << ";" << endl
                                     << "var NBOFFSETBAS  = " << QString::number( offset ) << ";" << endl
                                     << "var IMAGEQUALITYSTRATEGY = " << QString::number(m_parameters.m_photosConfig.imageOptimizationStrategy) << ";" << endl;

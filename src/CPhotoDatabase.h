@@ -29,7 +29,7 @@
 #include <QDomElement>
 #include <QStringListModel>
 
-#include "CPhotoPropertiesExtended.h"
+#include "CPhotoProperties.h"
 #include "CCaption.h"
 #include "CMessage.h"
 
@@ -50,18 +50,18 @@
     
  private:
     //Private type of element to store in the DB
-    class CPhotoDatabaseElem : public CPhotoPropertiesExtended
+    class CPhotoDatabaseElem : public CPhotoProperties
     {
         public:
             CPhotoDatabaseElem( void ) : 
-                CPhotoPropertiesExtended( )
+                CPhotoProperties( )
             {     }
             CPhotoDatabaseElem( const CPhotoDatabaseElem & other ) :
-                CPhotoPropertiesExtended( other ),
+                CPhotoProperties( other ),
                 m_thumbnail( other.m_thumbnail )
             {     }
-            CPhotoDatabaseElem( const CPhotoPropertiesExtended & other ) :
-                CPhotoPropertiesExtended( other )
+            CPhotoDatabaseElem( const CPhotoProperties & other ) :
+                CPhotoProperties( other )
             {     }     
             ~CPhotoDatabaseElem( void ){  }
             CPhotoDatabaseElem & operator=( const CPhotoDatabaseElem &  source)
@@ -90,10 +90,10 @@
         QStringList photosModified( void ) const; //List of the removed or modified files
         
         QStringList appendPhotoList( const QStringList & ); //Add new properties to the db. Return a list of invalid files.
-        QStringList appendPhotoList( const CPhotoPropertiesExtended & ); //Add new properties to the db. Return a list of invalid files.
+        //QStringList appendPhotoList( const CPhotoProperties & ); //Add new properties to the db. Return a list of invalid files.
 
         QStringList refresh( const QStringList & ); //Updates the database using this new list of files.
-        bool updateFileInfo( const QString & ); //Updates the file info of the element
+        bool refreshFileInfo( const QString & ); //Updates the file info of the element
 
         void remove( int );
         void remove( const QString &);
@@ -131,7 +131,7 @@
     private: //nb private memebers do not emit updatedProperties()
         void clear( void );
         bool add( const QString& photoPath ); //adds a photo photoproperties at the end of the ordered list
-        bool add( const CPhotoPropertiesExtended& ); //adds a photo photoproperties at the end of the ordered list
+        bool add( const CPhotoProperties& ); //adds a photo photoproperties at the end of the ordered list
         void consolidate( void ); //Removes files present in the db but not on the disk
         
     private:

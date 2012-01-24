@@ -23,7 +23,6 @@
 #include <QMainWindow>
 #include <QString>
 
-#include "CPhotoPropertiesExtended.h"
 #include "CGalleryGenerator.h"
 
 

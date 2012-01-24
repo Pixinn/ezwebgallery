@@ -29,7 +29,6 @@
 #include "CCaptionManager.h"
 #include "CCaption.h"
 #include "CSkinParameters.h"
-#include "CPhotoPropertiesExtended.h"
 #include "CTaggedString.h"
 #include "CPhotoFeederDirectory.h"
 
@@ -134,7 +133,7 @@ public:
     t_watermark watermark;
     bool f_regeneration;
 
-    //Ces énumrations doivent correspondre à la position des items dans les comboboxs
+    //Ces Ã©numrations doivent correspondre Ã  la position des items dans les comboboxs
     enum e_optimizationStrategy
     {
         OPTIMIZE_QUALITY = 0,
@@ -189,15 +188,9 @@ signals:
     void saved(QString);
     void message(QString);
 
-/*public slots:
-    void updatePhotoProperties( QList<CPhotoPropertiesExtended> properties )   {
-        m_photoPropertiesList = properties;
-    }*/
-    
+
 // !! BIEN METTRE A JOUR operator= , == et != en cas d'ajout d'attribut !! //
 public:
-//    QMap<QString,QDateTime> m_photosList;
-    //QMap<QString,CPhotoPropertiesExtended> m_photoPropertiesMap; //to deprecate
     t_galleryConf m_galleryConfig;
     t_thumbsConf m_thumbsConfig;
     t_photosConf m_photosConfig;
@@ -205,9 +198,9 @@ private:
     Ui::MainWin* m_p_ui;
     CCaptionManager* m_p_captionManager;
     CSkinParameters* m_p_skin;
-    int m_version;
+    unsigned int m_version;
     CPhotoFeederDirectory& m_feeder;
-//    QList<CPhotoPropertiesExtended> m_photoPropertiesList;
 };
 
 #endif // CPROJECTPARAMETERS_H
+

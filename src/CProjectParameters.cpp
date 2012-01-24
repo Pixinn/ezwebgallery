@@ -179,23 +179,6 @@ bool CProjectParameters::operator==(const CProjectParameters &source)
         f_result =  false;
     }
 
-    //Comparaison du Map de proprits
-/*    if( m_photoPropertiesMap.size() == source.m_photoPropertiesMap.size() )
-    {
-        QMapIterator<QString,CPhotoPropertiesExtended> i( this->m_photoPropertiesMap );
-        while( f_result == true && i.hasNext() ){
-            i.next();
-            CPhotoPropertiesExtended thisProperties = i.value();
-            CPhotoPropertiesExtended sourceProperties = source.m_photoPropertiesMap.value( i.key() );
-            if( !thisProperties.isEquivalent( sourceProperties ) ){
-                f_result = false;
-            }
-        }
-    }
-    else{ //Si la taille n'est pas gale, c'est tout de suite faux...
-        f_result = false;
-    }
-*/
     return f_result;
     
 }
@@ -292,7 +275,7 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
 
     //--- Conversion automatique du projet si il a t cr par une version antrieure  la version actuelle
     m_version = root.attribute( "release" ).remove( QChar('M') ).toInt( );
-    int currentVersion = CPlatform::revisionInt();
+    unsigned int currentVersion = CPlatform::revisionInt();
     if( m_version < currentVersion ){
         document = convertFromOldVersion( document, m_version );
         root = document.firstChildElement( "Session" );
@@ -369,38 +352,6 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     m_photosConfig.watermark.orientation = watermarkConfElem.firstChildElement( "watermarkOrientation" ).text().toInt();
     m_photosConfig.watermark.position = watermarkConfElem.firstChildElement( "watermarkPosition" ).text().toInt();
     m_photosConfig.watermark.relativeSize = watermarkConfElem.firstChildElement( "watermarkRelativeSize" ).text().toInt();
-
-    //---LEGENDES
-    /*
-    QMap<QString,CCaption> captionMap;
-    QDomNodeList photosNode = photoListElem.elementsByTagName( "Photo" );
-    CTaggedString captionBody;
-    CTaggedString captionHeader;
-    CTaggedString captionEnding;
-    CCaption caption;
-    CPhotoPropertiesExtended photoProperties;
-    QDateTime lastModificationTime;
-    //rem: on considre que la liste des fichiers que l'on lit est ordone comme il faut
-    for( unsigned int iteratorDomList = 0; iteratorDomList < photosNode.length() ; iteratorDomList++ ){        
-        QDomNode node = photosNode.item( iteratorDomList );
-        QString photoName = node.firstChildElement("PhotoName").text();
-        captionBody = node.firstChildElement("Caption").text();
-        captionHeader = node.firstChildElement("CaptionHeader").text();
-        captionEnding = node.firstChildElement("CaptionEnding").text();
-        caption.setBody( captionBody );
-        caption.setHeader( captionHeader );
-        caption.setEnding( captionEnding );
-        captionMap.insert( photoName, caption );
-        lastModificationTime = QDateTime::fromString( node.firstChildElement("LastModification").text() );
-        //--
-        photoProperties.setCaption( caption );
-        photoProperties.setFileInfo( QFileInfo( QDir( m_galleryConfig.inputDir ).absoluteFilePath( photoName ) ) );
-        photoProperties.setLastModificationTime( lastModificationTime );
-        m_photoPropertiesMap.insert( photoName, photoProperties );
-        //--
-    }
-    m_p_captionManager->setCaptionMap( captionMap );
-    */
 
     //deprecated fileformat
     if( m_version < s_versionFilePath ) {
@@ -552,50 +503,6 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
     watermarkConfig.appendChild( watermarkRelativeSize );
     watermarkRelativeSize.appendChild( document.createTextNode(  QString::number(m_photosConfig.watermark.relativeSize)) );
 
-    //--- PHOTOS et LEGENDES associes
-    /*
-    QMap<QString,CCaption> captionMap = m_p_captionManager->captionMap();
-    CPhotoPropertiesExtended photoProperties;
-    foreach( QString photoName, captionMap.keys() ){
-        if( m_photoPropertiesMap.contains( photoName ) ) {
-            photoProperties = m_photoPropertiesMap.value( photoName );
-            photoProperties.setCaption( captionMap.value( photoName ) );
-            m_photoPropertiesMap.insert( photoName, photoProperties );
-        }
-        else{
-            CPhotoPropertiesExtended newPhotoProperties;
-            m_photoPropertiesMap.insert( photoName, newPhotoProperties );
-            //On ne devrait pas tomber ici, car captionMap et m_photoPropertiesMap contiennent les mmes keys / caption (ou properties) !
-        }
-    }
-    QDomElement photoList = document.createElement( "PhotoList" );
-    
-    root.appendChild( photoList );
-    foreach( QString photoName, m_photoPropertiesMap.keys() )
-    {
-        photoProperties = m_photoPropertiesMap.value( photoName );
-        QDomElement photoElement = document.createElement( "Photo" );
-        photoList.appendChild( photoElement );
-        //name
-        QDomElement photoNameElement = document.createElement( "PhotoName" );
-        photoElement.appendChild( photoNameElement );
-        photoNameElement.appendChild( document.createTextNode( photoName ) );
-        //date
-        QDomElement date = document.createElement( "LastModification" );
-        photoElement.appendChild( date );
-        date.appendChild( document.createTextNode( photoProperties.lastModificationTime().toString() ) );
-        //caption
-        QDomElement captionElem = document.createElement( "Caption" );
-        photoElement.appendChild( captionElem );
-        captionElem.appendChild( document.createTextNode( photoProperties.caption().body() ) );
-        QDomElement captionHeaderElem = document.createElement( "CaptionHeader" );
-        photoElement.appendChild( captionHeaderElem );
-        captionHeaderElem.appendChild( document.createTextNode( photoProperties.caption().header() ) );
-        QDomElement captionEndingElem = document.createElement( "CaptionEnding" );
-        photoElement.appendChild( captionEndingElem );
-        captionEndingElem.appendChild( document.createTextNode( photoProperties.caption().ending() ) );
-    }
-*/
     root.appendChild( CPhotoDatabase::getInstance().xml(document));
 
     return document;

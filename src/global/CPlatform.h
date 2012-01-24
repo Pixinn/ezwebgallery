@@ -42,12 +42,12 @@ public:
     static QString applicationDirPath();        //Renvoie le rpertoire o a t install l'application
     static QString skinDirPath();               //Renvoie le rpertoire o se situent les skin fournies
     static QString revision();
-    static int revisionInt();                   //Renvoie la rvision du projet
+    static unsigned int revisionInt();       //Renvoie la rvision du projet
     static int buildDate();        //Renvoie la date de compilation
     static QString language();                  //Renvoie la langue de l'ui
     static QStringList languageList();          //Liste de toutes les langues disponibles
     static void setLanguage( const QString &language );       //Indique la langue de l'ui
-	static QString appDataDir();				//Retourne le rpertoire o sont sauves les donnes persistantes du programme
+    static QString appDataDir();				//Retourne le rpertoire o sont sauves les donnes persistantes du programme
     static QRegExp forbiddenCharacters();       //Retourne les caractres interdits (pour un nom de fichier par exemple)
 
     //Outils. Quand ils y en aura plus -> crer une classe CTools
