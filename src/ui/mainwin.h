@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -31,7 +31,6 @@
 #include <QTextEdit>
 #include <QString>
 #include <QStringList>
-#include <QStringListModel>
 #include <QModelIndex>
 #include <QDir>
 #include <QMap>
@@ -48,6 +47,10 @@
 #include "WinConfigure.h"
 #include "CCaptionManager.h"
 #include "CLanguageManager.h"
+#include "CPhotoFeederDirectory.h"
+#include "CPhotoDatabase.h"
+#include "CPhotoProperties.h"
+#include "CMessage.h"
 
 namespace Ui { //Pour diffrencier de la classe MainWin de mainwin.h et accder  la *vraie* ui
     class MainWin;
@@ -59,14 +62,14 @@ namespace Ui { //Pour diffrencier de la classe MainWin de mainwin.h et accder  l
 
 
 /************* CLASSES **************/
-class MainWin : public QMainWindow, IUserInterface //Hrite indirectement de QMainWindow -> ncessaire pour appeler m_ui->setupUi(QMainWindow*);
+class MainWin : public QMainWindow, IUserInterface
 {
     Q_OBJECT
 /************ METODES *************/
 public:
-    MainWin( QWidget *parent = 0);
+    MainWin( CGalleryGenerator &/*, IPhotoFeeder &*/, CProjectParameters &, QWidget *parent = 0);
     ~MainWin();
-    void setGenerator( CGalleryGenerator* );
+    //void setGenerator( CGalleryGenerator* );
 
 protected:
     void changeEvent(QEvent *e);
@@ -75,30 +78,30 @@ protected:
 private:
     void openSession( const QString &);
     void newSession( );
-    bool isUnsaved( );          //Renvoie true si le projet n'a pas t sauv depuis les dernires modifications
+    bool isUnsaved( );          //Renvoie true si le projet n'a pas été sauvédepuis les dernières modifications
     void displayRecentFiles( ); //Affiche la liste des fichiers rcemments ouverts
-    int displayUnsavedMsgBox( bool, bool ); //Affiche une message box indiquant que le projet et/ou la skin n'ont pas t savegards. Retourne le bouton appuy
+    int displayUnsavedMsgBox( bool, bool ); //Affiche une message box indiquant que le projet et/ou la skin n'ont pas été savegardés. Retourne le bouton choisi
     int displayMoreRecentMsgBox( ); //Affiche une alerte si on essaie d'ouvrir un projet gnr avec une version d'EZWG plus rcente
-    void swapButtons( ); //swap certains boutons pour cause de g�n�ration de galerie
-    bool checkForGeneration( QString & );//V�rifie les param�tres fournis pour la g�n�ration
-    QStringList checkPhotosInDir( const QStringList&, const QDir & ); //V�rifie la prsence des photos de la liste dans le r�pertoire
-    bool checkCreateDir( QString & ); //V�rifie l'existance d'un r�pertoire et propose sa cr�ation via msgBox le cas �chant
+    void swapButtons( ); //swap certains boutons pour cause de génération de galerie
+    bool checkForGeneration( QString & );//Vérifie les paramètres fournis pour la génération
+    QStringList checkPhotosInDir( const QDir & ); //Vérifie la présence des photos de la base dans le répertoire fourni
+    bool checkCreateDir( QString & ); //Vérifie l'existance d'un répertoire et propose sa création via msgBox le cas échant
 
 /********* SLOTS ********/
 public slots:
-    //-- internes -> relis  des signaux de l'UI
+    //-- internes -> relie  des signaux de l'UI
     //Windows
-    void onNewSession( );
-    void onOpenSession( );
-    void onOpenRecentSession( );
-    bool onSaveSession( );
-    bool onSaveSessionAs( );
-    void showTagsWindow( );
-    void showLogWindow( );
-    void showConfigureWindow( );
-    void onlineManual( );    
-    void about( );
-    void aboutImageMagick( );
+    void onNewSession( void );
+    void onOpenSession( void );
+    void onOpenRecentSession( void );
+    bool onSaveSession( void );
+    bool onSaveSessionAs( void );
+    void showTagsWindow( void );
+    void showLogWindow( void );
+    void showConfigureWindow( void );
+    void onlineManual( void );    
+    void about( void );
+    void aboutImageMagick( void );
     //Configuration
     void choosePhotosDir(); // Choix du rpertoire contenant les photos
     void choosePhotosDirManually( );
@@ -106,16 +109,24 @@ public slots:
     void chooseDestDirManually( );
     void sessionLoaded( QString );
     void sessionSaved( QString );
-    //Prsentation
+    //Présentation
     void sharpeningRadiusChanged( int );
     void sharpeningRadiusChanged( double );
     void imageOptimizationStrategyChanged( int );
     void watermarkTypeChanged( int );
     void watermarkGroupChecked( bool );
     void watermarkAutoColorChecked( int );
-    //Lgendes
-    int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoProperties avec les donnes disponibles
-    void previewCaption( QString );  //Affiche un prrendu de la lgende.
+    //Légendes
+    //int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoProperties avec les donnes disponibles
+    void previewCaption( QString );  //Affiche un prérendu de la légende.
+    void refresh( void );
+    void highlightPhoto( QModelIndex ); //Highlights a photo in the photoListView
+    /*void onPrevious( void );
+    void onNext( void );
+    void onListClicked( QModelIndex );
+    void onCaptionTextEdited( QString );
+    void onCaptionHeaderEdited(QString);
+    void onCaptionEndingEdited(QString);*/
     //skinning
     void openSkinDesigner( );
     void skinNameChanged( QString );
@@ -130,6 +141,9 @@ public slots:
     void displayThumbnail( QModelIndex ); //Affiche la vignette  lgender correspondant  l'index
     void thumnailChanged( int ); //Une photo a t choisie pour devenir vignette de la galerie
     void displayCaption( QString );        //Affiche le texte dans le lineEdit de la lgende
+    void error( CMessage );           //An error occured
+    void warning( CMessage );         //A warning occured
+    void information( CMessage );     //Display an iformative message
 
 /******** ATTRIBUTS *********/
 private:
@@ -139,7 +153,6 @@ private:
     QTextEdit* m_p_tagsWindow;
     WinSkinDesigner* m_p_skinDesignerWindow;
     WinConfigure* m_p_configureWindow;
-    QStringListModel m_photosListModel;
     enum { eGenerating, eNotGenerating } m_stateGeneration;
     QStringList m_debugMessages;
     QStringList m_recentSessions;           //Liste contenant les NBMAXRECENTFILES derniers fichiers projets ouverts
@@ -148,12 +161,16 @@ private:
     //conf    
     CCaptionManager m_captionManager;
     CProjectParameters m_newProjectParameters;
-    CProjectParameters m_projectParameters;
+    CProjectParameters& m_projectParameters;
     CProjectParameters m_referenceProjectParameters;
     CSkinParameters m_skinParameters;
     QString m_lastSelectedDir;
-    //Gneration
-    CGalleryGenerator* m_p_galleryGenerator;
+    //Photo feeder
+    CPhotoFeederDirectory &m_photoFeeder; //This ui knows the nature of feeder use
+    //Photo Database
+    CPhotoDatabase &m_photoDatabase;
+    //Generation
+    CGalleryGenerator& m_galleryGenerator;
 
 };
 

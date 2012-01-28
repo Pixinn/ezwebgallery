@@ -1,4 +1,4 @@
-/* 
+ï»¿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -44,8 +44,8 @@ bool CCaption::operator==( const CCaption &b ) const
 /*******************************************************************
 * setHeader( const CTaggedString &header )
 * ---------
-* Renseigne le préfixe de la légende
-* In : (CTaggedString) préfixe
+* Renseigne le prÃ©fixe de la lÃ©gende
+* In : (CTaggedString) prÃ©fixe
 ********************************************************************/
 void CCaption::setHeader( const CTaggedString &header )
 {   
@@ -55,8 +55,8 @@ void CCaption::setHeader( const CTaggedString &header )
 /*******************************************************************
 * setHeader( const QString &header )
 * ---------
-* Renseigne le préfixe de la légende
-* In : (QString) préfixe
+* Renseigne le prÃ©fixe de la lÃ©gende
+* In : (QString) prÃ©fixe
 ********************************************************************/
 void CCaption::setHeader( const QString &header )
 {   
@@ -67,7 +67,7 @@ void CCaption::setHeader( const QString &header )
 /*******************************************************************
 * setBody( const CTaggedString &body )
 * ---------
-* Renseigne le corps de la légende
+* Renseigne le corps de la lÃ©gende
 * In : (CTaggedString) corps
 ********************************************************************/
 void CCaption::setBody( const CTaggedString &body )
@@ -78,7 +78,7 @@ void CCaption::setBody( const CTaggedString &body )
 /*******************************************************************
 * setBody( const QString &body )
 * ---------
-* Renseigne le corps de la légende
+* Renseigne le corps de la lÃ©gende
 * In : (CTaggedString) corps
 ********************************************************************/
 void CCaption::setBody( const QString &body )
@@ -89,7 +89,7 @@ void CCaption::setBody( const QString &body )
 /*******************************************************************
 * setEnding( const CTaggedString &ending )
 * ---------
-* Renseigne le suffixe de la légende
+* Renseigne le suffixe de la lÃ©gende
 * In : (CTaggedString) suffixe
 ********************************************************************/
 void CCaption::setEnding( const CTaggedString &ending )
@@ -100,7 +100,7 @@ void CCaption::setEnding( const CTaggedString &ending )
 /*******************************************************************
 * setEnding( const QString &ending )
 * ---------
-* Renseigne le suffixe de la légende
+* Renseigne le suffixe de la lÃ©gende
 * In : (CTaggedString) suffixe
 ********************************************************************/
 void CCaption::setEnding( const QString &ending )
@@ -112,33 +112,42 @@ void CCaption::setEnding( const QString &ending )
 /*******************************************************************
 * header( )
 * ---------
-* Retourne le préfixe de la légende
-* Return : (CTaggedString) préfixe
+* Retourne le prÃ©fixe de la lÃ©gende
+* Return : (CTaggedString) prÃ©fixe
 ********************************************************************/
 CTaggedString CCaption::header(  )
 {   
+    m_header.setId( m_id );
+    m_header.setExifTags( m_exifTags );
+    m_header.setFileInfo( m_fileInfo );
     return m_header;
 }
 
 /*******************************************************************
 * body( )
 * ---------
-* Retourne le corps de la légende
+* Retourne le corps de la lÃ©gende
 * Return : (CTaggedString) corps
 ********************************************************************/
 CTaggedString CCaption::body( )
 {   
+    m_body.setId( m_id );
+    m_body.setExifTags( m_exifTags );
+    m_body.setFileInfo( m_fileInfo );
     return m_body;
 }
 
 /*******************************************************************
 * ending( )
 * ---------
-* Retourne le suffixe de la légende
+* Retourne le suffixe de la lÃ©gende
 * Return : (CTaggedString) suffixe
 ********************************************************************/
 CTaggedString CCaption::ending(  )
 {   
+    m_ending.setId( m_id );
+    m_ending.setExifTags( m_exifTags );
+    m_ending.setFileInfo( m_fileInfo );
     return m_ending;
 }
 
@@ -146,11 +155,12 @@ CTaggedString CCaption::ending(  )
 /*******************************************************************
 * setExifTags( const QMap<QString,QString> & )
 * ---------
-* Indique les <tags Exifs / metadata> à utiliser
+* Indique les <tags Exifs / metadata> Ã  utiliser
 * In : (QMap<QString,QString>) tag exifs
 ********************************************************************/
 void CCaption::setExifTags( const QMap<QString,QString> &exifTags )
 {   
+    m_exifTags = exifTags;
     m_header.setExifTags( exifTags );
     m_body.setExifTags( exifTags );
     m_ending.setExifTags( exifTags );
@@ -159,11 +169,12 @@ void CCaption::setExifTags( const QMap<QString,QString> &exifTags )
 /*******************************************************************
 * setFileInfo( const QQFileInfo & )
 * ---------
-* Indique le fileinfo à utiliser
+* Indique le fileinfo Ã  utiliser
 * In : (QFileInfo) file info
 ********************************************************************/
 void CCaption::setFileInfo( const QFileInfo &fileInfo )
 {
+    m_fileInfo = fileInfo;
     m_header.setFileInfo( fileInfo );
     m_body.setFileInfo( fileInfo );
     m_ending.setFileInfo( fileInfo );
@@ -178,6 +189,7 @@ void CCaption::setFileInfo( const QFileInfo &fileInfo )
 ********************************************************************/
 void CCaption::setId( int id )
 {
+    m_id = id;
     m_header.setId( id );
     m_body.setId( id );
     m_ending.setId( id );
@@ -187,15 +199,15 @@ void CCaption::setId( int id )
 /*******************************************************************
 * render( int preview = NOPREVIEW )
 * ---------
-* Calcule la légende avec tous les tags remplacés par les données correspondantes
+* Calcule la lÃ©gende avec tous les tags remplacÃ©s par les donnÃ©es correspondantes
 * In: (int) indique si le rendu est envue d'une preview (par faut : NON )
-* return : le QString résultant
+* return : le QString rÃ©sultant
 ********************************************************************/
 QString CCaption::render( int preview )
 {
     QString rendered = m_header.render( preview ) + m_body.render( preview ) + m_ending.render( preview );
 
-    //Il faut remplacer les caractères dangereux pour le html / javascript
+    //Il faut remplacer les caractÃ¨res dangereux pour le html / javascript
     //Mais pas si preview ;)
     if( preview == CTaggedString::NOPREVIEW ) {
         rendered.replace( QString("\""), QString("\\\"") );

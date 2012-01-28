@@ -18,57 +18,109 @@
 
 
 
-#ifndef CPHOTOPROPERTIES_H
-#define CPHOTOPROPERTIES_H
+#ifndef CPhotoProperties_H
+#define CPhotoProperties_H
 
-#include <QObject>
+#include <QDomDocument>
 #include <QString>
-#include <QDateTime>
 #include <QMap>
 #include <QFileInfo>
+#include <QDateTime>
 
 #include "CCaption.h"
 
-/*****************************
+
+/*****************************************************************
  * CPhotoProperties
  * ----------------------
- * Classe dcrivant les propits d'une photo  traiter
- * Permet de centraliser toutes ces infos
- ********************************************/
-class CPhotoProperties : public QObject //Drive de QObject pour pouvoir tre transmis via un signal
-{        
+ * Base proposeties of a photo ;
+ * required for gallery generation
+ ****************************************************************/
+class CPhotoProperties : public QObject 
+{
 
     Q_OBJECT
 
 public:
-    CPhotoProperties();
-    CPhotoProperties( const CPhotoProperties & );
-    CPhotoProperties & operator=( const CPhotoProperties & );
-    bool operator==( const CPhotoProperties &) const;
-    bool isEquivalent( const CPhotoProperties & ) const; //Ne compare que les champs intressants 
-    void setId( int );
-    void setFileInfo( const QFileInfo & );
-    void setLastModificationTime( const QDateTime & );
-    void setExifTags( const QMap<QString,QString> & );
-    void setCaption( const CCaption & );
-    void setProcessed( bool );
-    int id( ) const;
-    QString fileName( ) const;
-	QFileInfo fileInfo( ) const;
-    QDateTime lastModificationTime( ) const;
-    QMap<QString,QString> exifTags( ) const;
-    CCaption caption() const;
-    bool processed( ) const;
+    CPhotoProperties( void ) :
+        QObject(),
+        m_id(-1)
+    {   }
+    CPhotoProperties( const CPhotoProperties & other) :
+        QObject(),
+        m_id( other.m_id ),
+        m_fileInfo( other.m_fileInfo ),
+        m_lastModified( other.m_lastModified ),
+        m_exifTags( other.m_exifTags ),
+        m_caption( other.m_caption )
+    {   }
+    CPhotoProperties( const QDomNode & );
+    ~CPhotoProperties( void ){ }
 
+    CPhotoProperties & operator=( const CPhotoProperties & other);
+    bool operator==( const CPhotoProperties &) const;
+    
+    void setId( int id ){
+        m_id = id;
+        m_caption.setId( id + 1 );
+    }
+
+    void setFileInfo( const QFileInfo & fileInfo){
+        m_fileInfo = fileInfo;
+        m_caption.setFileInfo( fileInfo );
+    }
+
+    void refreshFileInfo( void ) {
+        m_fileInfo.refresh();
+        m_caption.setFileInfo( m_fileInfo );
+        m_lastModified = m_fileInfo.lastModified();
+    }
+
+    void setExifTags( const QMap<QString,QString> & exifTags){
+        m_exifTags = exifTags;
+        m_caption.setExifTags( exifTags );
+    }
+
+    void setCaption( const CCaption & caption){
+        m_caption = caption;
+        //Linking the caption with the properties
+        m_caption.setId( m_id + 1);
+        m_caption.setFileInfo( m_fileInfo );
+        m_caption.setExifTags( m_exifTags );
+    }
+    
+    int id( ) const {
+        return m_id;
+    }
+
+    QFileInfo fileInfo( ) const {
+        return m_fileInfo;
+    }
+
+    QDateTime lastModified( void ) const {
+        return m_lastModified;
+    }
+
+    QMap<QString,QString> exifTags( ) const {
+        return m_exifTags;
+    }
+    CCaption caption() const {
+        return m_caption;
+    }
+
+    bool isEquivalent( const CPhotoProperties & );
+
+    inline QString fileName( void ) const { return m_fileInfo.fileName(); }
+    
 private:
+    static const QString CAPTION;
+    static const QString CAPTIONHEADER;
+    static const QString CAPTIONENDING;
     int m_id;
-    bool m_f_processed; //La photo a t traite
-	QFileInfo m_fileInfo;
-    QString m_fileName;
-    QDateTime m_lastModificationTime;
+    QFileInfo m_fileInfo;
+    QDateTime m_lastModified; //Must be saved separated from m_fileInfo
     QMap<QString,QString> m_exifTags;
     CCaption m_caption;
-
 };
 
 #endif

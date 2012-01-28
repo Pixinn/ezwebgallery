@@ -30,7 +30,7 @@
 
 #include "CPhoto.h"
 #include "CPhotoProperties.h"
-#include "CErrorMessages.h"
+#include "CError.h"
 #include "CProjectParameters.h"
 
 
@@ -61,20 +61,25 @@ class CGeneratedPhotoSetParameters : public QObject
         CGeneratedPhotoSetParameters(const CGeneratedPhotoSetParameters &);
         ~CGeneratedPhotoSetParameters( );
         void enqueueSize( QSize );
-        void setIdPhoto( int );
+        //void setIdPhoto( int );
+        void setPhotoProperties( const CPhotoProperties& properties )   {
+            m_photoProperties = properties;
+        }
         void setMessage( const QString & );
         void setExitStatus( const e_photoProcessStatus );
-        void setExifTags( const  QMap<QString,QString>  &);
+        //void setExifTags( const  QMap<QString,QString>  &);
         QQueue<QSize> generatedSizesQueue( );
-        int idPhoto( );
+        //int idPhoto( );
         e_photoProcessStatus exitStatus( );
         QString message( );
-        QMap<QString,QString> exifTags( );
+        //QMap<QString,QString> exifTags( );
+        CPhotoProperties photoProperties( void ) { return m_photoProperties; }
 
     private:
-        int m_idPhoto; //Numro de la photo traite
+        //int m_idPhoto; //Numéro de la photo traitée
+        CPhotoProperties m_photoProperties;
         QQueue<QSize> m_generatedSizesQueue;  
-        QMap<QString,QString> m_exifTags; //Tags de la photo traite        
+        //QMap<QString,QString> m_exifTags; //Tags de la photo traitée        
         QString m_message;
         e_photoProcessStatus m_exitStatus;
 };
@@ -93,7 +98,7 @@ class CPhotoProcessor : public QObject, public QRunnable
 
     //variable statiques
     static QMutex m_mutexFileReading; //Mutex partag pour viter lesacces disques concurrents
-    static const CErrorMessages MsgError;
+    static const CError MsgError;
     
     signals:
         void processCompleted( CGeneratedPhotoSetParameters );
@@ -113,7 +118,7 @@ class CPhotoProcessor : public QObject, public QRunnable
     private:        
         QMutex* m_p_mutexRemoteControl; //Mutex permettant de protger les arrts "forcs" des threads
         CPhotoProperties m_photoProperties;
-        QString m_inFilePath;
+        //QString m_inFilePath;
         QDir m_outPath;
         QQueue<QSize> m_sizesQueue;
         QQueue<int> m_qualityQueue;

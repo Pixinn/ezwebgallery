@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -48,7 +48,7 @@ void CColorButton::setColor(const QColor &color)
 
 void CColorButton::paintEvent(QPaintEvent *e)
 {
-        int frameWidth = this->frameWidth(); //this  utiliser pour lever une ambiguit
+        int frameWidth = this->frameWidth(); //this à utiliser pour lever une ambiguité
         int buttonInnerWidth = width( ) - 2*frameWidth;
         int buttonInnerHeight = height( ) - 2*frameWidth;
         QRect innerRect = QRect( frameWidth, frameWidth, buttonInnerWidth, buttonInnerHeight );

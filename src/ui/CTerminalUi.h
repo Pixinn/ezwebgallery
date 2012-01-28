@@ -37,18 +37,19 @@ class CTerminalUi : public QObject, IUserInterface
     Q_OBJECT
 
 public:
-    CTerminalUi( const QString &projectFile );
-    ~CTerminalUi( );
-    void show();                //Redfinition car on ne veut pas qu'une fentre apparaisse...
-    void setGenerator( CGalleryGenerator* );
+    CTerminalUi( CGalleryGenerator &, const QString &projectFile );
+    ~CTerminalUi( void );
+    void show( void );                //Redfinition car on ne veut pas qu'une fentre apparaisse...
 signals:
-    void done();
+    void done( void );
 public slots:
-    void run( );                        //Contient le code  xcuter pour lancer la gnration
+    void run( void );                        //Contient le code  xcuter pour lancer la gnration
     void onLogMsg( QString );
     void onProgressBar( int completion, QString color, QString message, int timeout = 0 ); //Affiche un % d'avancement
     void onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties>);
     void onForceStoppedFinished( QStringList );
+    //Photo DB
+    void missingPhotos( QStringList ){}; //Some photos are present in the DB but not on the disk
 
 protected:
     void keyPressEvent ( QKeyEvent * event );
@@ -59,7 +60,7 @@ private:
     static QTextStream cerr;
 
     QString m_projectFile;
-    CGalleryGenerator* m_p_galleryGenerator;
+    CGalleryGenerator& m_galleryGenerator;
     CProjectParameters m_projectParameters;
     CSkinParameters m_skinParameters;
     CCaptionManager m_captionManager;

@@ -1,4 +1,4 @@
-/* 
+﻿/*
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -45,16 +45,18 @@ using namespace Magick;
 //////////////////// CLASSE CGalleryGenerator /////////////////////
 ///////////////////////////////////////////////////////////////////
 
+
 //------------------ DEFINITIONS ----------------------//
 
 #define CSSSKINFILENAME     "skin.css"
-#define SHARPENINGTHRESHOLD 0.04        /* quivalent  10 */
+#define SHARPENINGTHRESHOLD 0.04        /* équivalent à 10 */
+
 
 //-------------------- FONCTIONS -----------------------//
 
-//CA_Interface_GalleryGenerator::~CA_Interface_GalleryGenerator(){ }// Implmentation du destructeur virtuel obligatoire
 
-CGalleryGenerator::CGalleryGenerator( )
+CGalleryGenerator::CGalleryGenerator( ) :
+    QThread()
 {
     qRegisterMetaType<CGeneratedPhotoSetParameters> ( "CGeneratedPhotoSetParameters" );
 
@@ -119,7 +121,7 @@ CGalleryGenerator::~CGalleryGenerator( )
 * des photos  traiter, qui donnera l'ordre d'affichage
 * des photos de la galerie
 ************************************/
-void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, const CSkinParameters &skinParameters )
+void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, const CSkinParameters &skinParameters, QList<CPhotoProperties*> photoProperties )
 {
 	QStringList photoList;
 	QString photoName;
@@ -128,10 +130,8 @@ void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, 
     if( !this->isGenerationInProgress() )
     {
         CCaption emptyCaption;
-        CPhotoProperties photoProperties;
 		QDir inputDir;
         QFileInfo fileInfo;
-        int id = 1;
 
         //-- Init
         m_parameters = projectParameters;
@@ -142,19 +142,9 @@ void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, 
 
         displayProgressBar( 0, "green", "0%" );
 
-        //Cration de la liste ordone des proprits des photos  utiliser
-        //REMARQUE : pour le moment, la liste sera ordonne selon l'ordre alphabtique du nom des photos !
-        //Dans le futur, il faudra que ce soit le Caption Manager qui ordonne les photos. Avec un rle tendu, changement de nom?
         m_photoPropertiesList.clear();
-        photoList = m_parameters.m_photoPropertiesMap.keys();
-	    qSort( photoList.begin(), photoList.end() ); //Le tri de la liste de photos !            
-        foreach( photoName, photoList )
-        {
-            photoProperties = m_parameters.m_photoPropertiesMap.value( photoName );
-			fileInfo = QFileInfo( inputDir.absoluteFilePath( photoName ) );
-			photoProperties.setFileInfo( fileInfo );
-            photoProperties.setId( id++ );
-            m_photoPropertiesList.append( photoProperties );
+        foreach( CPhotoProperties* properties, photoProperties )    {
+            m_photoPropertiesList << *properties;
         }
     
         emit startGenerationSignal(); //Dmarrage des traitements
@@ -168,14 +158,6 @@ void CGalleryGenerator::abordGeneration( )
     emit abordGenerationSignal( );
 }
 
-/*void CGalleryGenerator::connectToUi( IUserInterface* ui ){
-    m_p_ui = ui;
-    connect( this, SIGNAL( debugSignal(QString) ), m_p_ui, SLOT( onLogMsg(QString) ) );
-    connect( this, SIGNAL( progressBarSignal( int, QString, QString ) ), m_p_ui, SLOT( onProgressBar( int, QString, QString ) ) );
-    connect( this, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), m_p_ui, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
-    connect( this, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), m_p_ui, SLOT( onForceStoppedFinished( QStringList ) ) );
-}
-*/
 
 bool CGalleryGenerator::isGenerationInProgress( )
 {
@@ -205,7 +187,7 @@ bool CGalleryGenerator::photosAlreadyExist(  )
     int nbRes = m_parameters.m_photosConfig.nbIntermediateResolutions;
 
     photosDir.cd( PHOTOSPATH );
-    for( int i = 1; i <= m_parameters.m_photoPropertiesMap.size(); i++)
+    for( int i = 1; i <= m_photoPropertiesList.size(); i++)
     {
         QString photoName = PHOTOPREFIXE + QString::number(i) + ".jpg";
         for(int res=1; res <= nbRes; res++)
@@ -228,7 +210,7 @@ bool CGalleryGenerator::thumbsAlreadyExist()
     QFile thumbFile;
 
     thumbsDir.cd( THUMBSPATH );
-    for( int i = 1; i <= m_parameters.m_photoPropertiesMap.size(); i++)
+    for( int i = 1; i <=  m_photoPropertiesList.size(); i++)
     {
         QString thumbName = QString(THUMBPREFIXE) + QString(PHOTOPREFIXE) + QString::number(i) + QString(".jpg");
         thumbFile.setFileName( thumbsDir.absoluteFilePath( thumbName ) );
@@ -286,13 +268,13 @@ bool CGalleryGenerator::generateFileStructure( )
     QDir srcPath( CPlatform::applicationDirPath()  );
 
     if ( !outPath.mkpath( thumbsFilesPath ) ){
-        m_msgErrorList.append( CErrorMessages::error(DirectoryCreation) + thumbsFilesPath );
+        m_msgErrorList.append( CError::error(CError::DirectoryCreation) + thumbsFilesPath );
         emit abordGenerationSignal( );
         return false;
     }
     for(int i = 1; i <= m_parameters.m_photosConfig.nbIntermediateResolutions; i++){
         if( !outPath.mkpath( photosFilesPath + QString::number(i) ) ){
-            m_msgErrorList.append( CErrorMessages::error(DirectoryCreation) + photosFilesPath + QString::number(i) );
+            m_msgErrorList.append( CError::error(CError::DirectoryCreation) + photosFilesPath + QString::number(i) );
             emit abordGenerationSignal( );
             return false;
         }
@@ -302,7 +284,7 @@ bool CGalleryGenerator::generateFileStructure( )
     outPath = QDir( m_parameters.m_galleryConfig.outputDir );
     srcPath = CPlatform::applicationDirPath();
     if( !srcPath.cd( QString(RESSOURCES) ) ){
-        m_msgErrorList.append(  CErrorMessages::error(SourceFileNotFound) );
+        m_msgErrorList.append(  CError::error(CError::SourceFileNotFound) );
         emit abordGenerationSignal( );
         return false;
     }
@@ -340,24 +322,26 @@ int CGalleryGenerator::generatePhotos( )
     QQueue<QSize> sizesList;
     QQueue<int> qualityList;
     QDir outPath( m_parameters.m_galleryConfig.outputDir );
-    QDir inPath( m_parameters.m_galleryConfig.inputDir );
-
 
     //Gnration de la vignette reprsentant la galerie
     //Cette gnration est effectue  part de celle des autres vignettes et des photos
-    if( !m_parameters.m_galleryConfig.thumbPhoto.isEmpty() )
-    {
-        QImage photo;
-        QImage thumbnail;
-        QString photoName = inPath.absoluteFilePath( m_parameters.m_galleryConfig.thumbPhoto );
-        outPath.cd( PHOTOSPATH );
-        if( photo.load( photoName )){
-            thumbnail = photo.scaled( QSize(250,250),
-                                      Qt::KeepAspectRatio,
-                                      Qt::SmoothTransformation );
-            thumbnail.save( outPath.absoluteFilePath( GALLERYTHUMBFILENAME ), 0, 77 );
-        }
+    QImage photo;
+    QImage thumbnail;
+    QString galleryThumbnailFile =  m_parameters.m_galleryConfig.thumbPhoto;
+    if( !QFileInfo( m_parameters.m_galleryConfig.thumbPhoto ).exists() )  {
+        galleryThumbnailFile = m_photoPropertiesList.at(0).fileInfo().absoluteFilePath();
     }
+    outPath.cd( PHOTOSPATH );
+    if( photo.load( galleryThumbnailFile )){
+        thumbnail = photo.scaled( QSize(250,250),
+                                  Qt::KeepAspectRatio,
+                                  Qt::SmoothTransformation );
+        thumbnail.save( outPath.absoluteFilePath( GALLERYTHUMBFILENAME ), 0, 85 );
+    }
+    else {
+        //TODO : log an error
+    }
+    
 
     //Gnration du watermark si besoin
     CWatermark watermarkImage;
@@ -372,7 +356,7 @@ int CGalleryGenerator::generatePhotos( )
             watermarkImage.setImage( watermarkParams.imageFile );
             //Vrification de la validit du watermark
             if( !watermarkImage.isValid() ){
-                m_msgErrorList.append( CErrorMessages::error(WatermarkInvalid) + watermarkImage.error() );
+                m_msgErrorList.append( CError::error(CError::WatermarkInvalid) + watermarkImage.error() );
                 emit abordGenerationSignal( );
                 return false;
             }
@@ -440,7 +424,7 @@ int CGalleryGenerator::generatePhotos( )
     outPath = m_parameters.m_galleryConfig.outputDir;
     displayProgressBar( 0, "green", tr("Generating the photos : ")+QString::number(0)+"%" );
     m_mutexControlProcessors.lock(); //Pour ne pas que les threads dmarrent trop tt
-
+    
     foreach( CPhotoProperties photoProperties, m_photoPropertiesList )
     {
         photoToProcess = new CPhotoProcessor( photoProperties,
@@ -490,7 +474,7 @@ bool CGalleryGenerator::generateJsFiles( )
     path.cd( JSPATH );
     QFile file_jsGalleryConfiguration( path.absoluteFilePath( jsGalleryConfigurationFileName ) );
     if (!file_jsGalleryConfiguration.open(QIODevice::WriteOnly | QIODevice::Text)){
-         m_msgErrorList.append( CErrorMessages::error(FileOpening) +  file_jsGalleryConfiguration.fileName() );
+         m_msgErrorList.append( CError::error(CError::FileOpening) +  file_jsGalleryConfiguration.fileName() );
          emit abordGenerationSignal( );
          return false;
     }
@@ -533,7 +517,7 @@ bool CGalleryGenerator::generateJsFiles( )
             localSize = localSizeQueue.dequeue();
             if( numRes < nbRes){
                 jsGalleryConfigurationStream << QString::number(numRes++) << " : {width:" << QString::number(localSize.width()) << ",\theight:" << QString::number(localSize.height()) << "},\t";
-            }
+       }
 
        }//fin while
 
@@ -581,7 +565,7 @@ bool CGalleryGenerator::generateJsFiles( )
     //---- Ouverture du fichier
     QFile file_jsGalleryPresentation( path.absoluteFilePath( jsGalleryPresentationFileName ) );
     if (!file_jsGalleryPresentation.open(QIODevice::WriteOnly | QIODevice::Text)){
-         m_msgErrorList.append( CErrorMessages::error(FileOpening) +  file_jsGalleryPresentation.fileName() );
+         m_msgErrorList.append( CError::error(CError::FileOpening) +  file_jsGalleryPresentation.fileName() );
          emit abordGenerationSignal( );
          return false;
     }
@@ -606,8 +590,8 @@ bool CGalleryGenerator::generateJsFiles( )
 
 
 
-///////////////////////////////////////////////////
-///////////////// cssSkinning /////////////////////
+////////////////////////////////////////////////////
+///////////////// css Skinning /////////////////////
 ///////////////////////////////////////////////////
 
 // -> Fin du process de skinning aprs 
@@ -626,7 +610,7 @@ bool CGalleryGenerator::skinning( )
         //---------- COPIE DES FICHIERS RESSOURCES --------//
         outSkinPath = QDir( m_parameters.m_galleryConfig.outputDir );        
         if( !outSkinPath.mkpath( RESIMGPATH ) ){
-            m_msgErrorList.append( CErrorMessages::error(FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(RESIMGPATH) );
+            m_msgErrorList.append( CError::error(CError::FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(RESIMGPATH) );
             emit abordGenerationSignal( );
             return false;
         }
@@ -645,14 +629,14 @@ bool CGalleryGenerator::skinning( )
         //--- Ouverture du fichier
         outSkinPath = QDir( m_parameters.m_galleryConfig.outputDir );
         if( !outSkinPath.mkpath( CSSPATH ) ){
-            m_msgErrorList.append( CErrorMessages::error(FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(CSSPATH) );
+            m_msgErrorList.append( CError::error(CError::FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(CSSPATH) );
             emit abordGenerationSignal( );
             return false;
         }
         outSkinPath.cd( CSSPATH );
         QFile skinCssFile( outSkinPath.absoluteFilePath( CSSSKINFILENAME ) );
         if (!skinCssFile.open(QIODevice::WriteOnly | QIODevice::WriteOnly | QIODevice::Text)){
-                m_msgErrorList.append( CErrorMessages::error(FileOpening) +  skinCssFile.fileName() );
+                m_msgErrorList.append( CError::error(CError::FileOpening) +  skinCssFile.fileName() );
                 emit abordGenerationSignal( );
                 return false;
         }
@@ -724,7 +708,7 @@ bool CGalleryGenerator::skinning( )
     	//---- Ouverture du fichier
     	QFile file_jsGalleryPresentation( outSkinPath.absoluteFilePath( jsGalleryPresentationFileName ) );
         if (!file_jsGalleryPresentation.open(QIODevice::Append | QIODevice::WriteOnly | QIODevice::Text)){
-                m_msgErrorList.append( CErrorMessages::error(FileOpening) +  file_jsGalleryPresentation.fileName() );
+                m_msgErrorList.append( CError::error(CError::FileOpening) +  file_jsGalleryPresentation.fileName() );
                 emit abordGenerationSignal( );
          	return false;
     	}
@@ -736,14 +720,6 @@ bool CGalleryGenerator::skinning( )
     	//---- Index
         jsGalleryPresentationStream << "var NBTHUMBSBYPAGE = " <<  QString::number(m_parameters.m_thumbsConfig.nbColumns * this->m_parameters.m_thumbsConfig.nbRows) << ";" << endl;
     	//---- RESIZE ET RECENTRAGE
-        /* //Lecture de la taille du bouton index
-        imgPath.cd( RESIMGPATH );
-        if( buttonIndex.load( imgPath.absoluteFilePath( m_skinParameters.buttonImage(CSkinParameters::buttonIndex) ) ) ) {
-            offset = buttonIndex.height() + 10;
-        }
-        else { 
-            offset = 75;
-        }*/
     	jsGalleryPresentationStream << "var NBOFFSETHAUT = " << QString::number( offset ) << ";" << endl
                                     << "var NBOFFSETBAS  = " << QString::number( offset ) << ";" << endl
                                     << "var IMAGEQUALITYSTRATEGY = " << QString::number(m_parameters.m_photosConfig.imageOptimizationStrategy) << ";" << endl;
@@ -847,7 +823,7 @@ bool CGalleryGenerator::skinning( )
 
         } //fin modifications html
         else{
-            m_msgErrorList.append( CErrorMessages::error(FileOpening) +  htmlFile.fileName() );
+            m_msgErrorList.append( CError::error(CError::FileOpening) +  htmlFile.fileName() );
             emit abordGenerationSignal( );
             return false;
         }
@@ -857,7 +833,7 @@ bool CGalleryGenerator::skinning( )
         //-- FIN DE LA GENERATION --//
         m_mutex.lock();
         m_f_WorkInProgress = false;        
-        emit generationFinishedSignal( /*true*/m_photoPropertiesList ); //Information de l'UI
+        emit generationFinishedSignal( m_photoPropertiesList ); //Information de l'UI
         emit jobDone();
         m_mutex.unlock();
 	
@@ -875,14 +851,15 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
     int completion = 0;
     int nbPhotosProcessed;
     int nbPhotoProcessFailed;
-    int idPhotoDone;
+    //int idPhotoDone;
     bool f_wip;
-    bool f_stopRequested;
+
     m_mutex.lock();
     f_wip = m_f_WorkInProgress;
     m_mutex.unlock();
-    CPhotoProperties photoProperties;
+    //CPhotoProperties photoProperties;
 
+    CPhotoProperties photoProperties = generatedPhotoParams.photoProperties();
     switch( generatedPhotoParams.exitStatus() )
     {
 	
@@ -897,21 +874,20 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
         if( nbPhotoProcessFailed == 0 && f_wip ){
             displayProgressBar( completion, "green", tr("Generating the photos : ")+QString::number(completion)+"%" );
         }
-        
-        idPhotoDone = generatedPhotoParams.idPhoto();
+       
+        //idPhotoDone = generatedPhotoParams.idPhoto();
         //Rcupration des tailles gnres par le process
-        m_photoSizes.insert( idPhotoDone, generatedPhotoParams.generatedSizesQueue() );
-        //Mise  jour des proprits de la photo
-        photoProperties = m_photoPropertiesList.at( idPhotoDone - 1 );
-        photoProperties.setExifTags( generatedPhotoParams.exifTags() );
-        photoProperties.setProcessed( true );
-        m_photoPropertiesList.replace( idPhotoDone - 1, photoProperties );
+        m_photoSizes.insert( photoProperties.id() + 1, generatedPhotoParams.generatedSizesQueue() );
+        //Updating photoproperties to insert the read ExifTags
+        //photoProperties = m_photoPropertiesList.at( photoProperties.id() );
+        //photoProperties.setExifTags( generatedPhotoParams.exifTags() );
+        m_photoPropertiesList.replace( photoProperties.id(), photoProperties );
 
         //Fin nominale du process des photos??
         if( nbPhotosProcessed + nbPhotoProcessFailed == m_nbPhotosToProcess)
         {
             if( nbPhotoProcessFailed == 0){
-                emit jobDone();
+                emit jobDone( );
             }
             else{
                 this->debugDisplay("UNSPECIFIED FAILURE !!!");
@@ -927,7 +903,6 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
      default:
         m_mutex.lock();
             m_nbPhotoProcessFailed++;
-            f_stopRequested = m_fStopRequested;
         m_mutex.unlock();
         emit abordGenerationSignal( );
      break;
@@ -950,7 +925,7 @@ void CGalleryGenerator::onAbordGeneration( )
     //Finalisation de l'annulation si tout est arrt
     if( nbPhotosProcessed + nbPhotoProcessFailed == m_nbPhotosToProcess )
 	{
-        m_p_photoProcessorPool->waitForDone(); 	//Pour que les dernires threads du pool aient le temps de se terminer proprement
+        m_p_photoProcessorPool->waitForDone(); 	//Pour que les derniers threads du pool aient le temps de se terminer proprement
 												//Dangereux si plus de deux cpus??
         emit jobDone();
         m_mutex.lock();

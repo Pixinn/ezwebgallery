@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -35,12 +35,12 @@ template<class UI>
 class IParameters
 {
 public:
-    virtual void fromUi( ) = 0;                             //Rcupre les donnes provenant de l'UI
+    virtual void fromUi( void ) = 0;                        //Rcupre les donnes provenant de l'UI
     virtual void fromDomDocument( QDomDocument & ) = 0;     //Rcupre les donnes provenant d'un QDomDocument
-    virtual void toUi( ) = 0;                               //Rempli l'UI
-    virtual QDomDocument toDomDocument( ) = 0;              //Gnre un QDomDocument
+    virtual void toUi( void ) = 0;                          //Rempli l'UI
+    virtual QDomDocument toDomDocument( void ) = 0;         //Gnre un QDomDocument
     virtual void setUi( UI* ) = 0;                          //Connecte avec l'UI
-    virtual int version( ) = 0;                             //Retourne la version d'EZWG ayant cr le IParameters
+    virtual unsigned int version( void ) = 0;               //Retourne la version d'EZWG ayant créé le IParameters
 private:
     virtual QDomDocument convertFromOldVersion(  const QDomDocument &, const int ) = 0; //Converti un ancien document dans le format actuel
 };

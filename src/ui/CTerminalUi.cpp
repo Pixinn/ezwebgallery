@@ -30,6 +30,8 @@
 #include "GlobalDefinitions.h"
 #include "CPlatform.h"
 #include "CCaption.h"
+#include "CPhotoDatabase.h"
+#include "CPhotoFeederDirectory.h"
 
 
 /******************************************* Variables statiques *********************/
@@ -38,10 +40,11 @@ QTextStream CTerminalUi::cerr( stderr, QIODevice::WriteOnly );
 
 
 /******************************************* Ralisation Interface **********************************************/
-//IUserInterface::IUserInterface( ){}
 
 
-CTerminalUi::CTerminalUi( const QString &projectFile )/* :  IUserInterface( parent )*/
+CTerminalUi::CTerminalUi( CGalleryGenerator & galleryGenerator, const QString &projectFile ) :
+    QObject(),    
+    m_galleryGenerator( galleryGenerator )
 {
     m_projectFile = projectFile;
 
@@ -59,7 +62,7 @@ CTerminalUi::~CTerminalUi( )
 ////////// SLOTS //////////
 
 void CTerminalUi::onLogMsg( QString msg ){
-    msg = ""; //Pour viter un warning
+    msg = ""; //Pour virer un warning
 }
 
 void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
@@ -74,25 +77,16 @@ void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
     emit done();
 }
 
-void CTerminalUi::onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties> propertiesList )
+void CTerminalUi::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesList )
 {
-    bool success = true;
-    foreach( CPhotoProperties photoProperties, propertiesList ){
-        if( !photoProperties.processed() ){
-            success = false;
-        }
-    }
-    if( success ){
-        cout << tr("Generation successfully completed.") << endl;
-    }
+    propertiesList.size(); //to avoid a warning
+    cout << tr("Generation successfully completed.") << endl;
     emit done();
 }
 
 void CTerminalUi::onProgressBar( int completion, QString color, QString msg, int timeout )
 {
-    completion = 0;
-    color = "";
-    timeout = 0; //Pour viter des warnings
+    timeout = completion; //To remove a warning about these useless parameters
     cout << msg << endl;
 }
 
@@ -106,7 +100,6 @@ void CTerminalUi::run( )
     QFile file_xmlprojectDoc( m_projectFile );
     if( projectDoc.setContent( &file_xmlprojectDoc ) ){
         m_projectParameters.fromDomDocument( projectDoc );
-       //  buildPhotoLists( );
         cout << m_projectFile << tr(" loaded.") << endl;
     }
     else{
@@ -137,35 +130,22 @@ void CTerminalUi::run( )
             return;
         }
     }
- /*   //Mise  jour de la liste des photos : le contenu du rep a peut-tre chang depuis la sauvegarde
-    QDir inputDir( m_projectParameters.m_galleryConfig.inputDir );
-	QStringList photoFileTypes = (QStringList() << "*.jpeg" << "*.jpg" << "*.tiff" << "*.tif"); //Formats d'image supports en entre
-    QStringList photoList = CPlatform::getImagesInDir( inputDir, photoFileTypes );
-    QStringListIterator* p_photoListIterator = new QStringListIterator( photoList );
-    m_projectParameters.m_photosList.clear();
-    while( p_photoListIterator->hasNext() ){    //Construction du QMap<photoName,lastModified>
-        QString photoName = p_photoListIterator->next();
-        QFileInfo* p_photoFileInfo = new QFileInfo( inputDir.absoluteFilePath(photoName) );
-        m_projectParameters.m_photosList.insert( photoName, p_photoFileInfo->lastModified() );
-        onLogMsg( photoName + QString(": ") + p_photoFileInfo->lastModified().toString() );
-        delete p_photoFileInfo;
+
+    //Constructing photo properties list
+    CPhotoDatabase& photoDB = CPhotoDatabase::getInstance();
+    CPhotoFeederDirectory& photoFeeder = CPhotoFeederDirectory::getInstance();
+    QStringList photoList = photoFeeder.getPhotoList();
+    photoDB.refresh( photoList );
+    QList<CPhotoProperties*> propertiesList;
+    for( int i = 0; i < photoDB.size(); i++ ) {
+        propertiesList << photoDB.properties(i);
     }
-    delete p_photoListIterator;
-    //Cration du QStringList de lgendes
-    QMap<QString,CCaption> projectCaptionMap = m_captionManager.captionMap(); //List de lgende telle que lue  partir du fichier projet
-    QList<CCaption> captionList;
-    CCaption emptyCaption;
-  //La liste des lgendes sera dans le mme ordre que la liste de photos : alphabtique
-    foreach( QString photo, photoList ){
-        if( projectCaptionList.contains( photo ) ){
-            captionList << projectCaptionList.value( photo ) ;
-        }
-        //La photo n'tait pas auparavant dans le rpertoire. On met une lgende vide
-        else{
-            captionList << emptyCaption;
-        }
-    }
-*/
+
+    //Launching generation
+    m_galleryGenerator.generateGallery( m_projectParameters, m_skinParameters, propertiesList );
+
+    /* 
+            A REVOIR !!!!!
 
    //Reconstruction de la liste des photos rellement prsentes dans le rpertoire d'entre
 	//REM: copier/coller adapt de mainwin::buildPhotoList() -> voir les commentaires de cette fonction pour explication
@@ -181,8 +161,7 @@ void CTerminalUi::run( )
         //Si les paramtres de la galerie ne comportaient le fichier, on met  jour et on demande la regnration
         if( !m_projectParameters.m_photoPropertiesMap.contains( photoName ) )
         {
-            CPhotoProperties newProperties;
-//          newProperties.setFileName( photoName );
+            CPhotoPropertiesExtended newProperties;
             newProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
             m_projectParameters.m_photoPropertiesMap.insert( photoName, newProperties );
             m_projectParameters.m_photosConfig.f_regeneration = true;
@@ -190,7 +169,7 @@ void CTerminalUi::run( )
         }
         //Si les infos de date du fichier sont diffrentes => on update et on demande la regration galement
         else{
-            CPhotoProperties deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
+            CPhotoPropertiesExtended deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
             if(  deprecatedProperties.lastModificationTime().toString() != p_photoFileInfo->lastModified().toString() ) { //Les QDateTime non convertis ne semblent pas bien se comparer ???
                 deprecatedProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
                 m_projectParameters.m_photosConfig.f_regeneration = true;
@@ -207,9 +186,8 @@ void CTerminalUi::run( )
 	}
 
     //Lancement de la gnration
-    m_p_galleryGenerator->generateGallery(  m_projectParameters,
-                                            m_skinParameters  );
-
+    m_galleryGenerator.generateGallery(  m_projectParameters, m_skinParameters  ); A AJOUTER !!!!!!
+*/
 }
 
 /****************************************** Fonctions protges **************************************/
@@ -219,7 +197,7 @@ void CTerminalUi::keyPressEvent ( QKeyEvent * event )
 {
     if( event->key() == Qt::Key_Escape ){
         cout << tr("Canceling...") << endl;
-        m_p_galleryGenerator->abordGeneration( );
+        m_galleryGenerator.abordGeneration( );
     }
 }
 
@@ -229,7 +207,3 @@ void CTerminalUi::keyPressEvent ( QKeyEvent * event )
 
 void CTerminalUi::show(){}
 
-void CTerminalUi::setGenerator( CGalleryGenerator *generator )
-{
-    m_p_galleryGenerator = generator;
-}

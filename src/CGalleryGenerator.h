@@ -33,24 +33,25 @@
 
 //#include "IUserInterface.h"
 #include "CPhotoProcessor.h"
-#include "CErrorMessages.h"
 #include "CProjectParameters.h"
 #include "CPhotoProperties.h"
 #include "CSkinParameters.h"
 #include "CCaptionManager.h"
 #include "CCaption.h"
+#include "CMessage.h"
+#include "CPhotoProperties.h"
 
 /*****************************
  * CGalleryGenerator
  * ----------------------
- * Classe permettant de gnrer la galerie
+ * Classe permettant de générer la galerie
  ******************************/
 
 class CGalleryGenerator : public QThread
 {
     Q_OBJECT
 
-    const CErrorMessages MsgError;
+    const CMessage MsgError;
 
     //// Signaux/Slots ////
 signals:
@@ -63,7 +64,7 @@ signals:
     void jobDone( );
 
 public slots:
-    //La gnration des photos se droule dans des tches spares
+    //La génération des photos se droule dans des tches spares
     void onPhotoProcessDone( CGeneratedPhotoSetParameters photoGeneratedSizes ); //Un process photo termin
     void onAbordGeneration( );
     //Les "tches"
@@ -74,21 +75,22 @@ public slots:
     bool skinning( );
 
 
-    ///// Oprations //////
+    ///// Opérations /////
+
 public:
-    CGalleryGenerator( );
-    ~CGalleryGenerator( );
+    CGalleryGenerator( void );
+    ~CGalleryGenerator( void );
     //Interface avec UI
-    void generateGallery( CProjectParameters &, const CSkinParameters &/*, const QMap<QString,CCaption> &*/ );
- //   void connectToUi( IUserInterface * );
-    bool isGenerationInProgress( );
-    void abordGeneration( );
+    void generateGallery( CProjectParameters &, const CSkinParameters &, const QList<CPhotoProperties*> );
+    bool isGenerationInProgress( void );
+    void abordGeneration( void );
     
 protected:
     void run( );    
 
 private:
-    //-- interfaage UI
+
+    //-- interfaçage UI
     void debugDisplay( QString );		//Affichage d'un message de debug
     void displayProgressBar( int completion, QString color, QString message ); //Affiche un % d'avancement sur la progressBar    
     //-- tools	
@@ -110,7 +112,7 @@ private:
     QState* m_p_generatingJSFiles;
     QState* m_p_skinning;
     QState* m_p_abording;
-    //Paramtres de la galerie
+    //Paramètres de la galerie
     CProjectParameters m_parameters;    
     QStringList m_captionsList;
     CSkinParameters m_skinParameters;

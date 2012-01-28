@@ -18,7 +18,6 @@ Debug {
     RCC_DIR =        $$BUILDDIR/.rcc
     UI_DIR =         $$BUILDDIR/.ui
     MINJS_DIR =      $$BUILDDIR/.min-js
-    WEBDIR =         $$PWD/../web
 }
 Release {
     DESTDIR =      $$BUILDDIR/release
@@ -35,19 +34,19 @@ Release {
 # The windows equivalent is done via some custom prebuild step defined  in the vcxproj file.
 unix|macx {
     Debug{
-            scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh && mkdir -p $$DESTDIR/skins && mkdir $$DESTDIR/res )
-            versiontarget.target = bazaarrev.h
-            versiontarget.commands = $$system(bzr version-info --custom --template=\"static const unsigned int BAZAAR_REVISION = 133 + {revno};\" > bazaarrev.h)
-            versiontarget.depends = FORCE
-            PRE_TARGETDEPS += bazaarrev.h
-            QMAKE_EXTRA_TARGETS += versiontarget
+#           scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh && mkdir -p $$DESTDIR/skins && mkdir $$DESTDIR/res )
+#           versiontarget.target = builddate.h
+#            versiontarget.commands = $$system(bzr version-info --custom --template=\'$${LITERAL_HASH}define BUILD_DATE \"{build_date}\"\' > builddate.h)
+#            versiontarget.depends = FORCE
+#            PRE_TARGETDEPS += builddate.h
+#            QMAKE_EXTRA_TARGETS += versiontarget
     }
     Release{
             scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh && mkdir -p $$DESTDIR/skins && mkdir $$DESTDIR/res )
-            versiontarget.target = bazaarrev.h
-            versiontarget.commands = $$system(bzr version-info --custom --template=\"static const unsigned int BAZAAR_REVISION = 133 + {revno};\" > bazaarrev.h)
+            versiontarget.target = builddate.h
+            versiontarget.commands = $$system(bzr version-info --custom --template=\'$${LITERAL_HASH}define BUILD_DATE \"{build_date}\"\' > builddate.h)
             versiontarget.depends = FORCE
-            PRE_TARGETDEPS += bazaarrev.h
+            PRE_TARGETDEPS += builddate.h
             QMAKE_EXTRA_TARGETS += versiontarget
     }
 }
@@ -72,7 +71,8 @@ HEADERS += ui/mainwin.h \
     ui/CLanguageManager.h \
     global/CPlatform.h \
     global/GlobalDefinitions.h \
-    global/CErrorMessages.h \
+    global/CError.h \
+    global/CMessage.h \
     widgets/CImagePicker.h \
     widgets/CColorPicker.h \
     CGalleryGenerator.h \
@@ -85,7 +85,10 @@ HEADERS += ui/mainwin.h \
     CCaptionManager.h \
     CProjectParameters.h \
     IParameters.h \
-    CSkinParameters.h
+    CSkinParameters.h \
+    IPhotoFeeder.h \
+    CPhotoFeederDirectory.h \
+    CPhotoDatabase.h
 
 SOURCES += main.cpp \
     ui/mainwin.cpp \
@@ -93,7 +96,8 @@ SOURCES += main.cpp \
     ui/CTerminalUi.cpp \
     ui/WinConfigure.cpp \
     ui/CLanguageManager.cpp \
-    global/CErrorMessages.cpp \
+    global/CError.cpp \
+    global/CMessage.cpp \
     global/CPlatform.cpp \
     widgets/CImagePicker.cpp \
     widgets/CColorPicker.cpp \
@@ -106,7 +110,9 @@ SOURCES += main.cpp \
     CCaption.cpp \
     CCaptionManager.cpp \
     CProjectParameters.cpp \    
-    CSkinParameters.cpp
+    CSkinParameters.cpp \
+    CPhotoFeederDirectory.cpp \
+    CPhotoDatabase.cpp
 
 FORMS += ui/mainwin.ui \
     ui/WinSkinDesigner.ui \

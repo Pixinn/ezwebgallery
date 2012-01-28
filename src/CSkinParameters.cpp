@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -25,7 +25,7 @@
 #include "CSkinParameters.h"
 #include "CPlatform.h"
 #include "GlobalDefinitions.h"
-#include "CErrorMessages.h"
+#include "CError.h"
 
 //----------- Dfinitions ---------//
 #define RESSOURCES_TAG_NAME     "Ressources"
@@ -368,7 +368,7 @@ void CSkinParameters::fromDomDocument( QDomDocument &document )
 
     //--- Conversion automatique de la skin si elle a t cre par une version antrieure  la version actuelle
     m_version = root.attribute( "release" ).remove( QChar('M') ).toInt( );
-    int currentVersion = CPlatform::revision().remove( QChar('M') ).toInt( );    
+    unsigned int currentVersion = CPlatform::revisionInt();
     if( m_version < currentVersion ){
         document = convertFromOldVersion( document, m_version );
         root = document.firstChildElement( "Skin" );
@@ -629,7 +629,7 @@ QDomDocument CSkinParameters::toDomDocument( )
 {
     QDomDocument document;
     QDomElement root = document.createElement( SKIN_TAG_NAME );
-    root.setAttribute( QString("release"), CPlatform::revision() );
+    root.setAttribute( QString("release"), QString::number(CPlatform::revisionInt()) );
     root.setAttribute( QString("name"), m_name );
     document.appendChild( root );
    
@@ -766,12 +766,12 @@ bool CSkinParameters::copyRessources( QDir outputDir/*, QStringList &errorMsg*/ 
             if( destFileInfo.exists() )
             {
                 if( !outputDir.remove( destFileInfo.fileName() ) ){//Impossible de supprimer le fichier
-                    m_lastErrors.append( CErrorMessages::error(FileCreation) + destFileInfo.absoluteFilePath() );
+                    m_lastErrors.append( CError::error(CError::FileCreation) + destFileInfo.absoluteFilePath() );
                 }
             }
             //Copie
             if( !QFile::copy( resourceFile.absoluteFilePath(), destFileInfo.absoluteFilePath()) ){
-                m_lastErrors.append( CErrorMessages::error(FileCreation) + destFileInfo.absoluteFilePath() );
+                m_lastErrors.append( CError::error(CError::FileCreation) + destFileInfo.absoluteFilePath() );
             }
         }
     }
@@ -867,39 +867,6 @@ QString CSkinParameters::defaultSkin()
     QString defaultSkinPath = CPlatform::applicationDirPath() + QString("/") + QString(SKINPATH) +  QString("/") + QString(DEFAULTSKINNAME) + QString(SKINSESSIONEXTENSION); 
     return defaultSkinPath;
 }
-
-/*******************************************************************
-* error(  )
-* ------------------------
-* Retourne la dernire erreur survenue
-********************************************************************/
-QString CSkinParameters::error( )
-{
-    return m_lastError;
-}
-
-
-/*******************************************************************
-* errors(  )
-* ------------------------
-* Retourne la dernire srie d'erreurs survenue
-********************************************************************/
-QStringList CSkinParameters::errors( )
-{
-    return m_lastErrors;
-}
-
-/*******************************************************************
-* version  )
-* ------------------------
-* Retourne la version d'EZWG ayant cr la skin
-********************************************************************/
-int CSkinParameters::version( )
-{
-    return m_version;
-}
-
-
 
 
 /*******************************************************************

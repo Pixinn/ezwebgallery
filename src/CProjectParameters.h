@@ -29,49 +29,14 @@
 #include "CCaptionManager.h"
 #include "CCaption.h"
 #include "CSkinParameters.h"
-#include "CPhotoProperties.h"
 #include "CTaggedString.h"
+#include "CPhotoFeederDirectory.h"
 
 namespace Ui { //Pour diffrencier de la classe MainWin de mainwin.h et accder  la *vraie* ui
     class MainWin;
 }
 
-/***** enumerations *****/
-
-
-/**** Classes de paramtres ****/
-
-
-
-class t_galleryConf{
-public:
-    bool operator==(const t_galleryConf& ); //<- METTRE A JOUR SI ON AJOUTE DES CHAMPS !!
-    bool operator!=(const t_galleryConf& );
-    QString title;
-    QString description;
-    QString inputDir;
-    QString outputDir;
-    QString url;
-    int nbPhotosToPrefetch;
-    int prefetchCacheSize;    
-    bool f_rightClickEnabled;
-    bool f_regeneration;
-    QString skinPath;
-    QString thumbPhoto;
-    bool f_shareOnSocialNetworks;
-}; //Configuration gnrale de la gallerie
-
-class t_thumbsConf{
-public:
-    bool operator==(const t_thumbsConf& ); //<- METTRE A JOUR SI ON AJOUTE DES CHAMPS !!
-    bool operator!=(const t_thumbsConf& );
-    int nbRows;
-    int nbColumns;
-    int size;
-    int quality;
-    bool f_regeneration;
-}; //Configuration des vignettes
-
+/***** Types *****/
 typedef struct
 {
     //Text
@@ -113,6 +78,45 @@ typedef struct
     };
 
 }t_watermark;
+
+
+/**** Classes de paramtres ****/
+
+
+
+class t_galleryConf{
+public:
+    bool operator==(const t_galleryConf& ); //<- METTRE A JOUR SI ON AJOUTE DES CHAMPS !!
+    bool operator!=(const t_galleryConf& );
+
+    QString title;
+    QString description;
+    QString inputDir;
+    QString outputDir;
+    QString skinPath;
+    QString thumbPhoto;
+    QString url;
+    int nbPhotosToPrefetch;
+    int prefetchCacheSize;     
+    bool f_rightClickEnabled;    
+    bool f_shareOnSocialNetworks;
+
+    bool f_regeneration;
+}; //Configuration gnrale de la gallerie
+
+class t_thumbsConf{
+public:
+    bool operator==(const t_thumbsConf& ); //<- METTRE A JOUR SI ON AJOUTE DES CHAMPS !!
+    bool operator!=(const t_thumbsConf& );
+
+    int nbRows;
+    int nbColumns;
+    int size;
+    int quality;
+
+    bool f_regeneration;
+}; //Configuration des vignettes
+
 class t_photosConf{
 public:
     bool operator==(const t_photosConf& ); //<- METTRE A JOUR SI ON AJOUTE DES CHAMPS !!
@@ -129,13 +133,14 @@ public:
     t_watermark watermark;
     bool f_regeneration;
 
-    //Ces numrations doivent correspondre  la position des items dans les comboboxs
+    //Ces énumrations doivent correspondre à la position des items dans les comboboxs
     enum e_optimizationStrategy
     {
         OPTIMIZE_QUALITY = 0,
         OPTIMIZE_SCREENUSAGE
     };
 }; //Configuration des photos
+
 
 /*****************************
  * CProjectParameters
@@ -148,11 +153,20 @@ class CProjectParameters :  public QObject, public IParameters<Ui::MainWin>
     Q_OBJECT
 
 public:
-    CProjectParameters( );
+    CProjectParameters( void ) :
+        QObject( ),
+            m_feeder( CPhotoFeederDirectory::getInstance() )
+    {           
+        m_galleryConfig.f_regeneration = true;
+        m_photosConfig.f_regeneration = true;
+        m_thumbsConfig.f_regeneration = true;
+    }
+
     CProjectParameters( const CProjectParameters & );
     CProjectParameters& operator=(const CProjectParameters & );  //Ncessit de surcharger l'oprateur d'assignement lorsqu'on hrite de QObject
     bool operator==(const CProjectParameters & );
     bool operator!=(const CProjectParameters & );
+    
     void fromUi( );                                              //Rcupre les donnes provenant de l'UI
     void fromDomDocument( QDomDocument & );                      //Rcupre les donnes provenant d'un QDomDocument
     void toUi(  );                                               //Rempli l'UI
@@ -164,19 +178,19 @@ public:
     bool photosChanged( const CProjectParameters &);             //Vrifie si les photos on chang
     bool load( const QString & );                                //Chargement d'un fichier de paramtres
     bool save( const QString & );                                //Sauvegarde d'un fichier de paramtres
-    int version( );                                               //Retoune le status du projet
+    unsigned int version( void ) {return m_version;}             //Retoune le status du projet
 private:
+    static const unsigned int s_versionFilePath = 20111217;
     QDomDocument convertFromOldVersion( const QDomDocument &document, const int version );    //Convertion du projet d'une version prcdante en la version actuelle
 
 signals:
     void loaded(QString);
     void saved(QString);
     void message(QString);
-    
+
+
 // !! BIEN METTRE A JOUR operator= , == et != en cas d'ajout d'attribut !! //
 public:
-//    QMap<QString,QDateTime> m_photosList;
-    QMap<QString,CPhotoProperties> m_photoPropertiesMap;
     t_galleryConf m_galleryConfig;
     t_thumbsConf m_thumbsConfig;
     t_photosConf m_photosConfig;
@@ -184,7 +198,9 @@ private:
     Ui::MainWin* m_p_ui;
     CCaptionManager* m_p_captionManager;
     CSkinParameters* m_p_skin;
-    int m_version;
+    unsigned int m_version;
+    CPhotoFeederDirectory& m_feeder;
 };
 
 #endif // CPROJECTPARAMETERS_H
+

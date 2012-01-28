@@ -1,4 +1,4 @@
-#ifndef EZWWIDGETS_H
+﻿#ifndef EZWWIDGETS_H
 #define EZWWIDGETS_H
 
 #include <QtDesigner/QtDesigner>

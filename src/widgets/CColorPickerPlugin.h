@@ -1,4 +1,4 @@
-#ifndef CCOLORPICKERPLUGIN_H
+﻿#ifndef CCOLORPICKERPLUGIN_H
 #define CCOLORPICKERPLUGIN_H
 
 #include <QDesignerCustomWidgetInterface>

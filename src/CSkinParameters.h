@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -29,7 +29,7 @@
 
 #include "IParameters.h"
 #include "CCss.h"
-#include "CErrorMessages.h"
+#include "CError.h"
 
 #include "ui_WinSkinDesigner.h" //Gnr par qmake. Ncessaire pour accs  la classe gnre par le formulaire .ui
 
@@ -76,10 +76,10 @@ public:
     bool saveSkin( const QString &/*, QStringList &*/ );         //Sauvegarde la skin. Retourne false si erreurs
     bool copyRessources( QDir /*, QStringList &*/ );             //Copie les fichiers de ressources vers le rpertoire spcifi
     void check( QStringList* , QStringList* );                   //Vrifie la skin et retourne les erreur et avertissements
-    static QString defaultSkin( );                               //Renvoie le chemin absolu de la skin par dfaut
-    QString error( );                                            //Retourne la dernire erreur survenue
-    QStringList errors( );                                       //Retourne la dernire srie d'erreurs survenues
-    int version( );                                               //Retourne le status du IParameters
+    static QString defaultSkin( void );                          //Renvoie le chemin absolu de la skin par dfaut
+    QString error( void ) { return m_lastError; }                //Retourne la dernire erreur survenue
+    QStringList errors( void ) { return m_lastErrors; }          //Retourne la dernire srie d'erreurs survenues
+    unsigned int version( void ) { return m_version; }           //Retourne le status du IParameters
 
 private:
     QDomDocument convertFromOldVersion( const QDomDocument &document, const int version );    //Convertion d'une skin d'une version prcdante en la version actuelle
@@ -110,7 +110,7 @@ private:
     t_misc m_misc;
     QMap<QString,QFileInfo> m_ressources;      //widget name ; file info
     CCssSheet m_styleSheet;
-    int m_version;
+    unsigned int m_version;
     //Enumration des erreurs possibles
     enum e_errors{
         noError,

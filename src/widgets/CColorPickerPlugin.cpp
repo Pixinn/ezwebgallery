@@ -1,4 +1,4 @@
-#include "CColorPicker.h"
+﻿#include "CColorPicker.h"
 #include "CColorPickerPlugin.h"
 
 #include <QtCore/QtPlugin>

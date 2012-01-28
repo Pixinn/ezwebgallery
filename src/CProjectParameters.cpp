@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -24,6 +24,8 @@
 
 #include "CPlatform.h"
 #include "CTaggedString.h"
+#include "CPhotoDatabase.h"
+
 
 /*********************** STRUCTURES DE DONNEES ************************/
 //--- BIEN METTRE A JOURS LES operator== EN CAS DE MODIFICATION DE CES CHAMPS ---//
@@ -108,19 +110,11 @@ bool t_photosConf::operator!=(const t_photosConf& source)
 
 
 
-
-CProjectParameters::CProjectParameters( )
-    : QObject()
-{
-    m_galleryConfig.f_regeneration = true;
-    m_photosConfig.f_regeneration = true;
-    m_thumbsConfig.f_regeneration = true;
-}
-
-
 // !!! ATTENTION : BIEN METTRE A JOUR CETTE FONCTION EN CAS D'AJOUTS D'ATTRIBUTS !!!!
-CProjectParameters::CProjectParameters(const CProjectParameters &source)
-    : QObject()
+CProjectParameters::CProjectParameters(const CProjectParameters &source) :
+    QObject(),
+    m_feeder( source.m_feeder )
+
 {
     this->m_galleryConfig = source.m_galleryConfig;
     this->m_photosConfig = source.m_photosConfig;
@@ -130,7 +124,7 @@ CProjectParameters::CProjectParameters(const CProjectParameters &source)
     this->m_p_skin = source.m_p_skin;
     this->m_p_ui = source.m_p_ui;
     this->m_version = source.m_version;
-    this->m_photoPropertiesMap = source.m_photoPropertiesMap;
+ //   this->m_photoPropertiesMap = source.m_photoPropertiesMap;
 }
 
 
@@ -155,7 +149,8 @@ CProjectParameters& CProjectParameters::operator=(const CProjectParameters &sour
         this->m_p_skin = source.m_p_skin;
         this->m_p_ui = source.m_p_ui;
         this->m_version = source.m_version;
-        this->m_photoPropertiesMap = source.m_photoPropertiesMap;
+//        this->m_photoPropertiesMap = source.m_photoPropertiesMap;
+        this->m_feeder = source.m_feeder;
     }
     return *this;
 }
@@ -167,7 +162,7 @@ CProjectParameters& CProjectParameters::operator=(const CProjectParameters &sour
 *****************************************************/
 
 // !!! ATTENTION : BIEN METTRE A JOUR CETTE FONCTION EN CAS D'AJOUTS D'ATTRIBUTS !!!!
-bool  CProjectParameters::operator==(const CProjectParameters &source)
+bool CProjectParameters::operator==(const CProjectParameters &source)
 {
     bool f_result = true;
     if( /*m_photosList != source.m_photosList      <<-- Renvoie toujours false !!?
@@ -178,26 +173,10 @@ bool  CProjectParameters::operator==(const CProjectParameters &source)
         || m_p_captionManager != source.m_p_captionManager
         || m_p_skin != source.m_p_skin
         || m_version != source.m_version
+        || m_feeder != source.m_feeder
        )
     {
         f_result =  false;
-    }
-
-    //Comparaison du Map de proprits
-    if( m_photoPropertiesMap.size() == source.m_photoPropertiesMap.size() )
-    {
-        QMapIterator<QString,CPhotoProperties> i( this->m_photoPropertiesMap );
-        while( f_result == true && i.hasNext() ){
-            i.next();
-            CPhotoProperties thisProperties = i.value();
-            CPhotoProperties sourceProperties = source.m_photoPropertiesMap.value( i.key() );
-            if( !thisProperties.isEquivalent( sourceProperties ) ){
-                f_result = false;
-            }
-        }
-    }
-    else{ //Si la taille n'est pas gale, c'est tout de suite faux...
-        f_result = false;
     }
 
     return f_result;
@@ -296,7 +275,7 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
 
     //--- Conversion automatique du projet si il a t cr par une version antrieure  la version actuelle
     m_version = root.attribute( "release" ).remove( QChar('M') ).toInt( );
-    int currentVersion = CPlatform::revision().remove( QChar('M') ).toInt( );    
+    unsigned int currentVersion = CPlatform::revisionInt();
     if( m_version < currentVersion ){
         document = convertFromOldVersion( document, m_version );
         root = document.firstChildElement( "Session" );
@@ -308,8 +287,9 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     QDomElement watermarkConfElem = root.firstChildElement( "WatermarkConfig" );
     QDomElement photoListElem = root.firstChildElement( "PhotoList" );
 
+
 //    m_photosList.clear();
-    m_photoPropertiesMap.clear();
+//    m_photoPropertiesMap.clear();
     //--- CONFIG GALLERY
     m_galleryConfig.title = galleryConfElem.firstChildElement( "title" ).text();
     m_galleryConfig.description = galleryConfElem.firstChildElement( "description" ).text();
@@ -317,12 +297,19 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     m_galleryConfig.prefetchCacheSize = galleryConfElem.firstChildElement( "prefetchCacheSize" ).text().toInt();
     m_galleryConfig.f_rightClickEnabled = galleryConfElem.firstChildElement( "rightClickEnabled" ).text().toInt();
     QString inputFolder =  galleryConfElem.firstChildElement( "inputFolder" ).text();
-    if( QFileInfo(inputFolder).exists() ){ 
+    if( m_feeder.setDirectory( inputFolder ) ) {
+        m_galleryConfig.inputDir = inputFolder;
+    }
+    else {
+        m_galleryConfig.inputDir.clear();
+        emit message( inputFolder + tr(" doesn't exists") );
+    }
+    /*if( QFileInfo(inputFolder).exists() ){ 
         m_galleryConfig.inputDir = inputFolder;
     }else{
         m_galleryConfig.inputDir.clear();
         emit message( inputFolder + tr(" doesn't exists") );
-    }
+    }*/
     QString outputFolder =  galleryConfElem.firstChildElement( "outputFolder" ).text();
     if( QFileInfo(outputFolder).exists() ){ 
         m_galleryConfig.outputDir = outputFolder;
@@ -366,35 +353,15 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     m_photosConfig.watermark.position = watermarkConfElem.firstChildElement( "watermarkPosition" ).text().toInt();
     m_photosConfig.watermark.relativeSize = watermarkConfElem.firstChildElement( "watermarkRelativeSize" ).text().toInt();
 
-    //---LEGENDES
-    QMap<QString,CCaption> captionMap;
-    QDomNodeList photosNode = photoListElem.elementsByTagName( "Photo" );
-    CTaggedString captionBody;
-    CTaggedString captionHeader;
-    CTaggedString captionEnding;
-    CCaption caption;
-    CPhotoProperties photoProperties;
-    QDateTime lastModificationTime;
-    //rem: on considre que la liste des fichiers que l'on lit est ordone comme il faut
-    for( unsigned int iteratorDomList = 0; iteratorDomList < photosNode.length() ; iteratorDomList++ ){        
-        QDomNode node = photosNode.item( iteratorDomList );
-        QString photoName = node.firstChildElement("PhotoName").text();
-        captionBody = node.firstChildElement("Caption").text();
-        captionHeader = node.firstChildElement("CaptionHeader").text();
-        captionEnding = node.firstChildElement("CaptionEnding").text();
-        caption.setBody( captionBody );
-        caption.setHeader( captionHeader );
-        caption.setEnding( captionEnding );
-        captionMap.insert( photoName, caption );
-        lastModificationTime = QDateTime::fromString( node.firstChildElement("LastModification").text() );
-        //--
-        photoProperties.setCaption( caption );
-        photoProperties.setFileInfo( QFileInfo( QDir( m_galleryConfig.inputDir ).absoluteFilePath( photoName ) ) );
-        photoProperties.setLastModificationTime( lastModificationTime );
-        m_photoPropertiesMap.insert( photoName, photoProperties );
-        //--
+    //deprecated fileformat
+    if( m_version < s_versionFilePath ) {
+        CPhotoDatabase::getInstance().importDeprecated( photoListElem, inputFolder );
     }
-    m_p_captionManager->setCaptionMap( captionMap );
+    //current file format
+    else
+    {
+        CPhotoDatabase::getInstance().build( photoListElem );
+    }
 
 }
 
@@ -402,13 +369,13 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
 /*************************
 * toDomDocument
 *----------------------
-* Retourn un document XML/DOM correspondant aux paramtres
+* Retourne un document XML/DOM correspondant aux parametres
 **************************/
 QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
 {
     QDomDocument document;
     QDomElement root = document.createElement( "Session" );
-    root.setAttribute( "release", CPlatform::revision() );
+    root.setAttribute( "release", QString::number(CPlatform::revisionInt()) );
     document.appendChild( root );
 
     
@@ -432,7 +399,7 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
     rightClickEnabled.appendChild( document.createTextNode( QString::number(m_galleryConfig.f_rightClickEnabled) ) );
     QDomElement inputFolder = document.createElement( "inputFolder" );
     galleryConfig.appendChild( inputFolder );
-    inputFolder.appendChild( document.createTextNode( m_galleryConfig.inputDir ) );
+    inputFolder.appendChild( document.createTextNode( m_feeder.getDirectoryPath() ) );
     QDomElement outputFolder = document.createElement( "outputFolder" );
     galleryConfig.appendChild( outputFolder );
     outputFolder.appendChild( document.createTextNode(  m_galleryConfig.outputDir ) );
@@ -536,48 +503,7 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
     watermarkConfig.appendChild( watermarkRelativeSize );
     watermarkRelativeSize.appendChild( document.createTextNode(  QString::number(m_photosConfig.watermark.relativeSize)) );
 
-    //--- PHOTOS et LEGENDES associes  
-    QMap<QString,CCaption> captionMap = m_p_captionManager->captionMap();
-    CPhotoProperties photoProperties;
-    foreach( QString photoName, captionMap.keys() ){
-        if( m_photoPropertiesMap.contains( photoName ) ) {
-            photoProperties = m_photoPropertiesMap.value( photoName );
-            photoProperties.setCaption( captionMap.value( photoName ) );
-            m_photoPropertiesMap.insert( photoName, photoProperties );
-        }
-        else{
-            CPhotoProperties newPhotoProperties;
-            m_photoPropertiesMap.insert( photoName, newPhotoProperties );
-            //On ne devrait pas tomber ici, car captionMap et m_photoPropertiesMap contiennent les mmes keys / caption (ou properties) !
-        }
-    }
-    QDomElement photoList = document.createElement( "PhotoList" );
-    
-    root.appendChild( photoList );
-    foreach( QString photoName, m_photoPropertiesMap.keys() )
-    {
-        photoProperties = m_photoPropertiesMap.value( photoName );
-        QDomElement photoElement = document.createElement( "Photo" );
-        photoList.appendChild( photoElement );
-        //name
-        QDomElement photoNameElement = document.createElement( "PhotoName" );
-        photoElement.appendChild( photoNameElement );
-        photoNameElement.appendChild( document.createTextNode( photoName ) );
-        //date
-        QDomElement date = document.createElement( "LastModification" );
-        photoElement.appendChild( date );
-        date.appendChild( document.createTextNode( photoProperties.lastModificationTime().toString() ) );
-        //caption
-        QDomElement captionElem = document.createElement( "Caption" );
-        photoElement.appendChild( captionElem );
-        captionElem.appendChild( document.createTextNode( photoProperties.caption().body() ) );
-        QDomElement captionHeaderElem = document.createElement( "CaptionHeader" );
-        photoElement.appendChild( captionHeaderElem );
-        captionHeaderElem.appendChild( document.createTextNode( photoProperties.caption().header() ) );
-        QDomElement captionEndingElem = document.createElement( "CaptionEnding" );
-        photoElement.appendChild( captionEndingElem );
-        captionEndingElem.appendChild( document.createTextNode( photoProperties.caption().ending() ) );
-    }
+    root.appendChild( CPhotoDatabase::getInstance().xml(document));
 
     return document;
 }
@@ -624,11 +550,19 @@ void CProjectParameters::toUi( )
     m_p_ui->comboBox_WatermarkPosition->setCurrentIndex( m_photosConfig.watermark.position );
     m_p_ui->groupBox_Watermark->setChecked( m_photosConfig.watermark.enabled ); //A mettre en dernire position des proprits watermark pour bien enable/disable les widgets
 
-    //Lgendes
-    //REM: le body est affich via un signal du caption manager, car il dpend du num de la photo  l'cran
-    QMap<QString,CCaption> captionMap = m_p_captionManager->captionMap();
+    //Legendes
+    //REM: le body est affiche via un signal du caption manager, car il depend du num de la photo a l'ecran
+    /*QMap<QString,CCaption> captionMap = m_p_captionManager->captionMap();
     if( !captionMap.isEmpty() ){
         CCaption caption = captionMap.begin().value();
+        m_p_ui->lineEdit_captionHeader->setText( caption.header() );
+        m_p_ui->lineEdit_captionEnding->setText( caption.ending() );
+    }*/
+
+    //REM: le body est affiche via un signal du caption manager, car il depend du num de la photo a l'ecran
+    CPhotoDatabase& photoDb = CPhotoDatabase::getInstance();
+    if( photoDb.size() > 0 ) {
+        CCaption caption = photoDb.properties( 0 )->caption();
         m_p_ui->lineEdit_captionHeader->setText( caption.header() );
         m_p_ui->lineEdit_captionEnding->setText( caption.ending() );
     }
@@ -675,17 +609,6 @@ bool CProjectParameters::save( const QString &fileToSave )
     else{
         return false;
     }
-}
-
-
-/*******************************************************************
-* version(  )
-* ------------------------
-* Retourne la version d'EZWG ayant cr le projet
-********************************************************************/
-int CProjectParameters::version( )
-{
-    return m_version;
 }
 
 

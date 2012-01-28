@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -32,7 +32,7 @@
 
 #include <cstring>
 
-#include "CErrorMessages.h"
+#include "CError.h"
 #include "CProjectParameters.h"
 #include "CTaggedString.h"
 
