@@ -151,7 +151,6 @@
          //The two containers that must be in sync form the DB.
          //Allowing access by filename and number.
          QMap<QString,CPhotoDatabaseElem*> m_db; //key : FILENAME
-         //QStringList m_orderedKeys;//element: FILENAME. Allows an ordered search of elements in m_db;
          QStringListModel m_model; //model syncing the db and the ui
  };
  

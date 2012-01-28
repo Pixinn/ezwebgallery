@@ -30,6 +30,8 @@
 #include "GlobalDefinitions.h"
 #include "CPlatform.h"
 #include "CCaption.h"
+#include "CPhotoDatabase.h"
+#include "CPhotoFeederDirectory.h"
 
 
 /******************************************* Variables statiques *********************/
@@ -38,7 +40,6 @@ QTextStream CTerminalUi::cerr( stderr, QIODevice::WriteOnly );
 
 
 /******************************************* Ralisation Interface **********************************************/
-//IUserInterface::IUserInterface( ){}
 
 
 CTerminalUi::CTerminalUi( CGalleryGenerator & galleryGenerator, const QString &projectFile ) :
@@ -61,7 +62,7 @@ CTerminalUi::~CTerminalUi( )
 ////////// SLOTS //////////
 
 void CTerminalUi::onLogMsg( QString msg ){
-    msg = ""; //Pour viter un warning
+    msg = ""; //Pour virer un warning
 }
 
 void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
@@ -76,18 +77,15 @@ void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
     emit done();
 }
 
-void CTerminalUi::onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties> propertiesList )
+void CTerminalUi::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesList )
 {
-    propertiesList;
+    propertiesList.size(); //to avoid a warning
     cout << tr("Generation successfully completed.") << endl;
     emit done();
 }
 
 void CTerminalUi::onProgressBar( int completion, QString color, QString msg, int timeout )
 {
-    completion = 0;
-    color = "";
-    timeout = 0; //Pour viter des warnings
     cout << msg << endl;
 }
 
@@ -101,7 +99,6 @@ void CTerminalUi::run( )
     QFile file_xmlprojectDoc( m_projectFile );
     if( projectDoc.setContent( &file_xmlprojectDoc ) ){
         m_projectParameters.fromDomDocument( projectDoc );
-       //  buildPhotoLists( );
         cout << m_projectFile << tr(" loaded.") << endl;
     }
     else{
@@ -132,6 +129,19 @@ void CTerminalUi::run( )
             return;
         }
     }
+
+    //Constructing photo properties list
+    CPhotoDatabase& photoDB = CPhotoDatabase::getInstance();
+    CPhotoFeederDirectory& photoFeeder = CPhotoFeederDirectory::getInstance();
+    QStringList photoList = photoFeeder.getPhotoList();
+    photoDB.refresh( photoList );
+    QList<CPhotoProperties*> propertiesList;
+    for( int i = 0; i < photoDB.size(); i++ ) {
+        propertiesList << photoDB.properties(i);
+    }
+
+    //Launching generation
+    m_galleryGenerator.generateGallery( m_projectParameters, m_skinParameters, propertiesList );
 
     /* 
             A REVOIR !!!!!
