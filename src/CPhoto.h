@@ -75,8 +75,6 @@ class CWatermark :  public CMagick
 
     public:
         CWatermark( );
-/*        CWatermark( const QString &watermarkImagePath );
-        CWatermark( const CTaggedString &inText, QFont inFont, QColor inColor );*/
         void setImage( const QString &watermarkImagePath );
         void setTaggedString( CTaggedString inText, QFont inFont, QColor inColor );
         void setOpacity( const unsigned int opacity );         //Rgler l'opacit

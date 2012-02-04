@@ -61,6 +61,7 @@ int main(int argc, char *argv[])
     //Instanciations
     //CPhotoFeederDirectory& photoFeeder = CPhotoFeederDirectory::getInstance();
     CPhotoDatabase& photoDatabase = CPhotoDatabase::getInstance();
+    photoDatabase.init();
     CProjectParameters& projectParameters = *new CProjectParameters( );
     CGalleryGenerator& galleryGenerator = *new CGalleryGenerator();
 

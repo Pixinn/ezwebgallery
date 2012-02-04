@@ -323,7 +323,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     connect( this->m_ui->checkBox_GalleryThumb, SIGNAL(stateChanged(int)), this, SLOT(thumnailChanged(int)));
     connect( this->m_ui->pushButton_PrevPhoto, SIGNAL(clicked( )), &(this->m_captionManager), SLOT( onPrevious() ) );
     connect( this->m_ui->pushButton_nextPhoto, SIGNAL(clicked( )), &(this->m_captionManager), SLOT( onNext() ) );
-    connect( this->m_ui->listView_Photos, SIGNAL(clicked(QModelIndex)), &(this->m_captionManager), SLOT( onListClicked(QModelIndex)) );
+    connect( this->m_ui->listView_Photos, SIGNAL(pressed(QModelIndex)), &(this->m_captionManager), SLOT( onListPressed(QModelIndex)) );
     connect( this->m_ui->lineEdit_Caption, SIGNAL(textEdited(QString)), &(this->m_captionManager), SLOT(onCaptionTextEdited(QString)) );
     connect( this->m_ui->lineEdit_captionEnding, SIGNAL(textEdited(QString)), &(this->m_captionManager), SLOT(onCaptionEndingEdited(QString)) );
     connect( this->m_ui->lineEdit_captionHeader, SIGNAL(textEdited(QString)), &(this->m_captionManager), SLOT(onCaptionHeaderEdited(QString)) );
@@ -363,8 +363,8 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     }
     displayRecentFiles( );
     
+    //UI tweaking
     m_ui->action_SaveSession->setDisabled( true );
-
 
     bool f_lastSessionOK = false;
     //Par défaut : Nouvelle session
@@ -1043,7 +1043,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 void MainWin::thumnailChanged( int state )
 {
     if( state == Qt::Checked ) {
-        m_projectParameters.m_galleryConfig.thumbPhoto = m_photoDatabase.properties( m_captionManager.displayedPhoto() )->fileInfo().absoluteFilePath();
+        m_projectParameters.m_galleryConfig.thumbPhoto = m_photoDatabase.properties( m_captionManager.selectedPhoto() )->fileInfo().absoluteFilePath();
     }
 }
 

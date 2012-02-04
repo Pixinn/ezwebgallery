@@ -16,6 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QDebug>
+
 #include "CPhotoDatabase.h"
 #include "CPhoto.h"
 
@@ -49,7 +51,6 @@ QStringList CPhotoDatabase::build( const QStringList& photoList )
     
     clear();
     QStringList invalidFiles = appendPhotoList( photoList );
-    //m_model.setStringList( m_orderedKeys );
     return invalidFiles;
 }
 
@@ -171,12 +172,15 @@ QDomElement CPhotoDatabase::xml( QDomDocument& document ) const
 * ---------
 * The layout of the model has been updated outside
 ********************************************************************/
-void CPhotoDatabase::modelLayoutChanged( void )
+void CPhotoDatabase::modelLayoutChanged( const QModelIndex & topLeft, const QModelIndex & bottomRight )
 {
+   /* qDebug() << "CPhotoDatabase: layout changed";
+
     CPhotoDatabaseElem* elem;
     int id = 0;
     QStringList orderedKeys = m_model.stringList();
-    foreach( QString key, orderedKeys ) {
+    foreach( QString key, orderedKeys ) 
+    {
         elem = m_db.value( key );
         elem->setId( id );
         //keeping the caption in sync
@@ -185,6 +189,27 @@ void CPhotoDatabase::modelLayoutChanged( void )
         elem->setCaption( caption );
         id++;
     }
+
+    emit layoutChanged();*/
+}
+
+void CPhotoDatabase::test( const QModelIndex & parent, int start, int end )
+{
+        CPhotoDatabaseElem* elem;
+    int id = 0;
+    QStringList orderedKeys = m_model.stringList();
+    foreach( QString key, orderedKeys ) 
+    {
+        elem = m_db.value( key );
+        elem->setId( id );
+        //keeping the caption in sync
+        CCaption caption = elem->caption();
+        caption.setId( id + 1);
+        elem->setCaption( caption );
+        id++;
+    }
+    qDebug() << "test";
+    emit layoutChanged();
 }
 
 
@@ -716,4 +741,20 @@ CPhotoProperties* CPhotoDatabase::properties( int id )
 CPhotoProperties* CPhotoDatabase::properties( const QString & fileName )
 {
    return m_db.value( fileName );
+}
+
+
+/*******************************************************************
+* id( const QString & );
+* ---------
+* Returns the id of the specified photo. -1 if not present in the db
+* Returns : (int)
+********************************************************************/
+int CPhotoDatabase::id( const QString & fileName ) const
+{
+    int id = -1;
+    if( m_db.contains( fileName ) ) {
+        id = m_db.value( fileName )->id();
+    }
+    return id;
 }
