@@ -114,10 +114,8 @@
         {
             if( !f_initialized ) {
                 f_initialized = true;
-                connect( &m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), \
-                this, SLOT( modelLayoutChanged(QModelIndex,QModelIndex) )     );
                 connect(  &m_model, SIGNAL(rowsRemoved (  QModelIndex , int,  int )), \
-                          this, SLOT(test ( QModelIndex , int,  int ) ) );
+                          this, SLOT(rowRemoved ( QModelIndex , int,  int ) ) );
             }
         }
     
@@ -162,8 +160,7 @@
         QStringList importDeprecated( const QDomElement &, const QString & ); //from a deprecated Xml. Returns the list of invalid files
         QDomElement xml( QDomDocument& document ) const; //Constructs an Xml representation of the in the provided document
         //link with the model, which layout is directly updated by the ui
-        void modelLayoutChanged( const QModelIndex & topLeft, const QModelIndex & bottomRight );
-        void test(const QModelIndex & parent, int start, int end );
+        void rowRemoved(const QModelIndex & parent, int start, int end );
      
     private: //nb private memebers do not emit updatedProperties()
         void clear( void );
@@ -172,6 +169,7 @@
         void consolidate( void ); //Removes files present in the db but not on the disk
         
     private:
+         QSize m_thumbnailsSize;
          bool f_initialized;
          static const QString XMLTAG_PHOTOSDB;
          static const QString XMLTAG_PHOTOS;
@@ -182,7 +180,6 @@
          static const QString XMLTAG_CAPTIONENDING;
          static const QString XMLTAG_DEPRECATED_FILENAME;
          const static QImage s_defaultThumbnail; //Thumbnail for a not yet loaded photo
-         QSize m_thumbnailsSize;
          //Static instance for singleton
          static CPhotoDatabase s_instance;
           //CORE DB:

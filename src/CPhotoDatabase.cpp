@@ -137,21 +137,17 @@ QStringList CPhotoDatabase::importDeprecated( const QDomElement & xmlElem, const
 QDomElement CPhotoDatabase::xml( QDomDocument& document ) const
 {
     QDomElement database = document.createElement( XMLTAG_PHOTOSDB );
-  //  QDomElement root = document.documentElement();
-    
-  //  root.appendChild( database );
-    foreach( CPhotoProperties* properties, m_db )
+    QStringList orderedList = m_model.stringList();
+
+    foreach( QString photoName, orderedList )
     {
+        CPhotoProperties* properties = m_db.value( photoName );
         QDomElement photoElement = document.createElement( XMLTAG_PHOTOS );
         database.appendChild( photoElement );
         //filePath
         QDomElement filePath = document.createElement( XMLTAG_FILEPATH );
         photoElement.appendChild( filePath );
         filePath.appendChild( document.createTextNode( properties->fileInfo().absoluteFilePath() ) );
-        /* //date
-        QDomElement date = document.createElement( XMLTAG_LASTMODIFICATIONTIME );
-        photoElement.appendChild( date );
-        date.appendChild( document.createTextNode( properties->lastModificationTime().toString() ) );*/
         //caption
         QDomElement captionElem = document.createElement( XMLTAG_CAPTIONBODY );
         photoElement.appendChild( captionElem );
@@ -166,16 +162,8 @@ QDomElement CPhotoDatabase::xml( QDomDocument& document ) const
     return database;
 }
 
-
-/*******************************************************************
-* CPhotoDatabase( )
-* ---------
-* The layout of the model has been updated outside
-********************************************************************/
-void CPhotoDatabase::modelLayoutChanged( const QModelIndex & topLeft, const QModelIndex & bottomRight )
+void CPhotoDatabase::rowRemoved( const QModelIndex&, int, int )
 {
-   /* qDebug() << "CPhotoDatabase: layout changed";
-
     CPhotoDatabaseElem* elem;
     int id = 0;
     QStringList orderedKeys = m_model.stringList();
@@ -189,26 +177,6 @@ void CPhotoDatabase::modelLayoutChanged( const QModelIndex & topLeft, const QMod
         elem->setCaption( caption );
         id++;
     }
-
-    emit layoutChanged();*/
-}
-
-void CPhotoDatabase::test( const QModelIndex & parent, int start, int end )
-{
-        CPhotoDatabaseElem* elem;
-    int id = 0;
-    QStringList orderedKeys = m_model.stringList();
-    foreach( QString key, orderedKeys ) 
-    {
-        elem = m_db.value( key );
-        elem->setId( id );
-        //keeping the caption in sync
-        CCaption caption = elem->caption();
-        caption.setId( id + 1);
-        elem->setCaption( caption );
-        id++;
-    }
-    qDebug() << "test";
     emit layoutChanged();
 }
 

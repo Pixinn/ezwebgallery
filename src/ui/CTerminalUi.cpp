@@ -84,9 +84,8 @@ void CTerminalUi::onGalleryGenerationFinished( QList<CPhotoProperties> propertie
     emit done();
 }
 
-void CTerminalUi::onProgressBar( int completion, QString color, QString msg, int timeout )
+void CTerminalUi::onProgressBar( int, QString, QString msg, int )
 {
-    timeout = completion; //To remove a warning about these useless parameters
     cout << msg << endl;
 }
 
