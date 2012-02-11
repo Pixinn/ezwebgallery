@@ -69,7 +69,7 @@ var DIV_SCROLLCONTAINER = ".scrollContainer";/* Contient les panneaux glissant *
 var DIV_SLIDINGPANEL = ".slidingPanel";			/* Panneau glissant */
 var DIV_THUMBCONTAINER = ".thumbBox";				/* Thumbnails */
 var ID_INDEXPREFIX = "index";	/* Utilisé lors de la génération automatique pour l'id des panneaux coulissant */
-var THUMBFILEPREFIX = "tn"; /*Préfixe pour le nom des fichiers de vignettes */
+var THUMBFILEPREFIX = "tn_"; /*Préfixe pour le nom des fichiers de vignettes */
 //--- Commun
 
 
@@ -190,7 +190,7 @@ function initGallery( )
 	/* création de g_listeThumbnails[nbPanneaux][NBTHUMBSBYPAGE]  */
   	for ( key in listePhotos )
 	{
-		var thumbName = THUMBFILEPREFIX + listePhotos[ key ].fileName;
+		var thumbName = /*THUMBFILEPREFIX + */listePhotos[ key ].fileName;
 		g_listeThumbnails[ thumbName ] = parseInt(key);
 	}
 	
@@ -217,8 +217,7 @@ function initGallery( )
 	for (indexPanneau = 0; indexPanneau < $panneaux.length; indexPanneau++) {
 		i=1;
 		while( ( i <= NBTHUMBSBYPAGE ) && ( numThumbnails <= g_nbThumbnails ) ){
-            var thumbName = THUMBFILEPREFIX + listePhotos[ numThumbnails ].fileName;
-        //   $(DIV_SLIDINGPANEL).eq(indexPanneau).append('<div class="'+DIV_THUMBCONTAINER.substr(1,DIV_THUMBCONTAINER.length-1)+'" id="'+numThumbnails+'"><img onload="onThumbLoaded('+numThumbnails+');" src="' +URL_THUMBS_PATH+thumbName+ '" /></div>');
+            var thumbName = /*THUMBFILEPREFIX + */listePhotos[ numThumbnails ].fileName;        
             //Une case "thumbBox"
             $(DIV_SLIDINGPANEL).eq(indexPanneau).append('<div class="'+DIV_THUMBCONTAINER.substr(1,DIV_THUMBCONTAINER.length-1)+'" id="'+numThumbnails+'"></div>');			
             //La vignette
@@ -230,12 +229,9 @@ function initGallery( )
                             var $thumbBox = $panneaux.find( "#"+ id );
                             g_nbThumbFullyLoaded++;
                             //Si anim, mettre l'état de départ ici
-                            //$(this).hide();
                             //Ajout de la vignette dans la case correspondante
 							$thumbBox.append( $(this) );
-                            //Animation : vers état de fin !
-                            //$(this).show();
-                            //$(this).verticalCenter( 0 ); //Attention : la vignette et ses parents doivent être visibles !                     
+                            //Animation : vers état de fin ici.                   
                             $(DIV_PROGRESSBARNAME).reportprogress( g_nbThumbFullyLoaded, g_nbThumbnails );                            
 						})
 						// Gestion Erreur
@@ -487,7 +483,13 @@ jQuery.fn.windowCenter = function(){
 function trimFileName( filePrefix , fileURL ){
 	var positionPrefixe = fileURL.indexOf( filePrefix , 0 );
 	var positionExtension = fileURL.indexOf( IMAGEFILEEXTENSION , 0 );
-	var fileName = fileURL.substr( positionPrefixe , positionExtension + IMAGEFILEEXTENSION.length - positionPrefixe );
+	var fileName;
+	if( positionPrefixe != -1 && positionExtension != -1 ) {
+        fileName = fileURL.substr( positionPrefixe , positionExtension + IMAGEFILEEXTENSION.length - positionPrefixe );
+    }
+    else{
+        fileName = fileURL;
+    }
 	return fileName;
 }
 		

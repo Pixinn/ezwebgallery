@@ -139,6 +139,7 @@ public:
         OPTIMIZE_QUALITY = 0,
         OPTIMIZE_SCREENUSAGE
     };
+
 }; //Configuration des photos
 
 

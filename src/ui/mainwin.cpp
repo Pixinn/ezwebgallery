@@ -424,7 +424,7 @@ void MainWin::changeEvent(QEvent *e)
     bool f_skinUnsaved = m_p_skinDesignerWindow->isUnsaved();
     bool f_sessionUnsaved = isUnsaved( );
     //Affichage de la boite de dialogue et sauvegardes si choix de l'utilisateur
-    int ret = displayUnsavedMsgBox( f_sessionUnsaved, f_skinUnsaved );
+    int ret = displayUnsavedMsgBox( f_sessionUnsaved || m_photoDatabase.hasChanged(), f_skinUnsaved );
     if( ret == QMessageBox::Cancel ){ //CANCEL -> ne pas fermer
         event->ignore(); 
         return;
@@ -455,8 +455,8 @@ void MainWin::onNewSession( )
     int retDlg = QMessageBox::Ok;
     bool f_sessionUnsaved = isUnsaved();
     bool f_skinUnsaved = m_p_skinDesignerWindow->isUnsaved();
-    if( f_sessionUnsaved || f_skinUnsaved ){ 
-        retDlg = displayUnsavedMsgBox( f_sessionUnsaved, f_skinUnsaved );
+    if( f_sessionUnsaved || f_skinUnsaved || m_photoDatabase.hasChanged() ){
+        retDlg = displayUnsavedMsgBox( f_sessionUnsaved || m_photoDatabase.hasChanged(), f_skinUnsaved );
     }
     
     if( retDlg != QMessageBox::Cancel ){
@@ -474,10 +474,11 @@ void MainWin::newSession( )
         m_skinParameters.load( m_projectParameters.m_galleryConfig.skinPath  );         
         m_projectParameters.toUi( );                             //Maj UI
         m_photoFeeder.clear();
-        //buildPhotoLists();                                       //Construction liste des photos (vide...)
         m_photoDatabase.build( m_photoFeeder.getPhotoList() );
         m_captionManager.reset( );
+        //saving a reference sate
         m_referenceProjectParameters = m_projectParameters;
+        m_photoDatabase.saveState();
         //UI
         m_ui->action_SaveSession->setDisabled( true );           //Il *faut* désactiver l'option save pour ne pas écraser le fichier le plus récent
 }
@@ -525,8 +526,8 @@ void MainWin::openSession( const QString &sessionFile )
        bool f_sessionUnsaved = isUnsaved();
        bool f_skinUnsaved = m_p_skinDesignerWindow->isUnsaved();
        //Affichage de la boite de dialogue si la session courante n'a pas été sauvée, récupération du code retour
-       if( f_sessionUnsaved || f_skinUnsaved ){ 
-           retDlg = displayUnsavedMsgBox( f_sessionUnsaved, f_skinUnsaved );
+       if( f_sessionUnsaved || f_skinUnsaved || m_photoDatabase.hasChanged() ){
+           retDlg = displayUnsavedMsgBox( f_sessionUnsaved || m_photoDatabase.hasChanged(), f_skinUnsaved );
        }
        //Si annulation demandée
        if( retDlg == QMessageBox::Cancel )   {
@@ -775,10 +776,12 @@ void MainWin::sessionLoaded( QString fileLoaded )
         m_recentSessions.removeLast();
     }
     settings.setValue( SETTINGS_RECENTPROJECTS, m_recentSessions );
+    //saving a reference state
     m_referenceProjectParameters = m_projectParameters;
+    m_photoDatabase.saveState();
+
     m_captionManager.captionsEditedReset();
     m_photoFeeder.setDirectory( m_projectParameters.m_galleryConfig.inputDir );
-//    m_photoDatabase.build( m_photoFeeder.getPhotoList() );
     //Affichage
     m_ui->action_SaveSession->setDisabled( false );
     m_projectParameters.toUi( );   
@@ -799,7 +802,9 @@ void MainWin::sessionSaved( QString fileSaved )
         m_recentSessions.removeLast();
     }
     settings.setValue( SETTINGS_RECENTPROJECTS, m_recentSessions );
+    //saving a reference state
     m_referenceProjectParameters = m_projectParameters;
+    m_photoDatabase.saveState();
     m_captionManager.captionsEditedReset();
     //Affichage
     m_ui->action_SaveSession->setDisabled( false );
@@ -928,7 +933,7 @@ void MainWin::generateGallery( )
             }
             //Vérification de la liste des photos d'entrée et reconstruction des légendes si besoin
             onProgressBar( 0, "green", tr("Building photo list.") );
-            QStringList photosModified = m_photoDatabase.photosModified(); //tobe executed before refresh() or you'll miss when some photo are removed
+            QStringList photosModified = m_photoDatabase.photosModified(); //to be executed before refresh() or you'll miss when some photo are removed
             QStringList newPhotos = m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
             m_captionManager.reset();
             m_projectParameters.m_photosConfig.f_regeneration |= ( !photosModified.isEmpty() || !newPhotos.isEmpty() );

@@ -100,10 +100,7 @@
             QObject(),
             m_thumbnailsSize( QSize(320,200) ),
             f_initialized( false )
-        {
-           /* connect( &m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), \
-                     this, SLOT( modelLayoutChanged(QModelIndex,QModelIndex) )     );*/
-        }
+        {    }
         ~CPhotoDatabase( )  {
             clear();
         }
@@ -123,7 +120,6 @@
         QStringList photosModified( void ) const; //List of the removed or modified files
         
         QStringList appendPhotoList( const QStringList & ); //Add new properties to the db. Return a list of invalid files.
-        //QStringList appendPhotoList( const CPhotoProperties & ); //Add new properties to the db. Return a list of invalid files.
 
         QStringList refresh( const QStringList & ); //Updates the database using this new list of files.
         bool refreshFileInfo( const QString & ); //Updates the file info of the element
@@ -133,6 +129,13 @@
         
         void swap( int id1, int id2 );
         void swap( const QString & name1, const QString & name2 );
+
+        void saveState( void ) {
+            m_savedState = m_model.stringList();
+        }
+        bool hasChanged( void ) {
+            return !( m_savedState == m_model.stringList() );
+        }
        
         void setThumbnailsSize( const QSize &size ) { m_thumbnailsSize = size; }
         bool loadThumbnail( int );  // ** For the times being thumbnails are loaded synchronously via an external request.
@@ -187,6 +190,8 @@
          //Allowing access by filename and number.
          QMap<QString,CPhotoDatabaseElem*> m_db; //key : FILENAME
          CPhotoDatabaseModel m_model; //model syncing the db and the ui
+         //Saved state to test if the db content or order has changed
+         QStringList m_savedState;
  };
  
 #endif

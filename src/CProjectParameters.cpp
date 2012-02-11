@@ -124,7 +124,6 @@ CProjectParameters::CProjectParameters(const CProjectParameters &source) :
     this->m_p_skin = source.m_p_skin;
     this->m_p_ui = source.m_p_ui;
     this->m_version = source.m_version;
- //   this->m_photoPropertiesMap = source.m_photoPropertiesMap;
 }
 
 

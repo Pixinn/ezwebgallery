@@ -43,7 +43,7 @@
 /*** Galerie ***/
 #define GALLERYTHUMBFILENAME "galleryThumbnail.jpg"
 #define PHOTOPREFIXE    "Photo_"
-#define THUMBPREFIXE    "tn"
+#define THUMBPREFIXE    "tn_"
 #define THUMBSPATH      "thumbnails"
 #define PHOTOSPATH      "images"
 #define RESOLUTIONPATH  "res"
@@ -55,6 +55,7 @@
 #define JSPATH          "ressources/javascript"
 #define JSCONFFILENAME  "galleryConfiguration.js"
 #define JSPRESFILENAME  "galleryPresentation.js"
+#define IMAGEFILEEXTENSION ".jpg"
 
 /**** skins ****/
 #define SKINPATH           "skins"                                  /*Path depuis le rpertoire de l'appli*/

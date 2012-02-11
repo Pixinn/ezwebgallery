@@ -51,6 +51,7 @@ QStringList CPhotoDatabase::build( const QStringList& photoList )
     
     clear();
     QStringList invalidFiles = appendPhotoList( photoList );
+    saveState();
     return invalidFiles;
 }
 
@@ -79,6 +80,7 @@ QStringList CPhotoDatabase::build( const QDomElement & xmlElem )
             invalidFiles << properties.fileInfo().absoluteFilePath();
         }
     } 
+    saveState();
 //    emit updatedProperties( propertiesList() );
     //m_model.setStringList( m_orderedKeys );
     return invalidFiles;
@@ -120,6 +122,7 @@ QStringList CPhotoDatabase::importDeprecated( const QDomElement & xmlElem, const
             invalidFiles << properties.fileInfo().absoluteFilePath();
         }
     } 
+    saveState();
 //    emit updatedProperties( propertiesList() );
     //m_model.setStringList( m_orderedKeys );
     return invalidFiles;

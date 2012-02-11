@@ -17,7 +17,7 @@
 */
 
 
-
+#include "GlobalDefinitions.h"
 #include "CPhotoProperties.h"
 
 
@@ -122,3 +122,17 @@ bool CPhotoProperties::isEquivalent( const CPhotoProperties &toCompare )
 
 }
 
+
+/*******************************************************************
+* encodedFilename( )
+* ---------
+* Returns the filename encoded to be part of URL (no forbidden characters)
+********************************************************************/
+QString CPhotoProperties::encodedFilename( void ) const
+{    
+    QByteArray encoded = fileName().remove( IMAGEFILEEXTENSION ).toUtf8().toBase64();
+    encoded.replace('=','-');
+    encoded.replace('/','_');
+    encoded.append( IMAGEFILEEXTENSION );
+    return QString( encoded );
+}

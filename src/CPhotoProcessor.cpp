@@ -49,15 +49,11 @@ CPhotoProcessor::CPhotoProcessor(   CPhotoProperties photoProperties,
                                     QMutex* remoteControl )
 {
     m_photoProperties = photoProperties,
-//    m_idPhoto = photoProperties.id();
-    //m_generatedParameters.setIdPhoto( photoProperties.id() );
-    //m_inFilePath = photoProperties.fileInfo().absoluteFilePath();
     m_outPath = outPath;
     m_qualityQueue = quality;
     m_sizesQueue = sizes;
     m_watermark = watermark;
     m_sharpening = sharpening;
-//    m_fCancellationRequested = false;
     m_fStopRequested = fStopRequested;
     m_p_mutexRemoteControl = remoteControl;
 }
@@ -75,7 +71,7 @@ void CPhotoProcessor::run()
     bool  fCancel = false;
     bool  f_refPictureComputed = false;
     bool  f_fileReadingSuccess;
-    const QString thumbPrefix( QString(THUMBPREFIXE) + QString(PHOTOPREFIXE) );
+    const QString thumbPrefix( QString(THUMBPREFIXE)/* + QString(PHOTOPREFIXE)*/ );
     const QString thumbsPath( THUMBSPATH );
     const QString photosPath( QString(PHOTOSPATH) + "/" + RESOLUTIONPATH );
     
@@ -85,7 +81,6 @@ void CPhotoProcessor::run()
     CPhoto photoResized;     //Photo resize  sauver sur le disque
     t_watermark watermarkParams;
     QString filename;
-//    string filenameLocal8; //filename converti en char 8bits du jeu de caractre local
     QString fileToWrite;
     QSize size;
     int saveQuality;
@@ -186,8 +181,9 @@ void CPhotoProcessor::run()
         //Sauvegarde
         saveQuality = m_qualityQueue.dequeue();
         fileOutPath.cd( photosPath + QString::number(++i) );
-        filename = PHOTOPREFIXE + QString::number( m_photoProperties.id() + 1 );
-        fileToWrite =  fileOutPath.absoluteFilePath( filename ) + ".jpg";
+        filename = /*PHOTOPREFIXE + QString::number( m_photoProperties.id() + 1 ) + "_" +*/ m_photoProperties.encodedFilename();
+        //filename = m_photoProperties.fileName();
+        fileToWrite =  fileOutPath.absoluteFilePath( filename )/* + ".jpg"*/;
         if( photoResized.save( fileToWrite, saveQuality ) ){
             m_generatedParameters.enqueueSize( QSize( photoResized.size().width(), photoResized.size().height() ) );
         }
@@ -204,7 +200,7 @@ void CPhotoProcessor::run()
             
     //Gnration de la vignette
     size = m_sizesQueue.dequeue();
-    filename = thumbPrefix + QString::number( m_photoProperties.id() + 1 );
+    filename = /*thumbPrefix + QString::number( m_photoProperties.id() + 1 ) + "_" +*/ m_photoProperties.encodedFilename();
 
     photoResized = photoThumbMaster;
     photoResized.zoom( size );
@@ -213,7 +209,7 @@ void CPhotoProcessor::run()
     //Sauvegarde vignette
     fileOutPath = m_outPath;
     fileOutPath.cd( thumbsPath );
-    fileToWrite =  fileOutPath.absoluteFilePath( filename ) + ".jpg";
+    fileToWrite =  fileOutPath.absoluteFilePath( filename )/* + ".jpg"*/;
     saveQuality = m_qualityQueue.dequeue();
     if( !photoResized.save( fileToWrite, saveQuality ) )
     { //Echec de la sauvegarde !
