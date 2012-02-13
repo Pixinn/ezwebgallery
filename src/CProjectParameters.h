@@ -187,7 +187,7 @@ private:
 signals:
     void loaded(QString);
     void saved(QString);
-    void message(QString);
+    //void message(QString);
 
 
 // !! BIEN METTRE A JOUR operator= , == et != en cas d'ajout d'attribut !! //

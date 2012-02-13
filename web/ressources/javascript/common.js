@@ -69,7 +69,7 @@ var DIV_SCROLLCONTAINER = ".scrollContainer";/* Contient les panneaux glissant *
 var DIV_SLIDINGPANEL = ".slidingPanel";			/* Panneau glissant */
 var DIV_THUMBCONTAINER = ".thumbBox";				/* Thumbnails */
 var ID_INDEXPREFIX = "index";	/* Utilisé lors de la génération automatique pour l'id des panneaux coulissant */
-var THUMBFILEPREFIX = "tn_"; /*Préfixe pour le nom des fichiers de vignettes */
+//var THUMBFILEPREFIX = "tn_"; /*Préfixe pour le nom des fichiers de vignettes */
 //--- Commun
 
 
@@ -472,28 +472,6 @@ jQuery.fn.windowCenter = function(){
   });
 };
 
-/* trimFileName( filePrefix , fileURL )
- * ----------------------
- * Permet de récupérer le nom exact d'un fichier dont on connait l'URL et le préfixe.
- * En effet URL firefox : relatif ; URL ie7 : absolu...
- * In - filePrefix : préfixe du fichier
- * In - fileURL : URL du fichier
- * Returns - File name
- */
-function trimFileName( filePrefix , fileURL ){
-	var positionPrefixe = fileURL.indexOf( filePrefix , 0 );
-	var positionExtension = fileURL.indexOf( IMAGEFILEEXTENSION , 0 );
-	var fileName;
-	if( positionPrefixe != -1 && positionExtension != -1 ) {
-        fileName = fileURL.substr( positionPrefixe , positionExtension + IMAGEFILEEXTENSION.length - positionPrefixe );
-    }
-    else{
-        fileName = fileURL;
-    }
-	return fileName;
-}
-		
-	
 
 /* calculerTaillesMax( ... )
  * ------------------------

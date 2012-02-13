@@ -23,6 +23,7 @@
 #include "ui_mainwin.h"     //Gnr par qmake. Ncessaire pour accs  la classe gnre par le formulaire .ui
 
 #include "CPlatform.h"
+#include "CDebug.h"
 #include "CTaggedString.h"
 #include "CPhotoDatabase.h"
 
@@ -301,20 +302,16 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     }
     else {
         m_galleryConfig.inputDir.clear();
-        emit message( inputFolder + tr(" doesn't exists") );
+        //emit message( inputFolder + tr(" doesn't exists") );
+        CDebug::getInstance().message( inputFolder + tr(" doesn't exists") );
     }
-    /*if( QFileInfo(inputFolder).exists() ){ 
-        m_galleryConfig.inputDir = inputFolder;
-    }else{
-        m_galleryConfig.inputDir.clear();
-        emit message( inputFolder + tr(" doesn't exists") );
-    }*/
     QString outputFolder =  galleryConfElem.firstChildElement( "outputFolder" ).text();
     if( QFileInfo(outputFolder).exists() ){ 
         m_galleryConfig.outputDir = outputFolder;
     }else{
         m_galleryConfig.outputDir.clear();
-        emit message( outputFolder + tr(" doesn't exists") );
+        //emit message( outputFolder + tr(" doesn't exists") );
+        CDebug::getInstance().message( outputFolder + tr(" doesn't exists") );
     }
     m_galleryConfig.url = galleryConfElem.firstChildElement( "url" ).text();
     m_galleryConfig.skinPath = galleryConfElem.firstChildElement( "Skin" ).firstChildElement( "Path" ).text();
@@ -354,6 +351,7 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
 
     //deprecated fileformat
     if( m_version < s_versionFilePath ) {
+        CDebug::getInstance().message( tr("Importing deprecated project: ") + QString::number( m_version ) );
         CPhotoDatabase::getInstance().importDeprecated( photoListElem, inputFolder );
     }
     //current file format

@@ -290,7 +290,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     //Paramètres (=Session)
     connect( &m_projectParameters, SIGNAL(loaded(QString)), this, SLOT(sessionLoaded(QString)));
     connect( &m_projectParameters, SIGNAL(saved(QString)), this, SLOT(sessionSaved(QString)));
-    connect( &m_projectParameters, SIGNAL(message(QString)), this, SLOT(onLogMsg(QString)));
+    //connect( &m_projectParameters, SIGNAL(message(QString)), this, SLOT(onLogMsg(QString)));
     //Afficher la fenêtre de tags
     connect( this->m_ui->action_DisplayTags, SIGNAL(triggered()), this, SLOT(showTagsWindow()));
     //Afficher la fenêtre de debug    

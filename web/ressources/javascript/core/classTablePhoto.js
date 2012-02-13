@@ -73,7 +73,7 @@ function TablePhotos( LMax )
 				}
 				var handle = m_tablePhotos.getItem( numPhotoASupprimer );
 				
-				codeRetour1 = m_tableIsLoaded.removeItem( trimFileName( PHOTOFILEPREFIXE , handle.src ) );
+				codeRetour1 = m_tableIsLoaded.removeItem( handle.src );
 				codeRetour2 = m_tablePhotos.removeItem( numPhotoASupprimer );
 				codeRetour3 = m_tableTargetedSizes.removeItem( numPhotoASupprimer );
 				
@@ -140,7 +140,7 @@ function TablePhotos( LMax )
 		}
 		m_tableAnciennete[m_lengthMax - 1] = -1; //dernier item
 		
-		m_tableIsLoaded.removeItem( trimFileName( PHOTOFILEPREFIXE , handle.src ) );
+		m_tableIsLoaded.removeItem( handle.src );
 		m_tablePhotos.removeItem( numero );
 		m_tableTargetedSizes.removeItem( numero );
 	}
@@ -166,7 +166,7 @@ function TablePhotos( LMax )
 		var handle = m_tablePhotos.getItem( numero );
 		if ( handle !== undefined )
 		{
-			if( m_tableIsLoaded.getItem( trimFileName( PHOTOFILEPREFIXE , handle.src ) ) == true ){
+			if( m_tableIsLoaded.getItem( handle.src ) == true ){
 				return true;	
 			}
 			
@@ -181,7 +181,7 @@ function TablePhotos( LMax )
 	 * In : numero de la photo
 	 */
 	this.loadingFinished = function( handle ){
-			m_tableIsLoaded.addItem( trimFileName( PHOTOFILEPREFIXE , handle.src ) , true);
+			m_tableIsLoaded.addItem( handle.src, true);
 	}
 		
 	

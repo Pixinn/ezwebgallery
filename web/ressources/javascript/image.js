@@ -251,7 +251,7 @@ function loadingManagement( evt )
 		{ 
 			photoURL = photoProperties.url;
 			$handlePhoto = g_prefetchManager.addPhoto( g_idPhotoToLoadNext , photoProperties.size, g_displayManager.photoToDisplay );
-			//dbgTrace( g_idPhotoToLoadNext + " (" + trimFileName( PHOTOFILEPREFIXE , photoURL) + ") "  + "not in cache" );							
+			//dbgTrace( g_idPhotoToLoadNext + " (" + photoURL + ") "  + "not in cache" );							
 			
 			if ($handlePhoto != "undefined")
 			{
@@ -261,7 +261,7 @@ function loadingManagement( evt )
 						{	
 							// La photo est bien présente dans la table
 							var fDisplayed;			
-							//dbgTrace( trimFileName( PHOTOFILEPREFIXE , $(this).attr('src') ) + " loaded");
+							//dbgTrace( $(this).attr('src') + " loaded");
 					    	/* Photo Chargée */
 					    	g_prefetchManager.loadingFinished( this );
 							/* Gestion de l'affichage */
