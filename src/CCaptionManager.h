@@ -42,15 +42,52 @@ class CCaptionManager : public QObject
 {
     Q_OBJECT
 
+private:
+    class CPhotoIndex {
     public:
-        CCaptionManager( );
+        CPhotoIndex( void ) :
+            m_photoIndex(0),
+            m_photoDb( CPhotoDatabase::getInstance() )
+        {    }
+        CPhotoIndex& operator=( const CPhotoIndex source ) {
+            m_photoName = source.m_photoName;
+            m_photoIndex = source.m_photoIndex;
+            return *this;
+        }
+        inline void operator++( int ) {
+            m_photoName = m_photoDb.filename( ++m_photoIndex );
+        }
+        inline void operator--( int ) {
+            m_photoName = m_photoDb.filename( --m_photoIndex );
+        }
+        inline void setName( const QString & name )   {
+            m_photoName = name;
+            m_photoIndex = m_photoDb.id( m_photoName );
+        }
+        inline void setIndex( int index )  {
+            m_photoIndex = index;
+            m_photoName = m_photoDb.filename( m_photoIndex );
+        }
+        inline QString name( void ) const {
+            return m_photoName;
+        }
+        inline int index( void ) const  {
+            return m_photoIndex;
+        }
+
+    private:
+        QString m_photoName;
+        int m_photoIndex;
+        const CPhotoDatabase& m_photoDb;
+    };
+
+    public:
+        CCaptionManager( void );
         CCaptionManager( const CCaptionManager & );
         CCaptionManager operator=(const CCaptionManager &);
         void reset( void ); //reinit the manager
-        QString displayedPhoto( );                          //Retourne le nom de la photo affiche
-       // QList<CCaption> captionList( );          //Retourne la liste de lgendes sous forme de QStringList
-       // QMap<QString,CCaption> captionMap( );           //Retourne la liste de lgendes sous forme de QMap<QString,QString>
-       // void setCaptionMap( QMap<QString,CCaption> &);   //Set la liste de lgendes
+
+        QString selectedPhoto( void );                          //Retourne le nom de la photo affiche
         void setExifTags( const QString &, const QMap<QString,QString> & ); //Indique les <tags Exifs / metadata>  utiliser pour la légende de la photo spécifiée
         void setFileInfo( const QString &, const QFileInfo & );             //Indique les infos fichier  utiliser par la lgende de la photo spcifie
         bool captionsEdited( void );    //Les légendes ont-elle été éditées depuis le dernier appel de legencaptionedReset() ?
@@ -58,7 +95,6 @@ class CCaptionManager : public QObject
 
     private:
         void display( int nb );//Positionne la liste de photos et envoie le signal d'affichage du thumb correspondant
-        int  remapCaptionList( ); //Refabrique une map de légendes correspondant au modèle associé
 
     signals:
         void displayThumbnailSignal( QModelIndex );
@@ -67,18 +103,20 @@ class CCaptionManager : public QObject
         void displayHighlightIndex( QModelIndex );
 
     public slots:
-        void onListClicked( QModelIndex );
+        void onListPressed( QModelIndex ); //Button pressed on the list view
+        void onListUpdated( void );
         void onCaptionTextEdited( QString );
         void onCaptionHeaderEdited(QString);
         void onCaptionEndingEdited(QString);
         void onPrevious( void ); //Previous caption requested
-        void onNext( void ); //Previous caption requested 
+        void onNext( void ); //Previous caption requested        
 
     private:
         CPhotoDatabase& m_photoDb;
-        int m_photoIndex;                       //Pour déplacement dans la liste des photos, en connection avec la listView
-        //QListView* m_p_listView;               //La listView qui permet d'obtenir les lgendes
-        //QMap<QString,CCaption> m_captionMap;     //La liste des légendes proprement dites <filename,lengend> (pas le path complet)
+        CPhotoIndex m_photoSelected;
+
+        //int m_photoIndex;                        //Pour déplacement dans la liste des photos, en connection avec la listView
+        //QString m_photoDisplayed;                //Name of the currently displayed photo
         bool m_f_captionsEdited;                //Les lgendes ont-elle t dite depuis le dernier appel de legencaptionedReset() ?
 };
 

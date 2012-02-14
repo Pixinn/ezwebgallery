@@ -23,6 +23,7 @@
 
 #include <QDomDocument>
 #include <QString>
+#include <QRegExp>
 #include <QMap>
 #include <QFileInfo>
 #include <QDateTime>
@@ -111,6 +112,8 @@ public:
     bool isEquivalent( const CPhotoProperties & );
 
     inline QString fileName( void ) const { return m_fileInfo.fileName(); }
+
+    QString encodedFilename( void ) const; //Filename without forbidden characters
     
 private:
     static const QString CAPTION;

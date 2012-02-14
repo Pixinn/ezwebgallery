@@ -187,9 +187,11 @@ bool CGalleryGenerator::photosAlreadyExist(  )
     int nbRes = m_parameters.m_photosConfig.nbIntermediateResolutions;
 
     photosDir.cd( PHOTOSPATH );
+    QList<CPhotoProperties>::iterator itProperties = m_photoPropertiesList.begin();
     for( int i = 1; i <= m_photoPropertiesList.size(); i++)
     {
-        QString photoName = PHOTOPREFIXE + QString::number(i) + ".jpg";
+        QString photoName = /*PHOTOPREFIXE + QString::number(i) + "_" +*/ itProperties->encodedFilename();
+        itProperties++;
         for(int res=1; res <= nbRes; res++)
         {
             QString resDir = RESOLUTIONPATH + QString::number(res) + "/";
@@ -210,9 +212,11 @@ bool CGalleryGenerator::thumbsAlreadyExist()
     QFile thumbFile;
 
     thumbsDir.cd( THUMBSPATH );
+    QList<CPhotoProperties>::iterator itProperties = m_photoPropertiesList.begin();
     for( int i = 1; i <=  m_photoPropertiesList.size(); i++)
     {
-        QString thumbName = QString(THUMBPREFIXE) + QString(PHOTOPREFIXE) + QString::number(i) + QString(".jpg");
+        QString thumbName = /*QString(THUMBPREFIXE) + QString(PHOTOPREFIXE) + QString::number(i) + "_" +*/ itProperties->encodedFilename()/* + QString(".jpg")*/;
+        itProperties++;
         thumbFile.setFileName( thumbsDir.absoluteFilePath( thumbName ) );
             if( !thumbFile.exists() ){
                 return false;
@@ -503,6 +507,7 @@ bool CGalleryGenerator::generateJsFiles( )
     int numRes;
 
     jsGalleryConfigurationStream << "listePhotos =  { " << endl;
+    QList<CPhotoProperties>::Iterator itProperties = m_photoPropertiesList.begin();
 
     while(i.hasNext())
     {
@@ -510,7 +515,9 @@ bool CGalleryGenerator::generateJsFiles( )
        numPhoto = i.key( );
        nbRes = localSizeQueue.size();
 
-       jsGalleryConfigurationStream << QString::number(numPhoto) <<  ":{fileName:\"" << PHOTOPREFIXE << QString::number(numPhoto) << ".jpg\",\tres:{\t";
+       jsGalleryConfigurationStream << QString::number(numPhoto) <<  ":{fileName:\"" << /*PHOTOPREFIXE << QString::number(numPhoto) <<*/ itProperties->encodedFilename() << "\" ,\tres:{\t";
+       itProperties++;
+
        numRes = 1;
        while( !localSizeQueue.isEmpty() )
        {

@@ -32,6 +32,7 @@
 #include <cstdio>
 #include <iostream>
 
+#include "CDebug.h"
 #include "CPhotoDatabase.h"
 #include "CPhotoFeederDirectory.h"
 #include "IUserInterface.h"
@@ -59,15 +60,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("EZWebGallery");
 
     //Instanciations
-    //CPhotoFeederDirectory& photoFeeder = CPhotoFeederDirectory::getInstance();
     CPhotoDatabase& photoDatabase = CPhotoDatabase::getInstance();
+    photoDatabase.init();
     CProjectParameters& projectParameters = *new CProjectParameters( );
     CGalleryGenerator& galleryGenerator = *new CGalleryGenerator();
 
     
-    //Connections
-    //QObject::connect( photoFeeder, SIGNAL( update( QStringList ) ), photoDatabase, SLOT( update(QStringList ) ) );
-
     //Deux possibilités : ouverture de la fenêtre ou éxecution à partir d'un terminal
     // ----------------- MODE FENETRE
     if( argc == 1 )
@@ -80,13 +78,12 @@ int main(int argc, char *argv[])
         QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, QString ) ), appWindow, SLOT( onProgressBar( int, QString, QString ) ) );
         QObject::connect( &galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), appWindow, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
         QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appWindow, SLOT( onForceStoppedFinished( QStringList ) ) );
-        // UI <-> DB
-        //QObject::connect( photoDatabase, SIGNAL( missingPhotos( QStringList ) ), appWindow, SLOT( missingPhotos( QStringList ) ) );
+        // DB -> UI
         QObject::connect( &photoDatabase, SIGNAL( error( CMessage ) ), appWindow, SLOT( error( CMessage ) ) );
         QObject::connect( &photoDatabase, SIGNAL( warning( CMessage ) ), appWindow, SLOT( warning( CMessage ) ) );
         QObject::connect( &photoDatabase, SIGNAL( message( CMessage ) ), appWindow, SLOT( information( CMessage ) ) );
-
-        //appWindow->setGenerator( galleryGenerator );
+        // Debug -> UI
+        QObject::connect( &(CDebug::getInstance()), SIGNAL( displayMessage( QString ) ), appWindow, SLOT( onLogMsg( QString ) ) );
 
         //Affichage fenêtre et éxécution
         appWindow->show( );
@@ -110,13 +107,12 @@ int main(int argc, char *argv[])
         //Excution
         QObject::connect( appCLI, SIGNAL(done()), &appli, SLOT(quit()));
         QTimer::singleShot( 1000, appCLI, SLOT(run()) );
-        exitValue = appli.exec(); //La boucle d'xcution fait partir le timer qui lance terminalDisplay->run()
+        exitValue = appli.exec(); //La boucle d'excution fait partir le timer qui lance terminalDisplay->run()
 
     }
 
     galleryGenerator.quit();
     galleryGenerator.deleteLater();
-//    delete &photoFeeder;
     delete &projectParameters;
     
     return exitValue;

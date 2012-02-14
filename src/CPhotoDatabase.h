@@ -35,6 +35,7 @@
 
 
 
+
 /***************************************************************************
  * CPhotoDatabase
  * ----------------------
@@ -49,35 +50,56 @@
      Q_OBJECT   
     
  private:
-    //Private type of element to store in the DB
+            // ---- PRIVATE CLASSES ---- //
+
+     //Private type of element to store in the DB
     class CPhotoDatabaseElem : public CPhotoProperties
     {
         public:
             CPhotoDatabaseElem( void ) : 
-                CPhotoProperties( )
-            {     }
+                CPhotoProperties( )  {     }
+
             CPhotoDatabaseElem( const CPhotoDatabaseElem & other ) :
                 CPhotoProperties( other ),
-                m_thumbnail( other.m_thumbnail )
-            {     }
+                m_thumbnail( other.m_thumbnail )    {     }
+
             CPhotoDatabaseElem( const CPhotoProperties & other ) :
-                CPhotoProperties( other )
-            {     }     
-            ~CPhotoDatabaseElem( void ){  }
-            CPhotoDatabaseElem & operator=( const CPhotoDatabaseElem &  source)
-            {
+                CPhotoProperties( other )   {     }
+
+            ~CPhotoDatabaseElem( void ) {       }
+
+            CPhotoDatabaseElem & operator=( const CPhotoDatabaseElem &  source)     {
                 m_thumbnail = source.m_thumbnail;
                 return *this;
             }            
         public:
             QImage m_thumbnail;
     };//class end
+
+    //Model ordering the elements and linked to the UI (see Model/View pattern)
+    class CPhotoDatabaseModel : public QStringListModel
+    {
+    public:
+        CPhotoDatabaseModel( void ) : QStringListModel( ) {     }
+
+        Qt::ItemFlags flags ( const QModelIndex & index ) const {
+            if( index.isValid() ) {
+                return ( QStringListModel::flags(index) & ~Qt::ItemIsDropEnabled & ~Qt::ItemIsEditable );
+            }
+            else {
+                return ( Qt::ItemIsDropEnabled );
+            }
+        }
+
+    };
+
     
  private:
         //Private constructor
         CPhotoDatabase( void ) :
             QObject(),
-            m_thumbnailsSize( QSize(320,200) )
+            m_thumbnailsSize( QSize(320,200) ),
+            f_initialized( false )
         {    }
         ~CPhotoDatabase( )  {
             clear();
@@ -85,12 +107,19 @@
  
  public:
         static CPhotoDatabase& getInstance( void ) { return s_instance; }
+        void init( void )
+        {
+            if( !f_initialized ) {
+                f_initialized = true;
+                connect(  &m_model, SIGNAL(rowsRemoved (  QModelIndex , int,  int )), \
+                          this, SLOT(rowRemoved ( QModelIndex , int,  int ) ) );
+            }
+        }
     
         QStringList checkPhotosInDb( void ); //Returns a list of the photos present in the DB but not on the disk
         QStringList photosModified( void ) const; //List of the removed or modified files
         
         QStringList appendPhotoList( const QStringList & ); //Add new properties to the db. Return a list of invalid files.
-        //QStringList appendPhotoList( const CPhotoProperties & ); //Add new properties to the db. Return a list of invalid files.
 
         QStringList refresh( const QStringList & ); //Updates the database using this new list of files.
         bool refreshFileInfo( const QString & ); //Updates the file info of the element
@@ -100,6 +129,13 @@
         
         void swap( int id1, int id2 );
         void swap( const QString & name1, const QString & name2 );
+
+        void saveState( void ) {
+            m_savedState = m_model.stringList();
+        }
+        bool hasChanged( void ) {
+            return !( m_savedState == m_model.stringList() );
+        }
        
         void setThumbnailsSize( const QSize &size ) { m_thumbnailsSize = size; }
         bool loadThumbnail( int );  // ** For the times being thumbnails are loaded synchronously via an external request.
@@ -111,6 +147,7 @@
         CPhotoProperties* properties( int );
         CPhotoProperties* properties( const QString & );
         QString filename( int id ) const { return  m_model.data( m_model.index( id ), Qt::DisplayRole ).toString(); }
+        int id( const QString & filename) const;
         
         const QStringListModel& model( void ) const { return m_model; } //returns a reference to a QModel representation of the filenames
 
@@ -118,6 +155,7 @@
         void warning( CMessage );   //a warning occured
         void error( CMessage );   //an error occured
         void message( CMessage );   //send an informative message
+        void layoutChanged( ); //The layout of the db changed
 
     public slots:
         QStringList build( const QDomElement & ); //from Xml. Returns the list of invalid files
@@ -125,8 +163,7 @@
         QStringList importDeprecated( const QDomElement &, const QString & ); //from a deprecated Xml. Returns the list of invalid files
         QDomElement xml( QDomDocument& document ) const; //Constructs an Xml representation of the in the provided document
         //link with the model, which layout is directly updated by the ui
-        void modelLayoutChanged( void );
-
+        void rowRemoved(const QModelIndex & parent, int start, int end );
      
     private: //nb private memebers do not emit updatedProperties()
         void clear( void );
@@ -135,6 +172,8 @@
         void consolidate( void ); //Removes files present in the db but not on the disk
         
     private:
+         QSize m_thumbnailsSize;
+         bool f_initialized;
          static const QString XMLTAG_PHOTOSDB;
          static const QString XMLTAG_PHOTOS;
          static const QString XMLTAG_LASTMODIFICATIONTIME;
@@ -144,14 +183,15 @@
          static const QString XMLTAG_CAPTIONENDING;
          static const QString XMLTAG_DEPRECATED_FILENAME;
          const static QImage s_defaultThumbnail; //Thumbnail for a not yet loaded photo
-         QSize m_thumbnailsSize;
          //Static instance for singleton
          static CPhotoDatabase s_instance;
           //CORE DB:
          //The two containers that must be in sync form the DB.
          //Allowing access by filename and number.
          QMap<QString,CPhotoDatabaseElem*> m_db; //key : FILENAME
-         QStringListModel m_model; //model syncing the db and the ui
+         CPhotoDatabaseModel m_model; //model syncing the db and the ui
+         //Saved state to test if the db content or order has changed
+         QStringList m_savedState;
  };
  
 #endif

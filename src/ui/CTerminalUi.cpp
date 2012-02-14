@@ -84,9 +84,8 @@ void CTerminalUi::onGalleryGenerationFinished( QList<CPhotoProperties> propertie
     emit done();
 }
 
-void CTerminalUi::onProgressBar( int completion, QString color, QString msg, int timeout )
+void CTerminalUi::onProgressBar( int, QString, QString msg, int )
 {
-    timeout = completion; //To remove a warning about these useless parameters
     cout << msg << endl;
 }
 
@@ -143,51 +142,6 @@ void CTerminalUi::run( )
 
     //Launching generation
     m_galleryGenerator.generateGallery( m_projectParameters, m_skinParameters, propertiesList );
-
-    /* 
-            A REVOIR !!!!!
-
-   //Reconstruction de la liste des photos rellement prsentes dans le rpertoire d'entre
-	//REM: copier/coller adapt de mainwin::buildPhotoList() -> voir les commentaires de cette fonction pour explication
-	QString photoName;
-	QDir inputDir( m_projectParameters.m_galleryConfig.inputDir );
-	QStringList photoFileTypes (QStringList() << "*.jpeg" << "*.jpg" << "*.tiff" << "*.tif"); //Formats d'image supports en entre
-    QStringList photoList = CPlatform::getImagesInDir( inputDir, photoFileTypes ); //Rcupration de la liste des photos du rpertoire d'entre
-    QStringListIterator* p_photoListIterator = new QStringListIterator( photoList );
-    while( p_photoListIterator->hasNext() ) //On vrifie que les paramtres des photos sont toujours  jour
-    {    
-        photoName = p_photoListIterator->next();
-        QFileInfo* p_photoFileInfo = new QFileInfo( inputDir.absoluteFilePath( photoName ) );
-        //Si les paramtres de la galerie ne comportaient le fichier, on met  jour et on demande la regnration
-        if( !m_projectParameters.m_photoPropertiesMap.contains( photoName ) )
-        {
-            CPhotoPropertiesExtended newProperties;
-            newProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
-            m_projectParameters.m_photoPropertiesMap.insert( photoName, newProperties );
-            m_projectParameters.m_photosConfig.f_regeneration = true;
-            m_projectParameters.m_thumbsConfig.f_regeneration = true;
-        }
-        //Si les infos de date du fichier sont diffrentes => on update et on demande la regration galement
-        else{
-            CPhotoPropertiesExtended deprecatedProperties = m_projectParameters.m_photoPropertiesMap.value( photoName );
-            if(  deprecatedProperties.lastModificationTime().toString() != p_photoFileInfo->lastModified().toString() ) { //Les QDateTime non convertis ne semblent pas bien se comparer ???
-                deprecatedProperties.setLastModificationTime( p_photoFileInfo->lastModified() );
-                m_projectParameters.m_photosConfig.f_regeneration = true;
-                m_projectParameters.m_thumbsConfig.f_regeneration = true;
-            }
-        }
-        delete p_photoFileInfo;
-    }
-	//Suppression des entres qui ne correspondent pas  une photo trouve dans le rpertoire
-	foreach( photoName, m_projectParameters.m_photoPropertiesMap.keys() ){
-		if( !photoList.contains( photoName ) ){
-			m_projectParameters.m_photoPropertiesMap.remove( photoName );
-		}
-	}
-
-    //Lancement de la gnration
-    m_galleryGenerator.generateGallery(  m_projectParameters, m_skinParameters  ); A AJOUTER !!!!!!
-*/
 }
 
 /****************************************** Fonctions protges **************************************/
@@ -200,7 +154,6 @@ void CTerminalUi::keyPressEvent ( QKeyEvent * event )
         m_galleryGenerator.abordGeneration( );
     }
 }
-
 
 
 /****************************************** Fonctions publiques *********************************/

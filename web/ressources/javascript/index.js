@@ -38,8 +38,7 @@ function indexEvents( )
 		/* Mise a jour de la photo courante */
 		var thumbURL = new String( $(this).attr("src") );
 		var key_ThumbFileURL = thumbURL.substr(URL_THUMBS_PATH.length , thumbURL.length - URL_THUMBS_PATH.length);		
-		var key_ThumbFileName = trimFileName( THUMBFILEPREFIX , key_ThumbFileURL );
-		g_idCurrentPhoto = g_listeThumbnails[ key_ThumbFileName ];
+		g_idCurrentPhoto = g_listeThumbnails[ key_ThumbFileURL ];
 			
 		//----- Affichage zone photo -----//
 	  	g_displayManager.displayScreenPhoto(  );	

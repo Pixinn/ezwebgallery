@@ -16,6 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QDebug>
+
 #include "CPhotoDatabase.h"
 #include "CPhoto.h"
 
@@ -49,7 +51,7 @@ QStringList CPhotoDatabase::build( const QStringList& photoList )
     
     clear();
     QStringList invalidFiles = appendPhotoList( photoList );
-    //m_model.setStringList( m_orderedKeys );
+    saveState();
     return invalidFiles;
 }
 
@@ -78,6 +80,7 @@ QStringList CPhotoDatabase::build( const QDomElement & xmlElem )
             invalidFiles << properties.fileInfo().absoluteFilePath();
         }
     } 
+    saveState();
 //    emit updatedProperties( propertiesList() );
     //m_model.setStringList( m_orderedKeys );
     return invalidFiles;
@@ -119,6 +122,7 @@ QStringList CPhotoDatabase::importDeprecated( const QDomElement & xmlElem, const
             invalidFiles << properties.fileInfo().absoluteFilePath();
         }
     } 
+    saveState();
 //    emit updatedProperties( propertiesList() );
     //m_model.setStringList( m_orderedKeys );
     return invalidFiles;
@@ -136,21 +140,17 @@ QStringList CPhotoDatabase::importDeprecated( const QDomElement & xmlElem, const
 QDomElement CPhotoDatabase::xml( QDomDocument& document ) const
 {
     QDomElement database = document.createElement( XMLTAG_PHOTOSDB );
-  //  QDomElement root = document.documentElement();
-    
-  //  root.appendChild( database );
-    foreach( CPhotoProperties* properties, m_db )
+    QStringList orderedList = m_model.stringList();
+
+    foreach( QString photoName, orderedList )
     {
+        CPhotoProperties* properties = m_db.value( photoName );
         QDomElement photoElement = document.createElement( XMLTAG_PHOTOS );
         database.appendChild( photoElement );
         //filePath
         QDomElement filePath = document.createElement( XMLTAG_FILEPATH );
         photoElement.appendChild( filePath );
         filePath.appendChild( document.createTextNode( properties->fileInfo().absoluteFilePath() ) );
-        /* //date
-        QDomElement date = document.createElement( XMLTAG_LASTMODIFICATIONTIME );
-        photoElement.appendChild( date );
-        date.appendChild( document.createTextNode( properties->lastModificationTime().toString() ) );*/
         //caption
         QDomElement captionElem = document.createElement( XMLTAG_CAPTIONBODY );
         photoElement.appendChild( captionElem );
@@ -165,18 +165,13 @@ QDomElement CPhotoDatabase::xml( QDomDocument& document ) const
     return database;
 }
 
-
-/*******************************************************************
-* CPhotoDatabase( )
-* ---------
-* The layout of the model has been updated outside
-********************************************************************/
-void CPhotoDatabase::modelLayoutChanged( void )
+void CPhotoDatabase::rowRemoved( const QModelIndex&, int, int )
 {
     CPhotoDatabaseElem* elem;
     int id = 0;
     QStringList orderedKeys = m_model.stringList();
-    foreach( QString key, orderedKeys ) {
+    foreach( QString key, orderedKeys ) 
+    {
         elem = m_db.value( key );
         elem->setId( id );
         //keeping the caption in sync
@@ -185,6 +180,7 @@ void CPhotoDatabase::modelLayoutChanged( void )
         elem->setCaption( caption );
         id++;
     }
+    emit layoutChanged();
 }
 
 
@@ -716,4 +712,20 @@ CPhotoProperties* CPhotoDatabase::properties( int id )
 CPhotoProperties* CPhotoDatabase::properties( const QString & fileName )
 {
    return m_db.value( fileName );
+}
+
+
+/*******************************************************************
+* id( const QString & );
+* ---------
+* Returns the id of the specified photo. -1 if not present in the db
+* Returns : (int)
+********************************************************************/
+int CPhotoDatabase::id( const QString & fileName ) const
+{
+    int id = -1;
+    if( m_db.contains( fileName ) ) {
+        id = m_db.value( fileName )->id();
+    }
+    return id;
 }

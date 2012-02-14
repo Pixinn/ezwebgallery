@@ -73,6 +73,7 @@ HEADERS += ui/mainwin.h \
     global/GlobalDefinitions.h \
     global/CError.h \
     global/CMessage.h \
+	global/CDebug.h \
     widgets/CImagePicker.h \
     widgets/CColorPicker.h \
     CGalleryGenerator.h \
@@ -99,6 +100,7 @@ SOURCES += main.cpp \
     global/CError.cpp \
     global/CMessage.cpp \
     global/CPlatform.cpp \
+	global/CDebug.cpp \
     widgets/CImagePicker.cpp \
     widgets/CColorPicker.cpp \
     CGalleryGenerator.cpp \

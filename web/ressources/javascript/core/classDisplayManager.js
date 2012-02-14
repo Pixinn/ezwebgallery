@@ -187,12 +187,12 @@ this.enableControls = function( )
 		/* Si les conditions sont réunies, affichage */
 		if (	hPhotoToDisplay !== "undefined"
 				&&
-				trimFileName(PHOTOFILEPREFIXE, photo.attr('src')) === trimFileName(PHOTOFILEPREFIXE, hPhotoToDisplay.attr( 'src' ) )
+				photo.attr('src') === hPhotoToDisplay.attr( 'src' )
 				&&
 				m_divScreenPhoto.is(':visible')  /* N'affiche pas la photo si la zone est cachée. IE si on navigue dans l'index */
 			)
 		{
-			dbgTrace("displaymanager.js / Displaying ->" + trimFileName( PHOTOFILEPREFIXE , photo.attr('src') ));
+			//dbgTrace("displaymanager.js / Displaying ->" + photo.attr('src') );
 			this.disableControls( );
 			
 			//--------- Préparation -----------//
