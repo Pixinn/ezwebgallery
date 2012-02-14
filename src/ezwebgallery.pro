@@ -73,7 +73,7 @@ HEADERS += ui/mainwin.h \
     global/GlobalDefinitions.h \
     global/CError.h \
     global/CMessage.h \
-	global/CDebug.h \
+    global/CDebug.h \
     widgets/CImagePicker.h \
     widgets/CColorPicker.h \
     CGalleryGenerator.h \
