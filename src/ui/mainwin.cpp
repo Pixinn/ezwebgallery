@@ -481,6 +481,7 @@ void MainWin::newSession( )
         m_photoDatabase.saveState();
         //UI
         m_ui->action_SaveSession->setDisabled( true );           //Il *faut* désactiver l'option save pour ne pas écraser le fichier le plus récent
+        m_ui->label_thumbPhoto->clear();                  //Clearing the photo preview
 }
 
 
@@ -989,7 +990,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 
     bool f_readSuccess = true;
     bool f_conversionSuccess = true;
-    CPhoto photo;
+/*    CPhoto photo;
     string filenameLocal8;
     
     if( !photo.load( photoFileInfo.absoluteFilePath( ) ) ){
@@ -1025,6 +1026,16 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
         m_captionManager.setExifTags( photoFilename, photo.exifTags() );
         m_captionManager.setFileInfo( photoFilename, photoFileInfo );
 
+    }
+*/
+    const QImage& photoToDisplay = m_photoDatabase.thumbnail( indexPhotoName.row() );
+    if( !photoToDisplay.isNull() ){
+        QPixmap photoPxMap =  QPixmap::fromImage ( photoToDisplay );
+        //Affichage
+        m_ui->label_thumbPhoto->setPixmap( photoPxMap );
+    }
+    else{
+        f_conversionSuccess = false;
     }
 
     if( !f_conversionSuccess || !f_readSuccess ){

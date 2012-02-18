@@ -117,8 +117,9 @@ QString CCaptionManager::selectedPhoto( )
 void CCaptionManager::setExifTags( const QString &photoName, const QMap<QString,QString> &exifTags )
 {    
     CPhotoProperties* properties =  m_photoDb.properties( photoName );
-    properties->setExifTags( exifTags );
-
+    if( properties != NULL ) {
+        properties->setExifTags( exifTags );
+    }
 }
 
 //-----------------------
@@ -129,9 +130,11 @@ void CCaptionManager::setExifTags( const QString &photoName, const QMap<QString,
 void CCaptionManager::setFileInfo( const QString & photoName, const QFileInfo & fileInfo )
 {
     CPhotoProperties* properties =  m_photoDb.properties( photoName );
-    CCaption caption = properties->caption();
-    caption.setFileInfo( fileInfo );
-    properties->setCaption( caption );
+    if( properties != NULL )    {
+        CCaption caption = properties->caption();
+        caption.setFileInfo( fileInfo );
+        properties->setCaption( caption );
+    }
 }
 
 
@@ -150,6 +153,7 @@ void CCaptionManager::display( int nb )
         QModelIndex indexPhotoSelected = model.index( nb );
 
         //Affichage vignette
+        m_photoDb.loadThumbnail( nb );
         emit displayThumbnailSignal( indexPhotoSelected );  //Affichage vignette à réaliser en premier
                                                         //Les données exifs lues à ce moment permettront la preview correcte de la légende
         //Affichage légende
@@ -265,12 +269,15 @@ void CCaptionManager::onListUpdated( )
 void CCaptionManager::onCaptionTextEdited( QString text )
 {
     CPhotoProperties* properties = m_photoDb.properties( m_photoSelected.index() );
-    CCaption caption = properties->caption();
-    caption.setBody( text );
-    properties->setCaption( caption );
-    m_f_captionsEdited = true;
+    if( properties != NULL )
+    {
+        CCaption caption = properties->caption();
+        caption.setBody( text );
+        properties->setCaption( caption );
+        m_f_captionsEdited = true;
 
-    emit displayPreviewSignal( caption.render( CTaggedString::PREVIEW ) );
+        emit displayPreviewSignal( caption.render( CTaggedString::PREVIEW ) );
+    }
 }
 
 
@@ -286,8 +293,10 @@ void CCaptionManager::onCaptionHeaderEdited( QString text )
    
     //Affichage de la preview
     CPhotoProperties* properties = m_photoDb.properties( m_photoSelected.index() );
-    CCaption caption = properties->caption();
-    emit displayPreviewSignal( caption.render( CTaggedString::PREVIEW ) );
+    if( properties != NULL ) {
+        CCaption caption = properties->caption();
+        emit displayPreviewSignal( caption.render( CTaggedString::PREVIEW ) );
+    }
 }
 
 void CCaptionManager::onCaptionEndingEdited( QString text )
@@ -299,9 +308,11 @@ void CCaptionManager::onCaptionEndingEdited( QString text )
         properties->setCaption( caption );
     }
     m_f_captionsEdited = true;
-
+    
     //Affichage de la preview    
     CPhotoProperties* properties = m_photoDb.properties( m_photoSelected.index() );
-    CCaption caption = properties->caption();
-    emit displayPreviewSignal( caption.render( CTaggedString::PREVIEW ) );
+    if( properties != NULL ) {
+        CCaption caption = properties->caption();
+        emit displayPreviewSignal( caption.render( CTaggedString::PREVIEW ) );
+    }
 }

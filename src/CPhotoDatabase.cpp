@@ -1,4 +1,4 @@
-﻿/* 
+﻿/*
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -17,13 +17,47 @@
 */
 
 #include <QDebug>
+#include <QColor>
+#include <QFont>
+#include <QPainter>
+#include <QRect>
+#include <QPen>
+#include <QColor>
 
+#include "CPlatform.h"
 #include "CPhotoDatabase.h"
 #include "CPhoto.h"
 
 
+
+/***************************************** CDefaultThumbnail CLASS ************************************/
+
+CPhotoDatabase::CPhotoDatabaseElem::CDefaultThumbnail CPhotoDatabase::CPhotoDatabaseElem::CDefaultThumbnail::s_instance( QSize(THUMBNAIL_WIDTH,THUMBNAIL_HEIGHT) );
+const int CPhotoDatabase::CPhotoDatabaseElem::CDefaultThumbnail::s_fontSize = 20;
+
+//Constructor
+CPhotoDatabase::CPhotoDatabaseElem::CDefaultThumbnail::CDefaultThumbnail( QSize size ) :
+    QImage( size, QImage::Format_ARGB32 )
+{
+
+}
+
+void CPhotoDatabase::CPhotoDatabaseElem::CDefaultThumbnail::init( void )
+{
+    fill( Qt::transparent );
+
+    QFont font = CPlatform::defaultFont();
+    font.setPointSize( s_fontSize );
+
+    QPainter painter( this );
+    painter.setFont( font );
+    painter.setPen( QPen( QColor( Qt::darkBlue ) ) );
+
+    QRect rect( 0, 0, this->width(), this->height() );
+    painter.drawText( rect, Qt::AlignCenter | Qt::AlignVCenter, tr("Loading preview...") );
+}
+
 /***************************************** STATIC VARS ************************************/
-const QImage CPhotoDatabase::s_defaultThumbnail;    //Needs to be initialized
 
 const QString CPhotoDatabase::XMLTAG_PHOTOSDB("PhotoList");
 const QString CPhotoDatabase::XMLTAG_PHOTOS("Photo");
@@ -605,29 +639,39 @@ void CPhotoDatabase::swap( int id1, int id2 )
 bool CPhotoDatabase::loadThumbnail( const QString & filename )
 {
     CPhoto photo;    
-    CPhotoDatabaseElem* elem = m_db.value( filename );
-
-    QString absoluteFilePath = elem->fileInfo().absoluteFilePath();
-    bool f_success = photo.load( elem->fileInfo().absoluteFilePath() );
+    bool f_success = true;
+    CPhotoDatabaseElem* elem = m_db.value( filename, NULL );
     
-    if( f_success )
-    {
-        photo.zoom( m_thumbnailsSize, Qt::FastTransformation ); //resize
-        photo.orientationExif(); //correct orientation
-        //Writing  into the db
-        elem->setExifTags( photo.exifTags() );
-        elem->setFileInfo( absoluteFilePath );
-        elem->m_thumbnail = photo.qimage();
+    if( elem == NULL ) {
+        return false;
     }
-    else
+
+    //Load only if the thumbnail is not already loaded
+    if( elem->m_thumbnail == CPhotoDatabaseElem::CDefaultThumbnail::getInstance() )
     {
-        //Loging messages if an error occured
-        if( !photo.errors().isEmpty() ){
-            foreach( QString err, photo.errors() ){
-                CMessage msg( QString("[Thumbnail]." ) + err );
-                emit error( msg );
+        QString absoluteFilePath = elem->fileInfo().absoluteFilePath();
+        f_success = photo.load( elem->fileInfo().absoluteFilePath() );
+    
+        if( f_success )
+        {
+            photo.zoom( m_thumbnailsSize, Qt::FastTransformation ); //resize
+            photo.orientationExif(); //correct orientation
+            //Writing  into the db
+            elem->setExifTags( photo.exifTags() );
+            elem->setFileInfo( absoluteFilePath );
+            elem->m_thumbnail = photo.qimage();
+        }
+        else
+        {
+            //Loging messages if an error occured
+            if( !photo.errors().isEmpty() )
+            {
+                foreach( QString err, photo.errors() ){
+                    CMessage msg( QString("[Thumbnail]." ) + err );
+                    emit error( msg );
+                }
+                f_success = false;
             }
-            f_success = false;
         }
     }
     
@@ -659,14 +703,14 @@ bool CPhotoDatabase::loadThumbnail( int id )
 * In : (int) element id
 * Returns : thumbnail
 ********************************************************************/
-const QImage& CPhotoDatabase::thumbnail( const QString & filename  ) const
+QImage& CPhotoDatabase::thumbnail( const QString & filename  )
 {
      if( m_db.contains( filename ) ) {
         CPhotoDatabaseElem* elem = m_db.value( filename );
         return elem->m_thumbnail;
      }
      else {
-        return s_defaultThumbnail;
+        return CPhotoDatabaseElem::CDefaultThumbnail::getInstance();
      }
 }
  
@@ -685,8 +729,8 @@ const QImage& CPhotoDatabase::thumbnail( int id  ) const
        CPhotoDatabaseElem* elem = m_db.value( filename );
        return elem->m_thumbnail;
     }
-    else {
-       return s_defaultThumbnail;
+    else { 
+       return CPhotoDatabaseElem::CDefaultThumbnail::getInstance();
     }
 }
 
@@ -699,7 +743,7 @@ const QImage& CPhotoDatabase::thumbnail( int id  ) const
 ********************************************************************/
 CPhotoProperties* CPhotoDatabase::properties( int id )
 {
-    return m_db.value( m_model.data( m_model.index( id ), Qt::DisplayRole ).toString() );
+    return m_db.value( m_model.data( m_model.index( id ), Qt::DisplayRole ).toString(), NULL );
 }
 
 
@@ -711,7 +755,7 @@ CPhotoProperties* CPhotoDatabase::properties( int id )
 ********************************************************************/
 CPhotoProperties* CPhotoDatabase::properties( const QString & fileName )
 {
-   return m_db.value( fileName );
+   return m_db.value( fileName, NULL );
 }
 
 

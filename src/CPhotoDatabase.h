@@ -33,7 +33,9 @@
 #include "CCaption.h"
 #include "CMessage.h"
 
-
+/***************************** DEFINES *****************************/
+#define THUMBNAIL_HEIGHT    360
+#define THUMBNAIL_WIDTH     420
 
 
 /***************************************************************************
@@ -55,26 +57,43 @@
      //Private type of element to store in the DB
     class CPhotoDatabaseElem : public CPhotoProperties
     {
+    public:
+
+
+        class CDefaultThumbnail : public QImage
+        {
         public:
-            CPhotoDatabaseElem( void ) : 
-                CPhotoProperties( )  {     }
+            CDefaultThumbnail( QSize size );
+            void init( void );
+            static CDefaultThumbnail& getInstance( void ){ return s_instance; }
 
-            CPhotoDatabaseElem( const CPhotoDatabaseElem & other ) :
-                CPhotoProperties( other ),
-                m_thumbnail( other.m_thumbnail )    {     }
+        private:
+            static CDefaultThumbnail s_instance;
+            const static int s_fontSize; //font size for text replacing not loaded thumb
+        };//End class
 
-            CPhotoDatabaseElem( const CPhotoProperties & other ) :
-                CPhotoProperties( other )   {     }
 
-            ~CPhotoDatabaseElem( void ) {       }
+        CPhotoDatabaseElem( void ) :
+            CPhotoProperties( ),
+            m_thumbnail( CDefaultThumbnail::getInstance() )
+        {   }
 
-            CPhotoDatabaseElem & operator=( const CPhotoDatabaseElem &  source)     {
-                m_thumbnail = source.m_thumbnail;
-                return *this;
-            }            
-        public:
+        CPhotoDatabaseElem( const CPhotoProperties & other ) :
+            CPhotoProperties( other ),
+            m_thumbnail( CDefaultThumbnail::getInstance() )
+        {   }
+
+        ~CPhotoDatabaseElem( void ) {       }
+
+        CPhotoDatabaseElem & operator=( const CPhotoDatabaseElem &  source)     {
+            m_thumbnail = source.m_thumbnail;
+            return *this;
+         }
+
+    public:
             QImage m_thumbnail;
-    };//class end
+    };//class CPhotoDatabaseElem end
+
 
     //Model ordering the elements and linked to the UI (see Model/View pattern)
     class CPhotoDatabaseModel : public QStringListModel
@@ -98,7 +117,7 @@
         //Private constructor
         CPhotoDatabase( void ) :
             QObject(),
-            m_thumbnailsSize( QSize(320,200) ),
+            m_thumbnailsSize( QSize(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT) ),
             f_initialized( false )
         {    }
         ~CPhotoDatabase( )  {
@@ -109,10 +128,12 @@
         static CPhotoDatabase& getInstance( void ) { return s_instance; }
         void init( void )
         {
-            if( !f_initialized ) {
+            if( !f_initialized )
+            {
                 f_initialized = true;
                 connect(  &m_model, SIGNAL(rowsRemoved (  QModelIndex , int,  int )), \
                           this, SLOT(rowRemoved ( QModelIndex , int,  int ) ) );
+                CPhotoDatabaseElem::CDefaultThumbnail::getInstance().init();
             }
         }
     
@@ -141,7 +162,7 @@
         bool loadThumbnail( int );  // ** For the times being thumbnails are loaded synchronously via an external request.
         bool loadThumbnail( const QString& ); // ** In the future: a background process could load them asynconously
         const QImage& thumbnail( int ) const; //Returns a thumbnail
-        const QImage& thumbnail( const QString & ) const; //Returns a thumbnail
+        QImage& thumbnail( const QString & ); //Returns a thumbnail
 
         int size( void ) const { return m_db.size(); }
         CPhotoProperties* properties( int );
@@ -167,8 +188,8 @@
      
     private: //nb private memebers do not emit updatedProperties()
         void clear( void );
-        bool add( const QString& photoPath ); //adds a photo photoproperties at the end of the ordered list
-        bool add( const CPhotoProperties& ); //adds a photo photoproperties at the end of the ordered list
+        bool add( const QString& photoPath ); //adds a an element at the end of the ordered list
+        bool add( const CPhotoProperties& ); //adds an element at the end of the ordered list
         void consolidate( void ); //Removes files present in the db but not on the disk
         
     private:
@@ -182,7 +203,6 @@
          static const QString XMLTAG_CAPTIONHEADER;
          static const QString XMLTAG_CAPTIONENDING;
          static const QString XMLTAG_DEPRECATED_FILENAME;
-         const static QImage s_defaultThumbnail; //Thumbnail for a not yet loaded photo
          //Static instance for singleton
          static CPhotoDatabase s_instance;
           //CORE DB:

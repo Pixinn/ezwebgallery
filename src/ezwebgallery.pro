@@ -100,7 +100,7 @@ SOURCES += main.cpp \
     global/CError.cpp \
     global/CMessage.cpp \
     global/CPlatform.cpp \
-	global/CDebug.cpp \
+    global/CDebug.cpp \
     widgets/CImagePicker.cpp \
     widgets/CColorPicker.cpp \
     CGalleryGenerator.cpp \

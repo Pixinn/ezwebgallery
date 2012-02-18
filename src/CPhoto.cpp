@@ -314,13 +314,13 @@ void CWatermark::setTaggedString( CTaggedString inText, QFont inFont, QColor inC
     inFont.setPointSizeF( startingPointSize );
     QFontMetrics fontMetrics(inFont);
 
-    //Mise  l'chelle de la police
+    //Mise  l'échelle de la police
     scaleFactor = (qreal)CWatermark::TEXTWIDTH / (qreal)fontMetrics.width( inText );
     newFont.setPointSizeF( (startingPointSize * scaleFactor) );
     fontMetrics = QFontMetrics( newFont );
     textBoundingRect = fontMetrics.boundingRect( inText.render() );
 
-    //Cration de l'image avec le texte  la bonne taille
+    //Création de l'image avec le texte  la bonne taille
     image = QImage( textBoundingRect.size(), QImage::Format_ARGB32 );
     image.fill( Qt::transparent );
     QPainter painter( &image );
