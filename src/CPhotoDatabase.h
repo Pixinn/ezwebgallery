@@ -122,20 +122,12 @@
         {    }
         ~CPhotoDatabase( )  {
             clear();
+            delete s_defaultElem;
         }
  
  public:
         static CPhotoDatabase& getInstance( void ) { return s_instance; }
-        void init( void )
-        {
-            if( !f_initialized )
-            {
-                f_initialized = true;
-                connect(  &m_model, SIGNAL(rowsRemoved (  QModelIndex , int,  int )), \
-                          this, SLOT(rowRemoved ( QModelIndex , int,  int ) ) );
-                CPhotoDatabaseElem::CDefaultThumbnail::getInstance().init();
-            }
-        }
+        void init( void );
     
         QStringList checkPhotosInDb( void ); //Returns a list of the photos present in the DB but not on the disk
         QStringList photosModified( void ) const; //List of the removed or modified files
@@ -203,8 +195,10 @@
          static const QString XMLTAG_CAPTIONHEADER;
          static const QString XMLTAG_CAPTIONENDING;
          static const QString XMLTAG_DEPRECATED_FILENAME;
-         //Static instance for singleton
-         static CPhotoDatabase s_instance;
+         
+         static CPhotoDatabase s_instance;  //Static instance for singleton
+         static CPhotoDatabaseElem* s_defaultElem; //Default element, returned when the queried elem was not found
+
           //CORE DB:
          //The two containers that must be in sync form the DB.
          //Allowing access by filename and number.

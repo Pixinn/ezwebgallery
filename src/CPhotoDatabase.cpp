@@ -34,6 +34,7 @@
 
 CPhotoDatabase::CPhotoDatabaseElem::CDefaultThumbnail CPhotoDatabase::CPhotoDatabaseElem::CDefaultThumbnail::s_instance( QSize(THUMBNAIL_WIDTH,THUMBNAIL_HEIGHT) );
 const int CPhotoDatabase::CPhotoDatabaseElem::CDefaultThumbnail::s_fontSize = 20;
+CPhotoDatabase::CPhotoDatabaseElem* CPhotoDatabase::s_defaultElem = NULL;
 
 //Constructor
 CPhotoDatabase::CPhotoDatabaseElem::CDefaultThumbnail::CDefaultThumbnail( QSize size ) :
@@ -72,6 +73,29 @@ const QString CPhotoDatabase::XMLTAG_DEPRECATED_FILENAME("PhotoName");
 CPhotoDatabase CPhotoDatabase::s_instance;
 
 /***************************************** FUNCTIONS ************************************/
+
+
+
+/*******************************************************************
+* init( )
+* ---------
+* Inits the database.
+* Calling this function before using the singleton is MANDATORY !
+* Executes code that cannot be executed during *static* instanciation
+********************************************************************/
+void CPhotoDatabase::init( )
+{
+    if( !f_initialized )
+    {
+        f_initialized = true;
+        connect(  &m_model, SIGNAL(rowsRemoved (  QModelIndex , int,  int )), \
+                    this, SLOT(rowRemoved ( QModelIndex , int,  int ) ) );
+        CPhotoDatabaseElem::CDefaultThumbnail::getInstance().init();
+        s_defaultElem = new CPhotoDatabaseElem();
+    }
+}
+
+
 
 
 /*******************************************************************
@@ -743,7 +767,7 @@ const QImage& CPhotoDatabase::thumbnail( int id  ) const
 ********************************************************************/
 CPhotoProperties* CPhotoDatabase::properties( int id )
 {
-    return m_db.value( m_model.data( m_model.index( id ), Qt::DisplayRole ).toString(), NULL );
+    return m_db.value( m_model.data( m_model.index( id ), Qt::DisplayRole ).toString(), s_defaultElem );
 }
 
 
@@ -755,7 +779,7 @@ CPhotoProperties* CPhotoDatabase::properties( int id )
 ********************************************************************/
 CPhotoProperties* CPhotoDatabase::properties( const QString & fileName )
 {
-   return m_db.value( fileName, NULL );
+   return m_db.value( fileName, s_defaultElem );
 }
 
 
