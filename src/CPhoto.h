@@ -101,6 +101,7 @@ class CWatermark :  public CMagick
  
 class CPhoto : public CMagick
 {
+
     public:
         CPhoto( );
         bool load( const QString & fileName ); //Chargement d'une photo

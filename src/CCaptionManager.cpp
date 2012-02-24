@@ -35,8 +35,9 @@ CCaptionManager::CCaptionManager( ) :
     m_f_captionsEdited = false;
 
     connect( &m_photoDb, SIGNAL(layoutChanged()), this, SLOT(onListUpdated()) );
+    connect( &m_photoDb, SIGNAL(thumbnailLoaded( int )), this, SLOT(onThumbLoaded( int )) );
 }
-
+/*
 //-----------------------
 // CCaptionManager(const CCaptionManager & toCopy)
 // ----------------
@@ -69,7 +70,7 @@ CCaptionManager CCaptionManager::operator=(const CCaptionManager & toCopy)
     this->m_f_captionsEdited = toCopy.m_f_captionsEdited;
 
     return *this;
-}
+}*/
 
 //-----------------------
 // reset( )
@@ -149,7 +150,7 @@ void CCaptionManager::display( int nb )
         QModelIndex indexPhotoSelected = model.index( nb );
 
         //Affichage vignette
-        m_photoDb.loadThumbnail( nb );
+        m_photoDb.loadThumbnail( nb );        
         emit displayThumbnailSignal( indexPhotoSelected );  //Affichage vignette à réaliser en premier
                                                         //Les données exifs lues à ce moment permettront la preview correcte de la légende
         //Affichage légende
@@ -206,8 +207,6 @@ void CCaptionManager::onPrevious(  )
 // next( QModelIndex& )
 // ----------------
 // Next photo requested by the ui
-// Out: (QModelIndex&) QModelIndex of the next photo
-// Returns: true if operation succedeed, false otherwise 
 //----------------------
 void CCaptionManager::onNext(  )
 {
@@ -221,6 +220,19 @@ void CCaptionManager::onNext(  )
     //m_photoDisplayed = m_photoDb.filename( m_photoIndex );
 }
 
+
+//-----------------------
+// onThumbLoaded( int id )
+// ----------------
+// A thumbnail has been loaded
+// Ask for display if corresponding to the selection
+//----------------------
+void CCaptionManager::onThumbLoaded( int id )
+{
+    if( id == m_photoSelected.index() ) {
+        display( id );
+    }
+}
 
 
 /******************* SLOTS ************************/
@@ -250,11 +262,9 @@ void CCaptionManager::onListUpdated( )
     int newPhotoIndex = m_photoDb.id( m_photoSelected.name() );
     if( newPhotoIndex != m_photoSelected.index() ) {
         if( newPhotoIndex == -1 ) { //Photo is no longer present in the db
-            //m_photoIndex = 0;
             m_photoSelected.setIndex(0);
         }
         else {
-            //m_photoIndex = newPhotoIndex;
             m_photoSelected.setIndex( newPhotoIndex );
         }
         display( m_photoSelected.index() );

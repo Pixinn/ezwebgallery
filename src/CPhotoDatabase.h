@@ -32,10 +32,9 @@
 #include "CPhotoProperties.h"
 #include "CCaption.h"
 #include "CMessage.h"
+#include "CThumbnailLoader.h"
 
-/***************************** DEFINES *****************************/
-#define THUMBNAIL_HEIGHT    360
-#define THUMBNAIL_WIDTH     420
+/***************************** FUNCTIONS *****************************/
 
 
 /***************************************************************************
@@ -169,6 +168,7 @@
         void error( CMessage );   //an error occured
         void message( CMessage );   //send an informative message
         void layoutChanged( ); //The layout of the db changed
+        void thumbnailLoaded( int ); //A thumbnail has been loaded and added to the db
 
     public slots:
         QStringList build( const QDomElement & ); //from Xml. Returns the list of invalid files
@@ -177,6 +177,7 @@
         QDomElement xml( QDomDocument& document ) const; //Constructs an Xml representation of the in the provided document
         //link with the model, which layout is directly updated by the ui
         void rowRemoved(const QModelIndex & parent, int start, int end );
+        void thumbnailLoaded( const CLoadedThumbnail );
      
     private: //nb private memebers do not emit updatedProperties()
         void clear( void );
@@ -206,6 +207,9 @@
          CPhotoDatabaseModel m_model; //model syncing the db and the ui
          //Saved state to test if the db content or order has changed
          QStringList m_savedState;
+
+         //Thumbnail loader
+         CThumbnailLoadingManager m_loader;
  };
  
 #endif

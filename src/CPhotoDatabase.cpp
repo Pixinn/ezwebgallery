@@ -92,6 +92,9 @@ void CPhotoDatabase::init( )
                     this, SLOT(rowRemoved ( QModelIndex , int,  int ) ) );
         CPhotoDatabaseElem::CDefaultThumbnail::getInstance().init();
         s_defaultElem = new CPhotoDatabaseElem();
+        m_loader.init();
+        connect( &m_loader, SIGNAL( loaded(const CLoadedThumbnail ) ),
+                 this, SLOT( thumbnailLoaded( const CLoadedThumbnail ) ) );
     }
 }
 
@@ -239,6 +242,26 @@ void CPhotoDatabase::rowRemoved( const QModelIndex&, int, int )
         id++;
     }
     emit layoutChanged();
+}
+
+
+/*******************************************************************
+* thumbnailLoaded( const CLoadedThumbnail )
+* ---------
+* A thumbnail as been loaded by the asynchronous loader
+********************************************************************/
+void CPhotoDatabase::thumbnailLoaded( const CLoadedThumbnail thumbnail )
+{
+    QFileInfo fileInfo( thumbnail.getFilePath() );
+    QString fileName = fileInfo.fileName();
+    qDebug() << fileName << " loaded!";
+    CPhotoDatabaseElem* elem = m_db.value( fileName, NULL );
+    if( elem != NULL ) {
+        elem->setExifTags( thumbnail.getExifTags() );
+        elem->setFileInfo( fileInfo );
+        elem->m_thumbnail = thumbnail.getImage();
+        emit thumbnailLoaded( elem->id() );
+    }
 }
 
 
@@ -674,7 +697,8 @@ bool CPhotoDatabase::loadThumbnail( const QString & filename )
     if( elem->m_thumbnail == CPhotoDatabaseElem::CDefaultThumbnail::getInstance() )
     {
         QString absoluteFilePath = elem->fileInfo().absoluteFilePath();
-        f_success = photo.load( elem->fileInfo().absoluteFilePath() );
+        m_loader.load( absoluteFilePath );
+        /*f_success = photo.load( elem->fileInfo().absoluteFilePath() );
     
         if( f_success )
         {
@@ -697,6 +721,7 @@ bool CPhotoDatabase::loadThumbnail( const QString & filename )
                 f_success = false;
             }
         }
+        */
     }
     
     return f_success;
