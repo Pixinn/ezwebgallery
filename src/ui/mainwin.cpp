@@ -37,6 +37,7 @@
 #include <QCursor>
 #include <QIcon>
 #include <QTextEdit>
+#include <QDebug>
 
 #include <CPhoto.h>
 #include <string>
@@ -816,6 +817,16 @@ void MainWin::sessionSaved( QString fileSaved )
 //--------------------------------
 void MainWin::choosePhotosDir()
 {
+
+    ///// DEBUG //////
+     qDebug() << "MAINWIN";
+    for( int i = 0; i < m_photoDatabase.size(); i++ )
+    {
+        CPhotoProperties* properties = m_photoDatabase.properties(i);
+        qDebug() << properties->id() << " - " << properties->fileName();
+    }
+
+    ///// FIN DEBUG /////
 
     QString dir  = QFileDialog::getExistingDirectory( this,
                                                       tr("Please select an input directory containing your pictures."),

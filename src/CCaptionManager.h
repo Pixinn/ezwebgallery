@@ -30,7 +30,6 @@
 
 #include "CCaption.h"
 #include "CPhotoDatabase.h"
-#include "CThumbnailLoader.h"
 
 /*****************************
  * CCaptionManager

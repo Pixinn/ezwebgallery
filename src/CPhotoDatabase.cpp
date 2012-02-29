@@ -93,8 +93,8 @@ void CPhotoDatabase::init( )
         CPhotoDatabaseElem::CDefaultThumbnail::getInstance().init();
         s_defaultElem = new CPhotoDatabaseElem();
         m_loader.init();
-        connect( &m_loader, SIGNAL( loaded(const CLoadedThumbnail ) ),
-                 this, SLOT( thumbnailLoaded( const CLoadedThumbnail ) ) );
+        connect( &m_loader, SIGNAL( loaded(const CLoadedThumbnail & ) ),
+                 this, SLOT( thumbnailLoaded( const CLoadedThumbnail & ) ) );
     }
 }
 
@@ -250,13 +250,13 @@ void CPhotoDatabase::rowRemoved( const QModelIndex&, int, int )
 * ---------
 * A thumbnail as been loaded by the asynchronous loader
 ********************************************************************/
-void CPhotoDatabase::thumbnailLoaded( const CLoadedThumbnail thumbnail )
+void CPhotoDatabase::thumbnailLoaded( const CLoadedThumbnail & thumbnail )
 {
     QFileInfo fileInfo( thumbnail.getFilePath() );
     QString fileName = fileInfo.fileName();
     qDebug() << fileName << " loaded!";
     CPhotoDatabaseElem* elem = m_db.value( fileName, NULL );
-    if( elem != NULL ) {
+    if( elem != NULL ) { //Keeping this test is ESSENTIAL: as a flushed loader can emit its last thumbnail afterwards
         elem->setExifTags( thumbnail.getExifTags() );
         elem->setFileInfo( fileInfo );
         elem->m_thumbnail = thumbnail.getImage();
@@ -303,13 +303,17 @@ QStringList CPhotoDatabase::refresh( const QStringList & fileSet )
     QStringList removedfiles;
     QStringList fileNameSet;
 
+
+
     //Extracting the file names from the file paths
     foreach( QString filePath, fileSet )  {
         fileNameSet << QFileInfo( filePath ).fileName( );
     }
 
     //1 - Removing non-provided files from the db
+    qDebug() << "REFRESH";
     foreach( CPhotoProperties* properties, m_db )  {
+        qDebug() << properties->id() << ": " << properties->fileName();
         QString fileName = properties->fileInfo().fileName();
         if( !fileNameSet.contains( fileName ) ) {
             remove( fileName );
@@ -323,10 +327,11 @@ QStringList CPhotoDatabase::refresh( const QStringList & fileSet )
         QString fileName = QFileInfo( filePath ).fileName( );
         if( !m_db.contains( fileName ) ) {
             newFiles << fileName;
+            if( !add( filePath ) ) {
+                invalidFiles << filePath;
+            }
         }
-        if( !add( filePath) ) {
-            invalidFiles << filePath;
-        }
+
     }
 
     //3 - Emit an info for the file removed from the db
@@ -473,10 +478,12 @@ bool CPhotoDatabase::add( const QString& photoPath)
             photoElem->setCaption( caption );
             photoElem->setId( id );
             photoElem->setFileInfo( fileInfo );
-            //photoElem->setLastModificationTime( fileInfo.lastModified() );
+
             m_db.insert( fileInfo.fileName(), photoElem );
             orderedKeys << fileInfo.fileName();
             m_model.setStringList( orderedKeys );
+
+            loadThumbnail( filename );
         }
 
     }
@@ -521,7 +528,12 @@ bool CPhotoDatabase::add( const CPhotoProperties& properties )
         photoElem->setId( id );
 
         //adding to db
-        m_db.insert( filename, photoElem );        
+        m_db.insert( filename, photoElem );
+
+        qDebug() << "add( properties ) - " << id << ": " << properties.fileName();
+
+        //async thumbnail loading
+        loadThumbnail( filename ); //MUST be placed afert insert: the element has ti be present in the db
     }
 
     return returnedValue;
@@ -557,22 +569,28 @@ void CPhotoDatabase::remove( const QString & filename )
         QStringList orderedKeys = m_model.stringList();
         CPhotoDatabaseElem* elem = m_db.value( filename );
         int id = elem->id();
-        orderedKeys.removeAt( id );
-        //Removing the element from the db and decrementing subsequent ids
-        QMap<QString,CPhotoDatabaseElem*>::iterator it = m_db.find( filename );        
-        while( ++it != m_db.end() ){
-            CPhotoProperties* properties = it.value();
-            int id = properties->id() - 1;
-            properties->setId( id );
-            //keeping the caption in sync
+
+        //Updating subsequent ids: processing in order!
+        QStringList::Iterator it = orderedKeys.begin() + id;
+        while( ++it < orderedKeys.end() )
+        {
+            QString filename = *it;
+            CPhotoProperties* properties = m_db.value( filename );
+            int newId = properties->id() - 1;
+            properties->setId( newId );
             CCaption caption = properties->caption();
-            caption.setId( id + 1);
+            caption.setId( newId + 1);
             properties->setCaption( caption );
         }
-        m_db.remove( filename );        
+
+        //removing from db
+        m_db.remove( filename );
+        orderedKeys.removeAt( id );  
+        m_model.setStringList( orderedKeys );  
+        //removing from the thumb loader
+        m_loader.stopLoading( elem->fileInfo().absoluteFilePath() );
         //Deleting the element itself
-        delete elem;
-        m_model.setStringList( orderedKeys );
+        delete elem;      
     }
 }
 
@@ -606,6 +624,7 @@ void CPhotoDatabase::clear( )
     m_db.clear();
     orderedKeys.clear();
     m_model.setStringList( orderedKeys ); //direct use of m_model.reset() possible ??
+    m_loader.flush();
 }
 
 /*******************************************************************
@@ -683,7 +702,7 @@ void CPhotoDatabase::swap( int id1, int id2 )
 * In : (QString) filename from which to generate the thumbnail
 * Returns : (bool) true if success, false otherwise
 ********************************************************************/
-bool CPhotoDatabase::loadThumbnail( const QString & filename )
+bool CPhotoDatabase::loadThumbnail( const QString & filename, CThumbnailLoadingManager::e_Priority priority )
 {
     CPhoto photo;    
     bool f_success = true;
@@ -697,7 +716,7 @@ bool CPhotoDatabase::loadThumbnail( const QString & filename )
     if( elem->m_thumbnail == CPhotoDatabaseElem::CDefaultThumbnail::getInstance() )
     {
         QString absoluteFilePath = elem->fileInfo().absoluteFilePath();
-        m_loader.load( absoluteFilePath );
+        m_loader.load( absoluteFilePath, priority );
         /*f_success = photo.load( elem->fileInfo().absoluteFilePath() );
     
         if( f_success )
@@ -736,11 +755,11 @@ bool CPhotoDatabase::loadThumbnail( const QString & filename )
 * In : (QString) filename from which to generate the thumbnail
 * Returns : (bool) true if success, false otherwise
 ********************************************************************/
-bool CPhotoDatabase::loadThumbnail( int id )
+bool CPhotoDatabase::loadThumbnail( int id, CThumbnailLoadingManager::e_Priority priority )
 {
     QStringList orderedKeys = m_model.stringList();
     const QString& filename = orderedKeys.at( id ); //m_model.data() ??
-    return loadThumbnail( filename );
+    return loadThumbnail( filename, priority );
 } 
  
  

@@ -36,14 +36,19 @@
 //-----------------------
 // load( const QString & filePath )
 // ----------------
-// Add the specified file to the loading queue and
-// load it when possible
+// Add the specified file to the loading queue: FILO or FIFO depending on the priority
+// Async loading
 //----------------------
-void CThumbnailLoadingManager::load( const QString & filePath )
+void CThumbnailLoadingManager::load( const QString & filePath, e_Priority priority )
 {
     //Updating the file queue
     if( !m_loadingQueue.contains( filePath ) ) {
-        m_loadingQueue.enqueue( filePath );
+        if( priority == HIGH ) {
+            m_loadingQueue.prepend( filePath );
+        }
+        else {
+             m_loadingQueue.append( filePath );
+        }
         qDebug() << filePath << ", not in queue.";
     }
     else //Already in the queue, put in front
@@ -70,6 +75,32 @@ void CThumbnailLoadingManager::load( const QString & filePath )
 
 
 //-----------------------
+// stopLoading( const QString & filePath )
+// ----------------
+// Stop loading the specified thumbnail
+// NOTE: if already in the loading thread, it will be loaded then emitted
+// anyway.
+//----------------------
+void CThumbnailLoadingManager::stopLoading( const QString & filePath )
+{
+    m_loadingQueue.removeOne( filePath );
+}
+
+
+//-----------------------
+// flush( )
+// ----------------
+// Flushing (reinit)
+// NOTE: if the loading thread is running, it will finish and the
+// loaded thumbnail will be emitted
+//----------------------
+void CThumbnailLoadingManager::flush( )
+{
+    m_loadingQueue.clear();
+    m_currentlyLoading.clear(); 
+}
+
+//-----------------------
 // thumbLoaded( const CLoadedThumbnail thumb )
 // ----------------
 // SIGNAL: a thumbnail has been loaded
@@ -94,6 +125,7 @@ void CThumbnailLoadingManager::loadNext( )
     }
     else {
         qDebug() << "Queue empty.";
+        m_currentlyLoading.clear();
     }
 }
 
@@ -120,13 +152,13 @@ void CThumbnailLoader::setJob( const QString & filePath )
 // Load a thumbnail in another thread
 //----------------------
 void CThumbnailLoader::run( void )
-{
-    qDebug() << "Loading Thread started.";
- 
+{    
     m_ptrMutex->lock();        
         QString filePath = m_filePath;
     m_ptrMutex->unlock();
     const QSize thumbSize = m_thumbSize;
+
+    qDebug() << "Loading Thread started." << QFileInfo( filePath ).fileName();
 
     CPhoto photo;    
     

@@ -34,6 +34,7 @@
 #include "CMessage.h"
 #include "CThumbnailLoader.h"
 
+
 /***************************** FUNCTIONS *****************************/
 
 
@@ -150,8 +151,8 @@
         }
        
         void setThumbnailsSize( const QSize &size ) { m_thumbnailsSize = size; }
-        bool loadThumbnail( int );  // ** For the times being thumbnails are loaded synchronously via an external request.
-        bool loadThumbnail( const QString& ); // ** In the future: a background process could load them asynconously
+        bool loadThumbnail( int, CThumbnailLoadingManager::e_Priority = CThumbnailLoadingManager::NORMAL );  // ** For the times being thumbnails are loaded synchronously via an external request.
+        bool loadThumbnail( const QString&, CThumbnailLoadingManager::e_Priority = CThumbnailLoadingManager::NORMAL ); // ** In the future: a background process could load them asynconously
         const QImage& thumbnail( int ) const; //Returns a thumbnail
         QImage& thumbnail( const QString & ); //Returns a thumbnail
 
@@ -177,7 +178,7 @@
         QDomElement xml( QDomDocument& document ) const; //Constructs an Xml representation of the in the provided document
         //link with the model, which layout is directly updated by the ui
         void rowRemoved(const QModelIndex & parent, int start, int end );
-        void thumbnailLoaded( const CLoadedThumbnail );
+        void thumbnailLoaded( const CLoadedThumbnail & );
      
     private: //nb private memebers do not emit updatedProperties()
         void clear( void );

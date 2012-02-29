@@ -119,6 +119,11 @@ class CThumbnailLoadingManager : public QObject
     Q_OBJECT
 
 public:
+    typedef enum {
+         NORMAL,
+         HIGH
+     }e_Priority;
+
     explicit CThumbnailLoadingManager( QObject *parent = 0 ) :
         QObject( parent ),
         m_loader( QSize(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT), &m_mutex )
@@ -132,15 +137,16 @@ public:
         connect( &m_loader, SIGNAL( finished() ), this, SLOT( loadNext() ) );
     }
 
-    void load( const QString& filePath );
-
+    void load( const QString& filePath, e_Priority priority = NORMAL );
+    void stopLoading( const QString& filePath );
+    void flush( void );
 
 public slots:
     void thumbLoaded( CLoadedThumbnail );
     void loadNext( void );
 
 signals:
-    void loaded( const CLoadedThumbnail );
+    void loaded( const CLoadedThumbnail & );
 
 private:
     CThumbnailLoader m_loader;

@@ -150,7 +150,7 @@ void CCaptionManager::display( int nb )
         QModelIndex indexPhotoSelected = model.index( nb );
 
         //Affichage vignette
-        m_photoDb.loadThumbnail( nb );        
+        m_photoDb.loadThumbnail( nb, CThumbnailLoadingManager::HIGH );        
         emit displayThumbnailSignal( indexPhotoSelected );  //Affichage vignette à réaliser en premier
                                                         //Les données exifs lues à ce moment permettront la preview correcte de la légende
         //Affichage légende
