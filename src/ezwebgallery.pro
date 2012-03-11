@@ -89,7 +89,8 @@ HEADERS += ui/mainwin.h \
     CSkinParameters.h \
     IPhotoFeeder.h \
     CPhotoFeederDirectory.h \
-    CPhotoDatabase.h
+    CPhotoDatabase.h \
+    CThumbnailLoader.h
 
 SOURCES += main.cpp \
     ui/mainwin.cpp \
@@ -100,7 +101,7 @@ SOURCES += main.cpp \
     global/CError.cpp \
     global/CMessage.cpp \
     global/CPlatform.cpp \
-	global/CDebug.cpp \
+    global/CDebug.cpp \
     widgets/CImagePicker.cpp \
     widgets/CColorPicker.cpp \
     CGalleryGenerator.cpp \
@@ -114,7 +115,8 @@ SOURCES += main.cpp \
     CProjectParameters.cpp \    
     CSkinParameters.cpp \
     CPhotoFeederDirectory.cpp \
-    CPhotoDatabase.cpp
+    CPhotoDatabase.cpp \
+    CThumbnailLoader.cpp
 
 FORMS += ui/mainwin.ui \
     ui/WinSkinDesigner.ui \

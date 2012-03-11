@@ -290,7 +290,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     //Paramètres (=Session)
     connect( &m_projectParameters, SIGNAL(loaded(QString)), this, SLOT(sessionLoaded(QString)));
     connect( &m_projectParameters, SIGNAL(saved(QString)), this, SLOT(sessionSaved(QString)));
-    //connect( &m_projectParameters, SIGNAL(message(QString)), this, SLOT(onLogMsg(QString)));
+    connect( &m_projectParameters, SIGNAL(message(CMessage)), this, SLOT(information(CMessage)));
     //Afficher la fenêtre de tags
     connect( this->m_ui->action_DisplayTags, SIGNAL(triggered()), this, SLOT(showTagsWindow()));
     //Afficher la fenêtre de debug    
@@ -331,6 +331,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     connect( &(this->m_captionManager), SIGNAL(displayCaptionSignal(QString)), this, SLOT(displayCaption(QString)) );
     connect( &(this->m_captionManager), SIGNAL(displayPreviewSignal(QString)), this, SLOT(previewCaption(QString)) );
     connect( &(this->m_captionManager), SIGNAL(displayHighlightIndex(QModelIndex)), this, SLOT(highlightPhoto(QModelIndex)) );
+    connect( &(this->m_captionManager), SIGNAL(clearThumbnail(void)), this, SLOT(clearThumbnailTab(void)) );
     //Onglet Présentation
     connect( this->m_ui->horizontalSlider_PhotoSharpeningRadius, SIGNAL(valueChanged(int)), this, SLOT(sharpeningRadiusChanged(int)) );
     connect( this->m_ui->doubleSpinBox_PhotoSharpeningRadius, SIGNAL(valueChanged(double)), this, SLOT(sharpeningRadiusChanged(double)) );
@@ -397,16 +398,24 @@ void MainWin::changeEvent(QEvent *e)
     switch (e->type()) {
     case QEvent::LanguageChange:
         //Il faut sauver / recharger les paramètres, car les combobox reviennent sur les valeurs par défaut
-        m_projectParameters.fromUi();
-        m_skinParameters.fromUi();
+        if( m_projectParameters.initialized() ) {
+            m_projectParameters.fromUi();
+        }
+        if( m_skinParameters.initialized() ) {
+            m_skinParameters.fromUi();
+        }
         //traductions
         m_ui->retranslateUi(this);
         m_p_skinDesignerWindow->retranslate();
         m_p_configureWindow->retranslate();
         //Restauration des paramètres
-        m_projectParameters.toUi();
-        m_skinParameters.toUi();
-        //Traduction des textes supplémentaires (htm, etc)
+        if( m_projectParameters.initialized() ) {
+            m_projectParameters.toUi();
+        }
+        if( m_skinParameters.initialized() ) {
+            m_skinParameters.toUi();
+        }
+        //Traduction des textes supplémentaires (html, etc)
         m_p_tagsWindow->setHtml( CPlatform::readTranslatedTextFile( "tagList.html" ) );
         //CPlatform::setLanguage( langSuffix );
         break;
@@ -481,6 +490,7 @@ void MainWin::newSession( )
         m_photoDatabase.saveState();
         //UI
         m_ui->action_SaveSession->setDisabled( true );           //Il *faut* désactiver l'option save pour ne pas écraser le fichier le plus récent
+        m_ui->label_thumbPhoto->clear();                  //Clearing the photo preview
 }
 
 
@@ -545,9 +555,7 @@ void MainWin::openSession( const QString &sessionFile )
             }
             //Le contenu du répertoire d'entrée est-il toujours valable depuis la dernière sauvegarde ?
             //ie : les photos source ont-elles changé de place depuis ??
-            if( m_photoFeeder.isValid() ){               
-                //missingPhotos = checkPhotosInDir( m_projectParameters.m_photoPropertiesMap.keys(), m_photoFeeder.getDirectory() );
-//                m_photoDatabase.build( m_photoFeeder.getPhotoList() );
+           /* if( m_photoFeeder.isValid() ){               
                 missingPhotos = m_photoDatabase.checkPhotosInDb();
             }
             else {
@@ -587,7 +595,7 @@ void MainWin::openSession( const QString &sessionFile )
                     missingPhotos.clear(); //L'utilisateur a décliné: on utilise le répertoire qui était dans la sauvegarde
                 }
             }
-            //buildPhotoLists( );
+            */
             m_captionManager.reset();
        
             //Chargement de la skin
@@ -769,6 +777,9 @@ void MainWin::aboutImageMagick( )
 void MainWin::sessionLoaded( QString fileLoaded )
 {
     QSettings settings;
+    //Setting feeder and updating photo db with new / missing files
+    m_photoFeeder.setDirectory( m_projectParameters.m_galleryConfig.inputDir );
+    m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
     //Insertion du fichier dans la liste des fichiers récemment utilisés
     m_recentSessions.removeAll(fileLoaded);
     m_recentSessions.prepend(fileLoaded);
@@ -781,7 +792,6 @@ void MainWin::sessionLoaded( QString fileLoaded )
     m_photoDatabase.saveState();
 
     m_captionManager.captionsEditedReset();
-    m_photoFeeder.setDirectory( m_projectParameters.m_galleryConfig.inputDir );
     //Affichage
     m_ui->action_SaveSession->setDisabled( false );
     m_projectParameters.toUi( );   
@@ -815,7 +825,6 @@ void MainWin::sessionSaved( QString fileSaved )
 //--------------------------------
 void MainWin::choosePhotosDir()
 {
-
     QString dir  = QFileDialog::getExistingDirectory( this,
                                                       tr("Please select an input directory containing your pictures."),
                                                       m_lastSelectedDir,
@@ -829,8 +838,6 @@ void MainWin::choosePhotosDir()
         m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
         m_lastSelectedDir = dir;
         m_ui->lineEdit_SourceFolder->setText( dir );//Affichage
-        //On créé la liste des jpegs ici pour qu'elle soit dispo sous l'onglet "Légendes"
-        //buildPhotoLists( );
         m_captionManager.reset( );
     }
 
@@ -983,52 +990,15 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
     onLogMsg( QString("[Thumbnail]. Affichage Vignette: ") + photoFilename  );
 
     m_ui->label_thumbPhoto->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-    
-    //Transformation du curseur en sablier car ça peut être un peu long...
-    QApplication::setOverrideCursor ( Qt::WaitCursor );
-
-    bool f_readSuccess = true;
-    bool f_conversionSuccess = true;
-    CPhoto photo;
-    string filenameLocal8;
-    
-    if( !photo.load( photoFileInfo.absoluteFilePath( ) ) ){
-        onLogMsg( QString("[Thumbnail]." ) + photo.error() );
-        f_readSuccess = false;
-    }   
-
-    if( f_readSuccess )
+   
+    if( m_photoDatabase.contains( photoFilename ) )
     {
-        //Resize
-        QSize thumbSize = m_ui->label_thumbPhoto->size();
-        photo.zoom( thumbSize, Qt::FastTransformation );
-        //Orientation
-        photo.orientationExif();
-        //vérification que tout est ok, sinon log des messages
-        if( !photo.errors().isEmpty() ){
-            foreach( QString err, photo.errors() ){
-                onLogMsg( QString("[Thumbnail]." ) + err );
-            }
-            f_readSuccess = false;
-        }
-        //Affichage
-        QImage photoToDisplay = photo.qimage();
-        if( !photoToDisplay.isNull() ){
-            QPixmap photoPxMap =  QPixmap::fromImage ( photoToDisplay );
-            //Affichage
-            m_ui->label_thumbPhoto->setPixmap( photoPxMap );            
-        }
-        else{
-            f_conversionSuccess = false;
-        }
-        //Propagation des données EXIF lues et autres infos au captionManager
-        m_captionManager.setExifTags( photoFilename, photo.exifTags() );
-        m_captionManager.setFileInfo( photoFilename, photoFileInfo );
-
+        const QImage& photoToDisplay = m_photoDatabase.thumbnail( indexPhotoName.row() );
+        QPixmap photoPxMap =  QPixmap::fromImage ( photoToDisplay );
+        m_ui->label_thumbPhoto->setPixmap( photoPxMap ); //Displaying the thumb
     }
-
-    if( !f_conversionSuccess || !f_readSuccess ){
-            m_ui->label_thumbPhoto->setText( tr("No preview available.") );
+    else{
+       m_ui->label_thumbPhoto->setText( tr("No preview available.") ); //Displaying a default text
     }
 
     //Thumbnail checkbox : cocher la case si la photo est la vignette de la galerie
@@ -1037,10 +1007,22 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
     }else{
         m_ui->checkBox_GalleryThumb->setCheckState( Qt::Unchecked );
     }
-
-    //Restauration du curseur
-    QApplication::restoreOverrideCursor() ;
 }
+
+
+//--------------------------------
+//--------- Clearing the fields of the thumbnaiol tab
+//--------------------------------
+void MainWin::clearThumbnailTab( void )
+{
+    onLogMsg( QString("[Thumbnail]. Clearing.") );
+    m_ui->label_thumbPhoto->clear();
+    m_ui->textEdit_captionPreview->clear();
+    m_ui->lineEdit_Caption->clear();
+    m_ui->lineEdit_captionEnding->clear();
+    m_ui->lineEdit_captionHeader->clear();
+}
+
 
 //--------------------------------
 //--------- La vignette représentant la gallerie a changé
@@ -1081,7 +1063,7 @@ void MainWin::warning( CMessage warning )
 
 void MainWin::information( CMessage info )
 {
-    QMessageBox modalErrorBox( this );
+    QMessageBox modalErrorBox( 0 );
     modalErrorBox.setText( info.summary() );
     modalErrorBox.setInformativeText( info.informativeText() );
     modalErrorBox.setDetailedText( info.details() );

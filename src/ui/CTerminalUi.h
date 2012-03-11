@@ -32,7 +32,7 @@
 #include "CLanguageManager.h"
 #include "CCaptionManager.h"
 
-class CTerminalUi : public QObject, IUserInterface
+class CTerminalUi : public QObject, public IUserInterface
 {
     Q_OBJECT
 
@@ -48,8 +48,9 @@ public slots:
     void onProgressBar( int completion, QString color, QString message, int timeout = 0 ); //Affiche un % d'avancement
     void onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties>);
     void onForceStoppedFinished( QStringList );
-    //Photo DB
-    void missingPhotos( QStringList ){}; //Some photos are present in the DB but not on the disk
+    void error( CMessage );         //An error occured
+    void warning( CMessage );       //A warning occured
+    void information( CMessage );   //Display an iformative message
 
 protected:
     void keyPressEvent ( QKeyEvent * event );

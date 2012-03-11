@@ -43,7 +43,8 @@ class CCaptionManager : public QObject
     Q_OBJECT
 
 private:
-    class CPhotoIndex {
+    class CPhotoIndex 
+    {
     public:
         CPhotoIndex( void ) :
             m_photoIndex(0),
@@ -78,13 +79,12 @@ private:
     private:
         QString m_photoName;
         int m_photoIndex;
-        const CPhotoDatabase& m_photoDb;
+        const CPhotoDatabase& m_photoDb;        
     };
 
     public:
         CCaptionManager( void );
-        CCaptionManager( const CCaptionManager & );
-        CCaptionManager operator=(const CCaptionManager &);
+
         void reset( void ); //reinit the manager
 
         QString selectedPhoto( void );                          //Retourne le nom de la photo affiche
@@ -101,6 +101,7 @@ private:
         void displayCaptionSignal( QString );
         void displayPreviewSignal( QString );
         void displayHighlightIndex( QModelIndex );
+        void clearThumbnail( void );
 
     public slots:
         void onListPressed( QModelIndex ); //Button pressed on the list view
@@ -109,7 +110,8 @@ private:
         void onCaptionHeaderEdited(QString);
         void onCaptionEndingEdited(QString);
         void onPrevious( void ); //Previous caption requested
-        void onNext( void ); //Previous caption requested        
+        void onNext( void ); //Previous caption requested
+        void onThumbLoaded( int ); //A thumbnail has been loaded
 
     private:
         CPhotoDatabase& m_photoDb;
@@ -117,7 +119,7 @@ private:
 
         //int m_photoIndex;                        //Pour déplacement dans la liste des photos, en connection avec la listView
         //QString m_photoDisplayed;                //Name of the currently displayed photo
-        bool m_f_captionsEdited;                //Les lgendes ont-elle t dite depuis le dernier appel de legencaptionedReset() ?
+        bool m_f_captionsEdited;                //Les lgendes ont-elle t dite depuis le dernier appel de legencaptionedReset() ?        
 };
 
 #endif // CCaptionManager_H

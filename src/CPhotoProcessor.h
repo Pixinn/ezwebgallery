@@ -118,15 +118,12 @@ class CPhotoProcessor : public QObject, public QRunnable
     private:        
         QMutex* m_p_mutexRemoteControl; //Mutex permettant de protger les arrts "forcs" des threads
         CPhotoProperties m_photoProperties;
-        //QString m_inFilePath;
         QDir m_outPath;
         QQueue<QSize> m_sizesQueue;
         QQueue<int> m_qualityQueue;
         CWatermark m_watermark;
         t_sharpening m_sharpening;
         CGeneratedPhotoSetParameters m_generatedParameters;        
-//      int m_idPhoto;
-//      bool m_fCancellationRequested;
         volatile bool* m_fStopRequested;
         
 

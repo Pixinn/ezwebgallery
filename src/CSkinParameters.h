@@ -80,6 +80,7 @@ public:
     QString error( void ) { return m_lastError; }                //Retourne la dernire erreur survenue
     QStringList errors( void ) { return m_lastErrors; }          //Retourne la dernire srie d'erreurs survenues
     unsigned int version( void ) { return m_version; }           //Retourne le status du IParameters
+    inline bool initialized( void ) { return f_initialized; }
 
 private:
     QDomDocument convertFromOldVersion( const QDomDocument &document, const int version );    //Convertion d'une skin d'une version prcdante en la version actuelle
@@ -111,6 +112,7 @@ private:
     QMap<QString,QFileInfo> m_ressources;      //widget name ; file info
     CCssSheet m_styleSheet;
     unsigned int m_version;
+    bool f_initialized;
     //Enumration des erreurs possibles
     enum e_errors{
         noError,

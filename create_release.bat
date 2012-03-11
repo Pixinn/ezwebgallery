@@ -49,7 +49,7 @@ copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_bzlib_.dll %3
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_jpeg_.dll %3
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_lcms_.dll %3
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_magick_.dll %3
-copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_Magick++_.dll %3
+copy "%MAGICK_HOME%\VisualMagick\bin\CORE_RL_Magick++_.dll" %3
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_png_.dll %3
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_tiff_.dll %3
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_ttf_.dll %3

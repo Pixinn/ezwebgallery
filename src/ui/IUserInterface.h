@@ -24,6 +24,7 @@
 #include <QString>
 
 #include "CGalleryGenerator.h"
+#include "CMessage.h"
 
 
 /*******************************
@@ -37,23 +38,19 @@ class IUserInterface/*: public QMainWindow *///Pour pouvoir proposer des slots, 
                                            //Et on ne peut pas faire d'hritage multiple avec plusieurs classe drivant de Q_Object
                                            //On prend donc la classe d'ui la plus gnraliste
 {
-//  Q_OBJECT
    
-public /*slots*/:
 // !!! Fonctions  implmenter comme SLOTS !!!
 // C'est impossible dans cette interface, car il faudrait hriter de QObject. Hors il est interdit
-// d'hriter deux fois indirectement de QObject. Ce qui est embtant pour les UI qui doivent ventuellement elles mme hriter d'un QWidget
+// d'hériter deux fois indirectement de QObject. Ce qui est embtant pour les UI qui doivent ventuellement elles mme hriter d'un QWidget
 public:
+   //public slots
    virtual void onLogMsg( QString ) = 0; //Rception d'un message de DEBUG
    virtual void onProgressBar( int completion, QString color, QString message, int timeout = 0 ) = 0; //Affiche un % d'avancement sur la progressBar et un message assi dans la statusbar
    virtual void onGalleryGenerationFinished( QList<CPhotoProperties>  ) = 0; //Fin nominale de la gnration de la galerie
    virtual void onForceStoppedFinished( QStringList ) = 0; //Fin prmature de la gnration de la galerie
-
-public:
-//    IUserInterface( QWidget *parent);
-//    IUserInterface( );
-//    virtual ~IUserInterface() = 0;    //Destructeur virtuel obligatoire
-//    virtual void setGenerator( CGalleryGenerator* ) = 0; //Indique le gnrateur de galerie
+   virtual void error( CMessage ) = 0;          //An error occured
+   virtual void warning( CMessage ) = 0;        //A warning occured
+   virtual void information( CMessage ) = 0;    //Display an iformative message
 
 };
 

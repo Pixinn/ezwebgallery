@@ -103,10 +103,10 @@ public slots:
     void about( void );
     void aboutImageMagick( void );
     //Configuration
-    void choosePhotosDir(); // Choix du rpertoire contenant les photos
-    void choosePhotosDirManually( );
-    void chooseDestDir( );  // Choix du rpertoire de destination de la gallerie
-    void chooseDestDirManually( );
+    void choosePhotosDir( void ); // Choix du rpertoire contenant les photos
+    void choosePhotosDirManually( void );
+    void chooseDestDir( void );  // Choix du rpertoire de destination de la gallerie
+    void chooseDestDirManually( void );
     void sessionLoaded( QString );
     void sessionSaved( QString );
     //Présentation
@@ -117,30 +117,24 @@ public slots:
     void watermarkGroupChecked( bool );
     void watermarkAutoColorChecked( int );
     //Légendes
-    //int  buildPhotoLists( ); //Parcourt le rpertoire d'entre et mets  jour le QMap de CPhotoProperties avec les donnes disponibles
     void previewCaption( QString );  //Affiche un prérendu de la légende.
     void refresh( void );
     void highlightPhoto( QModelIndex ); //Highlights a photo in the photoListView
-    /*void onPrevious( void );
-    void onNext( void );
-    void onListClicked( QModelIndex );
-    void onCaptionTextEdited( QString );
-    void onCaptionHeaderEdited(QString);
-    void onCaptionEndingEdited(QString);*/
     //skinning
-    void openSkinDesigner( );
+    void openSkinDesigner( void );
     void skinNameChanged( QString );
     void skinPathChanged( QString );
     //Generation
-    void generateGallery( );
+    void generateGallery( void );
     //-- externes
     void onLogMsg( QString );
     void onProgressBar( int completion, QString color, QString message, int timeout = 0 );
     void onGalleryGenerationFinished( QList<CPhotoProperties>  );
     void onForceStoppedFinished( QStringList );
     void displayThumbnail( QModelIndex ); //Affiche la vignette  lgender correspondant  l'index
+    void clearThumbnailTab( void ); //Clear the fields of the thumbnail tab
     void thumnailChanged( int ); //Une photo a t choisie pour devenir vignette de la galerie
-    void displayCaption( QString );        //Affiche le texte dans le lineEdit de la lgende
+    void displayCaption( QString );        //Affiche le texte dans le lineEdit de la legende
     void error( CMessage );           //An error occured
     void warning( CMessage );         //A warning occured
     void information( CMessage );     //Display an iformative message

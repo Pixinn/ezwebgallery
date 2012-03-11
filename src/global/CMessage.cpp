@@ -57,11 +57,11 @@ QString CMessage::message( e_message message )
             returnedMessage = QObject::tr("Watermark not valid: ");
             break;
         case Err_InvalidFiles:
-            returnedMessage = QObject::tr("Some photos cannot be read from the disk. ");
+            returnedMessage = QObject::tr("Some photos cannot be read from the disk.");
             break;
         //-- OTHER
         case Info_RemovingPhotos:
-            returnedMessage = QObject::tr("Some photos have been removed from the project. ");
+            returnedMessage = QObject::tr("Some photos can not be found and have been removed from the project.");
             break;
         default:
             returnedMessage = QObject::tr("Unknown message.");

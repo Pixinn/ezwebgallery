@@ -44,7 +44,7 @@ public:
         //Warning
 
         //Other
-        Info_RemovingPhotos
+        Info_RemovingPhotos,
     };
 
     CMessage() : QObject()

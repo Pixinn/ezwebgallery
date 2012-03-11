@@ -121,13 +121,14 @@ CGalleryGenerator::~CGalleryGenerator( )
 * des photos  traiter, qui donnera l'ordre d'affichage
 * des photos de la galerie
 ************************************/
-void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, const CSkinParameters &skinParameters, QList<CPhotoProperties*> photoProperties )
+bool CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, const CSkinParameters &skinParameters, QList<CPhotoProperties*> photoProperties )
 {
 	QStringList photoList;
 	QString photoName;
+    bool f_success = false;
     
     //Copie des paramtres en local avant lancement du thread
-    if( !this->isGenerationInProgress() )
+    if( !this->isGenerationInProgress() && !photoProperties.isEmpty() )
     {
         CCaption emptyCaption;
 		QDir inputDir;
@@ -148,7 +149,11 @@ void CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, 
         }
     
         emit startGenerationSignal(); //Dmarrage des traitements
+
+        f_success = true;
     }
+    
+    return f_success;
 
 }
 

@@ -54,6 +54,8 @@ CTerminalUi::CTerminalUi( CGalleryGenerator & galleryGenerator, const QString &p
     m_projectParameters.m_thumbsConfig.f_regeneration = true;
 
     m_languageManager.translate();
+
+    connect( &m_projectParameters, SIGNAL(message(CMessage)), this, SLOT(information(CMessage)));
 }
 
 CTerminalUi::~CTerminalUi( )
@@ -61,9 +63,7 @@ CTerminalUi::~CTerminalUi( )
 
 ////////// SLOTS //////////
 
-void CTerminalUi::onLogMsg( QString msg ){
-    msg = ""; //Pour virer un warning
-}
+void CTerminalUi::onLogMsg( QString  ){ }
 
 void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
 {
@@ -89,6 +89,46 @@ void CTerminalUi::onProgressBar( int, QString, QString msg, int )
     cout << msg << endl;
 }
 
+void CTerminalUi::information( CMessage message )
+{
+    QString summary = message.summary();
+    QString details = message.details();
+    cout << "INFO: " << message.informativeText() << endl;
+    if( !summary.isEmpty() ) {
+        cout << summary << endl;
+    }
+    if( !details.isEmpty() ) {
+        cout << details << endl;
+    }
+}
+
+void CTerminalUi::warning( CMessage message )
+{
+    QString summary = message.summary();
+    QString details = message.details();
+    cout << "WARNING: " << message.informativeText() << endl;
+    if( !summary.isEmpty() ) {
+        cout << summary << endl;
+    }
+    if( !details.isEmpty() ) {
+        cout << details << endl;
+    }
+}
+
+void CTerminalUi::error( CMessage message )
+{
+    QString summary = message.summary();
+    QString details = message.details();
+    cout << "ERROR: " << message.informativeText() << endl;
+    if( !summary.isEmpty() ) {
+        cout << summary << endl;
+    }
+    if( !details.isEmpty() ) {
+        cout << details << endl;
+    }
+}
+
+////////////////////////// RUN ///////////////////////
 void CTerminalUi::run( )
 {
 
@@ -140,8 +180,18 @@ void CTerminalUi::run( )
         propertiesList << photoDB.properties(i);
     }
 
+    //Displaying the project's photo' names
+    cout << endl << tr("Photos to be processed:") << endl;
+    foreach( CPhotoProperties* properties, propertiesList ) {
+        cout << properties->fileInfo().absoluteFilePath() << endl;
+    }
+    cout << endl;
+
     //Launching generation
-    m_galleryGenerator.generateGallery( m_projectParameters, m_skinParameters, propertiesList );
+    if( !m_galleryGenerator.generateGallery( m_projectParameters, m_skinParameters, propertiesList ) )  {
+        cout << tr("The gallery could not be properly generated.");
+        exit(0);
+    }    
 }
 
 /****************************************** Fonctions protges **************************************/

@@ -22,7 +22,6 @@
 #include <QStringListModel>
 #include <QStringList>
 #include <QMutableMapIterator>
-#include <QDebug>
 
 #include "CCaptionManager.h"
 
@@ -35,40 +34,7 @@ CCaptionManager::CCaptionManager( ) :
     m_f_captionsEdited = false;
 
     connect( &m_photoDb, SIGNAL(layoutChanged()), this, SLOT(onListUpdated()) );
-}
-
-//-----------------------
-// CCaptionManager(const CCaptionManager & toCopy)
-// ----------------
-// Surcharge de l'assignation.
-// Attention :  + on perd toutes les connections SIGNAUX/SLOTS dûes à QObject !!
-//              + La classe ne sera pas connextée à une QListeView => utiliser setPhotoList( QListView* ) !!!
-//----------------------
-CCaptionManager::CCaptionManager( const CCaptionManager & toCopy ) :
-    QObject( ), 
-    m_photoDb( CPhotoDatabase::getInstance() ),
-    m_photoSelected( toCopy.m_photoSelected )
-{
-    //m_photoIndex = 0;
-    m_f_captionsEdited = toCopy.m_f_captionsEdited;
-    
-    connect( &m_photoDb, SIGNAL(layoutChanged()), this, SLOT(onListUpdated()) );
-}
-
-//-----------------------
-// operator=(const CCaptionManager & toCopy)
-// ----------------
-// Surcharge de l'assignation.
-// Attention :  + on perd toutes les connections SIGNAUX/SLOTS dûes à QObject !!
-//              + La classe ne sera pas connextée à une QListeView => utiliser setPhotoList( QListView* ) !!!
-//----------------------
-CCaptionManager CCaptionManager::operator=(const CCaptionManager & toCopy)
-{
-    //this->m_photoIndex = 0;
-    m_photoSelected = toCopy.m_photoSelected;
-    this->m_f_captionsEdited = toCopy.m_f_captionsEdited;
-
-    return *this;
+    connect( &m_photoDb, SIGNAL(thumbnailLoaded( int )), this, SLOT(onThumbLoaded( int )) );
 }
 
 //-----------------------
@@ -94,6 +60,9 @@ void CCaptionManager::reset( )
             properties->setCaption( caption );
         }
     }
+    else {
+        emit clearThumbnail();
+    }
 }
 
 
@@ -118,7 +87,6 @@ void CCaptionManager::setExifTags( const QString &photoName, const QMap<QString,
 {    
     CPhotoProperties* properties =  m_photoDb.properties( photoName );
     properties->setExifTags( exifTags );
-
 }
 
 //-----------------------
@@ -150,6 +118,7 @@ void CCaptionManager::display( int nb )
         QModelIndex indexPhotoSelected = model.index( nb );
 
         //Affichage vignette
+        m_photoDb.loadThumbnail( nb, CThumbnailLoadingManager::HIGH );        
         emit displayThumbnailSignal( indexPhotoSelected );  //Affichage vignette à réaliser en premier
                                                         //Les données exifs lues à ce moment permettront la preview correcte de la légende
         //Affichage légende
@@ -206,8 +175,6 @@ void CCaptionManager::onPrevious(  )
 // next( QModelIndex& )
 // ----------------
 // Next photo requested by the ui
-// Out: (QModelIndex&) QModelIndex of the next photo
-// Returns: true if operation succedeed, false otherwise 
 //----------------------
 void CCaptionManager::onNext(  )
 {
@@ -221,6 +188,19 @@ void CCaptionManager::onNext(  )
     //m_photoDisplayed = m_photoDb.filename( m_photoIndex );
 }
 
+
+//-----------------------
+// onThumbLoaded( int id )
+// ----------------
+// A thumbnail has been loaded
+// Ask for display if corresponding to the selection
+//----------------------
+void CCaptionManager::onThumbLoaded( int id )
+{
+    if( id == m_photoSelected.index() ) {
+        display( id );
+    }
+}
 
 
 /******************* SLOTS ************************/
@@ -246,15 +226,12 @@ void CCaptionManager::onListPressed( QModelIndex indexPhotoSelected )
 //----------------------
 void CCaptionManager::onListUpdated( )
 {
-    qDebug() << "CaptionManager: list updated.";
     int newPhotoIndex = m_photoDb.id( m_photoSelected.name() );
     if( newPhotoIndex != m_photoSelected.index() ) {
         if( newPhotoIndex == -1 ) { //Photo is no longer present in the db
-            //m_photoIndex = 0;
             m_photoSelected.setIndex(0);
         }
         else {
-            //m_photoIndex = newPhotoIndex;
             m_photoSelected.setIndex( newPhotoIndex );
         }
         display( m_photoSelected.index() );
@@ -299,7 +276,7 @@ void CCaptionManager::onCaptionEndingEdited( QString text )
         properties->setCaption( caption );
     }
     m_f_captionsEdited = true;
-
+    
     //Affichage de la preview    
     CPhotoProperties* properties = m_photoDb.properties( m_photoSelected.index() );
     CCaption caption = properties->caption();
