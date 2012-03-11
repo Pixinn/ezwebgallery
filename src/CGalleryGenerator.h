@@ -81,7 +81,7 @@ public:
     CGalleryGenerator( void );
     ~CGalleryGenerator( void );
     //Interface avec UI
-    void generateGallery( CProjectParameters &, const CSkinParameters &, const QList<CPhotoProperties*> );
+    bool generateGallery( CProjectParameters &, const CSkinParameters &, const QList<CPhotoProperties*> );
     bool isGenerationInProgress( void );
     void abordGeneration( void );
     

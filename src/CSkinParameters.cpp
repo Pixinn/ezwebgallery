@@ -44,7 +44,8 @@
 * ---------
 * Constructeur par dfaut
 *****************************************************/
-CSkinParameters::CSkinParameters()
+CSkinParameters::CSkinParameters() :
+    f_initialized( false )
 {        
     //--- Inits
     m_styleSheet = CCssSheet("skin");
@@ -76,12 +77,13 @@ CSkinParameters& CSkinParameters::operator=(const CSkinParameters &source)
         this->m_styleSheet = source.m_styleSheet;
         this->m_filePath = source.m_filePath;
         this->m_version = source.m_version;
+        this->f_initialized = source.f_initialized;
     }
     return *this;
 }
 
 /****************************************************
-* operator=(const CSkinParameters& source)
+* operator==(const CSkinParameters& source)
 * ---------
 * L'hritage de QObject oblige de redfinir cet oprateur
 * voir: http://www.fredosaurus.com/notes-cpp/oop-overloading/overloadassign.html
@@ -98,6 +100,7 @@ bool CSkinParameters::operator ==( const CSkinParameters &source)
     if( this->m_styleSheet != source.m_styleSheet ){    return false;   }
     if( this->m_filePath != source.m_filePath ){    return false;   }
     if( this->m_version != source.m_version ){ return false; }
+    if( this->f_initialized != source.f_initialized ){ return false; }
     return true;
 }
 
@@ -174,7 +177,6 @@ void CSkinParameters::fromUi( )
     m_ressources.insert( "PhotoPage_BckgTexture",m_p_ui->cImagePicker_Photo_BckgTexture->fileName() );    
     m_ressources.insert( "PhotoButtonPrevious", m_p_ui->CImagePicker_PreviousButton_Icon->fileName() );
     m_ressources.insert( "PhotoButtonNext", m_p_ui->CImagePicker_NextButton_Icon->fileName() );
-//    m_ressources.insert( "PhotoButtonIndex", m_p_ui->CImagePicker_BrowseButton_Icon->fileName() );
     //Ressources ajoutes sous conditions
     if( m_p_ui->groupBox_PhotoNavBlocksBckg->isChecked() ){
         m_ressources.insert( "PhotoNavBlocks_BckgTexture", m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->fileName() );
@@ -248,16 +250,7 @@ void CSkinParameters::fromUi( )
         photoPadding.setProperty( QString("border-width"), QString::number(photoPaddingSize) + QString("px") );
     m_styleSheet.addSelection( photoPadding );
 
-    //Titre
-    /*CCssSelection photoTitle( QString("div#photoTitle") );
-        photoTitle.setProperty( QString("font-weight"), m_p_ui->comboBox_PhotoTitle_FontWeight->currentText() );
-        photoTitle.setProperty( QString("font-family"), m_p_ui->comboBox_PhotoTitle_FontFamily->currentText() );
-        photoTitle.setProperty( QString("font-variant"), m_p_ui->comboBox_PhotoTitle_FontVariant->currentText() );
-        photoTitle.setProperty( QString("font-size"), QString::number(m_p_ui->doubleSpinBox_PhotoTitle_FontSize->value()) + QString("em")  );
-        //photoTitle.setProperty( QString("min-height"),  QString::number(m_p_ui->doubleSpinBox_PhotoTitle_FontSize->value()) + QString("em")  ); //Mme taille que Title Font-Size
-        photoTitle.setProperty( QString("color"), m_p_ui->cColorPicker_PhotoTitle_TextColor->value() );
-    m_styleSheet.addSelection( photoTitle );*/
-    //Lgendes
+    //Légendes
     CCssSelection photoCaptions( QString("div.photoCaption") );
         photoCaptions.setProperty( QString("font-weight"), m_p_ui->comboBox_PhotoCaption_FontWeight->currentText() );
         photoCaptions.setProperty( QString("font-family"), m_p_ui->comboBox_PhotoCaption_FontFamily->currentText() );
@@ -416,7 +409,7 @@ void CSkinParameters::fromDomDocument( QDomDocument &document )
         }
         node = node.nextSibling();
     }
-
+f_initialized = true;
 }
 
 

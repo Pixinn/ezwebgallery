@@ -128,6 +128,8 @@
  public:
         static CPhotoDatabase& getInstance( void ) { return s_instance; }
         void init( void );
+
+        inline bool contains( const QString& filename ) { return m_db.contains( filename ); }
     
         QStringList checkPhotosInDb( void ); //Returns a list of the photos present in the DB but not on the disk
         QStringList photosModified( void ) const; //List of the removed or modified files
@@ -139,6 +141,7 @@
 
         void remove( int );
         void remove( const QString &);
+        void remove( const QStringList & );
         
         void swap( int id1, int id2 );
         void swap( const QString & name1, const QString & name2 );

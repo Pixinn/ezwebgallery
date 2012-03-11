@@ -109,7 +109,7 @@ Windows *
     + NOTE: These dll must be provided when distributing EZWebGallery. Use "create_release.bat" to generate a proper distribution including those libraries.    
 
 * If you wish to compile Qt yourself, you can use the folowing options :
-configure -opensource -sse2 -no-webkit -dsp no-opengl -debug-and-release -mp
+configure -opensource -sse2 -no-webkit -dsp -no-opengl -debug-and-release -mp
 
 *Check that the "additionnal Include directories" of the project are set as below:
 .\;.\global;.\ui;.\widgets;$(MAGICK_HOME)\;$(MAGICK_HOME)\Magick++\lib;%(AdditionalIncludeDirectories);$(QTDIR)\lib;$(QTDIR)\mkspecs\win32-msvc2010;$(QTDIR)\include\;$(QTDIR)\include\Qt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtXml

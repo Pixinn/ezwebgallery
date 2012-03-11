@@ -22,7 +22,6 @@
 #include <QStringListModel>
 #include <QStringList>
 #include <QMutableMapIterator>
-#include <QDebug>
 
 #include "CCaptionManager.h"
 
@@ -37,40 +36,6 @@ CCaptionManager::CCaptionManager( ) :
     connect( &m_photoDb, SIGNAL(layoutChanged()), this, SLOT(onListUpdated()) );
     connect( &m_photoDb, SIGNAL(thumbnailLoaded( int )), this, SLOT(onThumbLoaded( int )) );
 }
-/*
-//-----------------------
-// CCaptionManager(const CCaptionManager & toCopy)
-// ----------------
-// Surcharge de l'assignation.
-// Attention :  + on perd toutes les connections SIGNAUX/SLOTS dûes à QObject !!
-//              + La classe ne sera pas connextée à une QListeView => utiliser setPhotoList( QListView* ) !!!
-//----------------------
-CCaptionManager::CCaptionManager( const CCaptionManager & toCopy ) :
-    QObject( ), 
-    m_photoDb( CPhotoDatabase::getInstance() ),
-    m_photoSelected( toCopy.m_photoSelected )
-{
-    //m_photoIndex = 0;
-    m_f_captionsEdited = toCopy.m_f_captionsEdited;
-    
-    connect( &m_photoDb, SIGNAL(layoutChanged()), this, SLOT(onListUpdated()) );
-}
-
-//-----------------------
-// operator=(const CCaptionManager & toCopy)
-// ----------------
-// Surcharge de l'assignation.
-// Attention :  + on perd toutes les connections SIGNAUX/SLOTS dûes à QObject !!
-//              + La classe ne sera pas connextée à une QListeView => utiliser setPhotoList( QListView* ) !!!
-//----------------------
-CCaptionManager CCaptionManager::operator=(const CCaptionManager & toCopy)
-{
-    //this->m_photoIndex = 0;
-    m_photoSelected = toCopy.m_photoSelected;
-    this->m_f_captionsEdited = toCopy.m_f_captionsEdited;
-
-    return *this;
-}*/
 
 //-----------------------
 // reset( )
@@ -94,6 +59,9 @@ void CCaptionManager::reset( )
             caption.setHeader( ref.header() );
             properties->setCaption( caption );
         }
+    }
+    else {
+        emit clearThumbnail();
     }
 }
 
@@ -258,7 +226,6 @@ void CCaptionManager::onListPressed( QModelIndex indexPhotoSelected )
 //----------------------
 void CCaptionManager::onListUpdated( )
 {
-    qDebug() << "CaptionManager: list updated.";
     int newPhotoIndex = m_photoDb.id( m_photoSelected.name() );
     if( newPhotoIndex != m_photoSelected.index() ) {
         if( newPhotoIndex == -1 ) { //Photo is no longer present in the db

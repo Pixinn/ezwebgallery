@@ -254,7 +254,6 @@ void CPhotoDatabase::thumbnailLoaded( const CLoadedThumbnail & thumbnail )
 {
     QFileInfo fileInfo( thumbnail.getFilePath() );
     QString fileName = fileInfo.fileName();
-    qDebug() << fileName << " loaded!";
     CPhotoDatabaseElem* elem = m_db.value( fileName, NULL );
     if( elem != NULL ) { //Keeping this test is ESSENTIAL: as a flushed loader can emit its last thumbnail afterwards
         elem->setExifTags( thumbnail.getExifTags() );
@@ -311,15 +310,16 @@ QStringList CPhotoDatabase::refresh( const QStringList & fileSet )
     }
 
     //1 - Removing non-provided files from the db
-    qDebug() << "REFRESH";
+    //Building a list of the photos missing from the new fileset
     foreach( CPhotoProperties* properties, m_db )  {
-        qDebug() << properties->id() << ": " << properties->fileName();
         QString fileName = properties->fileInfo().fileName();
         if( !fileNameSet.contains( fileName ) ) {
-            remove( fileName );
-            removedfiles << fileName;
+            removedfiles << fileName; 
         }
     }
+    //Removing these photos
+    remove( removedfiles );
+
     //2 - adding provided files. Some properties of preexisting files are preserved.
     //    see add( QString ) definition.  
     foreach( QString filePath, fileSet )
@@ -352,7 +352,7 @@ QStringList CPhotoDatabase::refresh( const QStringList & fileSet )
         foreach( QString file, invalidFiles ) {
             details.append( file + QString('\n') );
         }
-        CMessage err( tr("Some photos are invalid."), QString(), details );
+        CMessage err( CMessage::message(CMessage::Err_InvalidFiles), QString(), details );
         emit error( err );
     }
 
@@ -530,8 +530,6 @@ bool CPhotoDatabase::add( const CPhotoProperties& properties )
         //adding to db
         m_db.insert( filename, photoElem );
 
-        qDebug() << "add( properties ) - " << id << ": " << properties.fileName();
-
         //async thumbnail loading
         loadThumbnail( filename ); //MUST be placed afert insert: the element has ti be present in the db
     }
@@ -606,6 +604,48 @@ void CPhotoDatabase::remove( int id )
     const QString filename = orderedKeys.at( id ); //we could use m_model.data( QModelIndex ).toString() but I don't understand how to use QModelIndex
     remove( filename );
     //emit updatedProperties( propertiesList() );
+}
+
+
+/*******************************************************************
+* remove( const QString & ); 
+* ---------
+* remove a list of photos from the db
+* In : (QStringList) fileList
+********************************************************************/
+void CPhotoDatabase::remove( const QStringList & fileList )
+{
+    QStringList orderedKeys = m_model.stringList();
+    foreach( QString photo, fileList )
+    {
+       if( m_db.contains( photo ) )
+       {
+           //removing corresponding properties from the database
+           orderedKeys.removeAll( photo );
+           CPhotoProperties* properties = m_db.value( photo );                      
+           m_loader.stopLoading( properties->fileInfo().absoluteFilePath() );// Stop thumbnail loading 
+           m_db.remove( photo );
+           delete properties;
+       }
+    }
+    m_model.setStringList( orderedKeys );
+
+    //Reordering the remaining properties
+    int id = 0;
+    QStringList::Iterator it = orderedKeys.begin();
+    while( it < orderedKeys.end() )
+    {
+         //updating id
+         CPhotoProperties* properties = m_db.value( *it );
+         properties->setId( id );
+         CCaption caption = properties->caption();
+         caption.setId( id + 1);
+         properties->setCaption( caption );
+         //next
+         id++;
+         it++;
+    }
+
 }
 
 
@@ -798,6 +838,7 @@ const QImage& CPhotoDatabase::thumbnail( int id  ) const
        return elem->m_thumbnail;
     }
     else { 
+       //We should avoid entering here!
        return CPhotoDatabaseElem::CDefaultThumbnail::getInstance();
     }
 }

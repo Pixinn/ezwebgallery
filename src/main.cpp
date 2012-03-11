@@ -98,11 +98,15 @@ int main(int argc, char *argv[])
         //Instanciation UI
         CTerminalUi* appCLI = new CTerminalUi( galleryGenerator, appli.arguments().at(1) );
 
-        //Connections UI<->Gnrateur
+        //Connections UI<->Générateur
         QObject::connect( &galleryGenerator, SIGNAL( debugSignal(QString)), appCLI, SLOT(onLogMsg(QString)) );
         QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, QString ) ), appCLI, SLOT( onProgressBar( int, QString, QString ) ) );
         QObject::connect( &galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), appCLI, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
         QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appCLI, SLOT( onForceStoppedFinished( QStringList ) ) );
+        // DB -> UI
+        QObject::connect( &photoDatabase, SIGNAL( error( CMessage ) ), appCLI, SLOT( error( CMessage ) ) );
+        QObject::connect( &photoDatabase, SIGNAL( warning( CMessage ) ), appCLI, SLOT( warning( CMessage ) ) );
+        QObject::connect( &photoDatabase, SIGNAL( message( CMessage ) ), appCLI, SLOT( information( CMessage ) ) );
 
         //Excution
         QObject::connect( appCLI, SIGNAL(done()), &appli, SLOT(quit()));

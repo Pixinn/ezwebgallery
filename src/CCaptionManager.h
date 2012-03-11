@@ -101,6 +101,7 @@ private:
         void displayCaptionSignal( QString );
         void displayPreviewSignal( QString );
         void displayHighlightIndex( QModelIndex );
+        void clearThumbnail( void );
 
     public slots:
         void onListPressed( QModelIndex ); //Button pressed on the list view

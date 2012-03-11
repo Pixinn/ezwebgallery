@@ -156,7 +156,8 @@ class CProjectParameters :  public QObject, public IParameters<Ui::MainWin>
 public:
     CProjectParameters( void ) :
         QObject( ),
-            m_feeder( CPhotoFeederDirectory::getInstance() )
+        f_initialized( false ),
+        m_feeder( CPhotoFeederDirectory::getInstance() )
     {           
         m_galleryConfig.f_regeneration = true;
         m_photosConfig.f_regeneration = true;
@@ -180,6 +181,7 @@ public:
     bool load( const QString & );                                //Chargement d'un fichier de paramtres
     bool save( const QString & );                                //Sauvegarde d'un fichier de paramtres
     unsigned int version( void ) {return m_version;}             //Retoune le status du projet
+    inline bool initialized( void ) { return f_initialized; }
 private:
     static const unsigned int s_versionFilePath = 20111217;
     QDomDocument convertFromOldVersion( const QDomDocument &document, const int version );    //Convertion du projet d'une version prcdante en la version actuelle
@@ -187,7 +189,7 @@ private:
 signals:
     void loaded(QString);
     void saved(QString);
-    //void message(QString);
+    void message(CMessage);
 
 
 // !! BIEN METTRE A JOUR operator= , == et != en cas d'ajout d'attribut !! //
@@ -200,6 +202,7 @@ private:
     CCaptionManager* m_p_captionManager;
     CSkinParameters* m_p_skin;
     unsigned int m_version;
+    bool f_initialized;
     CPhotoFeederDirectory& m_feeder;
 };
 

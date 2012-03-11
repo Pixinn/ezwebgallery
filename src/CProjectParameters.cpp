@@ -26,6 +26,7 @@
 #include "CDebug.h"
 #include "CTaggedString.h"
 #include "CPhotoDatabase.h"
+#include "CMessage.h"
 
 
 /*********************** STRUCTURES DE DONNEES ************************/
@@ -144,13 +145,12 @@ CProjectParameters& CProjectParameters::operator=(const CProjectParameters &sour
         this->m_galleryConfig = source.m_galleryConfig;
         this->m_photosConfig = source.m_photosConfig;
         this->m_thumbsConfig = source.m_thumbsConfig;
-//        this->m_photosList = source.m_photosList;
         this->m_p_captionManager = source.m_p_captionManager;
         this->m_p_skin = source.m_p_skin;
         this->m_p_ui = source.m_p_ui;
         this->m_version = source.m_version;
-//        this->m_photoPropertiesMap = source.m_photoPropertiesMap;
         this->m_feeder = source.m_feeder;
+        this->f_initialized = source.f_initialized;
     }
     return *this;
 }
@@ -174,6 +174,7 @@ bool CProjectParameters::operator==(const CProjectParameters &source)
         || m_p_skin != source.m_p_skin
         || m_version != source.m_version
         || m_feeder != source.m_feeder
+        || f_initialized != source.f_initialized
        )
     {
         f_result =  false;
@@ -288,8 +289,6 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     QDomElement photoListElem = root.firstChildElement( "PhotoList" );
 
 
-//    m_photosList.clear();
-//    m_photoPropertiesMap.clear();
     //--- CONFIG GALLERY
     m_galleryConfig.title = galleryConfElem.firstChildElement( "title" ).text();
     m_galleryConfig.description = galleryConfElem.firstChildElement( "description" ).text();
@@ -357,9 +356,19 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     //current file format
     else
     {
-        CPhotoDatabase::getInstance().build( photoListElem );
+        QStringList missingFiles = CPhotoDatabase::getInstance().build( photoListElem );
+        if( !missingFiles.isEmpty() )
+        {   //Some files were not found
+            QString details;
+            foreach( QString file, missingFiles ) {
+                details.append( file + QString('\n') );
+            }
+            CMessage info( CMessage::message(CMessage::Info_RemovingPhotos), QString(), details );
+            emit message( info );
+        }
     }
 
+    f_initialized = true;
 }
 
 
@@ -584,6 +593,7 @@ bool CProjectParameters::load( const QString &fileToLoad )
         return true;
     }
     else{
+        f_initialized = false;
         return false;
     }
 }

@@ -21,13 +21,13 @@
         <translation type="obsolete">Unknown error.</translation>
     </message>
     <message>
-        <location filename="../../CGalleryGenerator.cpp" line="266"/>
+        <location filename="../../CGalleryGenerator.cpp" line="271"/>
         <source>Generating the file structure...</source>
         <translation>Generating the file structure...</translation>
     </message>
     <message>
-        <location filename="../../CGalleryGenerator.cpp" line="429"/>
-        <location filename="../../CGalleryGenerator.cpp" line="882"/>
+        <location filename="../../CGalleryGenerator.cpp" line="434"/>
+        <location filename="../../CGalleryGenerator.cpp" line="887"/>
         <source>Generating the photos : </source>
         <translation>Generating the photos :</translation>
     </message>
@@ -36,27 +36,27 @@
         <translation type="obsolete">Skinning...</translation>
     </message>
     <message>
-        <location filename="../../CGalleryGenerator.cpp" line="615"/>
+        <location filename="../../CGalleryGenerator.cpp" line="620"/>
         <source>Skinning...</source>
         <translation>Skinning...</translation>
     </message>
     <message>
-        <location filename="../../CGalleryGenerator.cpp" line="782"/>
+        <location filename="../../CGalleryGenerator.cpp" line="787"/>
         <source>Photo gallery designed and generated using EZWebGallery.</source>
         <translation>Photo gallery designed and generated using EZWebGallery.</translation>
     </message>
     <message>
-        <location filename="../../CGalleryGenerator.cpp" line="814"/>
+        <location filename="../../CGalleryGenerator.cpp" line="819"/>
         <source>Previous photo</source>
         <translation>Previous photo</translation>
     </message>
     <message>
-        <location filename="../../CGalleryGenerator.cpp" line="818"/>
+        <location filename="../../CGalleryGenerator.cpp" line="823"/>
         <source>Next photo</source>
         <translation>Next photo</translation>
     </message>
     <message>
-        <location filename="../../CGalleryGenerator.cpp" line="822"/>
+        <location filename="../../CGalleryGenerator.cpp" line="827"/>
         <source>Browse the gallery</source>
         <translation>Browse the gallery</translation>
     </message>
@@ -95,9 +95,13 @@
 <context>
     <name>CPhotoDatabase</name>
     <message>
-        <location filename="../../CPhotoDatabase.cpp" line="269"/>
         <source>Some photos are invalid.</source>
-        <translation>Some photos are invalid.</translation>
+        <translation type="obsolete">Some photos are invalid.</translation>
+    </message>
+    <message>
+        <location filename="../../CPhotoDatabase.cpp" line="58"/>
+        <source>Loading preview...</source>
+        <translation>Loading preview...</translation>
     </message>
 </context>
 <context>
@@ -122,13 +126,13 @@
 <context>
     <name>CProjectParameters</name>
     <message>
-        <location filename="../../CProjectParameters.cpp" line="306"/>
-        <location filename="../../CProjectParameters.cpp" line="314"/>
+        <location filename="../../CProjectParameters.cpp" line="305"/>
+        <location filename="../../CProjectParameters.cpp" line="313"/>
         <source> doesn&apos;t exists</source>
         <translation> doesn&apos;t exists</translation>
     </message>
     <message>
-        <location filename="../../CProjectParameters.cpp" line="354"/>
+        <location filename="../../CProjectParameters.cpp" line="353"/>
         <source>Importing deprecated project: </source>
         <translation>Importing deprecated project: </translation>
     </message>
@@ -136,32 +140,32 @@
 <context>
     <name>CSkinParameters</name>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="947"/>
+        <location filename="../../CSkinParameters.cpp" line="940"/>
         <source>No error.</source>
         <translation>No error.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="950"/>
+        <location filename="../../CSkinParameters.cpp" line="943"/>
         <source>Cannot overwrite default skin.</source>
         <translation>Cannot overwrite default skin.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="953"/>
+        <location filename="../../CSkinParameters.cpp" line="946"/>
         <source>Destination folder doesn&apos;t exists.</source>
         <translation>Destination folder doesn&apos;t exists.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="837"/>
+        <location filename="../../CSkinParameters.cpp" line="830"/>
         <source>invalid character in filename.</source>
         <translation>invalid character in filename.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="842"/>
+        <location filename="../../CSkinParameters.cpp" line="835"/>
         <source>Button &quot;Previous&quot; - an image is required.</source>
         <translation>Button &quot;Previous&quot; - an image is required.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="845"/>
+        <location filename="../../CSkinParameters.cpp" line="838"/>
         <source>Button &quot;Next&quot; - an image is required.</source>
         <translation>Button &quot;Next&quot; - an image is required.</translation>
     </message>
@@ -170,17 +174,17 @@
         <translation type="obsolete">Button &quot;Browse&quot; - an image is required.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="853"/>
+        <location filename="../../CSkinParameters.cpp" line="846"/>
         <source>The zones containing the Previous/Next buttons are smaller than the buttons themselves.</source>
         <translation>The zones containing the Previous/Next buttons are smaller than the buttons themselves.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="956"/>
+        <location filename="../../CSkinParameters.cpp" line="949"/>
         <source>Cannot load the skin.</source>
         <translation>Cannot load the skin.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="958"/>
+        <location filename="../../CSkinParameters.cpp" line="951"/>
         <source>Unknown error.</source>
         <translation>Unknown error.</translation>
     </message>
@@ -198,52 +202,63 @@
         <translation>Generation successfully completed.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="95"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="135"/>
         <source>EZWebGallery started.</source>
         <translation>EZWebGallery started.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="102"/>
-        <location filename="../../ui/CTerminalUi.cpp" line="117"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="142"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="157"/>
         <source> loaded.</source>
         <translation> loaded.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="105"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="145"/>
         <source>Cannot load the project: </source>
         <translation>Cannot load the project: </translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="106"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="146"/>
         <source>Usage: GalleryDesigner [project file to load]</source>
         <translation>Usage: GalleryDesigner [project file to load]</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="112"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="152"/>
         <source>Cannot load the skin: </source>
         <translation>Cannot load the skin: </translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="123"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="163"/>
         <source>Creating the output folder: </source>
         <translation>Creating the output folder: </translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="125"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="165"/>
         <source>Output folder successfully created.</source>
         <translation>Output folder successfully created.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="153"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="184"/>
+        <source>Photos to be processed:</source>
+        <translation>Photos to be processed:</translation>
+    </message>
+    <message>
+        <location filename="../../ui/CTerminalUi.cpp" line="195"/>
+        <source>The gallery could not be properly generated.</source>
+        <translation>The gallery could not be properly generated.</translation>
+    </message>
+    <message>
+        <location filename="../../ui/CTerminalUi.cpp" line="206"/>
         <source>Canceling...</source>
         <translation>Canceling...</translation>
     </message>
     <message>
+        <location filename="../../ui/CTerminalUi.cpp" line="192"/>
         <source>Done.</source>
-        <translation type="obsolete">Done.</translation>
+        <translation>Done.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="127"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="167"/>
         <source>Folder creation impossible.</source>
         <translation>Folder creation impossible.</translation>
     </message>
@@ -282,7 +297,7 @@
         <translation type="obsolete">Your skin has been modified.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="491"/>
+        <location filename="../../ui/mainwin.cpp" line="501"/>
         <source>Open a project</source>
         <translation>Open a project</translation>
     </message>
@@ -298,9 +313,8 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete">Some photos cannot be found in this folder.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="564"/>
         <source>Do you want to manually provide their location ?</source>
-        <translation> Do you want to manually provide their location ?</translation>
+        <translation type="obsolete"> Do you want to manually provide their location ?</translation>
     </message>
     <message>
         <source>Please select the directory containing the project&apos;s photos.</source>
@@ -308,12 +322,12 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete">Please select the directory containing the project&apos;s photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="671"/>
+        <location filename="../../ui/mainwin.cpp" line="679"/>
         <source>Save a project</source>
         <translation>Save a project</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="751"/>
+        <location filename="../../ui/mainwin.cpp" line="759"/>
         <source>About EZWebGallery - svn version </source>
         <translation>About EZWebGallery - svn version </translation>
     </message>
@@ -330,7 +344,7 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete">not loaded</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="603"/>
+        <location filename="../../ui/mainwin.cpp" line="611"/>
         <source>Cannot load the skin: </source>
         <translation>Cannot load the skin: </translation>
     </message>
@@ -343,8 +357,8 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete"> Some photos cannot be found in this folder.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="651"/>
-        <location filename="../../ui/mainwin.cpp" line="689"/>
+        <location filename="../../ui/mainwin.cpp" line="659"/>
+        <location filename="../../ui/mainwin.cpp" line="697"/>
         <source>The session could not be saved.</source>
         <translation>The session could not be saved.</translation>
     </message>
@@ -353,28 +367,28 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;This program is a &lt;b&gt;FREEWARE&lt;/b&gt;. You can copy it and use it for any purpose but you are not allowed to modify it. It is provided &quot;as-is&quot; and cannot be held liable for any damage caused to your computer or your softwares.&lt;br&gt;Please read the provided &quot;ReadMe.txt&quot; file for further details.&lt;br&gt;&lt;br&gt;Download the latest version &lt;a href=&quot;http://ezwebgallery.pixinn.net/&quot;&gt;here&lt;/a&gt;.&lt;br&gt;Follow the news on &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;You can reach us at this address: ezwebgallery@pixinn.net</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="820"/>
+        <location filename="../../ui/mainwin.cpp" line="829"/>
         <source>Please select an input directory containing your pictures.</source>
         <translation>Please select an input directory containing your pictures.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="866"/>
+        <location filename="../../ui/mainwin.cpp" line="873"/>
         <source>Please select the output directory.</source>
         <translation>Please select the output directory.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="903"/>
+        <location filename="../../ui/mainwin.cpp" line="910"/>
         <source>Some configuration fields were not properly set.</source>
         <translation>Some configuration fields were not properly set.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="927"/>
+        <location filename="../../ui/mainwin.cpp" line="934"/>
         <source>Your skin is not valid.                                                                                </source>
         <comment>Please leave 60 blank space !</comment>
         <translation>Your skin is not valid.                                                                                </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="935"/>
+        <location filename="../../ui/mainwin.cpp" line="942"/>
         <source>Building photo list.</source>
         <translation>Building photo list.</translation>
     </message>
@@ -423,37 +437,32 @@ The legends have been automatically reassociated, but the process failed for %n 
         <translation>Logs</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="554"/>
         <source>Input folder does not exist.</source>
-        <translation>Input folder does not exist.</translation>
+        <translation type="obsolete">Input folder does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="561"/>
         <source>Input folder: </source>
         <comment>Source folder containing the pictures</comment>
-        <translation>Input folder: </translation>
+        <translation type="obsolete">Input folder: </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="563"/>
         <source>
 Some photos cannot be found. They will be removed from the project.
 </source>
-        <translation>Some photos cannot be found. They will be removed from the project.</translation>
+        <translation type="obsolete">Some photos cannot be found. They will be removed from the project.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="566"/>
         <source>Error:
 </source>
-        <translation>Error:</translation>
+        <translation type="obsolete">Error:</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="573"/>
         <source>Please select the directory containing the project&apos;s photos.</source>
         <comment>Relocalisation des photos</comment>
-        <translation>Please select the directory containing the project&apos;s photos.</translation>
+        <translation type="obsolete">Please select the directory containing the project&apos;s photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="603"/>
+        <location filename="../../ui/mainwin.cpp" line="611"/>
         <source>.
 
 Using default skin instead.</source>
@@ -462,55 +471,55 @@ Using default skin instead.</source>
 Using default skin instead.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="959"/>
+        <location filename="../../ui/mainwin.cpp" line="966"/>
         <source>No photo to process!</source>
         <translation>No photo to process!</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1123"/>
+        <location filename="../../ui/mainwin.cpp" line="1105"/>
         <source>The input directory does not exist.</source>
         <comment>Check before gallery generation</comment>
         <translation>The input directory does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1127"/>
+        <location filename="../../ui/mainwin.cpp" line="1109"/>
         <source>You have to define a title for your gallery.</source>
         <comment>Check before gallery generation</comment>
         <translation>You have to define a title for your gallery.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1131"/>
+        <location filename="../../ui/mainwin.cpp" line="1113"/>
         <source>The output directory does not exist.</source>
         <comment>Check before gallery generation</comment>
         <translation>The output directory does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1192"/>
+        <location filename="../../ui/mainwin.cpp" line="1174"/>
         <source>Do you want to save your changes?</source>
         <translation>Do you want to save your changes?</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1198"/>
+        <location filename="../../ui/mainwin.cpp" line="1180"/>
         <source>Your project has been modified.</source>
         <translation>Your project has been modified.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1212"/>
+        <location filename="../../ui/mainwin.cpp" line="1194"/>
         <source>Your project and your skin have been modified.</source>
         <translation>Your project and your skin have been modified.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1238"/>
+        <location filename="../../ui/mainwin.cpp" line="1220"/>
         <source>You are opening a project made with a version of EZWebGallery more recent than this one. Some parameters may get lost.</source>
         <translation>You are opening a project made with a version of EZWebGallery more recent than this one. Some parameters may get lost.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1324"/>
+        <location filename="../../ui/mainwin.cpp" line="1306"/>
         <source>this directory does not exist.</source>
         <translation>this directory does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="854"/>
+        <location filename="../../ui/mainwin.cpp" line="861"/>
         <source>Invalid directory.</source>
         <translation>Invalid directory.</translation>
     </message>
@@ -529,15 +538,15 @@ Using default skin instead.</translation>
         <translation type="obsolete">The provided output directory does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1325"/>
+        <location filename="../../ui/mainwin.cpp" line="1307"/>
         <source>Do you want to create it ?</source>
         <translation>Do you want to create it ?</translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.cpp" line="192"/>
-        <location filename="../../ui/mainwin.cpp" line="618"/>
-        <location filename="../../ui/mainwin.cpp" line="926"/>
-        <location filename="../../ui/mainwin.cpp" line="1338"/>
+        <location filename="../../ui/mainwin.cpp" line="626"/>
+        <location filename="../../ui/mainwin.cpp" line="933"/>
+        <location filename="../../ui/mainwin.cpp" line="1320"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
@@ -550,23 +559,23 @@ Using default skin instead.</translation>
         <translation type="obsolete">The input directory is empty !</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="967"/>
+        <location filename="../../ui/mainwin.cpp" line="974"/>
         <source>Canceling...</source>
         <translation>Canceling...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1031"/>
+        <location filename="../../ui/mainwin.cpp" line="1001"/>
         <source>No preview available.</source>
         <translation>No preview available.</translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.ui" line="2384"/>
-        <location filename="../../ui/mainwin.cpp" line="1142"/>
+        <location filename="../../ui/mainwin.cpp" line="1124"/>
         <source>&amp;Generate</source>
         <translation>&amp;Generate</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1148"/>
+        <location filename="../../ui/mainwin.cpp" line="1130"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancel</translation>
     </message>
@@ -1199,7 +1208,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../ui/mainwin.ui" line="2578"/>
-        <location filename="../../ui/mainwin.cpp" line="762"/>
+        <location filename="../../ui/mainwin.cpp" line="770"/>
         <source>About ImageMagick</source>
         <translation>About ImageMagick</translation>
     </message>
@@ -1559,7 +1568,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../global/CError.cpp" line="59"/>
-        <location filename="../../global/CMessage.cpp" line="60"/>
         <source>Some photos cannot be read from the disk. </source>
         <translation>Some photos cannot be read from the disk. </translation>
     </message>
@@ -1680,9 +1688,18 @@ p, li { white-space: pre-wrap; }
         <translation>French</translation>
     </message>
     <message>
-        <location filename="../../global/CMessage.cpp" line="64"/>
         <source>Some photos have been removed from the project. </source>
-        <translation>Some photos have been removed from the project. </translation>
+        <translation type="obsolete">Some photos have been removed from the project. </translation>
+    </message>
+    <message>
+        <location filename="../../global/CMessage.cpp" line="60"/>
+        <source>Some photos cannot be read from the disk.</source>
+        <translation>Some photos cannot be read from the disk.</translation>
+    </message>
+    <message>
+        <location filename="../../global/CMessage.cpp" line="64"/>
+        <source>Some photos can not be found and have been removed from the project.</source>
+        <translation>Some photos can not be found and have been removed from the project.</translation>
     </message>
     <message>
         <location filename="../../global/CMessage.cpp" line="67"/>

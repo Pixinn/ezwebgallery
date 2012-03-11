@@ -126,10 +126,13 @@ public:
 
     explicit CThumbnailLoadingManager( QObject *parent = 0 ) :
         QObject( parent ),
-        m_loader( QSize(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT), &m_mutex )
+        m_loader( *(new CThumbnailLoader(QSize(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT), &m_mutex)) )
     {   }  
     ~CThumbnailLoadingManager( void )
-    {   }
+    { 
+        m_loader.quit();
+        m_loader.deleteLater();
+    }
     void init( void )   //As a member of a static instance, connections cannot be performed in constructor
     {
         qRegisterMetaType<CLoadedThumbnail> ( "CLoadedThumbnail" );
@@ -149,7 +152,7 @@ signals:
     void loaded( const CLoadedThumbnail & );
 
 private:
-    CThumbnailLoader m_loader;
+    CThumbnailLoader& m_loader;
     QQueue<QString> m_loadingQueue;
     QMutex m_mutex;
     QString m_currentlyLoading;   

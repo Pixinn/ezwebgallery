@@ -16,8 +16,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QDebug>
-
 #include "CPhoto.h"
 #include "CThumbnailLoader.h"
 
@@ -49,14 +47,14 @@ void CThumbnailLoadingManager::load( const QString & filePath, e_Priority priori
         else {
              m_loadingQueue.append( filePath );
         }
-        qDebug() << filePath << ", not in queue.";
+        //qDebug() << filePath << ", not in queue.";
     }
     else //Already in the queue, put in front
     {
         if( m_currentlyLoading != filePath ) //m_currentlyLoading had been extracted from the queue
         {
             if( m_loadingQueue.at(0) != filePath ) {
-                qDebug() << m_loadingQueue.at(0) << ", removing from position " << QString::number(m_loadingQueue.indexOf( filePath ));
+                //qDebug() << m_loadingQueue.at(0) << ", removing from position " << QString::number(m_loadingQueue.indexOf( filePath ));
                 m_loadingQueue.removeAt( m_loadingQueue.indexOf( filePath ) ); //removing current occurence
                 m_loadingQueue.prepend( filePath ); //put in front                
             }
@@ -124,7 +122,7 @@ void CThumbnailLoadingManager::loadNext( )
         m_loader.start();
     }
     else {
-        qDebug() << "Queue empty.";
+        //qDebug() << "Queue empty.";
         m_currentlyLoading.clear();
     }
 }
@@ -158,8 +156,6 @@ void CThumbnailLoader::run( void )
     m_ptrMutex->unlock();
     const QSize thumbSize = m_thumbSize;
 
-    qDebug() << "Loading Thread started." << QFileInfo( filePath ).fileName();
-
     CPhoto photo;    
     
     if( photo.load( m_filePath ) ) //loading photo
@@ -170,18 +166,9 @@ void CThumbnailLoader::run( void )
 
         emit jobDone( loadedThumb );
     }
- /*   else
+    else
     {
-        //Loging messages if an error occured
-        if( !photo.errors().isEmpty() )
-        {
-            foreach( QString err, photo.errors() ){
-                CMessage msg( QString("[Thumbnail]." ) + err );
-                emit error( msg );
-            }
-            f_success = false;
-        }
-    }*/
+        //TO BE DONE
+    }
 
-    qDebug() << "Loading Thread finished.";
 }
