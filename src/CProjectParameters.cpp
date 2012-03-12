@@ -304,14 +304,8 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
         //emit message( inputFolder + tr(" doesn't exists") );
         CDebug::getInstance().message( inputFolder + tr(" doesn't exists") );
     }
-    QString outputFolder =  galleryConfElem.firstChildElement( "outputFolder" ).text();
-    if( QFileInfo(outputFolder).exists() ){ 
-        m_galleryConfig.outputDir = outputFolder;
-    }else{
-        m_galleryConfig.outputDir.clear();
-        //emit message( outputFolder + tr(" doesn't exists") );
-        CDebug::getInstance().message( outputFolder + tr(" doesn't exists") );
-    }
+    m_galleryConfig.outputDir =  galleryConfElem.firstChildElement( "outputFolder" ).text(); //DO NOT TEST IF THIS DIR STILL EXIST: it breaks cli!! It will be created if needed.
+
     m_galleryConfig.url = galleryConfElem.firstChildElement( "url" ).text();
     m_galleryConfig.skinPath = galleryConfElem.firstChildElement( "Skin" ).firstChildElement( "Path" ).text();
     m_p_skin->setName( galleryConfElem.firstChildElement( "Skin" ).attribute("name") );
