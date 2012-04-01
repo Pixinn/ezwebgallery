@@ -21,7 +21,7 @@ if not [%2] == [] goto :error
 
 SET JS_PATH=web\ressources\javascript
 
-md %1\min-js\core
+md %1\core
 
 echo on
 

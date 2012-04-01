@@ -340,60 +340,60 @@
 		<col def="S0">ISDotNetInstallerArgsCommit</col>
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
-		<row><td>CORE_RL_Magick___.dll2</td><td>{ACDC9EB4-C42F-441F-9F3A-F9E9A9564187}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_magick___.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>CORE_RL_bzlib_.dll2</td><td>{06FA2392-2D2A-4534-8EA8-A6C2F5C18E81}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_bzlib_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>CORE_RL_jpeg_.dll2</td><td>{19F0727D-350B-4F1C-9FED-FBFBD3577F8A}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_jpeg_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>CORE_RL_lcms_.dll2</td><td>{9ED4C105-93EB-4B44-871E-5D4CC7DC15CB}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_lcms_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>CORE_RL_magick_.dll2</td><td>{E93310B4-F831-468E-A2DC-F6AB409F4D59}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_magick_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>CORE_RL_png_.dll2</td><td>{98F95951-3C04-4DB8-9739-214C8F6684E0}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_png_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>CORE_RL_tiff_.dll2</td><td>{170958E3-1E80-46B0-9E5F-D87BEC59BCC0}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_tiff_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>CORE_RL_ttf_.dll2</td><td>{0589C2FA-2F31-4498-8AA7-743D278847B9}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_ttf_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>CORE_RL_wand_.dll2</td><td>{DB3DB767-3B9E-4FE4-8150-A2300291AA0A}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_wand_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>CORE_RL_xlib_.dll2</td><td>{644AD556-2E97-4075-A775-C659C3C57EFD}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_xlib_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>CORE_RL_zlib_.dll2</td><td>{28B0A70C-DF12-4C37-8DF8-057DD7DC9D91}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_zlib_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>EZWebGallery.exe2</td><td>{3312C82C-9DE8-4CF0-9363-0A5E00367BF5}</td><td>INSTALLDIR</td><td>2</td><td/><td>ezwebgallery.exe2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>IM_MOD_RL_jpeg_.dll2</td><td>{E8139316-7B77-4A10-9BA2-2C266D3A4C97}</td><td>INSTALLDIR</td><td>2</td><td/><td>im_mod_rl_jpeg_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>IM_MOD_RL_png_.dll2</td><td>{4C2A541A-1083-4169-9C35-46AA485A7EAF}</td><td>INSTALLDIR</td><td>2</td><td/><td>im_mod_rl_png_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>IM_MOD_RL_tiff_.dll2</td><td>{3EE0DEB9-F5A3-465F-AF8E-0544868981B0}</td><td>INSTALLDIR</td><td>2</td><td/><td>im_mod_rl_tiff_.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT</td><td>{D1798B2A-64F1-4A89-8BD3-846363FC1389}</td><td>IMAGEFORMATS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{36E80547-71A6-42D6-8091-D88AE7B663E3}</td><td>RES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT10</td><td>{A371392F-6F37-4382-BD0E-F0FB6B81A507}</td><td>TOOLS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT11</td><td>{83B9370C-5659-446F-9CAF-65E15FDD8FA5}</td><td>PHP</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT12</td><td>{8EC052F8-116A-433C-BC32-490C50A12AA0}</td><td>SKINS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT13</td><td>{8B5D1846-E7DF-4E93-9961-04D301FDA5FB}</td><td>AUTUMN_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT14</td><td>{898940E0-BF97-4B38-88AF-4D10BCA13E45}</td><td>IMAGES1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT15</td><td>{4F60BEF7-E842-4F53-AF71-56D03081D57C}</td><td>BLACKBOARD_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT16</td><td>{3A7ACE7E-E4E6-4F8C-AD85-ADD0BF5FC3D8}</td><td>IMAGES2</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT17</td><td>{1AE64D3C-EBE3-4BCB-AF1F-497A56302296}</td><td>DEFAULT_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT18</td><td>{AB47E031-1118-4005-AC31-BF206C885257}</td><td>IMAGES3</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT19</td><td>{6ACB2BDC-7694-4254-A75B-302C44F6954A}</td><td>EXEMPLE_HIGHLIGHT_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{09253DFC-2BF4-4A6B-8966-66B83B98B78F}</td><td>RESSOURCES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT20</td><td>{3267E930-A14E-41FF-9BB1-DEA6EB0B2452}</td><td>IMAGES4</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT21</td><td>{EF56961F-24C3-4236-97D4-8167540D1F24}</td><td>MORIA_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT22</td><td>{22C57571-30DD-4CDC-B582-B45CC44CAF34}</td><td>IMAGES5</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT23</td><td>{95D9FFA9-1DE0-4498-83B7-256FD3344076}</td><td>ORIENT_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT24</td><td>{98F8CA5F-A8EB-4A28-80B8-E3A28277F40D}</td><td>IMAGES6</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT25</td><td>{194F936D-3F2E-40F1-9C14-725914BFFF51}</td><td>WHITEPAPER_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT26</td><td>{6A8FA2F6-0065-44A5-9B6E-58FC194F65FD}</td><td>IMAGES7</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT27</td><td>{8F665797-5C24-43AC-AC28-58EC6DB699A6}</td><td>WINTER_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT28</td><td>{C8397E29-406E-4F97-AAF2-02F0FE7B6555}</td><td>IMAGES8</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>CORE_RL_Magick___.dll</td><td>{82625678-01F4-4154-906A-E18B15B2CB3F}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_magick___.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>CORE_RL_bzlib_.dll</td><td>{067C3335-ED7F-4C0F-9746-C5765A6CCF19}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_bzlib_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>CORE_RL_jpeg_.dll</td><td>{1656E164-D377-4BEE-A886-75B574B0EC91}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_jpeg_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>CORE_RL_lcms_.dll</td><td>{9CE85EC9-2B02-4027-B6A7-038F496E4D6E}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_lcms_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>CORE_RL_magick_.dll</td><td>{FFF1C6A5-FBB6-43E9-A43E-80502C16716F}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_magick_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>CORE_RL_png_.dll</td><td>{E430833E-C926-4167-A401-C7C8F6E43411}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_png_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>CORE_RL_tiff_.dll</td><td>{F30067F5-D39C-493C-82A8-7A2CFA728B96}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_tiff_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>CORE_RL_ttf_.dll</td><td>{92211CC5-DA91-4F0A-9AD9-27263BF9010C}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_ttf_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>CORE_RL_wand_.dll</td><td>{1D5AC6DF-2350-43AF-89EC-F0A69F88F2D3}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_wand_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>CORE_RL_xlib_.dll</td><td>{5106B999-8CD3-40F6-94F3-80A02504493D}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_xlib_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>CORE_RL_zlib_.dll</td><td>{0428ECBC-E85C-457A-8B93-592EC46E1BB9}</td><td>INSTALLDIR</td><td>2</td><td/><td>core_rl_zlib_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>EZWebGallery.exe</td><td>{AECA0C98-8384-4F70-B4D9-0047E55B9517}</td><td>INSTALLDIR</td><td>2</td><td/><td>ezwebgallery.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>IM_MOD_RL_jpeg_.dll</td><td>{A64C0EA3-959C-496D-94F6-DBA564C46A92}</td><td>INSTALLDIR</td><td>2</td><td/><td>im_mod_rl_jpeg_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>IM_MOD_RL_png_.dll</td><td>{579EFB62-2D4B-4D9B-9728-E6B0D3290D26}</td><td>INSTALLDIR</td><td>2</td><td/><td>im_mod_rl_png_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>IM_MOD_RL_tiff_.dll</td><td>{9ADC46DF-E88F-44D3-A530-F9BD096B60EA}</td><td>INSTALLDIR</td><td>2</td><td/><td>im_mod_rl_tiff_.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td>{DA55320B-BEBE-442A-A3CE-0353854C3663}</td><td>IMAGEFORMATS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{171CBCD7-1659-4CE7-8640-9EF435CF0203}</td><td>RES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT10</td><td>{3A4F47A7-09D9-46B1-92D4-8213321E9370}</td><td>TOOLS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT11</td><td>{D667FE52-7ED5-4D48-9E33-4F1DBDAC8259}</td><td>PHP</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT12</td><td>{3151C06C-354C-469E-BF89-80D42C0D3242}</td><td>SKINS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT13</td><td>{57B320A2-FA93-4EC9-A0B3-54A1BE419771}</td><td>AUTUMN_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT14</td><td>{55A62F8F-D8BB-4A2E-9A04-392726B15B05}</td><td>IMAGES1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT15</td><td>{6EC3E0FC-0CA6-48BB-9152-E068A7061F8B}</td><td>BLACKBOARD_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT16</td><td>{9DBAAB1B-CCA8-45E3-8D40-441FA34B21CE}</td><td>IMAGES2</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT17</td><td>{21652037-2739-4792-8AF1-67D793822253}</td><td>DEFAULT_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT18</td><td>{26B561ED-60C6-4D03-B560-A86977A5F9AE}</td><td>IMAGES3</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT19</td><td>{8099C138-2A6B-4641-8D2C-35661945C315}</td><td>EXEMPLE_HIGHLIGHT_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{2CEBA8C0-C60E-44C9-82D6-869891D6353C}</td><td>RESSOURCES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT20</td><td>{8B7ABE2A-B3FB-48E4-B6A7-BA052227CE94}</td><td>IMAGES4</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT21</td><td>{FE240CB9-FBE8-4662-AC13-C983D7907417}</td><td>MORIA_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT22</td><td>{20088107-E8C3-43CE-9B82-4C02BA84172E}</td><td>IMAGES5</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT23</td><td>{622F2FCD-BD32-4858-B6A5-44A079602D83}</td><td>ORIENT_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT24</td><td>{3B73D09E-56F6-4090-AA89-92A90E669421}</td><td>IMAGES6</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT25</td><td>{BFDF0E88-08E1-4E3C-B0D8-7C5B27336C6D}</td><td>WHITEPAPER_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT26</td><td>{A79F35F4-599D-4BC2-80E7-E50DCB60C09F}</td><td>IMAGES7</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT27</td><td>{8EE5EAFF-7B05-42ED-91DA-D51D8DF5D501}</td><td>WINTER_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT28</td><td>{84C3C794-7F69-4748-B530-CD4502272EE5}</td><td>IMAGES8</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT29</td><td>{9127C48C-B05B-48E4-8FD5-4A4F790D62B4}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{B0397193-F154-406F-850D-90440CE1C1FF}</td><td>CSS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{EF42B96D-E599-417B-BBDA-83DC959A831A}</td><td>IMAGES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{0C831E16-6579-4D82-B128-4F31237A9800}</td><td>SMILEYS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{2B0C4E3D-2381-4DC1-BBC6-A3305D3080D5}</td><td>JAVASCRIPT</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT7</td><td>{BE9A5E06-962F-4D62-9EC6-372E6E8C7286}</td><td>CORE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT8</td><td>{DD955279-99E8-46E7-99F6-AA9F7799AC4D}</td><td>JQUERY</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT9</td><td>{247CDED5-E733-4000-9660-B7BF540FD00F}</td><td>PLUGINS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>QtCore4.dll2</td><td>{ADFF5C17-6B58-4FC3-9108-140B18C23E72}</td><td>INSTALLDIR</td><td>2</td><td/><td>qtcore4.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>QtGui4.dll2</td><td>{C6E31CAC-32A6-4681-A8DF-CF3D95367946}</td><td>INSTALLDIR</td><td>2</td><td/><td>qtgui4.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>QtXml4.dll2</td><td>{BBE91F9F-026B-4DCD-A729-30E1752EB002}</td><td>INSTALLDIR</td><td>2</td><td/><td>qtxml4.dll2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>qgif4.dll</td><td>{4EC4D572-A681-49C9-BA1B-87DA90313BC6}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qgif4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>qico4.dll</td><td>{36CE39F3-A589-4BD0-B50C-8B4B89099B23}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qico4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>qjpeg4.dll</td><td>{ADDB9588-11F5-4831-8BEB-026484D0B010}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qjpeg4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>qmng4.dll</td><td>{D162AFE3-FE83-4F54-9B35-8A71B81FE4B3}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qmng4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>qsvg4.dll</td><td>{3A3ACBD2-6E1D-4DAE-A95C-A4B70BB6CB0E}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qsvg4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>qtiff4.dll</td><td>{81409584-7211-42CD-8F35-1DD595758890}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qtiff4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{E3D55FA8-FA23-43AA-ABA0-54A653474EF6}</td><td>CSS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{E3BFE15E-1BAE-475B-B053-D8EC67E81DBA}</td><td>IMAGES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{25AE58E9-294C-4910-9F8D-7733C57CBAA2}</td><td>SMILEYS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{DBFA26E5-181F-46CC-B415-0083C69DECAF}</td><td>JAVASCRIPT</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT7</td><td>{D5C4813F-38E4-44D2-A3D2-489412678907}</td><td>CORE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT8</td><td>{00271B62-7575-4CD2-AA6E-C3481EC42420}</td><td>JQUERY</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT9</td><td>{8D687F9B-2E73-433F-B7A5-1B29ED22B568}</td><td>PLUGINS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>QtCore4.dll</td><td>{9AAA2B8F-46BF-4C8C-8BC2-BC9618FCC315}</td><td>INSTALLDIR</td><td>2</td><td/><td>qtcore4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>QtGui4.dll</td><td>{D08C6E49-8296-4E82-9101-F08A72A5452D}</td><td>INSTALLDIR</td><td>2</td><td/><td>qtgui4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>QtXml4.dll</td><td>{D7FC9B16-7E8A-4F59-BDF7-8D4BE730FE6D}</td><td>INSTALLDIR</td><td>2</td><td/><td>qtxml4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qgif4.dll</td><td>{4FA5771C-7259-4342-BAFC-7DC3E9D788F3}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qgif4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qico4.dll</td><td>{728A2731-0E90-44C6-891C-94818B4E7F31}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qico4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qjpeg4.dll</td><td>{8BF29E67-7C5F-4A77-8D00-87B0CF76F38C}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qjpeg4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qmng4.dll</td><td>{01BF80EC-D846-40C6-A5BF-44C63E878182}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qmng4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qsvg4.dll</td><td>{9F161A61-C117-46A8-99B9-7C7DE0D8F611}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qsvg4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qtiff4.dll</td><td>{6B2DEB9B-634D-4C52-B45F-ED4B8E144197}</td><td>IMAGEFORMATS</td><td>2</td><td/><td>qtiff4.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
 	<table name="Condition">
@@ -1956,21 +1956,21 @@
 	<table name="FeatureComponents">
 		<col key="yes" def="s38">Feature_</col>
 		<col key="yes" def="s72">Component_</col>
-		<row><td>AlwaysInstall</td><td>CORE_RL_Magick___.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>CORE_RL_bzlib_.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>CORE_RL_jpeg_.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>CORE_RL_lcms_.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>CORE_RL_magick_.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>CORE_RL_png_.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>CORE_RL_tiff_.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>CORE_RL_ttf_.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>CORE_RL_wand_.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>CORE_RL_xlib_.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>CORE_RL_zlib_.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>EZWebGallery.exe2</td></row>
-		<row><td>AlwaysInstall</td><td>IM_MOD_RL_jpeg_.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>IM_MOD_RL_png_.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>IM_MOD_RL_tiff_.dll2</td></row>
+		<row><td>AlwaysInstall</td><td>CORE_RL_Magick___.dll</td></row>
+		<row><td>AlwaysInstall</td><td>CORE_RL_bzlib_.dll</td></row>
+		<row><td>AlwaysInstall</td><td>CORE_RL_jpeg_.dll</td></row>
+		<row><td>AlwaysInstall</td><td>CORE_RL_lcms_.dll</td></row>
+		<row><td>AlwaysInstall</td><td>CORE_RL_magick_.dll</td></row>
+		<row><td>AlwaysInstall</td><td>CORE_RL_png_.dll</td></row>
+		<row><td>AlwaysInstall</td><td>CORE_RL_tiff_.dll</td></row>
+		<row><td>AlwaysInstall</td><td>CORE_RL_ttf_.dll</td></row>
+		<row><td>AlwaysInstall</td><td>CORE_RL_wand_.dll</td></row>
+		<row><td>AlwaysInstall</td><td>CORE_RL_xlib_.dll</td></row>
+		<row><td>AlwaysInstall</td><td>CORE_RL_zlib_.dll</td></row>
+		<row><td>AlwaysInstall</td><td>EZWebGallery.exe</td></row>
+		<row><td>AlwaysInstall</td><td>IM_MOD_RL_jpeg_.dll</td></row>
+		<row><td>AlwaysInstall</td><td>IM_MOD_RL_png_.dll</td></row>
+		<row><td>AlwaysInstall</td><td>IM_MOD_RL_tiff_.dll</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT10</td></row>
@@ -2001,9 +2001,9 @@
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT7</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT8</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT9</td></row>
-		<row><td>AlwaysInstall</td><td>QtCore4.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>QtGui4.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>QtXml4.dll2</td></row>
+		<row><td>AlwaysInstall</td><td>QtCore4.dll</td></row>
+		<row><td>AlwaysInstall</td><td>QtGui4.dll</td></row>
+		<row><td>AlwaysInstall</td><td>QtXml4.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qgif4.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qico4.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qjpeg4.dll</td></row>
@@ -2052,17 +2052,17 @@
 		<row><td>close.gif</td><td>ISX_DEFAULTCOMPONENT4</td><td>close.gif</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\images\close.gif</td><td>1</td><td/></row>
 		<row><td>common.css</td><td>ISX_DEFAULTCOMPONENT3</td><td>common.css</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\css\common.css</td><td>1</td><td/></row>
 		<row><td>common_min.js</td><td>ISX_DEFAULTCOMPONENT6</td><td>COMMON~1.JS|common-min.js</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\javascript\common-min.js</td><td>1</td><td/></row>
-		<row><td>core_rl_bzlib_.dll2</td><td>CORE_RL_bzlib_.dll2</td><td>CORE_R~1.DLL|CORE_RL_bzlib_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_bzlib_.dll</td><td>1</td><td/></row>
-		<row><td>core_rl_jpeg_.dll2</td><td>CORE_RL_jpeg_.dll2</td><td>CORE_R~1.DLL|CORE_RL_jpeg_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_jpeg_.dll</td><td>1</td><td/></row>
-		<row><td>core_rl_lcms_.dll2</td><td>CORE_RL_lcms_.dll2</td><td>CORE_R~1.DLL|CORE_RL_lcms_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_lcms_.dll</td><td>1</td><td/></row>
-		<row><td>core_rl_magick_.dll2</td><td>CORE_RL_magick_.dll2</td><td>CORE_R~1.DLL|CORE_RL_magick_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_magick_.dll</td><td>1</td><td/></row>
-		<row><td>core_rl_magick___.dll2</td><td>CORE_RL_Magick___.dll2</td><td>CORE_R~1.DLL|CORE_RL_Magick++_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_Magick++_.dll</td><td>1</td><td/></row>
-		<row><td>core_rl_png_.dll2</td><td>CORE_RL_png_.dll2</td><td>CORE_R~1.DLL|CORE_RL_png_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_png_.dll</td><td>1</td><td/></row>
-		<row><td>core_rl_tiff_.dll2</td><td>CORE_RL_tiff_.dll2</td><td>CORE_R~1.DLL|CORE_RL_tiff_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_tiff_.dll</td><td>1</td><td/></row>
-		<row><td>core_rl_ttf_.dll2</td><td>CORE_RL_ttf_.dll2</td><td>CORE_R~1.DLL|CORE_RL_ttf_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_ttf_.dll</td><td>1</td><td/></row>
-		<row><td>core_rl_wand_.dll2</td><td>CORE_RL_wand_.dll2</td><td>CORE_R~1.DLL|CORE_RL_wand_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_wand_.dll</td><td>1</td><td/></row>
-		<row><td>core_rl_xlib_.dll2</td><td>CORE_RL_xlib_.dll2</td><td>CORE_R~1.DLL|CORE_RL_xlib_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_xlib_.dll</td><td>1</td><td/></row>
-		<row><td>core_rl_zlib_.dll2</td><td>CORE_RL_zlib_.dll2</td><td>CORE_R~1.DLL|CORE_RL_zlib_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_zlib_.dll</td><td>1</td><td/></row>
+		<row><td>core_rl_bzlib_.dll</td><td>CORE_RL_bzlib_.dll</td><td>CORE_R~1.DLL|CORE_RL_bzlib_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_bzlib_.dll</td><td>1</td><td/></row>
+		<row><td>core_rl_jpeg_.dll</td><td>CORE_RL_jpeg_.dll</td><td>CORE_R~1.DLL|CORE_RL_jpeg_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_jpeg_.dll</td><td>1</td><td/></row>
+		<row><td>core_rl_lcms_.dll</td><td>CORE_RL_lcms_.dll</td><td>CORE_R~1.DLL|CORE_RL_lcms_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_lcms_.dll</td><td>1</td><td/></row>
+		<row><td>core_rl_magick_.dll</td><td>CORE_RL_magick_.dll</td><td>CORE_R~1.DLL|CORE_RL_magick_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_magick_.dll</td><td>1</td><td/></row>
+		<row><td>core_rl_magick___.dll</td><td>CORE_RL_Magick___.dll</td><td>CORE_R~1.DLL|CORE_RL_Magick++_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_Magick++_.dll</td><td>1</td><td/></row>
+		<row><td>core_rl_png_.dll</td><td>CORE_RL_png_.dll</td><td>CORE_R~1.DLL|CORE_RL_png_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_png_.dll</td><td>1</td><td/></row>
+		<row><td>core_rl_tiff_.dll</td><td>CORE_RL_tiff_.dll</td><td>CORE_R~1.DLL|CORE_RL_tiff_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_tiff_.dll</td><td>1</td><td/></row>
+		<row><td>core_rl_ttf_.dll</td><td>CORE_RL_ttf_.dll</td><td>CORE_R~1.DLL|CORE_RL_ttf_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_ttf_.dll</td><td>1</td><td/></row>
+		<row><td>core_rl_wand_.dll</td><td>CORE_RL_wand_.dll</td><td>CORE_R~1.DLL|CORE_RL_wand_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_wand_.dll</td><td>1</td><td/></row>
+		<row><td>core_rl_xlib_.dll</td><td>CORE_RL_xlib_.dll</td><td>CORE_R~1.DLL|CORE_RL_xlib_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_xlib_.dll</td><td>1</td><td/></row>
+		<row><td>core_rl_zlib_.dll</td><td>CORE_RL_zlib_.dll</td><td>CORE_R~1.DLL|CORE_RL_zlib_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\CORE_RL_zlib_.dll</td><td>1</td><td/></row>
 		<row><td>crayon.jpg</td><td>ISX_DEFAULTCOMPONENT16</td><td>Crayon.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\BlackBoard_files\images\Crayon.jpg</td><td>1</td><td/></row>
 		<row><td>crayon_dark.jpg</td><td>ISX_DEFAULTCOMPONENT16</td><td>CRAYON~1.JPG|Crayon_Dark.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\BlackBoard_files\images\Crayon_Dark.jpg</td><td>1</td><td/></row>
 		<row><td>crying.gif</td><td>ISX_DEFAULTCOMPONENT5</td><td>crying.gif</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\images\smileys\crying.gif</td><td>1</td><td/></row>
@@ -2073,14 +2073,14 @@
 		<row><td>errorphoto.gif</td><td>ISX_DEFAULTCOMPONENT4</td><td>ERRORP~1.GIF|errorPhoto.gif</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\images\errorPhoto.gif</td><td>1</td><td/></row>
 		<row><td>evil.gif</td><td>ISX_DEFAULTCOMPONENT5</td><td>evil.gif</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\images\smileys\evil.gif</td><td>1</td><td/></row>
 		<row><td>exemple_highlight.skin</td><td>ISX_DEFAULTCOMPONENT12</td><td>EXEMPL~1.SKI|Exemple_Highlight.skin</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Exemple_Highlight.skin</td><td>1</td><td/></row>
-		<row><td>ezwebgallery.exe2</td><td>EZWebGallery.exe2</td><td>EZWEBG~1.EXE|EZWebGallery.exe</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\EZWebGallery.exe</td><td>1</td><td/></row>
-		<row><td>ezwebgallery.gif</td><td>ISX_DEFAULTCOMPONENT4</td><td>EZWEBG~1.GIF|EZWebGallery.gif</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\images\EZWebGallery.gif</td><td>1</td><td/></row>
+		<row><td>ezwebgallery.exe</td><td>EZWebGallery.exe</td><td>EZWEBG~1.EXE|EZWebGallery.exe</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\EZWebGallery.exe</td><td>1</td><td/></row>
+		<row><td>ezwebgallery.png</td><td>ISX_DEFAULTCOMPONENT4</td><td>EZWEBG~1.PNG|EZWebGallery.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\images\EZWebGallery.png</td><td>1</td><td/></row>
 		<row><td>frost.jpg</td><td>ISX_DEFAULTCOMPONENT28</td><td>Frost.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Winter_files\images\Frost.jpg</td><td>1</td><td/></row>
 		<row><td>getphoto.php</td><td>ISX_DEFAULTCOMPONENT11</td><td>getPhoto.php</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\php\getPhoto.php</td><td>1</td><td/></row>
 		<row><td>good.gif</td><td>ISX_DEFAULTCOMPONENT5</td><td>good.gif</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\images\smileys\good.gif</td><td>1</td><td/></row>
-		<row><td>im_mod_rl_jpeg_.dll2</td><td>IM_MOD_RL_jpeg_.dll2</td><td>IM_MOD~1.DLL|IM_MOD_RL_jpeg_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\IM_MOD_RL_jpeg_.dll</td><td>1</td><td/></row>
-		<row><td>im_mod_rl_png_.dll2</td><td>IM_MOD_RL_png_.dll2</td><td>IM_MOD~1.DLL|IM_MOD_RL_png_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\IM_MOD_RL_png_.dll</td><td>1</td><td/></row>
-		<row><td>im_mod_rl_tiff_.dll2</td><td>IM_MOD_RL_tiff_.dll2</td><td>IM_MOD~1.DLL|IM_MOD_RL_tiff_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\IM_MOD_RL_tiff_.dll</td><td>1</td><td/></row>
+		<row><td>im_mod_rl_jpeg_.dll</td><td>IM_MOD_RL_jpeg_.dll</td><td>IM_MOD~1.DLL|IM_MOD_RL_jpeg_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\IM_MOD_RL_jpeg_.dll</td><td>1</td><td/></row>
+		<row><td>im_mod_rl_png_.dll</td><td>IM_MOD_RL_png_.dll</td><td>IM_MOD~1.DLL|IM_MOD_RL_png_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\IM_MOD_RL_png_.dll</td><td>1</td><td/></row>
+		<row><td>im_mod_rl_tiff_.dll</td><td>IM_MOD_RL_tiff_.dll</td><td>IM_MOD~1.DLL|IM_MOD_RL_tiff_.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\IM_MOD_RL_tiff_.dll</td><td>1</td><td/></row>
 		<row><td>image.css</td><td>ISX_DEFAULTCOMPONENT3</td><td>image.css</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\css\image.css</td><td>1</td><td/></row>
 		<row><td>image_min.js</td><td>ISX_DEFAULTCOMPONENT6</td><td>IMAGE-~1.JS|image-min.js</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\javascript\image-min.js</td><td>1</td><td/></row>
 		<row><td>index.css</td><td>ISX_DEFAULTCOMPONENT3</td><td>index.css</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\css\index.css</td><td>1</td><td/></row>
@@ -2115,10 +2115,10 @@
 		<row><td>qjpeg4.dll</td><td>qjpeg4.dll</td><td>qjpeg4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\imageformats\qjpeg4.dll</td><td>1</td><td/></row>
 		<row><td>qmng4.dll</td><td>qmng4.dll</td><td>qmng4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\imageformats\qmng4.dll</td><td>1</td><td/></row>
 		<row><td>qsvg4.dll</td><td>qsvg4.dll</td><td>qsvg4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\imageformats\qsvg4.dll</td><td>1</td><td/></row>
-		<row><td>qtcore4.dll2</td><td>QtCore4.dll2</td><td>QtCore4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\QtCore4.dll</td><td>1</td><td/></row>
-		<row><td>qtgui4.dll2</td><td>QtGui4.dll2</td><td>QtGui4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\QtGui4.dll</td><td>1</td><td/></row>
+		<row><td>qtcore4.dll</td><td>QtCore4.dll</td><td>QtCore4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\QtCore4.dll</td><td>1</td><td/></row>
+		<row><td>qtgui4.dll</td><td>QtGui4.dll</td><td>QtGui4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\QtGui4.dll</td><td>1</td><td/></row>
 		<row><td>qtiff4.dll</td><td>qtiff4.dll</td><td>qtiff4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\imageformats\qtiff4.dll</td><td>1</td><td/></row>
-		<row><td>qtxml4.dll2</td><td>QtXml4.dll2</td><td>QtXml4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\QtXml4.dll</td><td>1</td><td/></row>
+		<row><td>qtxml4.dll</td><td>QtXml4.dll</td><td>QtXml4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\QtXml4.dll</td><td>1</td><td/></row>
 		<row><td>rightarrow_craie.png</td><td>ISX_DEFAULTCOMPONENT16</td><td>RIGHTA~1.PNG|RightArrow_craie.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\BlackBoard_files\images\RightArrow_craie.png</td><td>1</td><td/></row>
 		<row><td>rightarrow_craie.png1</td><td>ISX_DEFAULTCOMPONENT22</td><td>RIGHTA~1.PNG|RightArrow_craie.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Moria_files\images\RightArrow_craie.png</td><td>1</td><td/></row>
 		<row><td>rightarrow_craie.png2</td><td>ISX_DEFAULTCOMPONENT28</td><td>RIGHTA~1.PNG|RightArrow_craie.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Winter_files\images\RightArrow_craie.png</td><td>1</td><td/></row>
@@ -2394,60 +2394,60 @@
 		<col def="S0">FTPLocation</col>
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
-		<row><td>CORE_RL_Magick___.dll2</td><td/><td/><td>_4F74A234_79E5_41A2_BC08_A0457080368D_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>CORE_RL_bzlib_.dll2</td><td/><td/><td>_7BC5B06E_6E48_43DA_8FE9_031B63F9580D_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>CORE_RL_jpeg_.dll2</td><td/><td/><td>_0674BB84_6B3E_4B28_97A2_02055039984E_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>CORE_RL_lcms_.dll2</td><td/><td/><td>_63942C92_309F_46BF_8B15_E1DDB9FE9B53_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>CORE_RL_magick_.dll2</td><td/><td/><td>_B14ED460_9E4E_4984_BCF1_572C9D4617E4_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>CORE_RL_png_.dll2</td><td/><td/><td>_4EE62005_4CC0_4730_B6C5_7612391B2A8E_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>CORE_RL_tiff_.dll2</td><td/><td/><td>_BDD04503_B5E5_47D8_BC46_3467C6D8BD31_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>CORE_RL_ttf_.dll2</td><td/><td/><td>_7F8F9BE7_ED7B_4632_8B54_53F90603B1FB_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>CORE_RL_wand_.dll2</td><td/><td/><td>_450B728A_3098_4CD8_8BD9_6364C3520A79_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>CORE_RL_xlib_.dll2</td><td/><td/><td>_2FF7A020_891C_4A7D_8CDF_39FE87947ACB_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>CORE_RL_zlib_.dll2</td><td/><td/><td>_6ED10D2C_81C6_4A1B_8FBC_03131BA6237D_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>EZWebGallery.exe2</td><td/><td/><td>_A552873D_BD10_47E7_88CB_7FDB2ED2007E_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>IM_MOD_RL_jpeg_.dll2</td><td/><td/><td>_7BE082F2_6313_4AEA_99A9_5E1339437D52_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>IM_MOD_RL_png_.dll2</td><td/><td/><td>_6782932E_3670_4766_82FC_8059814B4F41_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>IM_MOD_RL_tiff_.dll2</td><td/><td/><td>_37E343FF_9E46_4057_89CD_74EDDC577CB4_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_108C73F0_C985_429F_BF02_33AA0E83E688_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_36D51FBD_9EA5_4501_AB30_95125A061698_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT10</td><td/><td/><td>_527FF2C8_2F00_4D3D_BBF2_0A2E6FBA38A1_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT11</td><td/><td/><td>_2E8FBBCF_5EF1_4676_B7A9_800EF095998E_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT12</td><td/><td/><td>_F0E24739_055B_47D8_B485_3191141E863F_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT13</td><td/><td/><td>_BF4A430A_24AC_4F09_BE94_A6A9B2AAE1AC_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT14</td><td/><td/><td>_50CEF010_1E56_4273_BB8D_AAE5C166EE30_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT15</td><td/><td/><td>_1CC0EF3B_026D_4C89_8556_1BEEB8E58B4B_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT16</td><td/><td/><td>_3597056A_C4E0_42E0_9881_AC36B41DA61C_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT17</td><td/><td/><td>_EF4C483F_5A56_4099_B3DF_F2D47ECC6DCD_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT18</td><td/><td/><td>_DFF25C58_568C_4932_876A_4AACE961E2DF_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT19</td><td/><td/><td>_19211CDC_FC6F_444F_B90F_CC0176839972_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_453E0FA4_322B_4520_A80E_05FF77D328D9_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT20</td><td/><td/><td>_A49CE6F8_EBEE_4AD1_AEB1_74FC3D9B5A04_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT21</td><td/><td/><td>_CA545636_9664_4492_82FE_3C40A5975A55_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT22</td><td/><td/><td>_4D3ACB77_1486_4A45_A8C7_17B186B27D98_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT23</td><td/><td/><td>_FF445D40_D6D5_4936_A26F_C47E41AC493B_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT24</td><td/><td/><td>_EB70A95A_59E3_44E7_B302_A0E1A28BED59_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT25</td><td/><td/><td>_020ED5BE_E4BC_4282_B851_7A100AC372D7_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT26</td><td/><td/><td>_9FB48BBB_4416_4A11_8452_31BC0DE952CE_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT27</td><td/><td/><td>_A4C91835_2A90_4B19_9435_0A8E596D18DE_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT28</td><td/><td/><td>_91AB8AAE_2036_4C84_97DA_D2D0F405E0F0_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>CORE_RL_Magick___.dll</td><td/><td/><td>_CA899B21_0798_4A40_838F_F7FB5445F7BA_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>CORE_RL_bzlib_.dll</td><td/><td/><td>_8380C05A_8320_4557_80BB_B1A78E14BEDD_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>CORE_RL_jpeg_.dll</td><td/><td/><td>_8A8E3579_0ABE_4487_9B40_DC946F657B19_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>CORE_RL_lcms_.dll</td><td/><td/><td>_145B2158_AA45_4739_A9CF_93698331BF6F_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>CORE_RL_magick_.dll</td><td/><td/><td>_08EF8391_0CFF_4BD2_B027_C06EE9FB0B05_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>CORE_RL_png_.dll</td><td/><td/><td>_E6548A9F_64AF_4863_9A71_96B7D5CA0A8B_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>CORE_RL_tiff_.dll</td><td/><td/><td>_A9EF88C4_D19B_4E3E_A837_285934514143_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>CORE_RL_ttf_.dll</td><td/><td/><td>_4EBE1A05_3BB4_4E44_BFC2_92F71F2EDF41_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>CORE_RL_wand_.dll</td><td/><td/><td>_06AA4CB4_C230_41C2_BFB4_B70E0AB8FB68_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>CORE_RL_xlib_.dll</td><td/><td/><td>_0B6CE42E_D918_400F_A7F8_4CE41B4F3B36_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>CORE_RL_zlib_.dll</td><td/><td/><td>_F9335559_ED75_4D6E_8AC4_8C37AF707B24_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>EZWebGallery.exe</td><td/><td/><td>_3D818128_AE1F_4D3D_BA46_C214EFA1E5FF_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>IM_MOD_RL_jpeg_.dll</td><td/><td/><td>_F6C3BB8E_03D5_474F_96C4_20CEC9B125CE_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>IM_MOD_RL_png_.dll</td><td/><td/><td>_A730BAA9_2BCE_4B64_A329_DF6610DAA3E8_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>IM_MOD_RL_tiff_.dll</td><td/><td/><td>_0ADEE848_989C_4D65_94DF_88EC4BB651C4_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_5245AE38_14C6_4FF5_9FAB_EE30A9E781E3_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_A796B30F_F53A_455B_B615_B834F4CB0380_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT10</td><td/><td/><td>_BBB620D2_F190_4874_852C_9849203117B9_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT11</td><td/><td/><td>_7BC55996_D203_426B_AC58_0F66EEAD3831_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT12</td><td/><td/><td>_71D21162_1FF7_4BD9_B08C_FCD3B9FA36FB_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT13</td><td/><td/><td>_46A63C9F_D354_495B_8DF2_1AF8C44B0FA7_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT14</td><td/><td/><td>_EE3E8B5C_5476_44F3_801A_41DC9DA2BC35_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT15</td><td/><td/><td>_18B77B09_9903_4094_AE88_93DC9CFB4F43_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT16</td><td/><td/><td>_998D73CF_EE92_4E04_B3B3_220C739BA837_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT17</td><td/><td/><td>_ECBF5AC2_977B_4991_A674_9EC469805229_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT18</td><td/><td/><td>_132D4B4C_11A6_477A_871B_54202634A615_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT19</td><td/><td/><td>_852EBA0A_2652_4B06_8097_3CBDBC797027_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_44D94F2B_6247_4B22_A07D_B742C74E875B_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT20</td><td/><td/><td>_B9EEEC76_74B3_47D9_9E2B_03FCC8742337_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT21</td><td/><td/><td>_5138A275_AA87_45C3_879E_6329629211A9_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT22</td><td/><td/><td>_A03E4771_237D_4390_8FCF_B36DA2FD7A6F_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT23</td><td/><td/><td>_A7BB23CA_F603_467C_8837_0C107424F5AD_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT24</td><td/><td/><td>_5817D936_B89C_472E_8D4D_CFCC7285B4D0_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT25</td><td/><td/><td>_78330F26_1202_4409_9100_CD942958FDEB_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT26</td><td/><td/><td>_824B372A_8A85_4488_9C84_86CF872E2728_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT27</td><td/><td/><td>_F3D084E5_8A78_47DD_82BD_A6AE008AFB04_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT28</td><td/><td/><td>_D769B2FD_B385_4BAD_BE2C_0DF633EA0563_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT29</td><td/><td/><td>_881FC604_BC9B_4570_93F8_8A1DD60C9E56_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_8FAD27C1_5F22_4243_BEF6_73953A6A4011_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_716744ED_F93C_497C_BDF1_E4FBDA675350_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_DB79E902_5684_49A6_A2D2_A675E89776C0_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_4836B791_AFD8_4804_AC81_4D73986F94CB_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT7</td><td/><td/><td>_E62FCC0F_1A25_4145_808F_5590CE7019A8_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT8</td><td/><td/><td>_E5534962_C1EF_410F_83C8_B7F4BC8279A4_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT9</td><td/><td/><td>_5EFF5013_867B_4631_AE96_919871A19F88_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>QtCore4.dll2</td><td/><td/><td>_0489A22C_512F_48C2_999B_0DAF81C0F7B7_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>QtGui4.dll2</td><td/><td/><td>_25B84970_D3DC_4B42_80AF_FD140FAA0F8D_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>QtXml4.dll2</td><td/><td/><td>_A568A483_F20C_4D04_8A40_FB158210B57C_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>qgif4.dll</td><td/><td/><td>_D37DCC59_D253_4E9E_B3EA_49A52847A0A8_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>qico4.dll</td><td/><td/><td>_12D56125_4672_455D_8983_C52E91AE00F4_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>qjpeg4.dll</td><td/><td/><td>_F3C23E5A_C117_46F1_A9E0_4812690A059F_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>qmng4.dll</td><td/><td/><td>_D83F23DB_7E8F_41A6_919F_871A4F5B69F3_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>qsvg4.dll</td><td/><td/><td>_5189B2EF_83A2_46C8_8A21_CFC9993EC4E9_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>qtiff4.dll</td><td/><td/><td>_FBBDFE5B_F93C_46FB_A166_3C62D8140660_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_A85EDD95_33E7_4BDA_9F03_26474A0B7EFB_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_4ED9DC90_376F_4C44_B50B_5E5C266A2D10_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_C46205FB_16ED_4EE0_8719_8C4B95829373_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_81A62C02_FE6B_4435_8D37_19DE1096E05B_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT7</td><td/><td/><td>_E6C2BF0D_CCB2_4E5B_A8B0_1C248A995017_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT8</td><td/><td/><td>_33DBB4CB_18B3_4281_83FC_1EEAA263A9C5_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT9</td><td/><td/><td>_A75A0506_6942_4B81_A612_D62272641113_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>QtCore4.dll</td><td/><td/><td>_1E259831_5059_4FA5_B462_8D2FBD0E004E_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>QtGui4.dll</td><td/><td/><td>_FA223D41_E0AB_453B_B619_C7D4368FD8C5_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>QtXml4.dll</td><td/><td/><td>_788E6E23_C505_44A9_958D_2100B15E0142_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qgif4.dll</td><td/><td/><td>_DA87CD56_AB91_4638_BBC3_6724DAADFA52_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qico4.dll</td><td/><td/><td>_F7795FBD_7311_4C05_994B_2421011DCCF3_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qjpeg4.dll</td><td/><td/><td>_E2BD2F07_FC35_4DDA_B0E5_15316C078EC1_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qmng4.dll</td><td/><td/><td>_70317450_6B1D_4F69_AD46_15B6708CD984_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qsvg4.dll</td><td/><td/><td>_4E2D0A38_4517_44C8_B5C1_6F90AD86B4AB_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qtiff4.dll</td><td/><td/><td>_A2EFF558_5752_4DAE_880E_FED720DCF5D3_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="ISCustomActionReference">
@@ -4878,7 +4878,6 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L255">FileName</col>
 		<col def="s72">DirProperty</col>
 		<col def="i2">InstallMode</col>
-		<row><td>NewShortcut1</td><td>EZWebGallery.exe2</td><td/><td>ezwebg_1_ezwebgallery_team</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">
@@ -4964,8 +4963,6 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>NewShortcut1</td><td>ezwebg_1_ezwebgallery_team</td><td>##ID_STRING7##</td><td>EZWebGallery.exe2</td><td>[INSTALLDIR]EZWebGallery.exe</td><td/><td>##ID_STRING8##</td><td/><td>NewShortcut1_22642A25209844238F6E591C17BE5B2E.exe</td><td>1</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>NewShortcut2</td><td>DesktopFolder</td><td>##ID_STRING9##</td><td>EZWebGallery.exe2</td><td>[INSTALLDIR]EZWebGallery.exe</td><td/><td>##ID_STRING10##</td><td/><td>NewShortcut2_A990A32036AB42F889E186BE8C3E7842.exe</td><td>1</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">
