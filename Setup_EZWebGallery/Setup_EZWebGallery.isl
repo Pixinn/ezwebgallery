@@ -3035,7 +3035,7 @@
 		<col def="I2">Order</col>
 		<col def="I2">ISSetupLocation</col>
 		<col def="S255">ISReleaseFlags</col>
-		<row><td>_FEE112C8_F7FB_4F70_BC94_80DF3FA5F191_</td><td>Microsoft Visual C++ 2010 Redistributable Package (x86).prq</td><td/><td>1</td><td/></row>
+		<row><td>_FEE112C8_F7FB_4F70_BC94_80DF3FA5F191_</td><td>Microsoft Visual C++ 2010 Redistributable Package (x86).prq</td><td/><td>2</td><td/></row>
 	</table>
 
 	<table name="ISSetupType">
@@ -4802,7 +4802,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGRAMFILETOLAUNCHATEND</td><td>[INSTALLDIR]EZWebGallery.exe</td><td/></row>
 		<row><td>ProductCode</td><td>{5C8B7CAF-F7E9-4946-9E14-A7D8CB3E769C}</td><td/></row>
 		<row><td>ProductName</td><td>EZWebGallery</td><td/></row>
-		<row><td>ProductVersion</td><td>0.18</td><td/></row>
+		<row><td>ProductVersion</td><td>0.18.1</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
@@ -4818,7 +4818,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>SecureCustomProperties</td><td>USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR;ISFOUNDNEWERPRODUCTVERSION</td><td/></row>
 		<row><td>SelectedSetupType</td><td>##IDS__DisplayName_Typical##</td><td/></row>
 		<row><td>SetupType</td><td>Typical</td><td/></row>
-		<row><td>UpgradeCode</td><td>{D2A9725F-3A2B-474F-9C4E-C66A0666789C}</td><td/></row>
+		<row><td>UpgradeCode</td><td>{1D2788B7-34AD-4006-908A-DB36BF02DCB3}</td><td/></row>
 		<row><td>_IsMaintenance</td><td>Change</td><td/></row>
 		<row><td>_IsSetupTypeMin</td><td>Typical</td><td/></row>
 	</table>
