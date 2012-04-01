@@ -783,7 +783,7 @@ bool CGalleryGenerator::skinning( )
             htmlString.replace( "[META_OPENGRAPH]",	openGraphString );
             //------ FOOTER -------//
             //EZWebGallery Logo
-            htmlString.replace( "[EZWEBGALLERY_LOGO]", QString("<img src=\"ressources/images/EZWebGallery.gif\" id=\"logo\" title=\"")
+            htmlString.replace( "[EZWEBGALLERY_LOGO]", QString("<img src=\"ressources/images/EZWebGallery.png\" id=\"logo\" title=\"")
                                                                 + tr("Photo gallery designed and generated using EZWebGallery.")
                                                                 + QString("\" alt=\"EZWebGallery\"/>") );
 			//Add-this
@@ -793,7 +793,7 @@ bool CGalleryGenerator::skinning( )
                                         QString("\t<a href=\"http://addthis.com/bookmark.php?v=250\" class=\"addthis_button_compact\"></a>\n")+
                                         QString("\t<a class=\"addthis_button_facebook\"></a>\n")+
                                         QString("\t<a class=\"addthis_button_twitter\"></a>\n")+
-                                        QString("\t<a class=\"addthis_button_googlebuzz\"></a>\n")+
+                                        /*QString("\t<a class=\"addthis_button_googlebuzz\"></a>\n")+*/
                                         QString("\t<a class=\"addthis_button_email\"></a>\n")+
                                         QString("</div>\n")+
                                         QString("<script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c0eb6595435a765\"></script>");
