@@ -1264,7 +1264,7 @@
 		<row><td>WINTER_FILES</td><td>SKINS</td><td>WINTER~1|Winter_files</td><td/><td>0</td><td/></row>
 		<row><td>WindowsFolder</td><td>TARGETDIR</td><td>.:Windows</td><td/><td>0</td><td/></row>
 		<row><td>WindowsVolume</td><td>TARGETDIR</td><td>.:WinRoot</td><td/><td>0</td><td/></row>
-		<row><td>ezwebg_1_ezwebgallery_team</td><td>ProgramMenuFolder</td><td>EZWEBG~1|EZWebGallery</td><td/><td>1</td><td/></row>
+		<row><td>ezwebg_1_ezwebgallery_team</td><td>ProgramMenuFolder</td><td>EZWEBG~1|EZWebGallery</td><td>Webgalleries Generator</td><td>1</td><td/></row>
 	</table>
 
 	<table name="DrLocator">
@@ -2549,6 +2549,7 @@
 		<col key="yes" def="s38">Feature_</col>
 		<col key="yes" def="s255">ISMergeModule_</col>
 		<col key="yes" def="i2">Language_</col>
+		<row><td>AlwaysInstall</td><td>Microsoft_VC100_CRT_x86.F1DD796A_B984_3DCA_A68D_6B352BDC86F3</td><td>0</td></row>
 	</table>
 
 	<table name="ISFeatureSetupPrerequisites">
@@ -2671,6 +2672,7 @@
 		<col def="s255">Name</col>
 		<col def="S255">Destination</col>
 		<col def="I4">ISAttributes</col>
+		<row><td>Microsoft_VC100_CRT_x86.F1DD796A_B984_3DCA_A68D_6B352BDC86F3</td><td>0</td><td>Visual C++ 10.0 CRT (x86)</td><td/><td/></row>
 	</table>
 
 	<table name="ISMergeModuleCfgValues">
@@ -4171,6 +4173,10 @@
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>1637910613</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td>http://www.ezwebgallery.org</td><td>0</td><td/><td>1637888117</td></row>
 		<row><td>ID_STRING10</td><td>1033</td><td>The Free automated webgallery generator.</td><td>0</td><td/><td>1637895989</td></row>
+		<row><td>ID_STRING11</td><td>1033</td><td>EZWEBG~1|EZWebGallery</td><td>0</td><td/><td>-1843335689</td></row>
+		<row><td>ID_STRING12</td><td>1033</td><td>Webgalleries Generator</td><td>0</td><td/><td>-1843366377</td></row>
+		<row><td>ID_STRING13</td><td>1033</td><td>EZWEBG~1|EZWebGallery</td><td>0</td><td/><td>-1843343849</td></row>
+		<row><td>ID_STRING14</td><td>1033</td><td>Webgalleries Generator</td><td>0</td><td/><td>-1843337705</td></row>
 		<row><td>ID_STRING2</td><td>1033</td><td>EZWebGallery Team</td><td>0</td><td/><td>1637875829</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>http://www.ezwebgallery.org</td><td>0</td><td/><td>1637902613</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>dev@ezwebgallery.com</td><td>0</td><td/><td>1637912853</td></row>
@@ -4283,6 +4289,8 @@
 		<row><td>ARPPRODUCTICON.exe</td><td/><td>D:\Users\Chris\Dev\C\EZWebGallery\TRUNK\src\ressources\win32\icon_GalleryDesigner.ico</td><td>0</td></row>
 		<row><td>EZWebGallery.exe_A1E62A0283254D57B65B98085C0A3CBC.exe</td><td/><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\EZWebGallery.exe</td><td>0</td></row>
 		<row><td>NewShortcut1_22642A25209844238F6E591C17BE5B2E.exe</td><td/><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\EZWebGallery.exe</td><td>0</td></row>
+		<row><td>NewShortcut1_86851A8037C543FFBC3AFC9B106FB599.exe</td><td/><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\EZWebGallery.exe</td><td>0</td></row>
+		<row><td>NewShortcut2_8A4927FD12574F52AB1AAA9BA98D984D.exe</td><td/><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\EZWebGallery.exe</td><td>0</td></row>
 		<row><td>NewShortcut2_A990A32036AB42F889E186BE8C3E7842.exe</td><td/><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\EZWebGallery.exe</td><td>0</td></row>
 	</table>
 
@@ -4802,7 +4810,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGRAMFILETOLAUNCHATEND</td><td>[INSTALLDIR]EZWebGallery.exe</td><td/></row>
 		<row><td>ProductCode</td><td>{5C8B7CAF-F7E9-4946-9E14-A7D8CB3E769C}</td><td/></row>
 		<row><td>ProductName</td><td>EZWebGallery</td><td/></row>
-		<row><td>ProductVersion</td><td>0.18.1</td><td/></row>
+		<row><td>ProductVersion</td><td>0.18.2</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
@@ -4878,6 +4886,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L255">FileName</col>
 		<col def="s72">DirProperty</col>
 		<col def="i2">InstallMode</col>
+		<row><td>NewShortcut1</td><td>EZWebGallery.exe</td><td/><td>ezwebg_1_ezwebgallery_team</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">
@@ -4963,6 +4972,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
+		<row><td>NewShortcut1</td><td>ezwebg_1_ezwebgallery_team</td><td>##ID_STRING11##</td><td>EZWebGallery.exe</td><td>[INSTALLDIR]EZWebGallery.exe</td><td/><td>##ID_STRING12##</td><td/><td>NewShortcut1_86851A8037C543FFBC3AFC9B106FB599.exe</td><td>1</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>NewShortcut2</td><td>DesktopFolder</td><td>##ID_STRING13##</td><td>EZWebGallery.exe</td><td>[INSTALLDIR]EZWebGallery.exe</td><td/><td>##ID_STRING14##</td><td/><td>NewShortcut2_8A4927FD12574F52AB1AAA9BA98D984D.exe</td><td>1</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">

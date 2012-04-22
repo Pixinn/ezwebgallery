@@ -68,9 +68,9 @@ bool CMagick::load( const QString & fileName )
     if( imageFile.exists() /*&& imageFile.isReadable()*/ ) //isReadable() retourne false par dfaut en NTFS
     {
         //--- Ouverture de l'image    
-        string filenameLocal8 = string( fileName.toLocal8Bit().constData() );
+        string filenameUtf8 = string( fileName.toUtf8().constData() );
         try{
-            this->read( filenameLocal8 );		
+            this->read( filenameUtf8 );		
         }
         catch( Magick::Error &error ){
             //Echec ouverture de l'image
@@ -97,21 +97,13 @@ bool CMagick::load( const QString & fileName )
 bool CMagick::save(  const QString & fileToWrite, const int quality )
 {
     bool f_success;
-    string filenameLocal8;
-/*
-    if( quality != 1 ){
-        this->quality( (size_t)quality );
-    }
-    else{
-        this->quality( 2 );
-    }
-*/
+
     this->quality( (size_t)quality );
 
-    filenameLocal8 = string( fileToWrite.toLocal8Bit().constData() );
+    string filenameUtf8( fileToWrite.toUtf8().constData() );
     try{
         f_success = true;
-        this->write( filenameLocal8 );
+        this->write( filenameUtf8 );
     }
     catch( Magick::Error &error ){ //Erreur lors de la sauvegarde        
         m_errors <<  QString( error.what() ) ;

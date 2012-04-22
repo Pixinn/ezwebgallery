@@ -31,6 +31,7 @@
 
 #include <cmath>
 
+
 #include "CGalleryGenerator.h"
 #include "CPhoto.h"
 #include "CTaggedString.h"
@@ -101,6 +102,7 @@ CGalleryGenerator::CGalleryGenerator( ) :
     m_f_WorkInProgress = false;
     m_fStopRequested = false;
     m_p_photoProcessorPool = new QThreadPool( this );
+    //m_p_photoProcessorPool->setMaxThreadCount( std::min(4,QThread::idealThreadCount() ) ); //above 4 threads, might be counterprodictive SMT
     m_errorMsg = tr("No error.");
 
     start();	//Lancement du thread
@@ -610,9 +612,9 @@ bool CGalleryGenerator::generateJsFiles( )
 
 bool CGalleryGenerator::skinning( )
 {
-    QDir imgPath( m_parameters.m_galleryConfig.outputDir );
-    QImage buttonIndex;
-    const int offset = 33;
+        QDir imgPath( m_parameters.m_galleryConfig.outputDir );
+
+        const int offset = 33;
 
 	//-------- Copie des fichiers de la skin --------//
         QDir outSkinPath( m_parameters.m_galleryConfig.outputDir );
@@ -661,7 +663,7 @@ bool CGalleryGenerator::skinning( )
         CCssSheet skinCssSheet = m_skinParameters.toCss( );
         
          //--- Modification du Css: prise en compte des paramtres pour
-         //    les tailles de la mosaque de vignettes.
+         //    les tailles de la mosaïque de vignettes.
         int thumbBoxW = m_parameters.m_thumbsConfig.size + 2*m_skinParameters.thumbImgBorderSize;
         int thumbBoxH = thumbBoxW;
         int wrapperW = m_parameters.m_thumbsConfig.nbColumns * ( thumbBoxW + 2*m_skinParameters.thumbBoxBorderSize );
