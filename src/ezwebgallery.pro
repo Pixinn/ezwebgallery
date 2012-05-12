@@ -90,7 +90,8 @@ HEADERS += ui/mainwin.h \
     IPhotoFeeder.h \
     CPhotoFeederDirectory.h \
     CPhotoDatabase.h \
-    CThumbnailLoader.h
+    CThumbnailLoader.h \
+    Json.h
 
 SOURCES += main.cpp \
     ui/mainwin.cpp \
@@ -116,7 +117,8 @@ SOURCES += main.cpp \
     CSkinParameters.cpp \
     CPhotoFeederDirectory.cpp \
     CPhotoDatabase.cpp \
-    CThumbnailLoader.cpp
+    CThumbnailLoader.cpp \
+    Json.cpp
 
 FORMS += ui/mainwin.ui \
     ui/WinSkinDesigner.ui \

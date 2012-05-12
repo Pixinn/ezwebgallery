@@ -37,6 +37,7 @@
 #include "CTaggedString.h"
 #include "CPlatform.h"
 #include "CCss.h"
+#include "Json.h"
 
 using namespace Magick;
 
@@ -504,6 +505,7 @@ bool CGalleryGenerator::generateJsFiles( )
             << "var NUMPREMIEREPHOTO = 1;" << endl
             << "var NUMPREMIEREPAGEINDEX = 1;"	 << endl;
 
+
     //---- photos
     QMapIterator<int, QQueue<QSize> > i( m_photoSizes );
     QQueue<QSize> localSizeQueue;
@@ -521,8 +523,7 @@ bool CGalleryGenerator::generateJsFiles( )
        localSizeQueue =  (i.next()).value();
        numPhoto = i.key( );
        nbRes = localSizeQueue.size();
-
-       jsGalleryConfigurationStream << QString::number(numPhoto) <<  ":{fileName:\"" << /*PHOTOPREFIXE << QString::number(numPhoto) <<*/ itProperties->encodedFilename() << "\" ,\tres:{\t";
+       jsGalleryConfigurationStream << QString::number(numPhoto) <<  ":{fileName:\"" <<  itProperties->encodedFilename() << "\" ,\tres:{\t";
        itProperties++;
 
        numRes = 1;
@@ -531,9 +532,8 @@ bool CGalleryGenerator::generateJsFiles( )
             localSize = localSizeQueue.dequeue();
             if( numRes < nbRes){
                 jsGalleryConfigurationStream << QString::number(numRes++) << " : {width:" << QString::number(localSize.width()) << ",\theight:" << QString::number(localSize.height()) << "},\t";
-       }
-
-       }//fin while
+            }
+        }//fin while
 
        //dernire rsolution
        jsGalleryConfigurationStream << QString::number(numRes) << " : {width:" << QString::number(localSize.width()) << ",\theight:" << QString::number(localSize.height()) << "}";
