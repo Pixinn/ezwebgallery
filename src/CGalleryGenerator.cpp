@@ -53,6 +53,13 @@ using namespace Magick;
 #define CSSSKINFILENAME     "skin.css"
 #define SHARPENINGTHRESHOLD 0.04        /* équivalent à 10 */
 
+//Thubnail mosaic targeted sizes
+const CGalleryGenerator::t_thumbSize CGalleryGenerator::s_thumbMosaicSizes[ s_nbMosaicSizes ] = {
+    {900,568},
+    {1130,670},
+    {1270,780},
+    {1690,1140}
+};
 
 //-------------------- FONCTIONS -----------------------//
 
@@ -198,7 +205,7 @@ bool CGalleryGenerator::photosAlreadyExist(  )
     QList<CPhotoProperties>::iterator itProperties = m_photoPropertiesList.begin();
     for( int i = 1; i <= m_photoPropertiesList.size(); i++)
     {
-        QString photoName = /*PHOTOPREFIXE + QString::number(i) + "_" +*/ itProperties->encodedFilename();
+        QString photoName = itProperties->encodedFilename();
         itProperties++;
         for(int res=1; res <= nbRes; res++)
         {
@@ -223,7 +230,7 @@ bool CGalleryGenerator::thumbsAlreadyExist()
     QList<CPhotoProperties>::iterator itProperties = m_photoPropertiesList.begin();
     for( int i = 1; i <=  m_photoPropertiesList.size(); i++)
     {
-        QString thumbName = /*QString(THUMBPREFIXE) + QString(PHOTOPREFIXE) + QString::number(i) + "_" +*/ itProperties->encodedFilename()/* + QString(".jpg")*/;
+        QString thumbName = itProperties->encodedFilename();
         itProperties++;
         thumbFile.setFileName( thumbsDir.absoluteFilePath( thumbName ) );
             if( !thumbFile.exists() ){
@@ -233,6 +240,72 @@ bool CGalleryGenerator::thumbsAlreadyExist()
 
     return true;
 }
+
+/**************************************
+* computeThumbSizes(  )
+*
+* Computes the size of the thumbnails to be generated
+* Returns: Computed sizes. Key: folder to save.
+***************************************/
+QMap<QString,QSize> CGalleryGenerator::computeThumbSizes( void )
+{
+  QList<int> sizeList; //in this "size" list width = height
+  unsigned int nbCols =  m_parameters.m_thumbsConfig.nbColumns;
+  unsigned int nbRows = m_parameters.m_thumbsConfig.nbRows;
+  /*unsigned int wastedSpace = 2*m_skinParameters.thumbImgBorderSize + 2*m_skinParameters.thumbBoxBorderSize + 2*m_skinParameters.photoPaddingSize +2*m_skinParameters.mosaicBorderSize;
+  unsigned int wastedVSpace = wastedSpace * nbRows;
+  unsigned int wastedHSpace = wastedSpace * nbCols;*/
+  QSize unavailableSpace = m_skinParameters.unavailableSpace( nbCols, nbRows );
+  //Iterating on the mosaic size constraints
+  for( int i = 0; i < s_nbMosaicSizes; i++ ) {
+      sizeList << ( s_thumbMosaicSizes[i].width - unavailableSpace.width() ) / nbCols;
+      sizeList << ( s_thumbMosaicSizes[i].height - unavailableSpace.height() ) / nbRows;
+  }
+  //Downward sorting sizes 
+  qSort( sizeList.begin(), sizeList.end(), qGreater<int>() );
+  //returning sizes
+  int n = 1;  //folder appendix
+  QMap<QString,QSize> sizes;
+  foreach( int size, sizeList ) {
+      sizes.insert( QString(RESOLUTIONPATH) + QString::number(n++), QSize( size, size ) );
+  }
+
+  return sizes;
+}
+
+
+/**************************************
+* computePhotoSizes(  )
+*
+* Computes the size of the photos to be generated
+* Returns: Computed sizes. Key: folder to save.
+***************************************/
+QMap<QString,QSize> CGalleryGenerator::computePhotoSizes( void )
+{
+    int n = 1; //folder appendix
+    QMap<QString,QSize> sizes;
+    //max size
+    sizes.insert( QString(RESOLUTIONPATH) + QString::number(n++),
+                  QSize( m_parameters.m_photosConfig.maxSizeW, m_parameters.m_photosConfig.maxSizeH ) );
+    //intermediate sizes
+    if( m_parameters.m_photosConfig.nbIntermediateResolutions > 2){
+        int spaceW;
+        int spaceH;
+        int nbRes = m_parameters.m_photosConfig.nbIntermediateResolutions - 2;
+        spaceW = (m_parameters.m_photosConfig.maxSizeW - m_parameters.m_photosConfig.minSizeW)/(nbRes+1);
+        spaceH = (m_parameters.m_photosConfig.maxSizeH - m_parameters.m_photosConfig.minSizeH)/(nbRes+1);
+        for(int i = 1; i <= nbRes; i++){
+            sizes.insert( QString(RESOLUTIONPATH) + QString::number(n++),
+                          QSize( m_parameters.m_photosConfig.maxSizeW - i*spaceW, m_parameters.m_photosConfig.maxSizeH - i*spaceH ) );
+        }
+    }
+    //min size
+    sizes.insert( QString(RESOLUTIONPATH) + QString::number(n++),
+                  QSize( m_parameters.m_photosConfig.minSizeW, m_parameters.m_photosConfig.minSizeH ) );
+
+    return sizes;
+}
+
 
 /***************************************************************************************************/
 //////////////////////////////////////////////////////////
@@ -330,8 +403,7 @@ int CGalleryGenerator::generatePhotos( )
         return 0;
     }//Attention cela ne vrifie pas la prsence de la vignette reprsentant la gallerie
 
-//    QMapIterator<QString,QDateTime> photoListIterator( m_parameters.m_photosList );
-    QQueue<QSize> sizesList;
+    QMap<QString,QSize> photoSizes;
     QQueue<int> qualityList;
     QDir outPath( m_parameters.m_galleryConfig.outputDir );
 
@@ -372,13 +444,7 @@ int CGalleryGenerator::generatePhotos( )
                 emit abordGenerationSignal( );
                 return false;
             }
-        }
-        
-/*
-        else{
-            watermarkImage = CWatermark( watermarkParams.text, QFont( watermarkParams.fontName ), QColor( watermarkParams.colorName ) );
-        }
-*/
+        }       
 
     }
     
@@ -389,6 +455,7 @@ int CGalleryGenerator::generatePhotos( )
     //- Cration de la file des tailles des photos  gnrer:
     //- IMPORTANT : L'ordre doit correspondre  l'ordre des traitements au sein de CPhotoProcessor
     //- tailleMax, ..., tailleMin, tailleVignette
+    /*
     sizesList.enqueue( QSize( m_parameters.m_photosConfig.maxSizeW, m_parameters.m_photosConfig.maxSizeH ) );
     if( m_parameters.m_photosConfig.nbIntermediateResolutions > 2){
         int spaceW;
@@ -402,7 +469,12 @@ int CGalleryGenerator::generatePhotos( )
         }
     }
     sizesList.enqueue( QSize( m_parameters.m_photosConfig.minSizeW, m_parameters.m_photosConfig.minSizeH ) );
-    sizesList.enqueue( QSize( m_parameters.m_thumbsConfig.size, m_parameters.m_thumbsConfig.size ) ); //Thumbnails toujours en dernier
+    */
+    
+    photoSizes = computePhotoSizes();
+    m_thumbSizes = computeThumbSizes();
+    // sizesList = computeThumbSizes( sizesList ); //enqueing thumb sizes
+    
 
     //- Cration de la file des qualits
     for(int i = 1; i <= m_parameters.m_photosConfig.nbIntermediateResolutions; i++){
@@ -441,7 +513,9 @@ int CGalleryGenerator::generatePhotos( )
     {
         photoToProcess = new CPhotoProcessor( photoProperties,
                                               outPath,
-                                              sizesList,
+                                              //sizesList,
+                                              photoSizes,
+                                              m_thumbSizes,
                                               qualityList,
                                               sharpening,
                                               watermarkImage,
@@ -571,10 +645,10 @@ bool CGalleryGenerator::generateJsFiles( )
 
 
 
-    //////////// Prsentation ///////////////
+    //////////// Presentation ///////////////
    // Attention : certaines proprits doivent tre en phase avec les css
    
-   // -> Dbut du process de skinning
+   // -> Debut du process de skinning
 
     //---- Ouverture du fichier
     QFile file_jsGalleryPresentation( path.absoluteFilePath( jsGalleryPresentationFileName ) );
@@ -597,6 +671,56 @@ bool CGalleryGenerator::generateJsFiles( )
 
    //---- Fermeture du fichier
     file_jsGalleryPresentation.close();
+
+
+    //---- JSON
+    const unsigned int nbCols =  m_parameters.m_thumbsConfig.nbColumns;
+    const unsigned int nbRows = m_parameters.m_thumbsConfig.nbRows;
+    const QSize unavailableSpace = m_skinParameters.unavailableSpace( nbCols, nbRows );
+    // Constructing document
+    JSON::Root properties;    
+    JSON::Object* index = new JSON::Object();
+    properties.insert( "index", index );
+    //index->insert( "titleOuterwidth", new JSON::Number( m_skinParameters.titleOuterWidth ) );
+    JSON::Object* mosaic = new JSON::Object();
+    index->insert( "mosaic", mosaic );
+    JSON::Object* sizes = new JSON::Object();
+    QMapIterator<QString,QSize> itThumbSizes( m_thumbSizes );
+    while( itThumbSizes.hasNext() )
+    {
+        itThumbSizes.next();
+        JSON::Number* thumbSize = new JSON::Number( itThumbSizes.value().width() ); //squared thumbs: width = height
+        sizes->insert(  itThumbSizes.key(), thumbSize );
+    }
+    mosaic->insert( "sizes", sizes );
+    JSON::Object* unavailable = new JSON::Object;
+    unavailable->insert( "horizontal", new JSON::Number( unavailableSpace.width() ) ); 
+    unavailable->insert( "vertical", new JSON::Number( unavailableSpace.height() ) );
+    mosaic->insert( "unavailable", unavailable );
+    /*JSON::Object* thumbDecoration = new JSON::Object;
+    thumbDecoration->insert( "horizontal", new JSON::Number( (mosaicDecoration * nbCols) -  (2*m_skinParameters.mosaicBorderSize) ) ); 
+    thumbDecoration->insert( "vertical", new JSON::Number( (mosaicDecoration * nbRows) - (2*m_skinParameters.mosaicBorderSize) ) );
+    mosaic->insert( "thumbDecoration", thumbDecoration );*/
+    mosaic->insert( "nbRows",  new JSON::Number( nbRows ) );
+    mosaic->insert( "nbCols",  new JSON::Number( nbCols ) );
+    mosaic->insert( "defaultSet", new JSON::String( "res8" ) );
+
+    // Writing document to disk
+    QDir jsonPath( m_parameters.m_galleryConfig.outputDir );
+    jsonPath.cd( RESPATH );
+    QFile jsonFile( jsonPath.absoluteFilePath( "parameters.json" ) );
+    if (!jsonFile.open(QIODevice::WriteOnly)){ //omitting QIODevice::Text to get UNIX end-of-line even on Windows
+         m_msgErrorList.append( CError::error(CError::FileOpening) +  jsonFile.fileName() );
+         emit abordGenerationSignal( );
+         return false;
+    }
+    jsonFile.setPermissions( QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::WriteUser | QFile::ReadGroup | QFile::ReadOther );
+    QTextStream jsonStream( &jsonFile );
+    jsonStream.setCodec( "UTF-8" );
+    jsonStream.setGenerateByteOrderMark (true);
+    jsonStream << properties.serialize();
+    jsonFile.close();
+    
     
     emit jobDone();
     return true;

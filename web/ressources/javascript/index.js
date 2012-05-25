@@ -36,8 +36,10 @@ function indexEvents( )
 	$(DIV_THUMBCONTAINER+" img").click( function( )
 	{	
 		/* Mise a jour de la photo courante */
-		var thumbURL = new String( $(this).attr("src") );
-		var key_ThumbFileURL = thumbURL.substr(URL_THUMBS_PATH.length , thumbURL.length - URL_THUMBS_PATH.length);		
+		var key_ThumbFileURL = $(this).attr("src");
+		//var key_ThumbFileURL = thumbURL.substr(URL_THUMBS_PATH.length , thumbURL.length - URL_THUMBS_PATH.length);		
+        var cutPosition = key_ThumbFileURL.lastIndexOf("/") + 1;
+        var key_ThumbFileURL = key_ThumbFileURL.substr( cutPosition, key_ThumbFileURL.length - cutPosition );		
 		g_idCurrentPhoto = g_listeThumbnails[ key_ThumbFileURL ];
 			
 		//----- Affichage zone photo -----//

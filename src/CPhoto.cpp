@@ -164,75 +164,7 @@ CWatermark::CWatermark(  )
 }
 
 
-/*******************************************************************
-* CWaterMark( const QString &watermarkImagePath )
-* ---------
-* Constructeur : assigne une image au watermark
-* In : Chemin vers l'image
-********************************************************************/
-/*CWatermark::CWatermark( const QString &watermarkImagePath )
-{
-    if ( load( watermarkImagePath ) ){
-        m_isValid = true;
-    }
-    else{
-        m_isValid = false;
-    }
-}
-*/
 
-
-/*******************************************************************
-* CWaterMark( const QString &inText, const QFont &inFont, const QSize &inSize )
-* ---------
-* Constructeur : Instancie un CWatermark  partir de texte dont on prcise la fonte
-* Une image est cre  l'aide de Qt, plus souple quand  la gestion des polices,
-* puis est convertie dans le format interne de la classe (drive de Magick::Image)
-* In : inText - texte formant la signature
-* In : inFont - font du texte
-* In : inSize - taille du watermark souhaite
-********************************************************************/
-/* CWatermark::CWatermark( const CTaggedString &inText, QFont inFont, QColor inColor)
-{
-	QImage image;
-    QFont newFont =  inFont;
-	qreal scaleFactor;
-	const qreal startingPointSize = 20.0;
-    QRect textBoundingRect;
-
-    m_isValid = false;
-
-    if( inText.isEmpty() ){
-        m_errors << ERROR_STRINGCLEARED;        
-        return;
-    }
-
-	//1ere itration "en aveugle"
-    inFont.setPointSizeF( startingPointSize );
-    QFontMetrics fontMetrics(inFont);
-    
-    //Mise  l'chelle de la police
-    scaleFactor = (qreal)CWatermark::TEXTWIDTH / (qreal)fontMetrics.width( inText );
-    newFont.setPointSizeF( (startingPointSize * scaleFactor) );
-    fontMetrics = QFontMetrics( newFont );
-    textBoundingRect = fontMetrics.boundingRect( inText.render() );
-
-    //Cration de l'image avec le texte  la bonne taille
-    image = QImage( textBoundingRect.size(), QImage::Format_ARGB32 );
-    image.fill( Qt::transparent );
-    QPainter painter( &image );
-	painter.setFont( newFont );
-    painter.setPen( QPen( inColor ) );
-    QRect rect( 0, 0, image.width(), image.height() );
-    painter.drawText( rect, Qt::AlignCenter | Qt::AlignVCenter, inText.render() );
-
-	//--- Rcupration par la classe drive de Magick::Image 
-    if( this->fromQImage( image ) ){
-        m_isValid = true;
-    }
-	
-}
-*/
 
 
 bool CWatermark::fromQImage( const QImage &qimage )
@@ -622,7 +554,7 @@ void CPhoto::zoom( const QSize &size, Qt::TransformationMode filter )
     }
 
     try{
-        Image::zoom( Geometry( size.width(), size.height() ) );
+        Image::resize( Geometry( size.width(), size.height() ) ); 
     }
     catch( Magick::Error &error ){
         m_errors << QString( error.what() );

@@ -28,7 +28,6 @@
  * 				-> requiert classHashTable.js
  * 		+ classDisplayManager.js - Gère l'affichage et la mise à l'echelle
  * 				-> requiert classObjetAjustable.js
- * 		+ listePhotos.js		 - contient la liste ordonnée des noms de fichier à charger
  *  FONCTIONS APPELEES
  * 		+ images.js				 - Gère tout ce qui a trait au chargement et à l'affichage de la photo
  * 				-> utilise classTablePhoto et classDisplayManager
@@ -61,6 +60,7 @@ var CLASS_SPINNER = "Spinner"; //Pas de # ou de . !!
 var AJAX_TIMEOUT_VALUE = 30000;
 //-- Ecran Index
 var DIV_SCREENINDEX = "#screenIndex";
+var DIV_INDEXDISPLAYZONE = "#wrapperAffichageIndex";
 var DIV_NAVIGATIONINDEX_CONTAINER = "ul.indexNavigation";
 var CLASSNAVIGATIONTABSELECTED = "navTabSelected"; /* Onglet de navigation sélectionné */
 var DIV_INDEX_CONTAINER = "#indexSliderContainer";
@@ -85,6 +85,7 @@ var g_displayManager;
 var g_idCurrentPhoto;					/* photo à afficher */
 var g_idPhotoToLoadNext;				/* On essaie d'avoir en permanence g_idCurrentPhoto + g_nbPhotosAPRECHARGER dans le cache */
 var g_idCurrentIndexPage;				/* Page de vignettes courantes */
+var g_properties;                       //Gallery properties
 //photos
 var g_nbRes;						/* Nombre de resolutions */
 var g_nbPhotos;						/* Nombre de photos */
@@ -101,18 +102,17 @@ var g_buttonPreviousPhoto;
 var g_buttonReturnToIndex;
 
 
-//Objets JQuery instanciés une fois pour plus de rapidité
-  //Pour scroller l'index avec les vignettes
+// *** Objets JQuery instanciés une fois pour plus de rapidité
+//Pour scroller l'index avec les vignettes
 var g_$divScrollContainer;
 var g_$divSlidingPanels;
-
 //CSS: div et conteneur
-	//Fenêtre Photo
+//Fenêtre Photo
 var g_$screenPhoto;	
 var	g_$divCadrePhotoName;
 var	g_$divDisplayZoneName;
-var	g_$divSpinner;			// A VIRER !!!
-	//-- Index
+//var	g_$divSpinner;			// A VIRER !!!
+//-- Index
 var g_$screenIndex;
 var g_$buttonsIndexNavigation;
 var	g_$divIndexContainer;
@@ -120,6 +120,7 @@ var	g_$divThumbsWrapper;
 var g_$divThumbBox;
 var g_$divScrollContainer;
 var	g_$divSlidingPanel;
+var g_thumbSize;
 
 var g_idWaitForThumbs;		//handle vers la fonction d'attente des vignettes
 /*****************************************/	
@@ -151,15 +152,20 @@ $(document).ready(function()
 		error: ajaxError
  	} );
 	//Catcher les erreurs
-	$(document).ajaxError(function()
+	$(document).ajaxError(function(event, request, settings)
 	{ 	//Seulement sur les browsers qui supportent...
     	if (window.console && window.console.error) {
-        console.error(arguments);
+        console.error( "Error requesting page:" + settings.url );
     	}	
 	});
-	
-	initGallery( );
-	
+    
+    $.getJSON("ressources/parameters.json",
+        function(data){
+            g_properties = data;
+            initGallery( );	 //Next: gallery initialization
+        }
+    );
+		
 	
 });	
 
@@ -180,17 +186,20 @@ function initGallery( )
 	var nbPanneaux;
 	var numIndex;
 	var numThumbnails;
+    var nbThumbsByPanel = g_properties.index.mosaic.nbRows * g_properties.index.mosaic.nbCols;
 	g_listeThumbnails = new Array;
 	for ( key in listePhotos ){g_nbThumbnails++;}
-	for ( key in listePhotos[1].res){g_nbRes++;}
+	for ( key in listePhotos[1].res ){g_nbRes++;}
+    
 	g_nbPhotos = g_nbThumbnails;
-	nbPanneaux = Math.ceil( g_nbThumbnails / NBTHUMBSBYPAGE );
+	nbPanneaux = Math.ceil( g_nbThumbnails / nbThumbsByPanel );
+   
 	
 	/* Récupération et mise en forme de la liste des thumbnails */
 	/* création de g_listeThumbnails[nbPanneaux][NBTHUMBSBYPAGE]  */
   	for ( key in listePhotos )
 	{
-		var thumbName = /*THUMBFILEPREFIX + */listePhotos[ key ].fileName;
+		var thumbName = listePhotos[ key ].fileName;
 		g_listeThumbnails[ thumbName ] = parseInt(key);
 	}
 	
@@ -210,14 +219,35 @@ function initGallery( )
 									.parent().addClass( CLASSNAVIGATIONTABSELECTED ); 
 	
 	// 2 - Les vignettes
+    // Computing wich thumbnail set to use
+    var f_setFound = false;
+    var thumbSet = g_properties.index.mosaic.defaultSet; //if no suitable set is found
+    g_thumbSize = g_properties.index.mosaic.sizes[ thumbSet ];
+    var margin = 60; //60 is necessary for vertical (tab height + logo). 30 is for horizontal comfort.
+    var availableWidth = $("#screenIndex").width() - g_properties.index.mosaic.unavailable.horizontal - margin/2;
+    var availableHeight = $("#screenIndex").height() - g_properties.index.mosaic.unavailable.vertical - margin;
+    $.each( g_properties.index.mosaic.sizes, function( key, size ) //iterating on the object using jQuery
+    {
+            if (   !f_setFound
+                && (availableWidth > size * g_properties.index.mosaic.nbCols)
+                && (availableHeight > size * g_properties.index.mosaic.nbRows) )
+            {
+                thumbSet = key;
+                g_thumbSize = size;
+                f_setFound = true;
+            }
+    } );
+    
 	var $panneaux = $(DIV_SLIDINGPANEL);
 	var indexPanneau;
     var qmap = new HashTable();//Besoin de cette table car les closures *pointent* vers une *référence* des variables locales de la boucle. ie: elles ibt la même valeur à chaque callback !
 	numThumbnails = 1;
-	for (indexPanneau = 0; indexPanneau < $panneaux.length; indexPanneau++) {
+	for (indexPanneau = 0; indexPanneau < $panneaux.length; indexPanneau++)
+    {
 		i=1;
-		while( ( i <= NBTHUMBSBYPAGE ) && ( numThumbnails <= g_nbThumbnails ) ){
-            var thumbName = /*THUMBFILEPREFIX + */listePhotos[ numThumbnails ].fileName;        
+		while( ( i <= nbThumbsByPanel ) && ( numThumbnails <= g_nbThumbnails ) )
+        {
+            var thumbName = listePhotos[ numThumbnails ].fileName;        
             //Une case "thumbBox"
             $(DIV_SLIDINGPANEL).eq(indexPanneau).append('<div class="'+DIV_THUMBCONTAINER.substr(1,DIV_THUMBCONTAINER.length-1)+'" id="'+numThumbnails+'"></div>');			
             //La vignette
@@ -241,7 +271,7 @@ function initGallery( )
 							dbgTrace("common.js / Erreur de chargement thumbnail "+g_nbThumbFullyLoaded++);                            
 						})
 						// Source de l'image : A METTRE EN DERNIER
-						.attr("src", src = URL_THUMBS_PATH+thumbName );
+						.attr("src", src = URL_THUMBS_PATH+thumbSet+"/"+thumbName );
             qmap.addItem( $(thumbnail).attr("src"), numThumbnails );
             i++;
 			numThumbnails++;
@@ -266,7 +296,7 @@ function initGallery( )
 	g_$divSlidingPanels = $(DIV_SLIDINGPANEL);
 	g_$divThumbsWrapper = $(DIV_THUMBSWRAPPER).css( "overflow" , "hidden" );
 	 //autres
-	g_$screenIndex = $(DIV_SCREENINDEX);
+	g_$screenIndex = $(DIV_SCREENINDEX);    
   	g_$buttonsIndexNavigation =  $(DIV_NAVIGATIONINDEX_CONTAINER + " a"); /* Onglet */
 	g_$divIndexContainer = $(DIV_INDEX_CONTAINER);
  	g_$divThumbBox = $(DIV_THUMBCONTAINER);
@@ -294,7 +324,6 @@ function initGallery( )
 	g_prefetchManager = new TablePhotos( TAILLECACHEPHOTO );
 	g_loadQueue = new Fifo( );
     
-    //initGallery_step3();
 }
 
 
@@ -309,6 +338,24 @@ function initGallery_step2_waitForThumbs( )
 
 function initGallery_step3( )
 {	
+    //resizing the mosaic according to the thumb set chosen
+    var thumbBorderWidth = $(".thumbBox img").first().css("border-top-width");
+    thumbBorderWidth = thumbBorderWidth.substr( 0, thumbBorderWidth.indexOf("px",0) );
+    $(".thumbBox").width( g_thumbSize + 2*thumbBorderWidth )
+                  .height( g_thumbSize + 2*thumbBorderWidth);
+    var mosaicWidth = g_properties.index.mosaic.nbCols * $(".thumbBox").outerWidth();
+    var mosaicHeight = g_properties.index.mosaic.nbRows * $(".thumbBox").outerHeight();
+    var $thumbsWrapperContainer = $(".thumbsWrapperContainer");
+    var thumbsWrapperContainerBorder = $thumbsWrapperContainer.css("border-left-width")
+    thumbsWrapperContainerBorder = thumbsWrapperContainerBorder.substr( 0, thumbsWrapperContainerBorder.indexOf("px",0) );
+    $("#indexSliderContainer").width( mosaicWidth + 2*thumbsWrapperContainerBorder );
+    $thumbsWrapperContainer.width( mosaicWidth )
+                           .height( mosaicHeight );
+    $(".thumbsWrapper").width( mosaicWidth )
+                       .height( mosaicHeight );
+    $(".scrollContainer	div.slidingPanel").width( mosaicWidth )
+                                          .height( mosaicHeight );
+
 	//Cacher la barre de loading
 	$(DIV_PROGRESSBARWRAPPER).hide( )
 	
