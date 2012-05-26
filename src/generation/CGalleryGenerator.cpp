@@ -38,9 +38,10 @@
 #include "CPlatform.h"
 #include "CCss.h"
 #include "Json.h"
+#include "CDirChecker.h"
 
 using namespace Magick;
-
+using namespace JSON;
 
 
 ///////////////////////////////////////////////////////////////////
@@ -195,51 +196,35 @@ void CGalleryGenerator::displayProgressBar( int completion, QString color, QStri
 
 /***********************************************************************/
 
-bool CGalleryGenerator::photosAlreadyExist(  )
-{    
-    QDir photosDir = m_parameters.m_galleryConfig.outputDir;
-    QFile photoFile;
-    int nbRes = m_parameters.m_photosConfig.nbIntermediateResolutions;
-
-    photosDir.cd( PHOTOSPATH );
-    QList<CPhotoProperties>::iterator itProperties = m_photoPropertiesList.begin();
-    for( int i = 1; i <= m_photoPropertiesList.size(); i++)
-    {
-        QString photoName = itProperties->encodedFilename();
-        itProperties++;
-        for(int res=1; res <= nbRes; res++)
-        {
-            QString resDir = RESOLUTIONPATH + QString::number(res) + "/";
-            photoFile.setFileName( photosDir.absoluteFilePath( resDir + photoName ) );
-            if( !photoFile.exists() ){
-                return false;
-            }
-        }
+/**************************************
+* checkImages(  )
+*
+* Returns true if the photos and the thumbnails tobe generated
+* are present in the proper dirs
+***************************************/
+bool CGalleryGenerator::areImageAndThumbs(  )
+{       
+    QStringList photosNames;
+    foreach( CPhotoProperties prop, m_photoPropertiesList ) {
+        photosNames << prop.encodedFilename();
     }
+    QStringList photoSubDirs;
+    for( int i = 1; i <= m_parameters.m_photosConfig.nbIntermediateResolutions; i++ ) {
+        photoSubDirs << ( RESOLUTIONPATH + QString::number(i) );
+    }
+    QStringList thumbSubDirs;
+    for( int i = 1; i <= s_nbthumbRes; i++ ) {
+        thumbSubDirs << ( RESOLUTIONPATH + QString::number(i) );
+    }
+    QDir photosDir( m_parameters.m_galleryConfig.outputDir );
+    CDirChecker photoCheck( photosDir.absoluteFilePath( PHOTOSPATH ) );
+    QDir thumbsDir( m_parameters.m_galleryConfig.outputDir );
+    CDirChecker thumbsCheck( thumbsDir.absoluteFilePath( THUMBSPATH ) );
 
-    return true;
+    return ( photoCheck.areFilesInSubdir( photosNames, photoSubDirs ) &&  thumbsCheck.areFilesInSubdir( photosNames, thumbSubDirs ) );
 }
 
 
-bool CGalleryGenerator::thumbsAlreadyExist()
-{
-    QDir thumbsDir = m_parameters.m_galleryConfig.outputDir;
-    QFile thumbFile;
-
-    thumbsDir.cd( THUMBSPATH );
-    QList<CPhotoProperties>::iterator itProperties = m_photoPropertiesList.begin();
-    for( int i = 1; i <=  m_photoPropertiesList.size(); i++)
-    {
-        QString thumbName = itProperties->encodedFilename();
-        itProperties++;
-        thumbFile.setFileName( thumbsDir.absoluteFilePath( thumbName ) );
-            if( !thumbFile.exists() ){
-                return false;
-            }
-    }
-
-    return true;
-}
 
 /**************************************
 * computeThumbSizes(  )
@@ -252,9 +237,6 @@ QMap<QString,QSize> CGalleryGenerator::computeThumbSizes( void )
   QList<int> sizeList; //in this "size" list width = height
   unsigned int nbCols =  m_parameters.m_thumbsConfig.nbColumns;
   unsigned int nbRows = m_parameters.m_thumbsConfig.nbRows;
-  /*unsigned int wastedSpace = 2*m_skinParameters.thumbImgBorderSize + 2*m_skinParameters.thumbBoxBorderSize + 2*m_skinParameters.photoPaddingSize +2*m_skinParameters.mosaicBorderSize;
-  unsigned int wastedVSpace = wastedSpace * nbRows;
-  unsigned int wastedHSpace = wastedSpace * nbCols;*/
   QSize unavailableSpace = m_skinParameters.unavailableSpace( nbCols, nbRows );
   //Iterating on the mosaic size constraints
   for( int i = 0; i < s_nbMosaicSizes; i++ ) {
@@ -396,8 +378,7 @@ int CGalleryGenerator::generatePhotos( )
     //Pas besoin de regnrer les photos
     if( !m_parameters.m_photosConfig.f_regeneration &&
         !m_parameters.m_thumbsConfig.f_regeneration &&
-        photosAlreadyExist() &&
-        thumbsAlreadyExist() )
+        areImageAndThumbs() )
     {
         emit jobDone();
         return 0;
@@ -677,33 +658,21 @@ bool CGalleryGenerator::generateJsFiles( )
     const unsigned int nbCols =  m_parameters.m_thumbsConfig.nbColumns;
     const unsigned int nbRows = m_parameters.m_thumbsConfig.nbRows;
     const QSize unavailableSpace = m_skinParameters.unavailableSpace( nbCols, nbRows );
+
     // Constructing document
-    JSON::Root properties;    
-    JSON::Object* index = new JSON::Object();
-    properties.insert( "index", index );
-    //index->insert( "titleOuterwidth", new JSON::Number( m_skinParameters.titleOuterWidth ) );
-    JSON::Object* mosaic = new JSON::Object();
-    index->insert( "mosaic", mosaic );
-    JSON::Object* sizes = new JSON::Object();
-    QMapIterator<QString,QSize> itThumbSizes( m_thumbSizes );
-    while( itThumbSizes.hasNext() )
-    {
-        itThumbSizes.next();
-        JSON::Number* thumbSize = new JSON::Number( itThumbSizes.value().width() ); //squared thumbs: width = height
-        sizes->insert(  itThumbSizes.key(), thumbSize );
+    Root properties;    
+    Object& index = properties.addObject( "index" );
+    Object& mosaic = index.addObject( "mosaic" );
+    mosaic.addNumber( "nbRows",  nbRows);
+    mosaic.addNumber( "nbCols",  nbCols);
+    mosaic.addString(  "defaultSet", "res8" );  
+    Object& sizes = mosaic.addObject( "sizes" );
+    foreach( QSize size, m_thumbSizes ) {
+        sizes.addNumber( m_thumbSizes.key(size), size.width() );
     }
-    mosaic->insert( "sizes", sizes );
-    JSON::Object* unavailable = new JSON::Object;
-    unavailable->insert( "horizontal", new JSON::Number( unavailableSpace.width() ) ); 
-    unavailable->insert( "vertical", new JSON::Number( unavailableSpace.height() ) );
-    mosaic->insert( "unavailable", unavailable );
-    /*JSON::Object* thumbDecoration = new JSON::Object;
-    thumbDecoration->insert( "horizontal", new JSON::Number( (mosaicDecoration * nbCols) -  (2*m_skinParameters.mosaicBorderSize) ) ); 
-    thumbDecoration->insert( "vertical", new JSON::Number( (mosaicDecoration * nbRows) - (2*m_skinParameters.mosaicBorderSize) ) );
-    mosaic->insert( "thumbDecoration", thumbDecoration );*/
-    mosaic->insert( "nbRows",  new JSON::Number( nbRows ) );
-    mosaic->insert( "nbCols",  new JSON::Number( nbCols ) );
-    mosaic->insert( "defaultSet", new JSON::String( "res8" ) );
+    Object& unavailable = mosaic.addObject( "unavailable" );
+    unavailable.addNumber( "horizontal", unavailableSpace.width() );
+    unavailable.addNumber( "vertical", unavailableSpace.height() );  
 
     // Writing document to disk
     QDir jsonPath( m_parameters.m_galleryConfig.outputDir );

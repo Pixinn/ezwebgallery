@@ -20,13 +20,22 @@
 #include <QMap>
 
 
+//////////////////////
+
+//STILL MISSING :
+//--------------
+//Boolean
+//Null
+//Array
+
+/////////////////////////
+
 namespace JSON
 {     
 
     class IValue 
     {
     public:
-        IValue( void );
         virtual ~IValue( void ) {   }
     protected:
         virtual QString serialize( void ) const = 0;
@@ -35,160 +44,71 @@ namespace JSON
         static int m_nbIndentation; //To follow indentation    
 
         friend class Object;
-        friend class Array;
     };
 
-
-
-
-    class Array : public IValue, public QList<IValue*>
+     class String : public IValue, public QString
     {
-    public:
-        Array( void ) :
-            IValue(),
-            QList<IValue*>() {  }
-        Array( const QList<IValue*> & array ) :
-            IValue(),
-            QList<IValue*>( array )
-        {    }
-        ~Array( void );
     protected:
-        QString serialize( void ) const;
-    };
-
-
-
-    class Object : public IValue, public QMap<QString, IValue*>
-    {
-    public:
-        Object( void ) :
-            IValue(),  QMap<QString, IValue*>()
-        {   }
-        ~Object( void );
-     protected:
-        QString serialize( void ) const;
-    };
-
-   
-
-    class String : public IValue, public QString
-    {
-    public:
         String( const QString & string ) :
             IValue(),
             QString( string ) {   }
-        String( void ) :
-            IValue(),
-            QString( "null" ) {   }
-        inline void setString( const QString & string )  {
-            *this = string;
-        }
-    protected:
         inline QString serialize( void ) const {
             return QString("\"") + *this + QString("\"");
         }
+
+        friend class Object;
     };
 
 
 
     class Number : public IValue
     {
-    public:
+    protected:
         Number( void ) :
             IValue(),
             m_value( 0.0 ) {    }
         Number( double value ) :
             IValue(),
             m_value( value ) {    }
-        inline void setValue( double value ) {
-          m_value = value;
-        }
-        inline double toDouble( void ) const {
-          return m_value;
-        }
-    protected:
         inline QString serialize( void ) const {
           return QString::number( m_value );
         }
     private:
         double m_value;
+
+        friend class Object;
     };
 
 
-
-    class Boolean : public IValue
+    class Object : public IValue
     {
     public:
-        Boolean( void ) :
-            IValue(),
-            m_value( false )
-        {   }        
-        Boolean( bool value ) :
-            IValue(),
-            m_value( value ) {    }
-        inline void setValue( bool value ) {
-          m_value = value;
-        }
-        inline bool toBool( void ) const {
-          return m_value;
-        }
-    protected:
-        QString serialize( void ) const;
-    private:
-        bool m_value;
+        ~Object( void );
+        Object& addObject( const QString& key);
+        void addNumber( const QString& key, double number );
+        void addString( const QString& key,const QString& str );
+     protected:       
+        Object( void ) : IValue()  {   } //protected construtor; only called from Root
+        QString serialize( void ) const;     
+        QMap<QString, IValue*> m_map;
     };
 
+   
 
-
-
-    class Null : public IValue
-    {
-    public:
-        Null( void ) : IValue() {   }
-    protected:
-        inline QString serialize( void ) const {
-          return QString("\"null\"");
-        }
-    };
-
+   
 
     class Root: public Object
     {
     public:
         Root( void ) : Object()
         {   }
-        void insert( const QString& key, Object* object );
-        void insert( const QString& key, Array* list );
-        void insert( const QString& key, String* string );
-        void insert( const QString& key, Boolean* boolean );
-        void insert( const QString& key, Number* number );
-        void insert( const QString& key, Null* empty );
+        Object& addObject( const QString& key );
+
         QString serialize( void ) const {
            return Object::serialize();
         }
     private:
         QList<IValue*> m_referencedValues;
     };
-
-    
-    //Singleton referencing all IValue created.
-    //Used to free their corresponding allocated ressources
-    /*class Referencer
-    {
-	public:
-        static Referencer& getInstance( void ) {
-            return m_singleInstance;
-        }
-        void deleteAll( void );
-        inline void addValue( IValue* value ) {
-            m_values << value;
-        }
-        
-    private:
-        Referencer( void ) {    } //private constructor
-        
-        static Referencer m_singleInstance;
-        QList<IValue*> m_values;
-    };*/
 
 }

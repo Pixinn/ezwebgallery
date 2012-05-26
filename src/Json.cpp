@@ -6,15 +6,6 @@ const QString IValue::TAB("    ");
 int IValue::m_nbIndentation = -1;
 //Referencer Referencer::m_singleInstance;
 
-/*************************************
-* IValue::IValue( void )
-*
-* Constructor called by all IValue derivatives
-*************************************/
-IValue::IValue( void )
-{
-    //Referencer::getInstance( ).addValue( this );
-}
 
 /*************************************
 * IValue::indentate( QString &string )
@@ -37,95 +28,47 @@ QString& IValue::indentate( QString &string ) const
 *************************************/
 Object::~Object( void )
 {
-    QMapIterator<QString,IValue*> it(*this);
-    while( it.hasNext() ) {
-        IValue* val = it.next().value();
+    foreach( IValue* val, m_map ) {
         delete val;
     }
-    clear();
+    m_map.clear();
 }
 
 
 /*************************************
-* ~Array( void )
+* addObject( const QString& key)
 *
-* call all hosted pointers' destructor
+* add an object to the object
+* return: a handle to the added object
 *************************************/
-Array::~Array( void )
+Object& Object::addObject( const QString& key)
 {
-    QListIterator<IValue*> it(*this);
-    while( it.hasNext() ) {
-        IValue* toto =it.next();
-        delete toto;
-    }
-    clear();
+    Object* obj = new Object();
+    m_map.insert( key, obj );
+    return *obj;
 }
 
 /*************************************
-* Root::insert( const QString& key, Object* object )
+* addNumber( const QString& key, double number )
 *
-* Add an object to the root
+* add a number to the object
 *************************************/
-void Root::insert( const QString& key, Object* object )
+void Object::addNumber( const QString& key, double number )
 {
-    m_referencedValues.append( object );
-    Object::insert( key, object );
+    m_map.insert( key, new Number( number ) );
 }
 
-/*************************************
-* Root::insert( const QString& key, Array* list )
-*
-* Add an array to the root
-*************************************/
-void Root::insert( const QString& key, Array* list  )
-{
-    m_referencedValues.append( list );
-    Object::insert( key, list );
-}
 
 /*************************************
-* Root::insert( const QString& key, String* string )
+* addString( const QString& key,const QString& str )
 *
-* Add a String to the root
+* add a string to the object
 *************************************/
-void Root::insert( const QString& key, String* string )
+void Object::addString( const QString& key,const QString& str )
 {
-    m_referencedValues.append( string );
-    Object::insert( key, string );
+    m_map.insert( key, new String( str ) );
 }
 
-/*************************************
-* Root::insert( const QString& key, Number* number )
-*
-* Add an object to the root
-*************************************/
-void Root::insert( const QString& key, Number* number )
-{
-    m_referencedValues.append( number );
-    Object::insert( key, number );
-}
-
-/*************************************
-* Root::insert( const QString& key, Boolean* boolean )
-*
-* Add a Boolean to the root
-*************************************/
-void Root::insert( const QString& key, Boolean* boolean )
-{
-    m_referencedValues.append( boolean );
-    Object::insert( key, boolean );
-}
-
-/*************************************
-* Root::insert( const QString& key, Null* empty )
-*
-* Add an object to the root
-*************************************/
-void Root::insert( const QString& key, Null* empty )
-{
-    m_referencedValues.append( empty );
-    Object::insert( key, empty );
-}
 
 
 /*************************************
@@ -141,7 +84,7 @@ QString Object::serialize( void ) const
     serialized += "{\n";
     m_nbIndentation++;
     //adding serialized object
-	QMapIterator<QString,IValue*> iterator(*this);
+	QMapIterator<QString,IValue*> iterator(m_map);
 	while( iterator.hasNext() ) {
 		iterator.next();
         indentate( serialized );
@@ -161,62 +104,14 @@ QString Object::serialize( void ) const
 }
 
 
+
 /*************************************
-* Boolean::serialize( void )
+* Root::insert( const QString& key )
 *
-* Serialize the boolean to a QString
+* Add an object to the root
 *************************************/
-QString Boolean::serialize( void ) const
+Object& Root::addObject( const QString& key )
 {
-  if( m_value == true ) {
-      return QString("\"true\"");
-  }
-  else {
-      return QString("\"false\"");
-  }
+    return Object::addObject( key );
 }
-
-/*************************************
-* Array::serialize( void )
-*
-* Serialize the array to a QString
-*************************************/
-QString Array::serialize( void ) const
-{
-    //opening bracket
-    QString serialized('\n');
-    indentate(serialized);
-    serialized += "[\n";
-    m_nbIndentation++;
-    //adding serialized object
-	QListIterator<IValue*> iterator(*this);
-	while (iterator.hasNext()) {
-        indentate( serialized );
-		serialized += iterator.next()->serialize() + QString(",\n");
-    }
-    m_nbIndentation--;
-    //removing last ','
-    int index = serialized.lastIndexOf( ',' );
-    if( index != -1 ) {
-      serialized.remove( index, 1 );
-    }
-    //closing bracket
-    indentate(serialized);
-    serialized += QString("]");
-    
-    return serialized;
-}
-
-
-/*************************************
-* Referencer::deleteAll( void )
-*
-* IMPORTANT: destroyes all the object pointed by hosted pointers!!!
-*************************************/
-/*void Referencer::deleteAll( void )
-{
-    foreach( IValue* value, m_values ) {
-        delete value;
-    }
-}*/
  
