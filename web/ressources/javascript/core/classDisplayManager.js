@@ -223,7 +223,7 @@ this.enableControls = function( )
 							.css("display", "inline"); //Les <IMG> sont des inlines. Permet le centrage horizontal
 			//Ajout légende			
 			m_$divCadrePhoto.append(  //Ajout de la légende <- A faire APRES l'ajout de la photo !
-						                    "<div class='"+m_classCaption+"'>"+listeCaptions[g_idCurrentPhoto]+"</div>"
+						                    "<div class='"+m_classCaption+"'>"+g_properties.photos.list[ g_idCurrentPhoto - 1].caption+"</div>"
 						                 );
 
 			//Resize & Centrage

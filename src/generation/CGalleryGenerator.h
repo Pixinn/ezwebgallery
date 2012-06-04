@@ -40,6 +40,7 @@
 #include "CCaption.h"
 #include "CMessage.h"
 #include "CPhotoProperties.h"
+#include "Json.h"
 
 /*****************************
  * CGalleryGenerator
@@ -117,6 +118,7 @@ private:
     //Paramètres de la galerie
     CProjectParameters m_parameters;    
     QStringList m_captionsList;
+    JSON::Root m_jsonRoot;
     CSkinParameters m_skinParameters;
     //Generation photos
     static const int s_nbMosaicSizes = 4;

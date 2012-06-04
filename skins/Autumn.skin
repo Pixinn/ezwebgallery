@@ -57,6 +57,7 @@
         <Selection selector=".thumbsWrapperContainer">
             <background-color>#b4742e</background-color>
             <background-image>url(../images/LeaveZoomed.jpg)</background-image>
+            <background-size>cover</background-size>
             <border-color>#514131</border-color>
             <border-width>5px</border-width>
         </Selection>

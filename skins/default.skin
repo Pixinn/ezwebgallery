@@ -57,6 +57,7 @@
         <Selection selector=".thumbsWrapperContainer">
             <background-color>#88837f</background-color>
             <background-image>url(../images/BrushedMetal_2.jpg)</background-image>
+            <background-size>cover</background-size>
             <border-color>#dcdcdc</border-color>
             <border-width>5px</border-width>
         </Selection>

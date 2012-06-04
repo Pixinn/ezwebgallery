@@ -22,6 +22,22 @@ QString& IValue::indentate( QString &string ) const
 
 
 /*************************************
+* Boolean::serialize( void )
+*
+* serialize
+*************************************/
+QString Boolean::serialize( void ) const
+{
+    if( m_value ) {
+        return QString("true");
+    }
+    else {
+        return QString("false");
+    }
+}
+
+
+/*************************************
 * ~Object( void )
 *
 * call all hosted pointers' destructor
@@ -38,7 +54,7 @@ Object::~Object( void )
 /*************************************
 * addObject( const QString& key)
 *
-* add an object to the object
+* adds an object to the object
 * return: a handle to the added object
 *************************************/
 Object& Object::addObject( const QString& key)
@@ -49,20 +65,42 @@ Object& Object::addObject( const QString& key)
 }
 
 /*************************************
+* addArray( const QString& key)
+*
+* adds an array to the object
+* return: a handle to the added array
+**************************************/
+Array& Object::addArray( const QString& key )
+{
+    Array* arr = new Array();
+    m_map.insert( key, arr );
+    return *arr;
+}
+
+/*************************************
 * addNumber( const QString& key, double number )
 *
-* add a number to the object
+* adds a number to the object
 *************************************/
 void Object::addNumber( const QString& key, double number )
 {
     m_map.insert( key, new Number( number ) );
 }
 
+/*************************************
+* addBoolean( const QString& key,, bool boolean )
+*
+* adds a bbolean to the object
+*************************************/
+void Object::addBoolean( const QString& key, bool boolean )
+{
+    m_map.insert( key, new Boolean( boolean ) );
+}
 
 /*************************************
 * addString( const QString& key,const QString& str )
 *
-* add a string to the object
+* adds a string to the object
 *************************************/
 void Object::addString( const QString& key,const QString& str )
 {
@@ -104,6 +142,110 @@ QString Object::serialize( void ) const
 }
 
 
+/*************************************
+* Array::~Array( void )
+*
+* Destructor: deletes all hosted values
+*************************************/
+Array::~Array( void )
+{
+    foreach( IValue* value, m_list ) {
+        delete value;
+    }
+    m_list.clear();
+}
+
+
+/*************************************
+* appendObject( void )
+*
+* appends an object to the array
+* return: a handle to the added object
+*************************************/
+Object& Array::appendObject( void )
+{
+    Object* obj = new Object();
+    m_list.append( obj );
+    return *obj;
+}
+
+
+/*************************************
+* appendArray( void )
+*
+* appends an array to the array
+* return: a handle to the added array
+*************************************/
+/*Array& Array::appendArray( void )
+{
+    Array* arr = new Array();
+    m_list.append( arr );
+    return *arr;
+}*/
+
+
+/*************************************
+* addNumber( const QString& key, double number )
+*
+* appends a number to the array
+*************************************/
+void Array::appendNumber( double number )
+{
+    m_list.append( new Number( number ) );
+}
+
+/*************************************
+* addBoolean( const QString& key,, bool boolean )
+*
+* appends a bbolean to the array
+*************************************/
+void Array::appendBoolean( bool boolean )
+{
+    m_list.append( new Boolean( boolean ) );
+}
+
+/*************************************
+* addString( const QString& key,const QString& str )
+*
+* appends a string to the array
+*************************************/
+void Array::appendString( const QString& str )
+{
+    m_list.append( new String( str ) );
+}
+
+
+/*************************************
+* String serialize( void )
+*
+* serializes the array
+*************************************/
+QString Array::serialize( void ) const
+{
+    //opening brace
+    QString serialized('\n');
+    indentate( serialized );
+    serialized += "[\n";
+    m_nbIndentation++;
+    //adding serialized object
+    foreach( IValue* value, m_list )  {
+        indentate( serialized );
+        serialized += value->serialize() + QString(",\n");
+    }
+    m_nbIndentation--;
+    //removing last ','
+    int index = serialized.lastIndexOf( ',' );
+    if( index != -1 ) {
+      serialized.remove( index, 1 );
+    }
+    //closing brace
+    indentate(serialized);
+    serialized += QString("]");    
+    
+    return serialized;
+}
+
+
 
 /*************************************
 * Root::insert( const QString& key )
@@ -115,3 +257,18 @@ Object& Root::addObject( const QString& key )
     return Object::addObject( key );
 }
  
+
+/*************************************
+* Root::clear( )
+*
+* Empty the root object
+*************************************/
+void Root::clear( void )
+{
+    foreach( IValue* val, m_map ) {
+        delete val;
+    }
+    m_map.clear();
+}
+ 
+

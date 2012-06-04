@@ -44,6 +44,7 @@ namespace JSON
         static int m_nbIndentation; //To follow indentation    
 
         friend class Object;
+        friend class Array;
     };
 
      class String : public IValue, public QString
@@ -52,11 +53,12 @@ namespace JSON
         String( const QString & string ) :
             IValue(),
             QString( string ) {   }
-        inline QString serialize( void ) const {
+        QString serialize( void ) const {
             return QString("\"") + *this + QString("\"");
         }
 
         friend class Object;
+        friend class Array;
     };
 
 
@@ -70,13 +72,30 @@ namespace JSON
         Number( double value ) :
             IValue(),
             m_value( value ) {    }
-        inline QString serialize( void ) const {
+        QString serialize( void ) const {
           return QString::number( m_value );
         }
     private:
         double m_value;
 
         friend class Object;
+        friend class Array;
+    };
+
+    
+    class Boolean : public IValue
+    {
+    protected:
+        Boolean( bool value ) :
+             IValue(),
+             m_value( value )
+        {   }
+        QString serialize( void ) const;
+    private:
+        bool m_value;
+
+        friend class Object;
+        friend class Array;
     };
 
 
@@ -84,17 +103,37 @@ namespace JSON
     {
     public:
         ~Object( void );
-        Object& addObject( const QString& key);
+        Object& addObject( const QString& key );
+        Array& addArray( const QString& key );
         void addNumber( const QString& key, double number );
+        void addBoolean( const QString& key, bool boolean );
         void addString( const QString& key,const QString& str );
      protected:       
-        Object( void ) : IValue()  {   } //protected construtor; only called from Root
+        Object( void ) : IValue()  {   } //protected construtor; only called from Root, Object or Array
         QString serialize( void ) const;     
         QMap<QString, IValue*> m_map;
+
+        friend class Array;
     };
 
    
+    class Array : public IValue
+    {
+    public:
+        ~Array( void );
+        Object& appendObject( void );
+        //Array& appendArray( void );
+        void appendNumber( double number );
+        void appendBoolean( bool boolean );
+        void appendString( const QString& str );
+    protected:
+        Array( void ) : IValue() {  } //protected construtor; only called from Root, Object or Array
+        QString serialize( void ) const;
+    private:
+        QList<IValue*> m_list;
 
+        friend class Object;
+    };
    
 
     class Root: public Object
@@ -107,6 +146,8 @@ namespace JSON
         QString serialize( void ) const {
            return Object::serialize();
         }
+
+        void clear( void );
     private:
         QList<IValue*> m_referencedValues;
     };

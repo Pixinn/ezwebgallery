@@ -57,6 +57,7 @@
         <Selection selector=".thumbsWrapperContainer">
             <background-color>#e0d7c3</background-color>
             <background-image>url(../images/Parchemin+Calligraphy.jpg)</background-image>
+            <background-size>cover</background-size>
             <border-color>#553333</border-color>
             <border-width>3px</border-width>
         </Selection>

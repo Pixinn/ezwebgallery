@@ -49,7 +49,7 @@ function indexEvents( )
 		/* Chargement et affichage de la photo */
 		g_displayManager.photoToDisplay = g_idCurrentPhoto;
 		g_idPhotoToLoadNext = g_idCurrentPhoto;
-		for( var i=0; i<=NBPHOTOSAPRECHARGER; i++){
+		for( var i=0; i<=g_properties.photos.technical.prefetchSize; i++){
 				//Pour une réactivité maximale, on insère les photos en haut de la pile
 		 		g_loadQueue.insert( g_idCurrentPhoto + i , i);
 		}

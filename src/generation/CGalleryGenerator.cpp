@@ -37,7 +37,6 @@
 #include "CTaggedString.h"
 #include "CPlatform.h"
 #include "CCss.h"
-#include "Json.h"
 #include "CDirChecker.h"
 
 using namespace Magick;
@@ -531,138 +530,60 @@ int CGalleryGenerator::generatePhotos( )
 ///////////////////////////////////////////////////
 bool CGalleryGenerator::generateJsFiles( )
 {
-    //Constantes : Noms de fichiers
-    const QString jsGalleryConfigurationFileName( JSCONFFILENAME );
-    const QString jsGalleryPresentationFileName( JSPRESFILENAME );
+    m_jsonRoot.clear(); //json root will be rebuilt
+
     QDir path( m_parameters.m_galleryConfig.outputDir );   
 
     //////////// Configuration ///////////////
-    //---- Ouverture du fichier
-    path.cd( JSPATH );
-    QFile file_jsGalleryConfiguration( path.absoluteFilePath( jsGalleryConfigurationFileName ) );
-    if (!file_jsGalleryConfiguration.open(QIODevice::WriteOnly | QIODevice::Text)){
-         m_msgErrorList.append( CError::error(CError::FileOpening) +  file_jsGalleryConfiguration.fileName() );
-         emit abordGenerationSignal( );
-         return false;
-    }
-    file_jsGalleryConfiguration.setPermissions( QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::WriteUser | QFile::ReadGroup | QFile::ReadOther );
-    QTextStream jsGalleryConfigurationStream( &file_jsGalleryConfiguration );
-    jsGalleryConfigurationStream.setCodec( "UTF-8" );
-    jsGalleryConfigurationStream.setGenerateByteOrderMark (true);
-    //---- proprits
-    //Ecriture du fichier JS
-    jsGalleryConfigurationStream
-            << "var TAILLECACHEPHOTO = " << m_parameters.m_galleryConfig.prefetchCacheSize << ";" << endl
-            << "var NBPHOTOSAPRECHARGER = " << m_parameters.m_galleryConfig.nbPhotosToPrefetch << ";" << endl
-            << "var F_PHOTO_RIGHTCLICKENABLED = " << m_parameters.m_galleryConfig.f_rightClickEnabled << ";" << endl
-            // ********* EN DUR -> TEMPORAIRE !! ************ //
-            << "var PHOTOFILEPREFIXE = " << "\"Photo_\"" << ";" << endl /* ATTENTION : doit correspondre  GlobalDefinitions.h !!! */            
-            << "var NUMPREMIEREPHOTO = 1;" << endl
-            << "var NUMPREMIEREPAGEINDEX = 1;"	 << endl;
 
+    // --- JSON    
+    // -- technical properties
+    Object& jsonPhotos = m_jsonRoot.addObject( "photos" );
+    Object& jsonPhotosProperties = jsonPhotos.addObject( "technical" );
+    jsonPhotosProperties.addNumber( "cacheSize", m_parameters.m_galleryConfig.prefetchCacheSize );
+    jsonPhotosProperties.addNumber( "prefetchSize", m_parameters.m_galleryConfig.nbPhotosToPrefetch );
+    jsonPhotosProperties.addBoolean( "rightClickEnabled", m_parameters.m_galleryConfig.f_rightClickEnabled );
+    jsonPhotosProperties.addNumber( "qualityStrategy", m_parameters.m_photosConfig.imageOptimizationStrategy );
+    jsonPhotosProperties.addNumber( "first", 1 );
+    Object& maxSize = jsonPhotosProperties.addObject( "maxSize" );
+    maxSize.addNumber("width", m_parameters.m_photosConfig.maxSizeW );
+    maxSize.addNumber("height", m_parameters.m_photosConfig.maxSizeH );
+    Object& decoration = jsonPhotosProperties.addObject( "decoration" );
+    decoration.addNumber( "padding", m_skinParameters.photoPaddingSize );    
 
-    //---- photos
-    QMapIterator<int, QQueue<QSize> > i( m_photoSizes );
-    QQueue<QSize> localSizeQueue;
-    QSize localSize;
-    int nbPhotos = m_photoSizes.size();
-    int numPhoto;
-    int nbRes;
-    int numRes;
-
-    jsGalleryConfigurationStream << "listePhotos =  { " << endl;
-    QList<CPhotoProperties>::Iterator itProperties = m_photoPropertiesList.begin();
-
-    while(i.hasNext())
+    // -- photo properties
+    int numPhoto = 1; //m_photoPropertiesList and m_photoSizes must be coherent. Bad design!
+    Array& jsonPhotoList = jsonPhotos.addArray( "list" );
+    foreach( CPhotoProperties properties, m_photoPropertiesList )
     {
-       localSizeQueue =  (i.next()).value();
-       numPhoto = i.key( );
-       nbRes = localSizeQueue.size();
-       jsGalleryConfigurationStream << QString::number(numPhoto) <<  ":{fileName:\"" <<  itProperties->encodedFilename() << "\" ,\tres:{\t";
-       itProperties++;
-
-       numRes = 1;
-       while( !localSizeQueue.isEmpty() )
-       {
-            localSize = localSizeQueue.dequeue();
-            if( numRes < nbRes){
-                jsGalleryConfigurationStream << QString::number(numRes++) << " : {width:" << QString::number(localSize.width()) << ",\theight:" << QString::number(localSize.height()) << "},\t";
-            }
-        }//fin while
-
-       //dernire rsolution
-       jsGalleryConfigurationStream << QString::number(numRes) << " : {width:" << QString::number(localSize.width()) << ",\theight:" << QString::number(localSize.height()) << "}";
-
-       if( numPhoto < nbPhotos ){
-           jsGalleryConfigurationStream << "} }," << endl;
-       }
-
-    }//fin while
-
-    //dernire photo
-    jsGalleryConfigurationStream << "} }" << endl << "};" << endl;
-
-    //---- Lgendes
-    int iteratorCaptions;
-    CCaption caption;
-    QString renderedCaption;
-    CPhotoProperties photoProperties;
-    jsGalleryConfigurationStream << "listeCaptions =  {" << endl;
-    for( iteratorCaptions = 1; iteratorCaptions < m_photoPropertiesList.size(); iteratorCaptions++ ) {
-        photoProperties = m_photoPropertiesList.at( iteratorCaptions - 1);
-		caption = photoProperties.caption();
-        renderedCaption = caption.render();
-        jsGalleryConfigurationStream << QString::number(iteratorCaptions) << "\t:\"" << renderedCaption << "\"," << endl;
+        Object& photo = jsonPhotoList.appendObject();
+        photo.addString("filename",properties.encodedFilename() );
+        photo.addString("caption",properties.caption().render() );
+        Array& photoSizes = photo.addArray( "sizes" );
+        QQueue<QSize> sizes = m_photoSizes.value( numPhoto++ );
+        while( !sizes.isEmpty() )  {
+            QSize size = sizes.dequeue();
+            Object& photoSize = photoSizes.appendObject();
+            photoSize.addNumber( "width", size.width() );
+            photoSize.addNumber( "height", size.height() );
+        }
     }
-    //dernire lgende, spare car il ne doit pas y avoir de virgule finale dans la liste
-    photoProperties = m_photoPropertiesList.at( iteratorCaptions - 1);
-    caption = photoProperties.caption();
-    renderedCaption = caption.render();
-    jsGalleryConfigurationStream << QString::number(iteratorCaptions) << "\t:\"" << renderedCaption << "\"" << endl << "};" << endl;
-
-    //---- Fermeture du fichier
-    file_jsGalleryConfiguration.close();
-
-
 
 
     //////////// Presentation ///////////////
    // Attention : certaines proprits doivent tre en phase avec les css
    
-   // -> Debut du process de skinning
-
-    //---- Ouverture du fichier
-    QFile file_jsGalleryPresentation( path.absoluteFilePath( jsGalleryPresentationFileName ) );
-    if (!file_jsGalleryPresentation.open(QIODevice::WriteOnly | QIODevice::Text)){
-         m_msgErrorList.append( CError::error(CError::FileOpening) +  file_jsGalleryPresentation.fileName() );
-         emit abordGenerationSignal( );
-         return false;
-    }
-    file_jsGalleryPresentation.setPermissions( QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::WriteUser | QFile::ReadGroup | QFile::ReadOther );
-    QTextStream jsGalleryPresentationStream( &file_jsGalleryPresentation );
-    jsGalleryPresentationStream.setCodec( "UTF-8" );
-    jsGalleryPresentationStream.setGenerateByteOrderMark (true);
-
-
-    //---- Image
-    jsGalleryPresentationStream << "var URL_QUALITY  = " << m_parameters.m_photosConfig.quality << ";" << endl
-                                << "var MAXPHOTOWIDTH  = " << m_parameters.m_photosConfig.maxSizeW << ";" << endl
-                                << "var MAXPHOTOWHEIGHT = " << m_parameters.m_photosConfig.maxSizeH << ";" << endl;
-
-
-   //---- Fermeture du fichier
-    file_jsGalleryPresentation.close();
-
-
-    //---- JSON
+    //---- JSON index      
+    Object& index = m_jsonRoot.addObject( "index" );
+   
+    //-- Mosaic
+    Object& mosaic = index.addObject( "mosaic" );
+    //-- Technical
+    mosaic.addNumber( "first", 1 );
+    //-- Display
     const unsigned int nbCols =  m_parameters.m_thumbsConfig.nbColumns;
     const unsigned int nbRows = m_parameters.m_thumbsConfig.nbRows;
     const QSize unavailableSpace = m_skinParameters.unavailableSpace( nbCols, nbRows );
-
-    // Constructing document
-    Root properties;    
-    Object& index = properties.addObject( "index" );
-    Object& mosaic = index.addObject( "mosaic" );
     mosaic.addNumber( "nbRows",  nbRows);
     mosaic.addNumber( "nbCols",  nbCols);
     mosaic.addString(  "defaultSet", "res8" );  
@@ -687,8 +608,8 @@ bool CGalleryGenerator::generateJsFiles( )
     QTextStream jsonStream( &jsonFile );
     jsonStream.setCodec( "UTF-8" );
     jsonStream.setGenerateByteOrderMark (true);
-    jsonStream << properties.serialize();
-    jsonFile.close();
+    jsonStream << m_jsonRoot.serialize();
+    jsonFile.close();   
     
     
     emit jobDone();
@@ -705,244 +626,155 @@ bool CGalleryGenerator::generateJsFiles( )
 
 bool CGalleryGenerator::skinning( )
 {
-        QDir imgPath( m_parameters.m_galleryConfig.outputDir );
+ 	//-------- Copie des fichiers de la skin --------//
+    QDir outSkinPath( m_parameters.m_galleryConfig.outputDir );
 
-        const int offset = 33;
-
-	//-------- Copie des fichiers de la skin --------//
-        QDir outSkinPath( m_parameters.m_galleryConfig.outputDir );
-
-        displayProgressBar( 100, "green", tr("Skinning...") );
+    displayProgressBar( 100, "green", tr("Skinning...") );
 	
-        //---------- COPIE DES FICHIERS RESSOURCES --------//
-        outSkinPath = QDir( m_parameters.m_galleryConfig.outputDir );        
-        if( !outSkinPath.mkpath( RESIMGPATH ) ){
-            m_msgErrorList.append( CError::error(CError::FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(RESIMGPATH) );
-            emit abordGenerationSignal( );
-            return false;
-        }
-        outSkinPath.cd( RESIMGPATH );
-        if( !m_skinParameters.copyRessources(outSkinPath/*, m_msgErrorList*/) ){
-            m_msgErrorList.append( m_skinParameters.errors() );
-            emit abordGenerationSignal( );
-            return false;
-        }
-        //
-        //
-        //
-        //
-        //
-        //---------- CREATION DU CSS --------//
-        //--- Ouverture du fichier
-        outSkinPath = QDir( m_parameters.m_galleryConfig.outputDir );
-        if( !outSkinPath.mkpath( CSSPATH ) ){
-            m_msgErrorList.append( CError::error(CError::FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(CSSPATH) );
-            emit abordGenerationSignal( );
-            return false;
-        }
-        outSkinPath.cd( CSSPATH );
-        QFile skinCssFile( outSkinPath.absoluteFilePath( CSSSKINFILENAME ) );
-        if (!skinCssFile.open(QIODevice::WriteOnly | QIODevice::WriteOnly | QIODevice::Text)){
-                m_msgErrorList.append( CError::error(CError::FileOpening) +  skinCssFile.fileName() );
-                emit abordGenerationSignal( );
-                return false;
-        }
-        skinCssFile.setPermissions( QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::WriteUser | QFile::ReadGroup | QFile::ReadOther );
-        QTextStream cssSkinStream( &skinCssFile );
-        cssSkinStream.setCodec( "UTF-8" );
-        cssSkinStream.setGenerateByteOrderMark (true);
-        
-        //--- Rcupration des paramtres de la skin
-        CCssSheet skinCssSheet = m_skinParameters.toCss( );
-        
-         //--- Modification du Css: prise en compte des paramtres pour
-         //    les tailles de la mosaïque de vignettes.
-        int thumbBoxW = m_parameters.m_thumbsConfig.size + 2*m_skinParameters.thumbImgBorderSize;
-        int thumbBoxH = thumbBoxW;
-        int wrapperW = m_parameters.m_thumbsConfig.nbColumns * ( thumbBoxW + 2*m_skinParameters.thumbBoxBorderSize );
-        int wrapperH = m_parameters.m_thumbsConfig.nbRows * ( thumbBoxH + 2*m_skinParameters.thumbBoxBorderSize ); 
-        
-      	CCssSelection * selection;
-        CCssSelection * subselection;
-        QStringList selector;
-        
-        selection = new CCssSelection( "#indexSliderContainer" );
-            selection->setProperty( "width", QString::number(wrapperW) + "px" );
-            skinCssSheet.addSelection( *selection );
-        delete selection;
-        selection = new CCssSelection( ".thumbsWrapper" );
-            selection->setProperty( "width", QString::number(wrapperW) + "px" );
-            selection->setProperty( "height", QString::number(wrapperH) + "px" );
-        skinCssSheet.addSelection( *selection );
-        delete selection;
-        selection = new CCssSelection( ".scrollContainer" );
-            selection->setProperty( "width", QString::number(wrapperW) + "px" );
-            selection->setProperty( "height", QString::number(wrapperH) + "px" );		
-            subselection = new CCssSelection( "div.slidingPanel" );
-                subselection->setProperty( "width", QString::number(wrapperW) + "px" );
-            selection->addSubSelection( *subselection );	
-        skinCssSheet.addSelection( *selection );	
-        delete selection;
-        delete subselection;   
-        selector << ".thumbsWrapperContainer"; //Existe dj: on rcupre la slection de la skin -> sinon crasement !
-        CCssSelection thumbWrapperSelection = skinCssSheet.selection( selector );
-            thumbWrapperSelection.setProperty( "width", QString::number(wrapperW) + "px" );
-            thumbWrapperSelection.setProperty( "height", QString::number(wrapperH) + "px" );
-        skinCssSheet.addSelection( thumbWrapperSelection );
-        selector.clear();        
-        selector << ".thumbBox";            
-        CCssSelection thumBoxSelection = skinCssSheet.selection( selector );
-            thumBoxSelection.setProperty( "width", QString::number(thumbBoxW) + "px" );
-            thumBoxSelection.setProperty( "height", QString::number(thumbBoxH) + "px" );
-        skinCssSheet.addSelection( thumBoxSelection );
-     
-        //--- Ecriture du fichier sur le disque
-        skinCssSheet.toStream( cssSkinStream );
-        skinCssFile.close();
-	//
-	//
-	//
-	//
-	//
-        //-------- MODIFICATION DU JAVASCRIPT --------//
-        /*const QString jsGalleryConfigurationFileName( JSCONFFILENAME );*/
-    	const QString jsGalleryPresentationFileName( JSPRESFILENAME );
-        const QString jsFilesPath( JSPATH );
-        outSkinPath = QDir( m_parameters.m_galleryConfig.outputDir );
+    //---------- COPIE DES FICHIERS RESSOURCES --------//
+    outSkinPath = QDir( m_parameters.m_galleryConfig.outputDir );        
+    if( !outSkinPath.mkpath( RESIMGPATH ) ){
+        m_msgErrorList.append( CError::error(CError::FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(RESIMGPATH) );
+        emit abordGenerationSignal( );
+        return false;
+    }
+    outSkinPath.cd( RESIMGPATH );
+    if( !m_skinParameters.copyRessources(outSkinPath/*, m_msgErrorList*/) ){
+        m_msgErrorList.append( m_skinParameters.errors() );
+        emit abordGenerationSignal( );
+        return false;
+    }
 
-    	outSkinPath.cd( jsFilesPath );		
-    	
-    	//---- Ouverture du fichier
-    	QFile file_jsGalleryPresentation( outSkinPath.absoluteFilePath( jsGalleryPresentationFileName ) );
-        if (!file_jsGalleryPresentation.open(QIODevice::Append | QIODevice::WriteOnly | QIODevice::Text)){
-                m_msgErrorList.append( CError::error(CError::FileOpening) +  file_jsGalleryPresentation.fileName() );
-                emit abordGenerationSignal( );
-         	return false;
-    	}
-        file_jsGalleryPresentation.setPermissions( QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::WriteUser | QFile::ReadGroup | QFile::ReadOther );
-    	QTextStream jsGalleryPresentationStream( &file_jsGalleryPresentation );
-    	jsGalleryPresentationStream.setCodec( "UTF-8" );
-        jsGalleryPresentationStream.setGenerateByteOrderMark (true);
-    	
-    	//---- Index
-        jsGalleryPresentationStream << "var NBTHUMBSBYPAGE = " <<  QString::number(m_parameters.m_thumbsConfig.nbColumns * this->m_parameters.m_thumbsConfig.nbRows) << ";" << endl;
-    	//---- RESIZE ET RECENTRAGE
-    	jsGalleryPresentationStream << "var NBOFFSETHAUT = " << QString::number( offset ) << ";" << endl
-                                    << "var NBOFFSETBAS  = " << QString::number( offset ) << ";" << endl
-                                    << "var IMAGEQUALITYSTRATEGY = " << QString::number(m_parameters.m_photosConfig.imageOptimizationStrategy) << ";" << endl;
-        //---- Photo
-        jsGalleryPresentationStream << "var MAINPHOTOPADDING = " << QString::number(m_skinParameters.photoPaddingSize) << endl;
+    //---------- CREATION DU CSS --------//
+    //--- Ouverture du fichier
+    outSkinPath = QDir( m_parameters.m_galleryConfig.outputDir );
+    if( !outSkinPath.mkpath( CSSPATH ) ){
+        m_msgErrorList.append( CError::error(CError::FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(CSSPATH) );
+        emit abordGenerationSignal( );
+        return false;
+    }
+    outSkinPath.cd( CSSPATH );
+    QFile skinCssFile( outSkinPath.absoluteFilePath( CSSSKINFILENAME ) );
+    if (!skinCssFile.open(QIODevice::WriteOnly | QIODevice::WriteOnly | QIODevice::Text)){
+            m_msgErrorList.append( CError::error(CError::FileOpening) +  skinCssFile.fileName() );
+            emit abordGenerationSignal( );
+            return false;
+    }
+    skinCssFile.setPermissions( QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::WriteUser | QFile::ReadGroup | QFile::ReadOther );
+    QTextStream cssSkinStream( &skinCssFile );
+    cssSkinStream.setCodec( "UTF-8" );
+    cssSkinStream.setGenerateByteOrderMark (true);
+        
+    //--- Récupration des paramtres de la skin
+    CCssSheet skinCssSheet = m_skinParameters.toCss( );
 
-        //---- Fermeture du fichier
-        file_jsGalleryPresentation.close();
-    	//
-    	//
-    	//
-    	//
-    	//
-        //
-    //-------- MODIFICATIONS HTML -------//
-        QDir outPath( m_parameters.m_galleryConfig.outputDir );
-        QFile htmlFile( outPath.absoluteFilePath( QString("index.html")) );
-        htmlFile.setPermissions( QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::WriteUser | QFile::ReadGroup | QFile::ReadOther );
-        if( htmlFile.open( QIODevice::Text|QIODevice::ReadWrite ) )
-        {
-            QTextStream htmlTextStream( &htmlFile );
-            htmlTextStream.setCodec( "UTF-8" );
-            htmlTextStream.setGenerateByteOrderMark (false); //False sinon pb avec ie6 car les premiers caractres ne sont pas le doctype...
-            QString htmlString;
-            QString verticalTitle(  "<br />" );
+    //--- Ecriture du fichier sur le disque
+    skinCssSheet.toStream( cssSkinStream );
+    skinCssFile.close();
+
+
+//-------- MODIFICATIONS HTML -------//
+    QDir outPath( m_parameters.m_galleryConfig.outputDir );
+    QFile htmlFile( outPath.absoluteFilePath( QString("index.html")) );
+    htmlFile.setPermissions( QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::WriteUser | QFile::ReadGroup | QFile::ReadOther );
+    if( htmlFile.open( QIODevice::Text|QIODevice::ReadWrite ) )
+    {
+        QTextStream htmlTextStream( &htmlFile );
+        htmlTextStream.setCodec( "UTF-8" );
+        htmlTextStream.setGenerateByteOrderMark (false); //False sinon pb avec ie6 car les premiers caractres ne sont pas le doctype...
+        QString htmlString;
+        QString verticalTitle(  "<br />" );
 			
-            htmlString = htmlTextStream.readAll() ; //Lecture du fichier
+        htmlString = htmlTextStream.readAll() ; //Lecture du fichier
 
-            //------ HEADER -----//
-            //Metatag generator
-            htmlString.replace( "[META_GENERATOR]", QString("<meta name=\"generator\" content=\"EZWebGallery r")+CPlatform::revision()+QString("\" />") );
-            //Metatags Content, title &  Description
-            htmlString.replace( "[META_TITLE]", QString("<meta name=\"title\" content=\"")+m_parameters.m_galleryConfig.title+QString("\" />") );
-            htmlString.replace( "[META_DESCRIPTION]", QString("<meta name=\"description\" content=\"")+m_parameters.m_galleryConfig.description+QString("\" />") );
-            htmlString.replace( "[META_CONTENT]", QString("<meta name=\"content\" content=\"")+m_parameters.m_galleryConfig.description+QString("\" />") );
-            //Facebook's OpenGraph
-            QChar slash = '/';
-            QString galleryThumbURL = m_parameters.m_galleryConfig.url.remove(' '); //Mise en forme de l'url de la vignette reprsentant la galerie
-            if( !galleryThumbURL.isEmpty() && galleryThumbURL.at( galleryThumbURL.size() - 1 ) != slash ){ //Ajout d'un / final si il n'y en a pas
-                galleryThumbURL += slash;
-            }
-            galleryThumbURL += PHOTOSPATH;
+        //------ HEADER -----//
+        //Metatag generator
+        htmlString.replace( "[META_GENERATOR]", QString("<meta name=\"generator\" content=\"EZWebGallery r")+CPlatform::revision()+QString("\" />") );
+        //Metatags Content, title &  Description
+        htmlString.replace( "[META_TITLE]", QString("<meta name=\"title\" content=\"")+m_parameters.m_galleryConfig.title+QString("\" />") );
+        htmlString.replace( "[META_DESCRIPTION]", QString("<meta name=\"description\" content=\"")+m_parameters.m_galleryConfig.description+QString("\" />") );
+        htmlString.replace( "[META_CONTENT]", QString("<meta name=\"content\" content=\"")+m_parameters.m_galleryConfig.description+QString("\" />") );
+        //Facebook's OpenGraph
+        QChar slash = '/';
+        QString galleryThumbURL = m_parameters.m_galleryConfig.url.remove(' '); //Mise en forme de l'url de la vignette reprsentant la galerie
+        if( !galleryThumbURL.isEmpty() && galleryThumbURL.at( galleryThumbURL.size() - 1 ) != slash ){ //Ajout d'un / final si il n'y en a pas
             galleryThumbURL += slash;
-            galleryThumbURL += GALLERYTHUMBFILENAME;
-            QString openGraphString = QString("<meta property=\"og:image\" content=\"")+galleryThumbURL+QString("\" / >\n") \
-                                     +QString("<meta property=\"og:title\" content=\"")+m_parameters.m_galleryConfig.title+QString("\" / >\n") \
-                                     +QString("<meta property=\"og:description\" content=\"")+m_parameters.m_galleryConfig.description+QString("\" / >\n")/*\
-                                     +QString("<meta property=\"fb:admins\" content=\"786810484\"/>" )*/;
-            htmlString.replace( "[META_OPENGRAPH]",	openGraphString );
-            //------ FOOTER -------//
-            //EZWebGallery Logo
-            htmlString.replace( "[EZWEBGALLERY_LOGO]", QString("<img src=\"ressources/images/EZWebGallery.png\" id=\"logo\" title=\"")
-                                                                + tr("Photo gallery designed and generated using EZWebGallery.")
-                                                                + QString("\" alt=\"EZWebGallery\"/>") );
-			//Add-this
-            if( m_parameters.m_galleryConfig.f_shareOnSocialNetworks ){
-                QString addthisString = QString("<div class=\"addthis_toolbox addthis_default_style\" style=\"margin-left:50px\">\n")+
-                                        QString("\t<span class=\"addthis_separator\"></span>\n")+
-                                        QString("\t<a href=\"http://addthis.com/bookmark.php?v=250\" class=\"addthis_button_compact\"></a>\n")+
-                                        QString("\t<a class=\"addthis_button_facebook\"></a>\n")+
-                                        QString("\t<a class=\"addthis_button_twitter\"></a>\n")+
-                                        /*QString("\t<a class=\"addthis_button_googlebuzz\"></a>\n")+*/
-                                        QString("\t<a class=\"addthis_button_email\"></a>\n")+
-                                        QString("</div>\n")+
-                                        QString("<script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c0eb6595435a765\"></script>");
-                htmlString.replace( "[BUTTON_ADDTHIS]", addthisString );
-            }else{
-                htmlString.remove( "[BUTTON_ADDTHIS]" );
-            }
-
-            //------ TITRES -----//
-            //Titre de la page
-            htmlString.replace( "[HTML_TITLE]", QString("<title>")+m_parameters.m_galleryConfig.title+QString("</title>") );
-            //Titre vertical
-            for( int i = 0; i < m_parameters.m_galleryConfig.title.size(); i++ ) {
-                verticalTitle.append( "<br />" );
-                verticalTitle.append( m_parameters.m_galleryConfig.title.at(i) );
-            }
-            htmlString.replace( "[CONTENT_VERTICALTITLE]", verticalTitle );
-            //Titre au dessus des photos
-            htmlString.replace( "[CONTENT_PHOTOTITLE]", m_parameters.m_galleryConfig.title );
-
-            //------ BOUTONS (SCREEN PHOTO) -------//
-            //Previous
-            htmlString.replace( "[BUTTON_PREVIOUSPHOTO]", QString("<img alt=\"") + tr("Previous photo")
-                                                                    +QString("\" class=\"photoButtonEnabled\" id=\"boutonPrevious\" src=\"ressources/images/")
-                                                                    +m_skinParameters.buttonImage( CSkinParameters::buttonPrevious )+QString("\" />") );
-            //Next
-            htmlString.replace( "[BUTTON_NEXTPHOTO]", QString("<img alt=\"") + tr("Next photo")
-                                                                +QString("\" class=\"photoButtonEnabled\" id=\"boutonNext\" src=\"ressources/images/")
-                                                                +m_skinParameters.buttonImage( CSkinParameters::buttonNext )+QString("\" />") );
-            //Index
-            htmlString.replace( "[BUTTON_INDEX]", QString("<img alt=\"") + tr("Browse the gallery")
-                                                            +QString("\" class=\"photoButtonEnabled\" id=\"boutonIndex\" src=\"ressources/images/")
-                                                            +m_skinParameters.buttonImage( CSkinParameters::buttonIndex )+QString("\" />") );
-
-            //---------------------//
-
-            htmlTextStream.seek( 0 ); //Reposition  0 pour remplacer le fichier et pas faire un append
-            htmlTextStream << htmlString;
-
-        } //fin modifications html
-        else{
-            m_msgErrorList.append( CError::error(CError::FileOpening) +  htmlFile.fileName() );
-            emit abordGenerationSignal( );
-            return false;
         }
-        htmlFile.close();
+        galleryThumbURL += PHOTOSPATH;
+        galleryThumbURL += slash;
+        galleryThumbURL += GALLERYTHUMBFILENAME;
+        QString openGraphString = QString("<meta property=\"og:image\" content=\"")+galleryThumbURL+QString("\" / >\n") \
+                                    +QString("<meta property=\"og:title\" content=\"")+m_parameters.m_galleryConfig.title+QString("\" / >\n") \
+                                    +QString("<meta property=\"og:description\" content=\"")+m_parameters.m_galleryConfig.description+QString("\" / >\n")/*\
+                                    +QString("<meta property=\"fb:admins\" content=\"786810484\"/>" )*/;
+        htmlString.replace( "[META_OPENGRAPH]",	openGraphString );
+        //------ FOOTER -------//
+        //EZWebGallery Logo
+        htmlString.replace( "[EZWEBGALLERY_LOGO]", QString("<img src=\"ressources/images/EZWebGallery.png\" id=\"logo\" title=\"")
+                                                            + tr("Photo gallery designed and generated using EZWebGallery.")
+                                                            + QString("\" alt=\"EZWebGallery\"/>") );
+		//Add-this
+        if( m_parameters.m_galleryConfig.f_shareOnSocialNetworks ){
+            QString addthisString = QString("<div class=\"addthis_toolbox addthis_default_style\" style=\"margin-left:50px\">\n")+
+                                    QString("\t<span class=\"addthis_separator\"></span>\n")+
+                                    QString("\t<a href=\"http://addthis.com/bookmark.php?v=250\" class=\"addthis_button_compact\"></a>\n")+
+                                    QString("\t<a class=\"addthis_button_facebook\"></a>\n")+
+                                    QString("\t<a class=\"addthis_button_twitter\"></a>\n")+
+                                    /*QString("\t<a class=\"addthis_button_googlebuzz\"></a>\n")+*/
+                                    QString("\t<a class=\"addthis_button_email\"></a>\n")+
+                                    QString("</div>\n")+
+                                    QString("<script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c0eb6595435a765\"></script>");
+            htmlString.replace( "[BUTTON_ADDTHIS]", addthisString );
+        }else{
+            htmlString.remove( "[BUTTON_ADDTHIS]" );
+        }
+
+        //------ TITRES -----//
+        //Titre de la page
+        htmlString.replace( "[HTML_TITLE]", QString("<title>")+m_parameters.m_galleryConfig.title+QString("</title>") );
+        //Titre vertical
+        for( int i = 0; i < m_parameters.m_galleryConfig.title.size(); i++ ) {
+            verticalTitle.append( "<br />" );
+            verticalTitle.append( m_parameters.m_galleryConfig.title.at(i) );
+        }
+        htmlString.replace( "[CONTENT_VERTICALTITLE]", verticalTitle );
+        //Titre au dessus des photos
+        htmlString.replace( "[CONTENT_PHOTOTITLE]", m_parameters.m_galleryConfig.title );
+
+        //------ BOUTONS (SCREEN PHOTO) -------//
+        //Previous
+        htmlString.replace( "[BUTTON_PREVIOUSPHOTO]", QString("<img alt=\"") + tr("Previous photo")
+                                                                +QString("\" class=\"photoButtonEnabled\" id=\"boutonPrevious\" src=\"ressources/images/")
+                                                                +m_skinParameters.buttonImage( CSkinParameters::buttonPrevious )+QString("\" />") );
+        //Next
+        htmlString.replace( "[BUTTON_NEXTPHOTO]", QString("<img alt=\"") + tr("Next photo")
+                                                            +QString("\" class=\"photoButtonEnabled\" id=\"boutonNext\" src=\"ressources/images/")
+                                                            +m_skinParameters.buttonImage( CSkinParameters::buttonNext )+QString("\" />") );
+        //Index
+        htmlString.replace( "[BUTTON_INDEX]", QString("<img alt=\"") + tr("Browse the gallery")
+                                                        +QString("\" class=\"photoButtonEnabled\" id=\"boutonIndex\" src=\"ressources/images/")
+                                                        +m_skinParameters.buttonImage( CSkinParameters::buttonIndex )+QString("\" />") );
+
+        //---------------------//
+
+        htmlTextStream.seek( 0 ); //Reposition  0 pour remplacer le fichier et pas faire un append
+        htmlTextStream << htmlString;
+
+    } //fin modifications html
+    else{
+        m_msgErrorList.append( CError::error(CError::FileOpening) +  htmlFile.fileName() );
+        emit abordGenerationSignal( );
+        return false;
+    }
+    htmlFile.close();
 		
 		
-        //-- FIN DE LA GENERATION --//
-        m_mutex.lock();
-        m_f_WorkInProgress = false;        
-        emit generationFinishedSignal( m_photoPropertiesList ); //Information de l'UI
-        emit jobDone();
-        m_mutex.unlock();
+    //-- FIN DE LA GENERATION --//
+    m_mutex.lock();
+    m_f_WorkInProgress = false;        
+    emit generationFinishedSignal( m_photoPropertiesList ); //Information de l'UI
+    emit jobDone();
+    m_mutex.unlock();
 	
 	return true;
 }

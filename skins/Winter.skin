@@ -57,6 +57,7 @@
         <Selection selector=".thumbsWrapperContainer">
             <background-color>#717d80</background-color>
             <background-image>url(../images/Frost.jpg)</background-image>
+            <background-size>cover</background-size>
             <border-color>#45463d</border-color>
             <border-width>5px</border-width>
         </Selection>

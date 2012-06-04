@@ -57,6 +57,7 @@
         <Selection selector=".thumbsWrapperContainer">
             <background-color>#cac9c7</background-color>
             <background-image>url(../images/Crayon.jpg)</background-image>
+            <background-size>cover</background-size>
             <border-color>#afaead</border-color>
             <border-width>7px</border-width>
         </Selection>

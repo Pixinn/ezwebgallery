@@ -57,6 +57,7 @@
         <Selection selector=".thumbsWrapperContainer">
             <background-color>#b1aaa2</background-color>
             <background-image>url(../images/Moria_paper.jpg)</background-image>
+            <background-size>cover</background-size>
             <border-color>#afaead</border-color>
             <border-width>5px</border-width>
         </Selection>

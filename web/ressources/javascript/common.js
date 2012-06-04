@@ -83,7 +83,7 @@ var g_prefetchManager;
 var g_displayManager;
 //navigation
 var g_idCurrentPhoto;					/* photo à afficher */
-var g_idPhotoToLoadNext;				/* On essaie d'avoir en permanence g_idCurrentPhoto + g_nbPhotosAPRECHARGER dans le cache */
+var g_idPhotoToLoadNext;				/* On essaie d'avoir en permanence g_idCurrentPhoto + g_properties.photos.technical.prefetchSize dans le cache */
 var g_idCurrentIndexPage;				/* Page de vignettes courantes */
 var g_properties;                       //Gallery properties
 //photos
@@ -188,8 +188,10 @@ function initGallery( )
 	var numThumbnails;
     var nbThumbsByPanel = g_properties.index.mosaic.nbRows * g_properties.index.mosaic.nbCols;
 	g_listeThumbnails = new Array;
-	for ( key in listePhotos ){g_nbThumbnails++;}
-	for ( key in listePhotos[1].res ){g_nbRes++;}
+	/*for ( key in listePhotos ){g_nbThumbnails++;}
+	for ( key in listePhotos[1].res ){g_nbRes++;}*/
+    g_nbThumbnails = g_properties.photos.list.length;
+    g_nbRes = g_properties.photos.list[0].sizes.length; //at least one photo in the list
     
 	g_nbPhotos = g_nbThumbnails;
 	nbPanneaux = Math.ceil( g_nbThumbnails / nbThumbsByPanel );
@@ -197,11 +199,10 @@ function initGallery( )
 	
 	/* Récupération et mise en forme de la liste des thumbnails */
 	/* création de g_listeThumbnails[nbPanneaux][NBTHUMBSBYPAGE]  */
-  	for ( key in listePhotos )
-	{
-		var thumbName = listePhotos[ key ].fileName;
-		g_listeThumbnails[ thumbName ] = parseInt(key);
-	}
+    for( var i = 0 ; i <  g_properties.photos.list.length; i++ ) {
+        var photo = g_properties.photos.list[ i ];
+        g_listeThumbnails[ photo.filename ] =  i + 1 ;
+    }
 	
 	
 	/* Génération des panneaux et des onglets */
@@ -247,7 +248,7 @@ function initGallery( )
 		i=1;
 		while( ( i <= nbThumbsByPanel ) && ( numThumbnails <= g_nbThumbnails ) )
         {
-            var thumbName = listePhotos[ numThumbnails ].fileName;        
+            var thumbName = g_properties.photos.list[ numThumbnails-1 ].filename;        
             //Une case "thumbBox"
             $(DIV_SLIDINGPANEL).eq(indexPanneau).append('<div class="'+DIV_THUMBCONTAINER.substr(1,DIV_THUMBCONTAINER.length-1)+'" id="'+numThumbnails+'"></div>');			
             //La vignette
@@ -302,10 +303,10 @@ function initGallery( )
  	g_$divThumbBox = $(DIV_THUMBCONTAINER);
  	
  	// ---- Init et instanciation des autres objets ---- //
-	g_idCurrentPhoto = NUMPREMIEREPHOTO;
-	g_idCurrentIndexPage = NUMPREMIEREPAGEINDEX;
-	g_pixelsOccupesEnHaut = NBOFFSETHAUT;
-	g_pixelsOccupesEnBas =  NBOFFSETBAS;
+	g_idCurrentPhoto = g_properties.photos.technical.first;
+	g_idCurrentIndexPage = g_properties.index.mosaic.first;
+	g_pixelsOccupesEnHaut = 33;
+	g_pixelsOccupesEnBas =  33;
 
 	g_displayManager = new DisplayManager( 									 g_$screenPhoto,
 																			 g_$divCadrePhotoName,
@@ -318,10 +319,10 @@ function initGallery( )
 																			 0,
 																			 g_pixelsOccupesEnHaut,
 																			 g_pixelsOccupesEnBas,
-																			 MAXPHOTOWIDTH,
-																			 MAXPHOTOWHEIGHT );
+																			 g_properties.photos.technical.maxSize.width,
+																			 g_properties.photos.technical.maxSize.height );
 																			 
-	g_prefetchManager = new TablePhotos( TAILLECACHEPHOTO );
+	g_prefetchManager = new TablePhotos( g_properties.photos.technical.cacheSize );
 	g_loadQueue = new Fifo( );
     
 }
@@ -564,9 +565,9 @@ function calculerTaillesMax( nbPixelsOccupesEnHaut, nbPixelsOccupesEnBas, cadreP
 		/* NB: On ne peut pas utiliser g_$divDisplayZoneName.innerWidth( ), car bug sous IE6 :( */
 		/* Du coup il faut que:	+ g_$divDisplayZoneName.siblings()::margin = 0px
 														+ g_$divDisplayZoneName::border=0 et ::margin=0 */
-        divTaille.h = g_$divDisplayZoneName.innerHeight( ) - 2*divCadrePhotoBorderSize - 2*MAINPHOTOPADDING - nbPixelsOccupesEnHaut - nbPixelsOccupesEnBas;
+        divTaille.h = g_$divDisplayZoneName.innerHeight( ) - 2*divCadrePhotoBorderSize - 2*g_properties.photos.technical.decoration.padding - nbPixelsOccupesEnHaut - nbPixelsOccupesEnBas;
 		/*divTaille.w = g_$divDisplayZoneName.width( ) - divCadrePhotoBorderSizeW - CORRECTIF_BUG_IE6; <-- NE MARCHE PAS SOUS IE6 !!!*/ 
-		divTaille.w = $(window).width( ) - widthWasted - 2*divCadrePhotoBorderSize - 2*MAINPHOTOPADDING - CORRECTIF_BUG_IE6;
+		divTaille.w = $(window).width( ) - widthWasted - 2*divCadrePhotoBorderSize - 2*g_properties.photos.technical.decoration.padding - CORRECTIF_BUG_IE6;
 		
 		if( divTaille.h > maxHeight ){
 			divTaille.h = 	maxHeight;}

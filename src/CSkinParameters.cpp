@@ -215,9 +215,9 @@ void CSkinParameters::fromUi( )
      m_styleSheet.addSelection( indexNav );
      //.thumbsWrapperContainer Mosaque
      CCssSelection thumbsMosaic( QString(".thumbsWrapperContainer"));
-        //this->mosaicBorderSize = m_p_ui->spinBox_Mosaic_BorderWidth->value();
         thumbsMosaic.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
         thumbsMosaic.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );
+        thumbsMosaic.setProperty( QString("background-size"), "cover" );
         thumbsMosaic.setProperty( QString("border-width"), QString::number( m_p_ui->spinBox_Mosaic_BorderWidth->value() ) + QString("px") );
         thumbsMosaic.setProperty( QString("border-color"), m_p_ui->cColorPicker_Mosaic_BorderColor->value() );
      m_styleSheet.addSelection( thumbsMosaic );
