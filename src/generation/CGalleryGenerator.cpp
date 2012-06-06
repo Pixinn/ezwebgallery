@@ -434,27 +434,9 @@ int CGalleryGenerator::generatePhotos( )
     
     //- Cration de la file des tailles des photos  gnrer:
     //- IMPORTANT : L'ordre doit correspondre  l'ordre des traitements au sein de CPhotoProcessor
-    //- tailleMax, ..., tailleMin, tailleVignette
-    /*
-    sizesList.enqueue( QSize( m_parameters.m_photosConfig.maxSizeW, m_parameters.m_photosConfig.maxSizeH ) );
-    if( m_parameters.m_photosConfig.nbIntermediateResolutions > 2){
-        int spaceW;
-        int spaceH;
-        int nbRes = m_parameters.m_photosConfig.nbIntermediateResolutions - 2;
-        spaceW = (m_parameters.m_photosConfig.maxSizeW - m_parameters.m_photosConfig.minSizeW)/(nbRes+1);
-        spaceH = (m_parameters.m_photosConfig.maxSizeH - m_parameters.m_photosConfig.minSizeH)/(nbRes+1);
-        for(int i = 1; i <= nbRes; i++){
-            sizesList.enqueue( QSize( m_parameters.m_photosConfig.maxSizeW - i*spaceW,
-                                      m_parameters.m_photosConfig.maxSizeH - i*spaceH ) );
-        }
-    }
-    sizesList.enqueue( QSize( m_parameters.m_photosConfig.minSizeW, m_parameters.m_photosConfig.minSizeH ) );
-    */
-    
+    //- tailleMax, ..., tailleMin, tailleVignette  
     photoSizes = computePhotoSizes();
     m_thumbSizes = computeThumbSizes();
-    // sizesList = computeThumbSizes( sizesList ); //enqueing thumb sizes
-    
 
     //- Cration de la file des qualits
     for(int i = 1; i <= m_parameters.m_photosConfig.nbIntermediateResolutions; i++){
@@ -493,7 +475,6 @@ int CGalleryGenerator::generatePhotos( )
     {
         photoToProcess = new CPhotoProcessor( photoProperties,
                                               outPath,
-                                              //sizesList,
                                               photoSizes,
                                               m_thumbSizes,
                                               qualityList,
@@ -586,7 +567,7 @@ bool CGalleryGenerator::generateJsFiles( )
     const QSize unavailableSpace = m_skinParameters.unavailableSpace( nbCols, nbRows );
     mosaic.addNumber( "nbRows",  nbRows);
     mosaic.addNumber( "nbCols",  nbCols);
-    mosaic.addString(  "defaultSet", "res8" );  
+    mosaic.addString(  "defaultSet", QString(RESOLUTIONPATH) + ("8") );  
     Object& sizes = mosaic.addObject( "sizes" );
     foreach( QSize size, m_thumbSizes ) {
         sizes.addNumber( m_thumbSizes.key(size), size.width() );

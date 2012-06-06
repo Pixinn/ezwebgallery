@@ -220,7 +220,7 @@ function initGallery( )
 									.parent().addClass( CLASSNAVIGATIONTABSELECTED ); 
 	
 	// 2 - Les vignettes
-    // Computing wich thumbnail set to use
+    // a. Computing wich thumbnail set to use
     var f_setFound = false;
     var thumbSet = g_properties.index.mosaic.defaultSet; //if no suitable set is found
     g_thumbSize = g_properties.index.mosaic.sizes[ thumbSet ];
@@ -239,46 +239,36 @@ function initGallery( )
             }
     } );
     
+    // b. Thumbnail containers
 	var $panneaux = $(DIV_SLIDINGPANEL);
 	var indexPanneau;
-    var qmap = new HashTable();//Besoin de cette table car les closures *pointent* vers une *référence* des variables locales de la boucle. ie: elles ibt la même valeur à chaque callback !
-	numThumbnails = 1;
-	for (indexPanneau = 0; indexPanneau < $panneaux.length; indexPanneau++)
-    {
-		i=1;
-		while( ( i <= nbThumbsByPanel ) && ( numThumbnails <= g_nbThumbnails ) )
-        {
-            var thumbName = g_properties.photos.list[ numThumbnails-1 ].filename;        
-            //Une case "thumbBox"
-            $(DIV_SLIDINGPANEL).eq(indexPanneau).append('<div class="'+DIV_THUMBCONTAINER.substr(1,DIV_THUMBCONTAINER.length-1)+'" id="'+numThumbnails+'"></div>');			
-            //La vignette
-            var thumbnail = new Image(); //pas de delete correspondant car persistant jusqu'à fermeteure de la page
-            $(thumbnail)// callback OnLoad
-						.load( function( )
-						{	
-                            var id = qmap.getItem( $(this).attr("src") );
-                            var $thumbBox = $panneaux.find( "#"+ id );
-                            g_nbThumbFullyLoaded++;
-                            //Si anim, mettre l'état de départ ici
-                            //Ajout de la vignette dans la case correspondante
-							$thumbBox.append( $(this) );
-                            //Animation : vers état de fin ici.                   
-                            $(DIV_PROGRESSBARNAME).reportprogress( g_nbThumbFullyLoaded, g_nbThumbnails );                            
-						})
-						// Gestion Erreur
-						.error( function()
-						{
-							//$(this).attr('src','ressources/images/errorPhoto.gif');
-							dbgTrace("common.js / Erreur de chargement thumbnail "+g_nbThumbFullyLoaded++);                            
-						})
-						// Source de l'image : A METTRE EN DERNIER
-						.attr("src", src = URL_THUMBS_PATH+thumbSet+"/"+thumbName );
-            qmap.addItem( $(thumbnail).attr("src"), numThumbnails );
+    var numThumbnails = 1;
+	for (indexPanneau = 0; indexPanneau < $panneaux.length; indexPanneau++) {
+        var i = 1;
+        while( ( i <= nbThumbsByPanel ) && ( numThumbnails <= g_nbThumbnails ) ) {
+            $(DIV_SLIDINGPANEL).eq(indexPanneau).append('<div class="'+DIV_THUMBCONTAINER.substr(1,DIV_THUMBCONTAINER.length-1)+'" id="'+numThumbnails+'"></div>');	
+            numThumbnails++;
             i++;
-			numThumbnails++;
-		}
-	}
-	
+        }
+    }
+      
+    // c. loading thumbnails
+    $(DIV_THUMBCONTAINER).each( function( index )
+    {
+        var thumbName =g_properties.photos.list[ index ].filename
+        var thumbnail = new Image();
+        $(this).append( thumbnail );
+        $(thumbnail).load( function( )	{	// callback OnLoad
+                        g_nbThumbFullyLoaded++;               
+                        $(DIV_PROGRESSBARNAME).reportprogress( g_nbThumbFullyLoaded, g_nbThumbnails );                            
+					})
+					.error( function()  {
+						dbgTrace("common.js / Erreur de chargement thumbnail "+g_nbThumbFullyLoaded++);                            
+					})
+					// Source de l'image : A METTRE EN DERNIER
+					.attr("src", src = URL_THUMBS_PATH+thumbSet+'/'+thumbName );
+    } );
+  
 	
 	/******* STEP 2 : Attente de fin de chargement des vignettes ***********/
 	/******* Initialisation des objets en // pour gagner du temps **********/
@@ -324,7 +314,7 @@ function initGallery( )
 																			 
 	g_prefetchManager = new TablePhotos( g_properties.photos.technical.cacheSize );
 	g_loadQueue = new Fifo( );
-    
+
 }
 
 
