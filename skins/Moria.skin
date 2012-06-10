@@ -1,4 +1,4 @@
-﻿<Skin release="129" name="Moria">
+﻿<Skin release="20120609" name="Moria">
     <properties title-position="0"/>
     <StyleSheet name="noname">
         <Selection selector="#progressbar">
@@ -43,6 +43,11 @@
             <border-width>2px</border-width>
             <margin>-2px</margin>
         </Selection>
+        <Selection selector=".scrollContainer div.slidingPanel">
+            <background-color>#b1aaa2</background-color>
+            <background-image>url(../images/Moria_paper.jpg)</background-image>
+            <background-size>cover</background-size>
+        </Selection>
         <Selection selector=".thumbBox">
             <border-color>#424242</border-color>
             <border-width>1px</border-width>
@@ -56,8 +61,6 @@
         </Selection>
         <Selection selector=".thumbsWrapperContainer">
             <background-color>#b1aaa2</background-color>
-            <background-image>url(../images/Moria_paper.jpg)</background-image>
-            <background-size>cover</background-size>
             <border-color>#afaead</border-color>
             <border-width>5px</border-width>
         </Selection>
@@ -67,9 +70,9 @@
             <padding>6px</padding>
         </Selection>
         <Selection selector="div#indexTitle">
-            <background-color>#b1aaa2</background-color>
-            <background-image>url(../images/Moria_paper.jpg)</background-image>
-            <border-color>#282828</border-color>
+            <background-color>#b2aaa3</background-color>
+            <background-image>url(../images/Moria_paper_small.jpg)</background-image>
+            <border-color>#f3f3f3</border-color>
             <border-left-width>0px</border-left-width>
             <border-right-width>3px</border-right-width>
             <color>#000000</color>
@@ -117,6 +120,6 @@
         <File id="PhotoButtonPrevious">LeftArrow_craie.png</File>
         <File id="PhotoFraming_Texture">Moria_paper.jpg</File>
         <File id="PhotoPage_BckgTexture">Moria_background.jpg</File>
-        <File id="VTitle_BackgroundTexture">Moria_paper.jpg</File>
+        <File id="VTitle_BackgroundTexture">Moria_paper_small.jpg</File>
     </Ressources>
 </Skin>

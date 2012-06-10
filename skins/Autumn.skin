@@ -1,4 +1,4 @@
-﻿<Skin release="129" name="Autumn">
+﻿<Skin release="20120609" name="Autumn">
     <properties title-position="0"/>
     <StyleSheet name="noname">
         <Selection selector="#progressbar">
@@ -43,6 +43,11 @@
             <border-width>4px</border-width>
             <margin>-3px</margin>
         </Selection>
+        <Selection selector=".scrollContainer div.slidingPanel">
+            <background-color>#b4742e</background-color>
+            <background-image>url(../images/LeaveZoomed.jpg)</background-image>
+            <background-size>cover</background-size>
+        </Selection>
         <Selection selector=".thumbBox">
             <border-color>#211a14</border-color>
             <border-width>1px</border-width>
@@ -56,8 +61,6 @@
         </Selection>
         <Selection selector=".thumbsWrapperContainer">
             <background-color>#b4742e</background-color>
-            <background-image>url(../images/LeaveZoomed.jpg)</background-image>
-            <background-size>cover</background-size>
             <border-color>#514131</border-color>
             <border-width>5px</border-width>
         </Selection>

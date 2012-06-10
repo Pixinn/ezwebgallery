@@ -442,7 +442,6 @@ int CGalleryGenerator::generatePhotos( )
     for(int i = 1; i <= m_parameters.m_photosConfig.nbIntermediateResolutions; i++){
         qualityList.enqueue( m_parameters.m_photosConfig.quality );
     }
-    qualityList.enqueue( m_parameters.m_thumbsConfig.quality ); //Thumbnails toujours en dernier !
 
     //- Sharpening options cf. http://redskiesatnight.com/2005/04/06/sharpening-using-image-magick/
     // Seulement si OPTIMIZE_QUALITY

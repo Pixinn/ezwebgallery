@@ -1,4 +1,4 @@
-﻿<Skin release="129" name="Black Board">
+﻿<Skin release="20120607" name="Black Board">
     <properties title-position="0"/>
     <StyleSheet name="noname">
         <Selection selector="#progressbar">
@@ -43,6 +43,11 @@
             <border-width>3px</border-width>
             <margin>-3px</margin>
         </Selection>
+        <Selection selector=".scrollContainer div.slidingPanel">
+            <background-color>#cac9c7</background-color>
+            <background-image>url(../images/Crayon.jpg)</background-image>
+            <background-size>cover</background-size>
+        </Selection>
         <Selection selector=".thumbBox">
             <border-color>#ffffff</border-color>
             <border-width>1px</border-width>
@@ -56,8 +61,6 @@
         </Selection>
         <Selection selector=".thumbsWrapperContainer">
             <background-color>#cac9c7</background-color>
-            <background-image>url(../images/Crayon.jpg)</background-image>
-            <background-size>cover</background-size>
             <border-color>#afaead</border-color>
             <border-width>7px</border-width>
         </Selection>

@@ -1,4 +1,4 @@
-﻿<Skin release="129" name="White Paper">
+﻿<Skin release="20120609" name="White Paper">
     <properties title-position="0"/>
     <StyleSheet name="noname">
         <Selection selector="#progressbar">
@@ -43,6 +43,11 @@
             <border-width>3px</border-width>
             <margin>-3px</margin>
         </Selection>
+        <Selection selector=".scrollContainer div.slidingPanel">
+            <background-color>#b6b2ae</background-color>
+            <background-image>url(../images/brushedMetal_1.jpg)</background-image>
+            <background-size>cover</background-size>
+        </Selection>
         <Selection selector=".thumbBox">
             <border-color>#ffffff</border-color>
             <border-width>1px</border-width>
@@ -56,8 +61,6 @@
         </Selection>
         <Selection selector=".thumbsWrapperContainer">
             <background-color>#b6b2ae</background-color>
-            <background-image>url(../images/brushedMetal_1.jpg)</background-image>
-            <background-size>cover</background-size>
             <border-color>#45463d</border-color>
             <border-width>5px</border-width>
         </Selection>

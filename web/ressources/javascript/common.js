@@ -188,8 +188,7 @@ function initGallery( )
 	var numThumbnails;
     var nbThumbsByPanel = g_properties.index.mosaic.nbRows * g_properties.index.mosaic.nbCols;
 	g_listeThumbnails = new Array;
-	/*for ( key in listePhotos ){g_nbThumbnails++;}
-	for ( key in listePhotos[1].res ){g_nbRes++;}*/
+
     g_nbThumbnails = g_properties.photos.list.length;
     g_nbRes = g_properties.photos.list[0].sizes.length; //at least one photo in the list
     
@@ -224,7 +223,7 @@ function initGallery( )
     var f_setFound = false;
     var thumbSet = g_properties.index.mosaic.defaultSet; //if no suitable set is found
     g_thumbSize = g_properties.index.mosaic.sizes[ thumbSet ];
-    var margin = 60; //60 is necessary for vertical (tab height + logo). 30 is for horizontal comfort.
+    var margin = 100; //60 is necessary for vertical (tab height + logo). 100 is for horizontal comfort.
     var availableWidth = $("#screenIndex").width() - g_properties.index.mosaic.unavailable.horizontal - margin/2;
     var availableHeight = $("#screenIndex").height() - g_properties.index.mosaic.unavailable.vertical - margin;
     $.each( g_properties.index.mosaic.sizes, function( key, size ) //iterating on the object using jQuery
@@ -344,9 +343,16 @@ function initGallery_step3( )
                            .height( mosaicHeight );
     $(".thumbsWrapper").width( mosaicWidth )
                        .height( mosaicHeight );
-    $(".scrollContainer	div.slidingPanel").width( mosaicWidth )
-                                          .height( mosaicHeight );
+    $(".scrollContainer").find(".slidingPanel").width( mosaicWidth )
+                                                .height( mosaicHeight );
 
+    // ########## DEBUG ##########
+    /*alert( "indexSliderContainer: " + $("#indexSliderContainer").eq(0).width() + " - " + $("#indexSliderContainer").eq(0).height() + "\n" +
+           "thumbsWrapperContainer: " +  $thumbsWrapperContainer.width() + " - " + $thumbsWrapperContainer.height() + "\n" +
+           "thumbsWrapper: " + $(".thumbsWrapper").eq(0).width() + " - " + $(".thumbsWrapper").eq(0).height() + "\n" +
+           "scrollContainer div sliding: " + $(".scrollContainer").find(".slidingPanel").eq(0).width() + " - " + $(".scrollContainer div.slidingPanel").eq(0).height() ); */
+    // ##########################
+                                          
 	//Cacher la barre de loading
 	$(DIV_PROGRESSBARWRAPPER).hide( )
 	

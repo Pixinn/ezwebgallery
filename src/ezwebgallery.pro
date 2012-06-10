@@ -55,15 +55,18 @@ LIBS += -lMagick++ -lMagickCore -lMagickWand
 
 UI_DIR = $${PWD}/ui
 
-INCLUDEPATH += ./widgets \
-               ./ui \
-               ./global
+INCLUDEPATH +=  ./generation \
+                ./widgets \
+                ./ui \
+                ./global
 unix:INCLUDEPATH += /usr/include/ImageMagick/
 macx:INCLUDEPATH += /usr/local/include/ImageMagick/
 
 DEPENDPATH += ./widgets
 
-HEADERS += ui/mainwin.h \
+HEADERS += generation/CGalleryGenerator.h \
+    generation/CDirChecker.h \
+    ui/mainwin.h \
     ui/IUserInterface.h \
     ui/WinSkinDesigner.h \
     ui/CTerminalUi.h \
@@ -76,7 +79,6 @@ HEADERS += ui/mainwin.h \
     global/CDebug.h \
     widgets/CImagePicker.h \
     widgets/CColorPicker.h \
-    CGalleryGenerator.h \
     CPhotoProperties.h \
     CPhoto.h \
     CPhotoProcessor.h \
@@ -94,6 +96,8 @@ HEADERS += ui/mainwin.h \
     Json.h
 
 SOURCES += main.cpp \
+    generation/CGalleryGenerator.cpp \
+    generation/CDirChecker.cpp \
     ui/mainwin.cpp \
     ui/WinSkinDesigner.cpp \
     ui/CTerminalUi.cpp \
@@ -105,7 +109,6 @@ SOURCES += main.cpp \
     global/CDebug.cpp \
     widgets/CImagePicker.cpp \
     widgets/CColorPicker.cpp \
-    CGalleryGenerator.cpp \
     CPhotoProperties.cpp \
     CPhoto.cpp \
     CPhotoProcessor.cpp \

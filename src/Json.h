@@ -33,6 +33,13 @@
 namespace JSON
 {     
 
+    class Root;
+    class Array;
+    class Object;
+    class String;
+    class Number;
+    class Boolean;
+
     class IValue 
     {
     public:

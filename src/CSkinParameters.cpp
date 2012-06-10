@@ -27,7 +27,7 @@
 #include "GlobalDefinitions.h"
 #include "CError.h"
 
-//----------- Dfinitions ---------//
+//----------- Définitions ---------//
 #define RESSOURCES_TAG_NAME     "Ressources"
 #define RESSOURCEFILE_TAG_NAME  "File"
 
@@ -36,7 +36,7 @@
 
 
 
-//----------- Mthodes ------------//
+//----------- Méthodes ------------//
 
 
 /****************************************************
@@ -215,12 +215,17 @@ void CSkinParameters::fromUi( )
      m_styleSheet.addSelection( indexNav );
      //.thumbsWrapperContainer Mosaque
      CCssSelection thumbsMosaic( QString(".thumbsWrapperContainer"));
-        thumbsMosaic.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
+       // thumbsMosaic.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
         thumbsMosaic.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );
-        thumbsMosaic.setProperty( QString("background-size"), "cover" );
+        //thumbsMosaic.setProperty( QString("background-size"), "cover" );
         thumbsMosaic.setProperty( QString("border-width"), QString::number( m_p_ui->spinBox_Mosaic_BorderWidth->value() ) + QString("px") );
         thumbsMosaic.setProperty( QString("border-color"), m_p_ui->cColorPicker_Mosaic_BorderColor->value() );
      m_styleSheet.addSelection( thumbsMosaic );
+    CCssSelection sliders( QString(".scrollContainer div.slidingPanel") );
+        sliders.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );
+        sliders.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
+        sliders.setProperty( QString("background-size"), "cover" ); //CSS3
+    m_styleSheet.addSelection( sliders );
     CCssSelection thumbSpacing( QString(".thumbBox") );  //Espace entre les vignettes
         this->thumbBoxBorderSize = m_p_ui->spinBox_Mosaic_SpacingWidth->value();
         thumbSpacing.setProperty( QString("border-width"), QString::number( thumbBoxBorderSize ) + QString("px") );
