@@ -1523,19 +1523,50 @@
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_WatermarkText">
                <item>
-                <widget class="QLabel" name="label_WatermarkText">
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                   <weight>50</weight>
-                   <bold>false</bold>
-                   <underline>true</underline>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Text Watermark:</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_11">
+                 <item>
+                  <widget class="QLabel" name="label_WatermarkText">
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                     <weight>50</weight>
+                     <bold>false</bold>
+                     <underline>true</underline>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Text Watermark:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_8">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_WatermarkTextShortcuts">
+                   <property name="toolTip">
+                    <string>Display shortcuts you can use to write captions and watermark.</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../ressources/GalleryDesigner.qrc">
+                     <normaloff>:/icons/images/text-x-authors.png</normaloff>:/icons/images/text-x-authors.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
                 <layout class="QFormLayout" name="formLayout_WatermarkText">
@@ -1757,19 +1788,40 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_Caption">
-                <property name="toolTip">
-                 <string>Caption of the displayed photo.</string>
-                </property>
-                <property name="text">
-                 <string notr="true"/>
-                </property>
-               </widget>
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_Caption">
+                  <property name="toolTip">
+                   <string>Caption of the displayed photo.</string>
+                  </property>
+                  <property name="text">
+                   <string notr="true"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_CaptionShortcuts">
+                  <property name="toolTip">
+                   <string>Display shortcuts you can use to write captions and watermark.</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../ressources/GalleryDesigner.qrc">
+                    <normaloff>:/icons/images/text-x-authors.png</normaloff>:/icons/images/text-x-authors.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_9">
                 <item>
                  <layout class="QFormLayout" name="formLayout_3">
+                  <property name="fieldGrowthPolicy">
+                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+                  </property>
                   <item row="0" column="0">
                    <widget class="QLabel" name="label_captionHeader">
                     <property name="text">
@@ -1952,6 +2004,8 @@ p, li { white-space: pre-wrap; }
 &lt;table border=&quot;0&quot; style=&quot;-qt-table-type: root; margin-top:4px; margin-bottom:4px; margin-left:4px; margin-right:4px;&quot;&gt;
 &lt;tr&gt;
 &lt;td style=&quot;border: none;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -2315,10 +2369,10 @@ Use it if photos were added or removed.</string>
      <normaloff>:/icons/images/text-x-authors.png</normaloff>:/icons/images/text-x-authors.png</iconset>
    </property>
    <property name="text">
-    <string>Display Tags</string>
+    <string>Display Shorcuts</string>
    </property>
    <property name="toolTip">
-    <string>Display the tags you can use to write captions and watermark.</string>
+    <string>Display shortcuts you can use to write captions and watermark.</string>
    </property>
   </action>
   <action name="action_Configure">
@@ -2388,7 +2442,6 @@ Use it if photos were added or removed.</string>
   <tabstop>spinBox_WatermarkOpacity</tabstop>
   <tabstop>lineEdit_WatermarkText</tabstop>
   <tabstop>fontComboBox_WatermarkText</tabstop>
-  <tabstop>lineEdit_Caption</tabstop>
   <tabstop>lineEdit_captionHeader</tabstop>
   <tabstop>lineEdit_captionEnding</tabstop>
   <tabstop>pushButton_PrevPhoto</tabstop>

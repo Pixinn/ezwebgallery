@@ -293,6 +293,8 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     connect( &m_projectParameters, SIGNAL(message(CMessage)), this, SLOT(information(CMessage)));
     //Afficher la fenêtre de tags
     connect( this->m_ui->action_DisplayTags, SIGNAL(triggered()), this, SLOT(showTagsWindow()));
+    connect( this->m_ui->pushButton_CaptionShortcuts, SIGNAL(clicked()), this, SLOT(showTagsWindow()));
+    connect( this->m_ui->pushButton_WatermarkTextShortcuts, SIGNAL(clicked()), this, SLOT(showTagsWindow()));
     //Afficher la fenêtre de debug    
     connect( this->m_ui->action_ShowLogWindow, SIGNAL(triggered()), this, SLOT(showLogWindow()));
     //Afficher la fenêtre de configuration
