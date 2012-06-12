@@ -36,8 +36,10 @@ function indexEvents( )
 	$(DIV_THUMBCONTAINER+" img").click( function( )
 	{	
 		/* Mise a jour de la photo courante */
-		var thumbURL = new String( $(this).attr("src") );
-		var key_ThumbFileURL = thumbURL.substr(URL_THUMBS_PATH.length , thumbURL.length - URL_THUMBS_PATH.length);		
+		var key_ThumbFileURL = $(this).attr("src");
+		//var key_ThumbFileURL = thumbURL.substr(URL_THUMBS_PATH.length , thumbURL.length - URL_THUMBS_PATH.length);		
+        var cutPosition = key_ThumbFileURL.lastIndexOf("/") + 1;
+        var key_ThumbFileURL = key_ThumbFileURL.substr( cutPosition, key_ThumbFileURL.length - cutPosition );		
 		g_idCurrentPhoto = g_listeThumbnails[ key_ThumbFileURL ];
 			
 		//----- Affichage zone photo -----//
@@ -47,7 +49,7 @@ function indexEvents( )
 		/* Chargement et affichage de la photo */
 		g_displayManager.photoToDisplay = g_idCurrentPhoto;
 		g_idPhotoToLoadNext = g_idCurrentPhoto;
-		for( var i=0; i<=NBPHOTOSAPRECHARGER; i++){
+		for( var i=0; i<=g_properties.photos.technical.prefetchSize; i++){
 				//Pour une réactivité maximale, on insère les photos en haut de la pile
 		 		g_loadQueue.insert( g_idCurrentPhoto + i , i);
 		}

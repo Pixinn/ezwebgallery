@@ -65,7 +65,7 @@ function ButtonDeactivable( handle, onClickFct )
 		{
 			//Mise à jour des éléments de navigation
 			g_idCurrentPhoto++;
-			g_idCurrentIndexPage = Math.ceil(g_idCurrentPhoto/NBTHUMBSBYPAGE);
+			g_idCurrentIndexPage = Math.ceil( g_idCurrentPhoto/ (g_properties.index.mosaic.nbRows * g_properties.index.mosaic.nbCols) );
 			g_idPhotoToLoadNext = g_idCurrentPhoto;
 			//dbgTrace("Bouton NEXT - " + g_idCurrentPhoto + " oldIndex: " + idOldIndexPage + " index: " +  g_idCurrentIndexPage);
 			//On change de page d'index si besoin
@@ -73,7 +73,7 @@ function ButtonDeactivable( handle, onClickFct )
 					g_$buttonsIndexNavigation.eq(g_idCurrentIndexPage - 1).click( );
 			}
 
-		  	for(var i=0; i<=NBPHOTOSAPRECHARGER; i++){
+		  	for(var i=0; i<=g_properties.photos.technical.prefetchSize; i++){
 				//Pour une réactivité maximale, on insère les photos en haut de la pile
 		 		g_loadQueue.insert( g_idCurrentPhoto + i , i);
 			}  		
@@ -88,17 +88,17 @@ function ButtonDeactivable( handle, onClickFct )
 		var idOldIndexPage = g_idCurrentIndexPage;
 		
 		if (   g_displayManager.fControlsDisabled === false
-			&& g_idCurrentPhoto > NUMPREMIEREPHOTO ) //Si on n'est pas sur la première photo
+			&& g_idCurrentPhoto > g_properties.photos.technical.first ) //Si on n'est pas sur la première photo
 		{
 			g_idCurrentPhoto--;
-			g_idCurrentIndexPage = Math.ceil(g_idCurrentPhoto / NBTHUMBSBYPAGE);
+			g_idCurrentIndexPage = Math.ceil( g_idCurrentPhoto/ (g_properties.index.mosaic.nbRows * g_properties.index.mosaic.nbCols) );
 			g_idPhotoToLoadNext = g_idCurrentPhoto;
 			//dbgTrace("Bouton PREVIOUS - " + g_idCurrentPhoto + " oldIndex: " + idOldIndexPage + " index: " + g_idCurrentIndexPage);
 			//On change de page d'index si besoin
 			if (g_idCurrentIndexPage !== idOldIndexPage) { //Visiblement cette fonction est éxécutée avant le href sinon ça ne marcherait pas
 				g_$buttonsIndexNavigation.eq(g_idCurrentIndexPage - 1).click();
 			}
-			for (var i = 0; i <= NBPHOTOSAPRECHARGER; i++) {
+			for (var i = 0; i <= g_properties.photos.technical.prefetchSize; i++) {
 				//Pour une réactivité maximale, on insère les photos en haut de la pile
 				g_loadQueue.insert(g_idCurrentPhoto - i, i);
 			}
@@ -133,7 +133,7 @@ function imageEvents( )
 		$(BUTTON_RETURNTOINDEXNAME).click( onClickReturnToIndex );
 		
 		//Si clic droit non authorisé -> on surcharge l'evt
-		if( !F_PHOTO_RIGHTCLICKENABLED )		{
+		if( !g_properties.photos.technical.rightClickEnabled )		{
 			g_$divDisplayZoneName.bind( "contextmenu", function( e )
 			{
 				return false;
@@ -351,44 +351,9 @@ function choosePhotoToLoad( photoDivHW, numPhoto )
     // Cela fait donc 3 cas possibles
 	////////////////////////////////////
 	
-	//IE6 et IE7 ?
-/* var f_IE67 = ( $.browser.msie === true ) && ( $.browser.version.substr(0,2)=="6." ||  $.browser.version.substr(0,2)=="7." );
-	if( f_IE67 ) //IMAGEQUALITYSTRATEGY : 0 -> Qualité ; 1 -> Utilisation de l'espace
-	{
-		
-        //On parcours les tailles d'images disponibles
-	    //On prend la première qui tient dans l'espace disponible
-        resH = getSmallerImage( photoDivHW, numPhoto );
-	
-        //Si une photo convient, c'est elle qu'on chargera
-		if( resH != -1 ){
-			photoSize.h = listePhotos[ numPhoto ].res[ resH ].height;
-			photoSize.w = listePhotos[ numPhoto ].res[ resH ].width; //Oui c'est bien resH !!
-			photoURL = IMAGES_PATH + resH + "/"  + listePhotos[ numPhoto ].fileName;
-		}
-		
-		//Sinon (ie. la plus petite photo jpeg est plus grande que l'espace disponible),
-		//on fait un resize sur le serveur via une URL php, puisque IE6 et 7 en sont incapable 
-		else 
-		{
-			var checksum = ( photoDivHW.w*(photoDivHW.h+17) )- URL_QUALITY;
-		
-			photoURL = 	URL_BASE
-						+ listePhotos[ g_idPhotoToLoadNext ].fileName
-						+ "&photoResampledW=" + photoDivHW.w.toString(10)
-						+ "&photoResampledH=" + photoDivHW.h.toString(10)
-						+ "&photoResampledQuality=" + URL_QUALITY.toString(10)
-						+ "&crc=" + hex_md5(checksum.toString(10));	
-						
-			photoSize.h = photoDivHW.h;
-			photoSize.w = photoDivHW.w;
-	 	}
-	}//Fin IE6 et 7
-	*/
-	//Autres navigateurs
 
   //Optimisation de la qualité ?
-  if( IMAGEQUALITYSTRATEGY === 0)
+  if( g_properties.photos.technical.qualityStrategy === 0)
   {
       //On parcours les tailles d'images disponibles
       //On prend la première qui tient dans l'espace disponible
@@ -400,9 +365,10 @@ function choosePhotoToLoad( photoDivHW, numPhoto )
       }
       
       //Récupération de la photo choisie
-      photoSize.h = listePhotos[ numPhoto ].res[ resH ].height;
-      photoSize.w = listePhotos[ numPhoto ].res[ resH ].width; //Oui c'est bien resH !!
-      photoURL = IMAGES_PATH + resH + "/"  + listePhotos[ numPhoto ].fileName;
+      var folderId = resH+1;
+      photoSize.h = g_properties.photos.list[ numPhoto - 1].sizes[ resH ].height;
+      photoSize.w = g_properties.photos.list[ numPhoto - 1].sizes[ resH ].width; //Oui c'est bien resH !!
+      photoURL = IMAGES_PATH + folderId + "/"  + g_properties.photos.list[ numPhoto - 1].filename;
   }//Fin Optimisation de la qualité
   
   //Optimisation de l'espace ? -- Marche de façon médiocre avec ie6/ie7 qui ont du mal avec les redimensionnements
@@ -417,9 +383,10 @@ function choosePhotoToLoad( photoDivHW, numPhoto )
       resW = resH;
       
       //Récupération de la photo choisie
-      photoSize.h = listePhotos[ numPhoto ].res[ resH ].height;
-      photoSize.w = listePhotos[ numPhoto ].res[ resW ].width;
-      photoURL = IMAGES_PATH + resH + "/"  + listePhotos[ numPhoto ].fileName;
+      var folderId = resH+1;
+      photoSize.h = g_properties.photos.list[ numPhoto - 1].sizes[ resH ].height;
+      photoSize.w = g_properties.photos.list[ numPhoto - 1 ].sizes[ resW ].width;
+      photoURL = IMAGES_PATH + folderId + "/"  + g_properties.photos.list[ numPhoto - 1].filename;
   }// Fin Optimisation de l'espace       
 	
 	
@@ -437,18 +404,18 @@ function choosePhotoToLoad( photoDivHW, numPhoto )
  */
 function getBiggerImage( photoDivHW, numPhoto )
 {
-	var resW = g_nbRes;
-	var resH = g_nbRes;
+	var resW = g_nbRes-1;
+	var resH = g_nbRes-1;
 	var f_OK = false;
     
     //On parcourt toutes les tailles de photos de la plus petite à la plus grande
 	//Celle qui conviendra sera la première avec une dimension trop grande pour être affichée			
-	while( resW >= 1 && resH >= 1 && f_OK === false )
+	while( resW >= 0 && resH >= 0 && f_OK === false )
 	{
 			//Une dimension est-elle supérieure à l'espace affichable ?
-			if( listePhotos[ numPhoto ].res[ resW ].width >= photoDivHW.w 
+			if( g_properties.photos.list[ numPhoto - 1].sizes[ resW ].width >= photoDivHW.w 
 					||
-					listePhotos[ numPhoto ].res[ resH ].height >= photoDivHW.h  )
+					g_properties.photos.list[ numPhoto - 1].sizes[ resH ].height >= photoDivHW.h  )
 			{
 				f_OK = true;
 			}
@@ -476,8 +443,8 @@ function getBiggerImage( photoDivHW, numPhoto )
  */
 function getSmallerImage( photoDivHW, numPhoto )
 {
-	var resW = 1;
-	var resH = 1;
+	var resW = 0;
+	var resH = 0;
     var f_OK = false;
 	
 	//On parcours les tailles d'images disponibles
@@ -485,14 +452,14 @@ function getSmallerImage( photoDivHW, numPhoto )
 	while( resW <= g_nbRes && resH <= g_nbRes && f_OK === false )
 	{
 		//Recherche du width immédiatement inférieur à celui disponible
-		if( listePhotos[ numPhoto ].res[ resW ].width <= photoDivHW.w )
+		if( g_properties.photos.list[ numPhoto - 1].sizes[ resW ].width <= photoDivHW.w )
 		{
 			//Puis Recherche du height immédiatement inférieur à celui disponible
 			resH = resW;
 			while( resH <= g_nbRes && f_OK === false )
 			{
 					//On a trouvé la bonne combinaison !
-					if( listePhotos[ numPhoto ].res[ resH ].height <= photoDivHW.h ){
+					if( g_properties.photos.list[ numPhoto - 1 ].sizes[ resH ].height <= photoDivHW.h ){
 						f_OK = true;
 					}
 					else{

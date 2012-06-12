@@ -60,8 +60,8 @@ bool t_thumbsConf::operator==(const t_thumbsConf& source)
 {
     if(  nbRows == source.nbRows
         && nbColumns == source.nbColumns
-        && size == source.size 
-        && quality == source.quality
+        //&& size == source.size 
+        //&& quality == source.quality
         //&& f_regeneration == source.f_regeneration Ne pas le comparer, car modifi automatique lors de la gnration
     )
     { return true; }
@@ -231,8 +231,6 @@ void CProjectParameters::fromUi( /*const Ui::MainWin* const ui */)
     //Remplissage structure Config Vignettes
     m_thumbsConfig.nbColumns = m_p_ui->spinBox_ThumbNbCol->value();
     m_thumbsConfig.nbRows = m_p_ui->spinBox_ThumbNbRow->value();
-    m_thumbsConfig.quality = m_p_ui->spinBox_ThumbJpegQuality->value();
-    m_thumbsConfig.size = m_p_ui->spinBox_ThumbHSzize->value(); //=VSize
 
     //Remplissage structure Config Photos
     m_photosConfig.maxSizeH = m_p_ui->spinBox_PhotoMaxVSize->value();
@@ -315,8 +313,6 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     //--- CONFIG THUMBS
     m_thumbsConfig.nbColumns = thumbsConfElem.firstChildElement( "nbColumns" ).text().toInt();
     m_thumbsConfig.nbRows = thumbsConfElem.firstChildElement( "nbRows" ).text().toInt();
-    m_thumbsConfig.quality = thumbsConfElem.firstChildElement( "quality" ).text().toInt();
-    m_thumbsConfig.size = thumbsConfElem.firstChildElement( "size" ).text().toInt();
 
     //--- CONFIG PHOTOS
     m_photosConfig.maxSizeH = photosConfElem.firstChildElement( "maxSizeH" ).text().toInt();
@@ -428,12 +424,6 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
     QDomElement nbRows = document.createElement( "nbRows" );
     thumbsConfig.appendChild( nbRows );
     nbRows.appendChild( document.createTextNode(  QString::number(m_thumbsConfig.nbRows)) );
-    QDomElement quality = document.createElement( "quality" );
-    thumbsConfig.appendChild( quality );
-    quality.appendChild( document.createTextNode(  QString::number(m_thumbsConfig.quality)) );
-    QDomElement size = document.createElement( "size" );
-    thumbsConfig.appendChild( size );
-    size.appendChild( document.createTextNode(  QString::number(m_thumbsConfig.size)) );
 
 
     //--- CONFIG PHOTO
@@ -457,7 +447,7 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
     QDomElement nbIntermediateResolutions = document.createElement( "nbIntermediateResolutions" );
     photosConfig.appendChild( nbIntermediateResolutions );
     nbIntermediateResolutions.appendChild( document.createTextNode(  QString::number(m_photosConfig.nbIntermediateResolutions)) );
-    quality = document.createElement( "quality" );
+    QDomElement quality = document.createElement( "quality" );
     photosConfig.appendChild( quality );
     quality.appendChild( document.createTextNode(  QString::number(m_photosConfig.quality)) );
     QDomElement sharpeningAmount = document.createElement( "sharpeningAmount" );
@@ -525,8 +515,6 @@ void CProjectParameters::toUi( )
     //Lecture structure Config Vignettes
     m_p_ui->spinBox_ThumbNbCol->setValue( m_thumbsConfig.nbColumns );
     m_p_ui->spinBox_ThumbNbRow->setValue( m_thumbsConfig.nbRows );
-    m_p_ui->spinBox_ThumbJpegQuality->setValue( m_thumbsConfig.quality );
-    m_p_ui->spinBox_ThumbHSzize->setValue( m_thumbsConfig.size ); //=VSize
 
     //Lecture structure Config Photos
     m_p_ui->spinBox_PhotoMaxVSize->setValue( m_photosConfig.maxSizeH );

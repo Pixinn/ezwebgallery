@@ -111,9 +111,6 @@ public:
 
     int nbRows;
     int nbColumns;
-    int size;
-    int quality;
-
     bool f_regeneration;
 }; //Configuration des vignettes
 

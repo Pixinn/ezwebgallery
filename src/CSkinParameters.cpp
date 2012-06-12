@@ -27,7 +27,7 @@
 #include "GlobalDefinitions.h"
 #include "CError.h"
 
-//----------- Dfinitions ---------//
+//----------- Définitions ---------//
 #define RESSOURCES_TAG_NAME     "Ressources"
 #define RESSOURCEFILE_TAG_NAME  "File"
 
@@ -36,7 +36,7 @@
 
 
 
-//----------- Mthodes ------------//
+//----------- Méthodes ------------//
 
 
 /****************************************************
@@ -66,9 +66,11 @@ CSkinParameters::CSkinParameters() :
 CSkinParameters& CSkinParameters::operator=(const CSkinParameters &source)
 {
     if( this != &source){
+        //this->mosaicBorderSize = source.mosaicBorderSize;
         this->thumbImgBorderSize = source.thumbImgBorderSize;
         this->thumbBoxBorderSize = source.thumbBoxBorderSize;
         this->photoPaddingSize = source.photoPaddingSize;
+        //this->titleOuterWidth = source.titleOuterWidth;
         this->m_name = source.m_name;
         this->m_ressourcesPath = source.m_ressourcesPath;
         this->m_p_ui = source.m_p_ui;
@@ -90,9 +92,11 @@ CSkinParameters& CSkinParameters::operator=(const CSkinParameters &source)
 *****************************************************/
 bool CSkinParameters::operator ==( const CSkinParameters &source)
 {
+    //if( this->mosaicBorderSize != source.mosaicBorderSize ){ return false; }
     if( this->thumbImgBorderSize != source.thumbImgBorderSize ){    return false;   }
     if( this->thumbBoxBorderSize != source.thumbBoxBorderSize ){    return false;   }
     if( this->photoPaddingSize != source.photoPaddingSize ){    return false;   }
+    //if( this->titleOuterWidth != source.titleOuterWidth ) { return false; }
     if( this->m_name != source.m_name ){    return false;   }
     if( this->m_ressourcesPath != source.m_ressourcesPath ){    return false;   }
     if( this->m_misc.titlePosition != source.m_misc.titlePosition ){    return false;   }
@@ -211,11 +215,17 @@ void CSkinParameters::fromUi( )
      m_styleSheet.addSelection( indexNav );
      //.thumbsWrapperContainer Mosaque
      CCssSelection thumbsMosaic( QString(".thumbsWrapperContainer"));
-        thumbsMosaic.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
+       // thumbsMosaic.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
         thumbsMosaic.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );
+        //thumbsMosaic.setProperty( QString("background-size"), "cover" );
         thumbsMosaic.setProperty( QString("border-width"), QString::number( m_p_ui->spinBox_Mosaic_BorderWidth->value() ) + QString("px") );
         thumbsMosaic.setProperty( QString("border-color"), m_p_ui->cColorPicker_Mosaic_BorderColor->value() );
      m_styleSheet.addSelection( thumbsMosaic );
+    CCssSelection sliders( QString(".scrollContainer div.slidingPanel") );
+        sliders.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );
+        sliders.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
+        sliders.setProperty( QString("background-size"), "cover" ); //CSS3
+    m_styleSheet.addSelection( sliders );
     CCssSelection thumbSpacing( QString(".thumbBox") );  //Espace entre les vignettes
         this->thumbBoxBorderSize = m_p_ui->spinBox_Mosaic_SpacingWidth->value();
         thumbSpacing.setProperty( QString("border-width"), QString::number( thumbBoxBorderSize ) + QString("px") );
@@ -255,7 +265,6 @@ void CSkinParameters::fromUi( )
         photoCaptions.setProperty( QString("font-weight"), m_p_ui->comboBox_PhotoCaption_FontWeight->currentText() );
         photoCaptions.setProperty( QString("font-family"), m_p_ui->comboBox_PhotoCaption_FontFamily->currentText() );
         photoCaptions.setProperty( QString("font-size"), QString::number(m_p_ui->doubleSpinBox_PhotoCaption_FontSize->value()) + QString("em")  );
-        //photoCaptions.setProperty( QString("min-height"),  QString::number(m_p_ui->doubleSpinBox_PhotoTitle_FontSize->value()) + QString("em")  ); //Mme taille que Title Font-Size
         photoCaptions.setProperty( QString("color"), m_p_ui->cColorPicker_PhotoCaption_TextColor->value() );
     m_styleSheet.addSelection( photoCaptions );
     //Buttons
@@ -297,14 +306,22 @@ void CSkinParameters::fromUi( )
 
     //-------------- ///////////////// MISC //////////////// ----------------//
     //--- Propritts conditionnelles
-    QString titleBorderRight( QString::number( m_p_ui->spinBox_VTitleBlock_BorderWidth->value() ) );
-    QString titleBorderLeft("0");
+    int titleWidth = m_p_ui->spinBox_VTitleBlock_Width->value();
+    int titleBorderRight = m_p_ui->spinBox_VTitleBlock_BorderWidth->value();
+    //QString titleBorderRight( QString::number(  ) );
+    int titleBorderLeft = 0;
     if( m_misc.titlePosition != TITLE_POSITION_LEFT ){
         titleBorderRight = titleBorderLeft;
-        titleBorderLeft = QString::number( m_p_ui->spinBox_VTitleBlock_BorderWidth->value() );
+        titleBorderLeft = m_p_ui->spinBox_VTitleBlock_BorderWidth->value();
     }
     QString titleDisplay("none");
-    if( m_p_ui->groupBox_VTitle->isChecked() ){ titleDisplay = QString("block");   }
+    if( m_p_ui->groupBox_VTitle->isChecked() ){ 
+        titleDisplay = QString("block");
+       // this->titleOuterWidth = m_p_ui->spinBox_VTitleBlock_Width->value() + titleBorderRight + titleBorderLeft; //Left or Right = 0
+    } /*
+    else {
+        this->titleOuterWidth = 0;
+    }*/
     
     //--- Css
     //#progressbarWrapper
@@ -328,10 +345,10 @@ void CSkinParameters::fromUi( )
     m_styleSheet.addSelection( progressBar );
     //div#indexTitle
      CCssSelection title( QString( "div#indexTitle" ) );
-        title.setProperty( QString("display"), titleDisplay );
-        title.setProperty( QString("width"), QString::number( m_p_ui->spinBox_VTitleBlock_Width->value() ) + QString("px") );
-        title.setProperty( QString("border-right-width"), titleBorderRight + QString("px") );
-        title.setProperty( QString("border-left-width"), titleBorderLeft + QString("px") );
+        title.setProperty( QString("display"), titleDisplay );        
+        title.setProperty( QString("width"), QString::number( titleWidth ) + QString("px") );
+        title.setProperty( QString("border-right-width"), QString::number( titleBorderRight ) + QString("px") );
+        title.setProperty( QString("border-left-width"), QString::number( titleBorderLeft ) + QString("px") );
         title.setProperty( QString("border-color"), m_p_ui->cColorPicker_VTitleBlock_BorderColor->value() );
         title.setProperty( QString("color"), m_p_ui->cColorPicker_VTitleText_TextColor->value() );
         title.setProperty( QString("font-size"), QString::number( m_p_ui->doubleSpinBox_VTitle_FontSize->value() ) + QString("em") );
@@ -343,6 +360,7 @@ void CSkinParameters::fromUi( )
         }else{ //Bckg Transparent
             title.setProperty( QString("background-color"), "transparent" );
         }
+
     m_styleSheet.addSelection( title );
      
 }
@@ -384,6 +402,10 @@ void CSkinParameters::fromDomDocument( QDomDocument &document )
     selectors << ".thumbBox" << "img";
     CCssSelection thumbnail = m_styleSheet.selection( selectors );
     this->thumbImgBorderSize = thumbnail.property("border-width").remove("px").toInt();
+    selectors.clear();
+    selectors << ".thumbsWrapperContainer";
+    CCssSelection thumbsMosaic = m_styleSheet.selection( selectors );
+//    this->mosaicBorderSize = thumbsMosaic.property("border-width").remove("px").toInt();
     //Properties
     setName( rootAttributes.namedItem( "name" ).nodeValue() );
     QDomElement miscProperties = root.firstChildElement( "properties" );
@@ -466,7 +488,7 @@ void CSkinParameters::toUi(  )
         CCssSelection indexNavTabSelectedText = m_styleSheet.selection( path );
             m_p_ui->cColorPicker_BrowsingTabs_Selected_TextColor->setColor( indexNavTabSelectedText.property("color") );
     path.clear();
-    //.thumbsWrapperContainer Mosaque
+    //.thumbsWrapperContainer mosaic
     path << ".thumbsWrapperContainer";
     CCssSelection thumbsMosaic = m_styleSheet.selection( path );
         m_p_ui->cImagePicker_Mosaic_BckgTexture->setImage( m_ressources.value("Mosaic_BckgTexture").absoluteFilePath() );
@@ -510,18 +532,6 @@ void CSkinParameters::toUi(  )
         m_p_ui->cColorPicker_PhotoFraming_PaddingColor->setColor( photoPadding.property("border-color") );
         m_p_ui->spinBox_PhotoFraming_PaddingWidth->setValue( photoPadding.property("border-width").remove("px").toInt() );
     path.clear();
-    //Titre
-    /*path << "div#photoTitle";
-    CCssSelection photoTitle = m_styleSheet.selection( path );
-        index = m_p_ui->comboBox_PhotoTitle_FontWeight->findText( photoTitle.property("font-weight") );
-        m_p_ui->comboBox_PhotoTitle_FontWeight->setCurrentIndex( index );
-        index = m_p_ui->comboBox_PhotoTitle_FontFamily->findText( photoTitle.property("font-family") );
-        m_p_ui->comboBox_PhotoTitle_FontFamily->setCurrentIndex( index );
-        index = m_p_ui->comboBox_PhotoTitle_FontVariant->findText( photoTitle.property("font-variant") );
-        m_p_ui->comboBox_PhotoTitle_FontVariant->setCurrentIndex( index );
-        m_p_ui->doubleSpinBox_PhotoTitle_FontSize->setValue( photoTitle.property("font-size").remove("em").toDouble() );
-        m_p_ui->cColorPicker_PhotoTitle_TextColor->setColor( photoTitle.property("color") );
-    path.clear();*/
     //Lgendes
     path << "div.photoCaption";
     CCssSelection photoCaptions = m_styleSheet.selection( path );
@@ -647,6 +657,54 @@ QDomDocument CSkinParameters::toDomDocument( )
     return document;
 }
 
+
+/*******************************************************************
+* QSize unavailableSpace(  unsigned int nbCols, unsigned int nbRows )
+* ------------------------
+* Returns space unavailable for the thumbnails
+*   ie: thumbBorders + thumbBoxBorders + MosaicBorders + VerticalTitle
+* Input: nb rows & cols of the mosaic
+********************************************************************/
+QSize CSkinParameters::unavailableSpace( unsigned int nbCols, unsigned int nbRows )
+{
+    QStringList selector;
+    selector << "div#indexTitle";
+    CCssSelection titleDiv = m_styleSheet.selection( selector );    
+    QSize titleSize;
+    if( titleDiv.property("display") != "none" ) {
+        int titleBorderWidth = titleDiv.property( "border-right-width" ).remove("px").toInt();
+        titleSize = QSize( titleDiv.property( "width" ).remove("px").toInt() + titleBorderWidth, 0 );
+    } else {
+        titleSize = QSize(0,0);
+    }
+    return mosaicDecoration( nbCols, nbRows ) + titleSize;
+}
+
+
+/*******************************************************************
+* QSize mosaicDecoration( unsigned int nbCols, unsigned int nbRows )
+* ------------------------
+* Returns space used by the mosaic decoration on the index page
+*   ie: thumbBorders + thumbBoxBorders + MosaicBorders
+* Input: nb rows & cols of the mosaic
+********************************************************************/
+QSize CSkinParameters::mosaicDecoration( unsigned int nbCols, unsigned int nbRows )
+{    
+    QStringList selectors;
+    selectors << ".thumbBox";
+    CCssSelection thumbSpacing = m_styleSheet.selection( selectors );
+    thumbBoxBorderSize = thumbSpacing.property("border-width").remove("px").toInt();
+    selectors << "img";
+    CCssSelection thumbnail = m_styleSheet.selection( selectors );
+    thumbImgBorderSize = thumbnail.property("border-width").remove("px").toInt();
+    selectors.clear();
+    selectors << ".thumbsWrapperContainer";
+    CCssSelection thumbsMosaic = m_styleSheet.selection( selectors );
+    int mosaicBorderSize = thumbsMosaic.property("border-width").remove("px").toInt();
+
+    return QSize( 2*nbCols*(thumbImgBorderSize + thumbBoxBorderSize) + 2*mosaicBorderSize,
+                  2*nbRows*(thumbImgBorderSize + thumbBoxBorderSize) + 2*mosaicBorderSize );
+}
 
 
 /*******************************************************************

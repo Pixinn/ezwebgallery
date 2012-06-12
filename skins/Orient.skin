@@ -1,4 +1,4 @@
-﻿<Skin release="129" name="Orient">
+﻿<Skin release="20120609" name="Orient">
     <properties title-position="0"/>
     <StyleSheet name="noname">
         <Selection selector="#progressbar">
@@ -43,6 +43,11 @@
             <border-width>3px</border-width>
             <margin>-3px</margin>
         </Selection>
+        <Selection selector=".scrollContainer div.slidingPanel">
+            <background-color>#e0d7c3</background-color>
+            <background-image>url(../images/Parchemin+Calligraphy.jpg)</background-image>
+            <background-size>cover</background-size>
+        </Selection>
         <Selection selector=".thumbBox">
             <border-color>#07060e</border-color>
             <border-width>1px</border-width>
@@ -56,14 +61,13 @@
         </Selection>
         <Selection selector=".thumbsWrapperContainer">
             <background-color>#e0d7c3</background-color>
-            <background-image>url(../images/Parchemin+Calligraphy.jpg)</background-image>
             <border-color>#553333</border-color>
             <border-width>3px</border-width>
         </Selection>
         <Selection selector="div#cadrePhoto">
             <background-color>#eadbb9</background-color>
             <background-image>url(../images/Parchemin.jpg)</background-image>
-            <padding>6px</padding>
+            <padding>11px</padding>
         </Selection>
         <Selection selector="div#indexTitle">
             <background-color>#dde2e9</background-color>

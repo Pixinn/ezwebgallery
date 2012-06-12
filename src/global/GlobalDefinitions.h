@@ -33,7 +33,6 @@
 #define SETTINGS_OPENGENERATEDGAL   "Open Generated Gallery"
 
 /*** GUI ***/
-//#define RELEASE             "15"
 #define XMLSESSIONEXTENSION ".gallery"
 #define XMLLASTSESSIONFILE  "lastSession"
 #define SKINSESSIONEXTENSION ".skin"
@@ -53,8 +52,6 @@
 #define RESEMOTICONSPATH  "ressources/images/smileys/"
 #define CSSINDEXSKINFILENAME "index-skin.css"
 #define JSPATH          "ressources/javascript"
-#define JSCONFFILENAME  "galleryConfiguration.js"
-#define JSPRESFILENAME  "galleryPresentation.js"
 #define IMAGEFILEEXTENSION ".jpg"
 
 /**** skins ****/

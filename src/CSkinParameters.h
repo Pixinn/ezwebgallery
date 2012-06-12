@@ -60,6 +60,7 @@ public:
     CSkinParameters( );
     CSkinParameters& operator=(const CSkinParameters & );        //Ncessit de surcharger l'oprateur d'assignement lorsqu'on hrite de QObject
     bool operator==(const CSkinParameters & );
+    void setUi( Ui::SkinDesigner* );                             //Connecte les paramtres  l'UI
     void setName( const QString & );                             //Donne le nom de la skin    
     QString name( );                                             //Rcupre le nom de la skin
     QString filePath( );                                         //Rcupre le path de la skin. Vide si non sauvegarde.
@@ -70,8 +71,10 @@ public:
     CCssSheet toCss( );                                          //Cr une feuille de style CSS
     QString buttonImage( int );                                  //Renvoie le nom du fichier de l'icone dsire
     QDomDocument toDomDocument( );                               //Gnre un QDomDocument rempli des paramtres
-    void setDir( const QString & );                              //Indique le rpertoire de la skin
-    void setUi( Ui::SkinDesigner* );                             //Connecte les paramtres  l'UI
+    //void setDir( const QString & );                            //Indique le rpertoire de la skin
+    QSize unavailableSpace( unsigned int, unsigned int );        //Returns space unavailable for the thumbnails on the index page
+    QSize mosaicDecoration( unsigned int, unsigned int );        //Returns space used by the mosaic decoration on the index page
+
     bool load( const QString &);                                 //Chargement de la skin
     bool saveSkin( const QString &/*, QStringList &*/ );         //Sauvegarde la skin. Retourne false si erreurs
     bool copyRessources( QDir /*, QStringList &*/ );             //Copie les fichiers de ressources vers le rpertoire spcifi
@@ -91,9 +94,11 @@ private:
 
 public:
     //Pour calculs
-    int thumbImgBorderSize;
-    int thumbBoxBorderSize;
-    int photoPaddingSize;
+    unsigned int thumbImgBorderSize;
+    unsigned int thumbBoxBorderSize;
+    unsigned int photoPaddingSize;
+    /*unsigned int mosaicBorderSize;
+    unsigned int titleOuterWidth;*/
     //Boutons
     enum Buttons{ //Sert  passer un paramtre  la fonction buttonImage( int )
         buttonNext = 0,

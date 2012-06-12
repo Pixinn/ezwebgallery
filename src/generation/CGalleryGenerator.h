@@ -40,6 +40,7 @@
 #include "CCaption.h"
 #include "CMessage.h"
 #include "CPhotoProperties.h"
+#include "Json.h"
 
 /*****************************
  * CGalleryGenerator
@@ -89,19 +90,21 @@ protected:
     void run( );    
 
 private:
+    //-- definition
+    typedef struct {
+        unsigned int width;
+        unsigned int height;
+    }t_thumbSize;
 
     //-- interfaçage UI
     void debugDisplay( QString );		//Affichage d'un message de debug
     void displayProgressBar( int completion, QString color, QString message ); //Affiche un % d'avancement sur la progressBar    
     //-- tools	
-    bool photosAlreadyExist( ); //Vrifie la prsence des photos dans le rpertoire de sortie
-    bool thumbsAlreadyExist( );  //Vrifie la prsence des vignettes dans le rpertoire de sortie
-    
+    bool areImageAndThumbs( void ); //Returns true if the photos and the thumbnails tobe generated are present in the proper dirs
+    QMap<QString,QSize> computeThumbSizes( void ); //Computes the size of the thumbs to be generated
+    QMap<QString,QSize> computePhotoSizes( void ); //Computes the size of the photos to be generated
 
     ///// Attributs //////
-
-    //IUserInterface* m_p_ui;
-
     //Machine Etat
     QStateMachine m_stateMachine;
     QState* m_p_waitingForOrders;
@@ -115,8 +118,13 @@ private:
     //Paramètres de la galerie
     CProjectParameters m_parameters;    
     QStringList m_captionsList;
+    JSON::Root m_jsonRoot;
     CSkinParameters m_skinParameters;
-    //Gnration photos
+    //Generation photos
+    static const int s_nbMosaicSizes = 4;
+    static const int s_nbthumbRes = 2*s_nbMosaicSizes;
+    static const t_thumbSize s_thumbMosaicSizes[ s_nbMosaicSizes ];
+    QMap<QString,QSize> m_thumbSizes;
     QList<CPhotoProperties> m_photoPropertiesList;
     QThreadPool* m_p_photoProcessorPool;    //Pool des threads effectuant les traitements. Un thread par photo
     QStringList m_msgErrorList;
