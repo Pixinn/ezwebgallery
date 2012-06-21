@@ -525,11 +525,13 @@ bool CGalleryGenerator::generateJsFiles( )
     jsonPhotosProperties.addBoolean( "rightClickEnabled", m_parameters.m_galleryConfig.f_rightClickEnabled );
     jsonPhotosProperties.addNumber( "qualityStrategy", m_parameters.m_photosConfig.imageOptimizationStrategy );
     jsonPhotosProperties.addNumber( "first", 1 );
+    jsonPhotosProperties.addString( "smallestSet", QString(RESOLUTIONPATH) + QString::number( m_parameters.m_photosConfig.nbIntermediateResolutions ) );
+    jsonPhotosProperties.addString( "largetSet", QString(RESOLUTIONPATH) + QString::number( 1 ) );
     Object& maxSize = jsonPhotosProperties.addObject( "maxSize" );
     maxSize.addNumber("width", m_parameters.m_photosConfig.maxSizeW );
     maxSize.addNumber("height", m_parameters.m_photosConfig.maxSizeH );
     Object& decoration = jsonPhotosProperties.addObject( "decoration" );
-    decoration.addNumber( "padding", m_skinParameters.photoPaddingSize );    
+    decoration.addNumber( "padding", m_skinParameters.photoPaddingSize );
 
     // -- photo properties
     int numPhoto = 1; //m_photoPropertiesList and m_photoSizes must be coherent. Bad design!
@@ -539,14 +541,16 @@ bool CGalleryGenerator::generateJsFiles( )
         Object& photo = jsonPhotoList.appendObject();
         photo.addString("filename",properties.encodedFilename() );
         photo.addString("caption",properties.caption().render() );
-        Array& photoSizes = photo.addArray( "sizes" );
-        QQueue<QSize> sizes = m_photoSizes.value( numPhoto++ );
-        while( !sizes.isEmpty() )  {
-            QSize size = sizes.dequeue();
-            Object& photoSize = photoSizes.appendObject();
+        Object& photoSizes = photo.addObject( "sizes" );
+        QMap<QString,QSize> sizes = m_photoSizes.value( numPhoto );        
+        foreach(QString res, sizes.keys() )
+        {
+            QSize size = sizes.value( res );
+            Object& photoSize = photoSizes.addObject( res );
             photoSize.addNumber( "width", size.width() );
             photoSize.addNumber( "height", size.height() );
         }
+        numPhoto++;
     }
 
 
@@ -566,7 +570,7 @@ bool CGalleryGenerator::generateJsFiles( )
     const QSize unavailableSpace = m_skinParameters.unavailableSpace( nbCols, nbRows );
     mosaic.addNumber( "nbRows",  nbRows);
     mosaic.addNumber( "nbCols",  nbCols);
-    mosaic.addString(  "defaultSet", QString(RESOLUTIONPATH) + ("8") );  
+    mosaic.addString( "defaultSet", QString(RESOLUTIONPATH) + ("8") );  
     Object& sizes = mosaic.addObject( "sizes" );
     foreach( QSize size, m_thumbSizes ) {
         sizes.addNumber( m_thumbSizes.key(size), size.width() );
@@ -796,7 +800,7 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
        
         //idPhotoDone = generatedPhotoParams.idPhoto();
         //Rcupration des tailles gnres par le process
-        m_photoSizes.insert( photoProperties.id() + 1, generatedPhotoParams.generatedSizesQueue() );
+        m_photoSizes.insert( photoProperties.id() + 1,  generatedPhotoParams.generatedSizes() );
         //Updating photoproperties to insert the read ExifTags
         //photoProperties = m_photoPropertiesList.at( photoProperties.id() );
         //photoProperties.setExifTags( generatedPhotoParams.exifTags() );

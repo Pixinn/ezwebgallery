@@ -185,7 +185,7 @@ void CPhotoProcessor::run()
     fileOutPath.cd( filedir );
     fileToWrite =  fileOutPath.absoluteFilePath( filename );
     if( photoResized.save( fileToWrite, saveQuality ) ){
-        m_generatedParameters.enqueueSize( QSize( photoResized.size().width(), photoResized.size().height() ) );
+        m_generatedParameters.addSize( key, QSize( photoResized.size().width(), photoResized.size().height() ) );
     }
     else{ //Failure !
         m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
@@ -238,7 +238,7 @@ void CPhotoProcessor::run()
         fileOutPath.cd( filedir );
         fileToWrite =  fileOutPath.absoluteFilePath( filename );
         if( photoResized.save( fileToWrite, saveQuality ) ){
-            m_generatedParameters.enqueueSize( QSize( photoResized.size().width(), photoResized.size().height() ) );
+            m_generatedParameters.addSize( key, QSize( photoResized.size().width(), photoResized.size().height() ) );
         }
         else{ //Failure !
             m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
@@ -412,7 +412,8 @@ CGeneratedPhotoSetParameters::CGeneratedPhotoSetParameters( ) :
 CGeneratedPhotoSetParameters::CGeneratedPhotoSetParameters( const CGeneratedPhotoSetParameters &other ) :
     QObject( )
 {
-    this->m_generatedSizesQueue = other.m_generatedSizesQueue;
+//    this->m_generatedSizesQueue = other.m_generatedSizesQueue;
+    this->m_generatedSizes = other.m_generatedSizes;
     this->m_photoProperties = other.m_photoProperties;
     this->m_exitStatus = other.m_exitStatus;
     this->m_message = other.m_message;
@@ -421,8 +422,13 @@ CGeneratedPhotoSetParameters::CGeneratedPhotoSetParameters( const CGeneratedPhot
 CGeneratedPhotoSetParameters::~CGeneratedPhotoSetParameters( ){
 }
 
-void CGeneratedPhotoSetParameters::enqueueSize( QSize toQueue ){
+/*void CGeneratedPhotoSetParameters::enqueueSize( QSize toQueue ){
     m_generatedSizesQueue.enqueue( toQueue );
+}*/
+
+void CGeneratedPhotoSetParameters::addSize(const QString& path, const QSize& size )
+{
+    m_generatedSizes.insert( path, size );
 }
 
 
@@ -433,9 +439,13 @@ void CGeneratedPhotoSetParameters::setMessage( const QString & message ){
 void CGeneratedPhotoSetParameters::setExitStatus( const e_photoProcessStatus exitStatus ){
     m_exitStatus = exitStatus;
 }
-
+/*
 QQueue<QSize> CGeneratedPhotoSetParameters::generatedSizesQueue(){
     return m_generatedSizesQueue;
+}*/
+
+const QMap<QString, QSize>& CGeneratedPhotoSetParameters::generatedSizes( void ) const {
+    return m_generatedSizes;
 }
 
 e_photoProcessStatus CGeneratedPhotoSetParameters::exitStatus( ){

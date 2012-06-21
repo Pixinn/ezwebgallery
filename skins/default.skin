@@ -1,4 +1,4 @@
-﻿<Skin release="20120609" name="Default Skin">
+﻿<Skin release="20120612" name="Default Skin">
     <properties title-position="0"/>
     <StyleSheet name="noname">
         <Selection selector="#progressbar">
@@ -19,12 +19,12 @@
             <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
         </Selection>
         <Selection selector="#screenIndex">
-            <background-color>#1b1b1b</background-color>
-            <background-image>url(../images/bg_DarkGray.jpg)</background-image>
+            <background-color>#000a23</background-color>
+            <background-image>url(../images/Browse.jpg)</background-image>
         </Selection>
         <Selection selector="#screenPhoto">
-            <background-color>#1b1b1b</background-color>
-            <background-image>url(../images/bg_DarkGray.jpg)</background-image>
+            <background-color>#000a23</background-color>
+            <background-image>url(../images/Photo.jpg)</background-image>
         </Selection>
         <Selection selector=".mainPhoto">
             <border-color>#000000</border-color>
@@ -44,52 +44,50 @@
             <margin>-2px</margin>
         </Selection>
         <Selection selector=".scrollContainer div.slidingPanel">
-            <background-color>#787674</background-color>
-            <background-image>url(../images/BrushedMetal_2.jpg)</background-image>
+            <background-color>#f0edea</background-color>
+            <background-image>url(../images/Mosaic.jpg)</background-image>
             <background-size>cover</background-size>
         </Selection>
         <Selection selector=".thumbBox">
-            <border-color>#000000</border-color>
-            <border-width>1px</border-width>
+            <border-color>#f0edea</border-color>
+            <border-width>10px</border-width>
             <Selection selector="img">
-                <border-color>#ffffff</border-color>
+                <border-color>#2c2a2a</border-color>
                 <border-width>5px</border-width>
             </Selection>
             <Selection selector="img:hover">
-                <border-color>#676262</border-color>
+                <border-color>#85899d</border-color>
             </Selection>
         </Selection>
         <Selection selector=".thumbsWrapperContainer">
-            <background-color>#787674</background-color>
-            <border-color>#000000</border-color>
-            <border-width>1px</border-width>
+            <background-color>#f0edea</background-color>
+            <border-color>#a2a2b5</border-color>
+            <border-width>5px</border-width>
         </Selection>
         <Selection selector="div#cadrePhoto">
-            <background-color>#edeef0</background-color>
-            <background-image>url(../images/WhitePaper.jpg)</background-image>
+            <background-color>#f0edea</background-color>
+            <background-image>url(../images/)</background-image>
             <padding>10px</padding>
         </Selection>
         <Selection selector="div#indexTitle">
-            <background-color>#050505</background-color>
-            <background-image>url(../images/bg_DarkerGray.jpg)</background-image>
-            <border-color>#ffffff</border-color>
+            <background-color>#ebe9e6</background-color>
+            <background-image>url(../images/)</background-image>
+            <border-color>#aaaab5</border-color>
             <border-left-width>0px</border-left-width>
-            <border-right-width>1px</border-right-width>
-            <color>#ffffff</color>
+            <border-right-width>5px</border-right-width>
+            <color>#0a0a3a</color>
             <display>block</display>
-            <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
-            <font-size>2.2em</font-size>
+            <font-family>Times, "Times New Roman", "Liberation Serif", FreeSerif, serif</font-family>
+            <font-size>2.4em</font-size>
             <line-height>0.9em</line-height>
             <width>50px</width>
         </Selection>
         <Selection selector="div#photoLefter">
-            <background-color>#050505</background-color>
-            <background-image>url(../images/bg_DarkerGray.jpg)</background-image>
+            <background-color>transparent</background-color>
             <width>55px</width>
         </Selection>
         <Selection selector="div#photoRighter">
-            <background-color>#050505</background-color>
-            <background-image>url(../images/bg_DarkerGray.jpg)</background-image>
+            <background-color>transparent</background-color>
             <width>55px</width>
         </Selection>
         <Selection selector="div.photoCaption">
@@ -100,15 +98,15 @@
         </Selection>
         <Selection selector="ul.indexNavigation">
             <Selection selector="li">
-                <background-color>#c6c3c0</background-color>
+                <background-color>#f0edea</background-color>
                 <Selection selector="a">
                     <color>#000000</color>
                 </Selection>
             </Selection>
             <Selection selector="li.navTabSelected">
                 <background-color>#c6c3c0</background-color>
-                <border-color>#ffffff</border-color>
-                <border-width>2px</border-width>
+                <border-color>#a2a2b5</border-color>
+                <border-width>3px</border-width>
                 <Selection selector="a">
                     <color>#000000</color>
                 </Selection>
@@ -116,13 +114,10 @@
         </Selection>
     </StyleSheet>
     <Ressources>
-        <File id="IndexPage_BckgTexture">bg_DarkGray.jpg</File>
-        <File id="Mosaic_BckgTexture">BrushedMetal_2.jpg</File>
-        <File id="PhotoButtonNext">arrows_right_dark.png</File>
-        <File id="PhotoButtonPrevious">arrows_left_dark.png</File>
-        <File id="PhotoFraming_Texture">WhitePaper.jpg</File>
-        <File id="PhotoNavBlocks_BckgTexture">bg_DarkerGray.jpg</File>
-        <File id="PhotoPage_BckgTexture">bg_DarkGray.jpg</File>
-        <File id="VTitle_BackgroundTexture">bg_DarkerGray.jpg</File>
+        <File id="IndexPage_BckgTexture">Browse.jpg</File>
+        <File id="Mosaic_BckgTexture">Mosaic.jpg</File>
+        <File id="PhotoButtonNext">ArrowRight.gif</File>
+        <File id="PhotoButtonPrevious">ArrowLeft.gif</File>
+        <File id="PhotoPage_BckgTexture">Photo.jpg</File>
     </Ressources>
 </Skin>

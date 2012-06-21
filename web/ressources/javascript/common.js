@@ -40,7 +40,7 @@
 //--- Urls 
 var URL_BASE = "ressources/php/getPhoto.php?photoURL="; //<= RELEASE
 var URL_THUMBS_PATH = "thumbnails/"; /* chemin vers les vignettes. En relatif et avec le / final ! */
-var IMAGES_PATH = "images/res";
+var IMAGES_PATH = "images";
 var IMAGEFILEEXTENSION = ".jpg";
 //-- CSS & DOM --//
 //-- Barre de chargement

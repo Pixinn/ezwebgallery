@@ -336,12 +336,8 @@ function loadingManagement( evt )
  */
 function choosePhotoToLoad( photoDivHW, numPhoto )
 {
-	var photoURL = "undefined";
-	var photoSize = {h:0,w:0};
-	var resW;
-	var resH;
-	var f_OK = false;
-	
+    var photo = new Object();
+
 	////////////////////////////////////
 	//Deux méthodes différentes :
 	//IE6 et 7 ne sont pas capable de redimensionner correctement une image --> on affichera TOUJOURS l'image immédiatement < à l'écran
@@ -351,47 +347,22 @@ function choosePhotoToLoad( photoDivHW, numPhoto )
     // Cela fait donc 3 cas possibles
 	////////////////////////////////////
 	
-
   //Optimisation de la qualité ?
   if( g_properties.photos.technical.qualityStrategy === 0)
   {
       //On parcours les tailles d'images disponibles
       //On prend la première qui tient dans l'espace disponible
-      resH = getSmallerImage( photoDivHW, numPhoto );
-      
-      //Si aucune photo ne convient, on prend la plus petite dispo et le navigateur resizera
-      if( resH === -1 ){
-          resH = g_nbRes;
-      }
-      
-      //Récupération de la photo choisie
-      var folderId = resH+1;
-      photoSize.h = g_properties.photos.list[ numPhoto - 1].sizes[ resH ].height;
-      photoSize.w = g_properties.photos.list[ numPhoto - 1].sizes[ resH ].width; //Oui c'est bien resH !!
-      photoURL = IMAGES_PATH + folderId + "/"  + g_properties.photos.list[ numPhoto - 1].filename;
+      photo = getSmallerImage( photoDivHW, numPhoto );
   }//Fin Optimisation de la qualité
   
   //Optimisation de l'espace ? -- Marche de façon médiocre avec ie6/ie7 qui ont du mal avec les redimensionnements
   else
   {
       //On récupère la plus petite image de taille > à l'espace afficache. Le navigateur resizera.
-      resH = getBiggerImage( photoDivHW, numPhoto );
-      //Si aucune photo n'a convenu, on prend la plus grande. Elle sera naturellement conservée à sa taille d'origine.
-      if( resH === -1 ){
-          resH = 1;
-      }
-      resW = resH;
-      
-      //Récupération de la photo choisie
-      var folderId = resH+1;
-      photoSize.h = g_properties.photos.list[ numPhoto - 1].sizes[ resH ].height;
-      photoSize.w = g_properties.photos.list[ numPhoto - 1 ].sizes[ resW ].width;
-      photoURL = IMAGES_PATH + folderId + "/"  + g_properties.photos.list[ numPhoto - 1].filename;
+      photo = getBiggerImage( photoDivHW, numPhoto );
   }// Fin Optimisation de l'espace       
-	
-	
-	
-	return { url:photoURL , size:photoSize }; 
+		
+	return { url:photo.url , size:photo.size }; 
 }
 
 /* getBiggerImage( photoDivHW, numPhoto )
@@ -404,33 +375,35 @@ function choosePhotoToLoad( photoDivHW, numPhoto )
  */
 function getBiggerImage( photoDivHW, numPhoto )
 {
-	var resW = g_nbRes-1;
-	var resH = g_nbRes-1;
-	var f_OK = false;
+    var f_OK = false;
+    var sizes = g_properties.photos.list[ numPhoto - 1].sizes;
+    var suitableSizes = new Object();
+    //Extracting all suitable sizes
+    $.each( sizes, function( key, size )
+    {
+        if( size.width >= photoDivHW.w || size.height >= photoDivHW.h ) //suitable size found
+        {
+            suitableSizes[ key ] = size;
+            f_OK = true;
+        } 
+    } );
+    //Finding the smallest suitable size
+    //same format so we can compare only one dimension
+    var minWidth = Number.MAX_VALUE;
+    var res = g_properties.photos.technical.largestSet;
+    $.each( suitableSizes, function( key, size )
+    {
+        if(  size.width < minWidth )
+        {
+            minWidth = suitableSizes[ key ].width;
+            res = key;
+        }
+    } );
     
-    //On parcourt toutes les tailles de photos de la plus petite à la plus grande
-	//Celle qui conviendra sera la première avec une dimension trop grande pour être affichée			
-	while( resW >= 0 && resH >= 0 && f_OK === false )
-	{
-			//Une dimension est-elle supérieure à l'espace affichable ?
-			if( g_properties.photos.list[ numPhoto - 1].sizes[ resW ].width >= photoDivHW.w 
-					||
-					g_properties.photos.list[ numPhoto - 1].sizes[ resH ].height >= photoDivHW.h  )
-			{
-				f_OK = true;
-			}
-			else{ //On passe à la photo de taille supérieure
-				resW--;
-				resH--;
-			}
-	}//Fin while
-    
-    if( f_OK === true ){ //Résultat concluant
-        return resH; //<<-- Implique que resH = resW...
-    }
-    else{
-        return -1;
-    }
+    return {    url: IMAGES_PATH + "/" + res + "/" + g_properties.photos.list[ numPhoto - 1].filename,
+                size: {    w: sizes[ res ].width,
+                           h: sizes[ res ].height }
+           };
 }
 
 /* getSmallerImage( photoDivHW, numPhoto )
@@ -443,39 +416,33 @@ function getBiggerImage( photoDivHW, numPhoto )
  */
 function getSmallerImage( photoDivHW, numPhoto )
 {
-	var resW = 0;
-	var resH = 0;
     var f_OK = false;
-	
-	//On parcours les tailles d'images disponibles
-    //On prend la première qui tient dans l'espace disponible
-	while( resW <= g_nbRes && resH <= g_nbRes && f_OK === false )
-	{
-		//Recherche du width immédiatement inférieur à celui disponible
-		if( g_properties.photos.list[ numPhoto - 1].sizes[ resW ].width <= photoDivHW.w )
-		{
-			//Puis Recherche du height immédiatement inférieur à celui disponible
-			resH = resW;
-			while( resH <= g_nbRes && f_OK === false )
-			{
-					//On a trouvé la bonne combinaison !
-					if( g_properties.photos.list[ numPhoto - 1 ].sizes[ resH ].height <= photoDivHW.h ){
-						f_OK = true;
-					}
-					else{
-						resH++;
-					}
-			}//Fin while
-		}
-		else{
-			resW++;
-		}
-	}//Fin while
+    var sizes = g_properties.photos.list[ numPhoto - 1].sizes;
+    var suitableSizes = new Object();
+    //Extracting all suitable sizes
+    $.each( sizes, function( key, size )
+    {
+        if( size.width <= photoDivHW.w && size.height <= photoDivHW.h ) //suitable size found
+        {
+            suitableSizes[ key ] = size;
+            f_OK = true;
+        } 
+    } );
+    //Finding the biggest suitable size
+    var maxWidth = 0;
+    var res = g_properties.photos.technical.smallestSet;
+    $.each( suitableSizes, function( key, size )
+    {
+        if(  size.width > maxWidth )
+        {
+            maxWidth =  suitableSizes[ key ].width;
+            res = key;
+        }
+    } );
     
-    if( f_OK === true ){ //Résultat concluant
-        return resH; //<<-- Implique que resH = resW...
-    }
-    else{
-        return -1;
-    }
+    return {    url: IMAGES_PATH + "/" + res + "/" + g_properties.photos.list[ numPhoto - 1].filename,
+                size: {    w: sizes[ res ].width,
+                           h: sizes[ res ].height }
+           };
+        
 }

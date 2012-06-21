@@ -128,7 +128,7 @@ private:
     QList<CPhotoProperties> m_photoPropertiesList;
     QThreadPool* m_p_photoProcessorPool;    //Pool des threads effectuant les traitements. Un thread par photo
     QStringList m_msgErrorList;
-    QMap<int, QQueue<QSize> > m_photoSizes;            //Contient les files des tailles des photos gnres <id,file>
+    QMap<int, QMap<QString,QSize> > m_photoSizes;      //Contient les files des tailles des photos gnres <id,file>
     QMap<int, QMap<QString,QString> > m_photoExifTags; //Contient les donnes exifs intressantes des photos <id,exif>
     volatile int m_nbPhotosToProcess;
     volatile int m_nbPhotosProcessed;

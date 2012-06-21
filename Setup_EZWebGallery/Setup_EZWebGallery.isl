@@ -364,8 +364,8 @@
 		<row><td>ISX_DEFAULTCOMPONENT14</td><td>{55A62F8F-D8BB-4A2E-9A04-392726B15B05}</td><td>IMAGES1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT15</td><td>{6EC3E0FC-0CA6-48BB-9152-E068A7061F8B}</td><td>BLACKBOARD_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT16</td><td>{9DBAAB1B-CCA8-45E3-8D40-441FA34B21CE}</td><td>IMAGES2</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT17</td><td>{21652037-2739-4792-8AF1-67D793822253}</td><td>DEFAULT_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT18</td><td>{26B561ED-60C6-4D03-B560-A86977A5F9AE}</td><td>IMAGES3</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT17</td><td>{FBC9CFF2-997E-4B69-9426-006AB15D3C70}</td><td>DEFAULT_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT18</td><td>{3A9D9329-930F-48AD-B896-8EE50AB3F7E0}</td><td>IMAGES3</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT19</td><td>{8099C138-2A6B-4641-8D2C-35661945C315}</td><td>EXEMPLE_HIGHLIGHT_FILES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{2CEBA8C0-C60E-44C9-82D6-869891D6353C}</td><td>RESSOURCES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT20</td><td>{8B7ABE2A-B3FB-48E4-B6A7-BA052227CE94}</td><td>IMAGES4</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -2030,20 +2030,18 @@
 		<row><td>arabic_background.jpg</td><td>ISX_DEFAULTCOMPONENT24</td><td>ARABIC~1.JPG|Arabic_Background.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Orient_files\images\Arabic_Background.jpg</td><td>1</td><td/></row>
 		<row><td>arabic_leftarrow.png</td><td>ISX_DEFAULTCOMPONENT24</td><td>ARABIC~1.PNG|Arabic_LeftArrow.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Orient_files\images\Arabic_LeftArrow.png</td><td>1</td><td/></row>
 		<row><td>arabic_rightarrow.png</td><td>ISX_DEFAULTCOMPONENT24</td><td>ARABIC~1.PNG|Arabic_RightArrow.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Orient_files\images\Arabic_RightArrow.png</td><td>1</td><td/></row>
-		<row><td>arrows_left_dark.png</td><td>ISX_DEFAULTCOMPONENT18</td><td>ARROWS~1.PNG|arrows_left_dark.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\default_files\images\arrows_left_dark.png</td><td>1</td><td/></row>
+		<row><td>arrowleft.gif</td><td>ISX_DEFAULTCOMPONENT18</td><td>ARROWL~1.GIF|ArrowLeft.gif</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\default_files\images\ArrowLeft.gif</td><td>1</td><td/></row>
+		<row><td>arrowright.gif</td><td>ISX_DEFAULTCOMPONENT18</td><td>ARROWR~1.GIF|ArrowRight.gif</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\default_files\images\ArrowRight.gif</td><td>1</td><td/></row>
 		<row><td>arrows_left_dark.png1</td><td>ISX_DEFAULTCOMPONENT20</td><td>ARROWS~1.PNG|arrows_left_dark.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Exemple_Highlight_files\images\arrows_left_dark.png</td><td>1</td><td/></row>
 		<row><td>arrows_left_dark.png2</td><td>ISX_DEFAULTCOMPONENT26</td><td>ARROWS~1.PNG|arrows_left_dark.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\WhitePaper_files\images\arrows_left_dark.png</td><td>1</td><td/></row>
-		<row><td>arrows_right_dark.png</td><td>ISX_DEFAULTCOMPONENT18</td><td>ARROWS~1.PNG|arrows_right_dark.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\default_files\images\arrows_right_dark.png</td><td>1</td><td/></row>
 		<row><td>arrows_right_dark.png1</td><td>ISX_DEFAULTCOMPONENT20</td><td>ARROWS~1.PNG|arrows_right_dark.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Exemple_Highlight_files\images\arrows_right_dark.png</td><td>1</td><td/></row>
 		<row><td>arrows_right_dark.png2</td><td>ISX_DEFAULTCOMPONENT26</td><td>ARROWS~1.PNG|arrows_right_dark.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\WhitePaper_files\images\arrows_right_dark.png</td><td>1</td><td/></row>
 		<row><td>autumn.skin</td><td>ISX_DEFAULTCOMPONENT12</td><td>AUTUMN~1.SKI|Autumn.skin</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Autumn.skin</td><td>1</td><td/></row>
 		<row><td>bad.gif</td><td>ISX_DEFAULTCOMPONENT5</td><td>bad.gif</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\images\smileys\bad.gif</td><td>1</td><td/></row>
 		<row><td>bg_darkergray.jpg</td><td>ISX_DEFAULTCOMPONENT16</td><td>BG_DAR~1.JPG|bg_DarkerGray.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\BlackBoard_files\images\bg_DarkerGray.jpg</td><td>1</td><td/></row>
-		<row><td>bg_darkergray.jpg1</td><td>ISX_DEFAULTCOMPONENT18</td><td>BG_DAR~1.JPG|bg_DarkerGray.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\default_files\images\bg_DarkerGray.jpg</td><td>1</td><td/></row>
-		<row><td>bg_darkgray.jpg</td><td>ISX_DEFAULTCOMPONENT18</td><td>BG_DAR~1.JPG|bg_DarkGray.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\default_files\images\bg_DarkGray.jpg</td><td>1</td><td/></row>
 		<row><td>blackboard.skin</td><td>ISX_DEFAULTCOMPONENT12</td><td>BLACKB~1.SKI|BlackBoard.skin</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\BlackBoard.skin</td><td>1</td><td/></row>
+		<row><td>browse.jpg</td><td>ISX_DEFAULTCOMPONENT18</td><td>Browse.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\default_files\images\Browse.jpg</td><td>1</td><td/></row>
 		<row><td>brushedmetal_1.jpg</td><td>ISX_DEFAULTCOMPONENT26</td><td>BRUSHE~1.JPG|brushedMetal_1.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\WhitePaper_files\images\brushedMetal_1.jpg</td><td>1</td><td/></row>
-		<row><td>brushedmetal_2.jpg</td><td>ISX_DEFAULTCOMPONENT18</td><td>BRUSHE~1.JPG|BrushedMetal_2.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\default_files\images\BrushedMetal_2.jpg</td><td>1</td><td/></row>
 		<row><td>classdisplaymanager_min.js</td><td>ISX_DEFAULTCOMPONENT7</td><td>CLASSD~1.JS|classDisplayManager-min.js</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\javascript\core\classDisplayManager-min.js</td><td>1</td><td/></row>
 		<row><td>classfifo_min.js</td><td>ISX_DEFAULTCOMPONENT7</td><td>CLASSF~1.JS|classFifo-min.js</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\javascript\core\classFifo-min.js</td><td>1</td><td/></row>
 		<row><td>classhashtable_min.js</td><td>ISX_DEFAULTCOMPONENT7</td><td>CLASSH~1.JS|classHashTable-min.js</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\javascript\core\classHashTable-min.js</td><td>1</td><td/></row>
@@ -2106,10 +2104,12 @@
 		<row><td>moria.skin</td><td>ISX_DEFAULTCOMPONENT12</td><td>MORIA~1.SKI|Moria.skin</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Moria.skin</td><td>1</td><td/></row>
 		<row><td>moria_background.jpg</td><td>ISX_DEFAULTCOMPONENT22</td><td>MORIA_~1.JPG|Moria_background.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Moria_files\images\Moria_background.jpg</td><td>1</td><td/></row>
 		<row><td>moria_paper.jpg</td><td>ISX_DEFAULTCOMPONENT22</td><td>MORIA_~1.JPG|Moria_paper.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Moria_files\images\Moria_paper.jpg</td><td>1</td><td/></row>
+		<row><td>mosaic.jpg</td><td>ISX_DEFAULTCOMPONENT18</td><td>Mosaic.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\default_files\images\Mosaic.jpg</td><td>1</td><td/></row>
 		<row><td>orient.skin</td><td>ISX_DEFAULTCOMPONENT12</td><td>ORIENT~1.SKI|Orient.skin</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Orient.skin</td><td>1</td><td/></row>
 		<row><td>parchemin.jpg</td><td>ISX_DEFAULTCOMPONENT24</td><td>PARCHE~1.JPG|Parchemin.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Orient_files\images\Parchemin.jpg</td><td>1</td><td/></row>
 		<row><td>parchemin_calligraphy.jpg</td><td>ISX_DEFAULTCOMPONENT24</td><td>PARCHE~1.JPG|Parchemin+Calligraphy.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Orient_files\images\Parchemin+Calligraphy.jpg</td><td>1</td><td/></row>
 		<row><td>parchemin_left.jpg</td><td>ISX_DEFAULTCOMPONENT14</td><td>PARCHE~1.JPG|Parchemin-left.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Autumn_files\images\Parchemin-left.jpg</td><td>1</td><td/></row>
+		<row><td>photo.jpg</td><td>ISX_DEFAULTCOMPONENT18</td><td>Photo.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\default_files\images\Photo.jpg</td><td>1</td><td/></row>
 		<row><td>qgif4.dll</td><td>qgif4.dll</td><td>qgif4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\imageformats\qgif4.dll</td><td>1</td><td/></row>
 		<row><td>qico4.dll</td><td>qico4.dll</td><td>qico4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\imageformats\qico4.dll</td><td>1</td><td/></row>
 		<row><td>qjpeg4.dll</td><td>qjpeg4.dll</td><td>qjpeg4.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\imageformats\qjpeg4.dll</td><td>1</td><td/></row>
@@ -2130,7 +2130,6 @@
 		<row><td>surprise.gif</td><td>ISX_DEFAULTCOMPONENT5</td><td>surprise.gif</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\images\smileys\surprise.gif</td><td>1</td><td/></row>
 		<row><td>tongue.gif</td><td>ISX_DEFAULTCOMPONENT5</td><td>tongue.gif</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\res\ressources\images\smileys\tongue.gif</td><td>1</td><td/></row>
 		<row><td>whitepaper.jpg</td><td>ISX_DEFAULTCOMPONENT16</td><td>WHITEP~1.JPG|WhitePaper.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\BlackBoard_files\images\WhitePaper.jpg</td><td>1</td><td/></row>
-		<row><td>whitepaper.jpg1</td><td>ISX_DEFAULTCOMPONENT18</td><td>WHITEP~1.JPG|WhitePaper.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\default_files\images\WhitePaper.jpg</td><td>1</td><td/></row>
 		<row><td>whitepaper.jpg2</td><td>ISX_DEFAULTCOMPONENT26</td><td>WHITEP~1.JPG|WhitePaper.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\WhitePaper_files\images\WhitePaper.jpg</td><td>1</td><td/></row>
 		<row><td>whitepaper.jpg3</td><td>ISX_DEFAULTCOMPONENT28</td><td>WHITEP~1.JPG|WhitePaper.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\Winter_files\images\WhitePaper.jpg</td><td>1</td><td/></row>
 		<row><td>whitepaper.skin</td><td>ISX_DEFAULTCOMPONENT12</td><td>WHITEP~1.SKI|WhitePaper.skin</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Users\Chris\Dev\C\EZWebGallery\distribution\windows\skins\WhitePaper.skin</td><td>1</td><td/></row>
@@ -2418,8 +2417,8 @@
 		<row><td>ISX_DEFAULTCOMPONENT14</td><td/><td/><td>_EE3E8B5C_5476_44F3_801A_41DC9DA2BC35_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT15</td><td/><td/><td>_18B77B09_9903_4094_AE88_93DC9CFB4F43_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT16</td><td/><td/><td>_998D73CF_EE92_4E04_B3B3_220C739BA837_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT17</td><td/><td/><td>_ECBF5AC2_977B_4991_A674_9EC469805229_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT18</td><td/><td/><td>_132D4B4C_11A6_477A_871B_54202634A615_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT17</td><td/><td/><td>_76E2A866_A197_47CF_B6C9_9BFA4B7BD434_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT18</td><td/><td/><td>_86C77FE4_18D0_4904_9E89_37C30EC97D1F_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT19</td><td/><td/><td>_852EBA0A_2652_4B06_8097_3CBDBC797027_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_44D94F2B_6247_4B22_A07D_B742C74E875B_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT20</td><td/><td/><td>_B9EEEC76_74B3_47D9_9E2B_03FCC8742337_FILTER</td><td/><td/><td/><td/></row>
@@ -4809,7 +4808,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGRAMFILETOLAUNCHATEND</td><td>[INSTALLDIR]EZWebGallery.exe</td><td/></row>
 		<row><td>ProductCode</td><td>{5C8B7CAF-F7E9-4946-9E14-A7D8CB3E769C}</td><td/></row>
 		<row><td>ProductName</td><td>EZWebGallery</td><td/></row>
-		<row><td>ProductVersion</td><td>0.19.0</td><td/></row>
+		<row><td>ProductVersion</td><td>0.19.1</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>

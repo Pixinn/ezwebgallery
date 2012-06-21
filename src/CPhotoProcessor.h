@@ -61,20 +61,23 @@ class CGeneratedPhotoSetParameters : public QObject
         CGeneratedPhotoSetParameters( );
         CGeneratedPhotoSetParameters(const CGeneratedPhotoSetParameters &);
         ~CGeneratedPhotoSetParameters( );
-        void enqueueSize( QSize );
+        //void enqueueSize( QSize );
+        inline void addSize(const QString&, const QSize& );
         void setPhotoProperties( const CPhotoProperties& properties )   {
             m_photoProperties = properties;
         }
         void setMessage( const QString & );
         void setExitStatus( const e_photoProcessStatus );
-        QQueue<QSize> generatedSizesQueue( );
+//        QQueue<QSize> generatedSizesQueue( );
+        const QMap<QString, QSize>& generatedSizes( void ) const;
         e_photoProcessStatus exitStatus( );
         QString message( );
         CPhotoProperties photoProperties( void ) { return m_photoProperties; }
 
     private:
         CPhotoProperties m_photoProperties;
-        QQueue<QSize> m_generatedSizesQueue;  
+        //QQueue<QSize> m_generatedSizesQueue;
+        QMap<QString,QSize> m_generatedSizes;
         QString m_message;
         e_photoProcessStatus m_exitStatus;
 };
