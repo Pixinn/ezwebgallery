@@ -272,3 +272,13 @@ void Root::clear( void )
 }
  
 
+/*************************************
+*  Root::serialize( const QString& varName )
+*
+* In: (QString) NOT TRUE JSON BECAUSE OF THAT
+* RATIONAL: SOME BROWSER CANNOT IMPORT JSON OFFLINE
+*************************************/
+QString Root::serialize( const QString& varName ) const
+{
+    return varName + " = " + Object::serialize();
+}

@@ -43,7 +43,6 @@
 #include "CProjectParameters.h"
 #include "CMessage.h"
 
-
 using namespace Magick;
 
 

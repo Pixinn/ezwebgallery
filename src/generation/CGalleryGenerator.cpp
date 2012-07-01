@@ -592,7 +592,7 @@ bool CGalleryGenerator::generateJsFiles( )
     QTextStream jsonStream( &jsonFile );
     jsonStream.setCodec( "UTF-8" );
     jsonStream.setGenerateByteOrderMark (true);
-    jsonStream << m_jsonRoot.serialize();
+    jsonStream << m_jsonRoot.serialize( "g_properties" );
     jsonFile.close();   
     
     
@@ -798,12 +798,9 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
             displayProgressBar( completion, "green", tr("Generating the photos : ")+QString::number(completion)+"%" );
         }
        
-        //idPhotoDone = generatedPhotoParams.idPhoto();
         //Rcupration des tailles gnres par le process
         m_photoSizes.insert( photoProperties.id() + 1,  generatedPhotoParams.generatedSizes() );
         //Updating photoproperties to insert the read ExifTags
-        //photoProperties = m_photoPropertiesList.at( photoProperties.id() );
-        //photoProperties.setExifTags( generatedPhotoParams.exifTags() );
         m_photoPropertiesList.replace( photoProperties.id(), photoProperties );
 
         //Fin nominale du process des photos??

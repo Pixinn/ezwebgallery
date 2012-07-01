@@ -43,6 +43,8 @@
 
 #include "mainwin.h"
 #include "CPlatform.h"
+#include "WinPreview.h"
+#include <QtWebKit>
 
 using namespace std;
 
@@ -232,9 +234,8 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
     
     //Ouverture de la galerie
     if( m_p_configureWindow->openGeneratedGallery() ) {
-        QUrl url;
         QString indexPath = QDir(m_projectParameters.m_galleryConfig.outputDir).absoluteFilePath("index.html");
-        QDesktopServices::openUrl( url.fromLocalFile( indexPath ) );
+        QDesktopServices::openUrl( QUrl::fromLocalFile( indexPath ) );
     }
 
 }

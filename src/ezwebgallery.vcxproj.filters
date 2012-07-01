@@ -262,6 +262,9 @@
     <ClCompile Include="generation\CDirChecker.cpp">
       <Filter>Source Files\generation</Filter>
     </ClCompile>
+    <ClCompile Include="ui\WinPreview.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="CPhoto.h">
@@ -506,13 +509,11 @@
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
@@ -737,94 +738,20 @@
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
-    <CustomBuild Include="CCaption.h">
-      <Filter>Generated Files\Debug</Filter>
-    </CustomBuild>
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CCss.h" />
     <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhoto.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
-    <CustomBuild Include="CTaggedString.h" />
-    <CustomBuild Include="IParameters.h" />
-    <CustomBuild Include="CCaption.cpp" />
-    <CustomBuild Include="CCaptionManager.cpp" />
-    <CustomBuild Include="CCss.cpp" />
-    <CustomBuild Include="CGalleryGenerator.cpp" />
-    <CustomBuild Include="CPhoto.cpp" />
-    <CustomBuild Include="CPhotoProcessor.cpp" />
-    <CustomBuild Include="CPhotoProperties.cpp" />
-    <CustomBuild Include="CProjectParameters.cpp" />
-    <CustomBuild Include="CSkinParameters.cpp" />
-    <CustomBuild Include="CTaggedString.cpp" />
-    <CustomBuild Include="main.cpp" />
-    <CustomBuild Include=".\global\CErrorMessages.h" />
-    <CustomBuild Include=".\global\CPlatform.h" />
-    <CustomBuild Include=".\global\GlobalDefinitions.h" />
-    <CustomBuild Include=".\global\CErrorMessages.cpp" />
-    <CustomBuild Include=".\global\CPlatform.cpp" />
-    <CustomBuild Include=".\ui\CLanguageManager.cpp" />
-    <CustomBuild Include=".\ui\CTerminalUi.cpp" />
-    <CustomBuild Include=".\ui\mainwin.cpp" />
-    <CustomBuild Include=".\ui\WinConfigure.cpp" />
-    <CustomBuild Include=".\ui\WinSkinDesigner.cpp" />
-    <CustomBuild Include=".\widgets\CColorPicker.h" />
-    <CustomBuild Include=".\widgets\CColorPickerPlugin.h" />
-    <CustomBuild Include=".\widgets\CImagePicker.h" />
-    <CustomBuild Include=".\widgets\CImagePickerPlugin.h" />
-    <CustomBuild Include=".\widgets\EZWWidgets.h" />
-    <CustomBuild Include=".\widgets\CColorPicker.cpp" />
-    <CustomBuild Include=".\widgets\CColorPickerPlugin.cpp" />
-    <CustomBuild Include=".\widgets\CImagePicker.cpp" />
-    <CustomBuild Include=".\widgets\CImagePickerPlugin.cpp" />
-    <CustomBuild Include=".\widgets\EZWWidgets.cpp" />
-    <CustomBuild Include="CCaption.h">
-      <Filter>Generated Files\Debug</Filter>
-    </CustomBuild>
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CCss.h" />
     <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhoto.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
-    <CustomBuild Include="CTaggedString.h" />
-    <CustomBuild Include="IParameters.h" />
-    <CustomBuild Include="CCaption.cpp" />
-    <CustomBuild Include="CCaptionManager.cpp" />
-    <CustomBuild Include="CCss.cpp" />
-    <CustomBuild Include="CGalleryGenerator.cpp" />
-    <CustomBuild Include="CPhoto.cpp" />
-    <CustomBuild Include="CPhotoProcessor.cpp" />
-    <CustomBuild Include="CPhotoProperties.cpp" />
-    <CustomBuild Include="CProjectParameters.cpp" />
-    <CustomBuild Include="CSkinParameters.cpp" />
-    <CustomBuild Include="CTaggedString.cpp" />
-    <CustomBuild Include="main.cpp" />
-    <CustomBuild Include=".\global\CErrorMessages.h" />
-    <CustomBuild Include=".\global\CPlatform.h" />
-    <CustomBuild Include=".\global\GlobalDefinitions.h" />
-    <CustomBuild Include=".\global\CErrorMessages.cpp" />
-    <CustomBuild Include=".\global\CPlatform.cpp" />
-    <CustomBuild Include=".\ui\CLanguageManager.cpp" />
-    <CustomBuild Include=".\ui\CTerminalUi.cpp" />
-    <CustomBuild Include=".\ui\mainwin.cpp" />
-    <CustomBuild Include=".\ui\WinConfigure.cpp" />
-    <CustomBuild Include=".\ui\WinSkinDesigner.cpp" />
-    <CustomBuild Include=".\widgets\CColorPicker.h" />
-    <CustomBuild Include=".\widgets\CColorPickerPlugin.h" />
-    <CustomBuild Include=".\widgets\CImagePicker.h" />
-    <CustomBuild Include=".\widgets\CImagePickerPlugin.h" />
-    <CustomBuild Include=".\widgets\EZWWidgets.h" />
-    <CustomBuild Include=".\widgets\CColorPicker.cpp" />
-    <CustomBuild Include=".\widgets\CColorPickerPlugin.cpp" />
-    <CustomBuild Include=".\widgets\CImagePicker.cpp" />
-    <CustomBuild Include=".\widgets\CImagePickerPlugin.cpp" />
-    <CustomBuild Include=".\widgets\EZWWidgets.cpp" />
     <CustomBuild Include="$(TargetDir)\$(TargetFileName)">
       <Filter>Generated Files</Filter>
     </CustomBuild>
@@ -886,5 +813,10 @@
     <ResourceCompile Include="ressources\win32\GalleryDesigner.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ui\WinPreview.h">
+      <Filter>Header Files\ui</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
