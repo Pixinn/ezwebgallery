@@ -85,7 +85,7 @@ var g_displayManager;
 var g_idCurrentPhoto;					/* photo à afficher */
 var g_idPhotoToLoadNext;				/* On essaie d'avoir en permanence g_idCurrentPhoto + g_properties.photos.technical.prefetchSize dans le cache */
 var g_idCurrentIndexPage;				/* Page de vignettes courantes */
-var g_properties;                       //Gallery properties
+//var g_properties;                       //Gallery properties
 //photos
 var g_nbRes;						/* Nombre de resolutions */
 var g_nbPhotos;						/* Nombre de photos */
@@ -158,15 +158,16 @@ $(document).ready(function()
         console.error( "Error requesting page:" + settings.url );
     	}	
 	});
-    
+    /*
     $.getJSON("ressources/parameters.json",
         function(data){
             g_properties = data;
             initGallery( );	 //Next: gallery initialization
         }
     );
+     */           
 		
-	
+	initGallery( );	 //Next: gallery initialization
 });	
 
 

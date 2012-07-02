@@ -150,9 +150,10 @@ namespace JSON
         {   }
         Object& addObject( const QString& key );
 
-        QString serialize( void ) const {
+        QString serialize( const QString& varName ) const;/* {
+           
            return Object::serialize();
-        }
+        }*/
 
         void clear( void );
     private:

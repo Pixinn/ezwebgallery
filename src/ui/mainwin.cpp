@@ -232,9 +232,8 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
     
     //Ouverture de la galerie
     if( m_p_configureWindow->openGeneratedGallery() ) {
-        QUrl url;
         QString indexPath = QDir(m_projectParameters.m_galleryConfig.outputDir).absoluteFilePath("index.html");
-        QDesktopServices::openUrl( url.fromLocalFile( indexPath ) );
+        QDesktopServices::openUrl( QUrl::fromLocalFile( indexPath ) );
     }
 
 }
@@ -758,7 +757,7 @@ void MainWin::about( )
 {
 
     QMessageBox::about( this,
-                        tr("About EZWebGallery - version ") + CPlatform::revision(),
+                        tr("About EZWebGallery - build date: ") + CPlatform::revision(),
                         CPlatform::readTranslatedTextFile( "about.html" ));
 
 }
