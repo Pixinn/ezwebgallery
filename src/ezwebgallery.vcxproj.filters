@@ -262,9 +262,6 @@
     <ClCompile Include="generation\CDirChecker.cpp">
       <Filter>Source Files\generation</Filter>
     </ClCompile>
-    <ClCompile Include="ui\WinPreview.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="CPhoto.h">
@@ -519,7 +516,6 @@
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
@@ -813,10 +809,5 @@
     <ResourceCompile Include="ressources\win32\GalleryDesigner.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ui\WinPreview.h">
-      <Filter>Header Files\ui</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

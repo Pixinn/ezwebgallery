@@ -257,7 +257,6 @@
     <ClCompile Include="global\CMessage.cpp" />
     <ClCompile Include="global\CDebug.cpp" />
     <ClCompile Include="Json.cpp" />
-    <ClCompile Include="ui\WinPreview.cpp" />
     <ClCompile Include="widgets\CColorPicker.cpp" />
     <ClCompile Include="CCss.cpp" />
     <ClCompile Include="widgets\CImagePicker.cpp" />
@@ -276,7 +275,6 @@
     <ClCompile Include="ui\mainwin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ui\WinPreview.h" />
     <CustomBuild Include="$(TargetDir)\$(TargetFileName)">
       <Command>bzr version-info --custom --template="#define BUILD_DATE \"{build_date}\" " &gt; builddate.h</Command>
       <Outputs>builddate.h</Outputs>

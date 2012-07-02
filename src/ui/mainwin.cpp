@@ -43,8 +43,6 @@
 
 #include "mainwin.h"
 #include "CPlatform.h"
-#include "WinPreview.h"
-#include <QtWebKit>
 
 using namespace std;
 
@@ -759,7 +757,7 @@ void MainWin::about( )
 {
 
     QMessageBox::about( this,
-                        tr("About EZWebGallery - version ") + CPlatform::revision(),
+                        tr("About EZWebGallery - build date: ") + CPlatform::revision(),
                         CPlatform::readTranslatedTextFile( "about.html" ));
 
 }
