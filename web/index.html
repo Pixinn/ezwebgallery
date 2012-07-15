@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html> 
 <html>
 <head>
 [HTML_TITLE]
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta http-equiv="imagetoolbar" content="no" />
+<!-- <meta name="viewport" content="maximum-scale=1.0,initial-scale=1.0" />!-->
 [META_GENERATOR]
 [META_TITLE]
 [META_DESCRIPTION]
@@ -14,6 +14,7 @@
 
 <!-- L'ordre des inclusions est important ! !-->
 <script type="text/javascript" src="ressources/javascript/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="ressources/javascript/jquery/jquery.mobile.min.js"></script>
 <script type="text/javascript" src="ressources/javascript/jquery/plugins/jquery.scrollTo-min.js"></script>
 <script type="text/javascript" src="ressources/javascript/jquery/plugins/jquery.localscroll-min.js"></script>
 <script type="text/javascript" src="ressources/javascript/jquery/plugins/jquery.serialScroll-min.js"></script>
@@ -29,9 +30,9 @@
 
 <script type="text/javascript" src="ressources/parameters.json"></script> 
                                                           
-<script type="text/javascript" src="ressources/javascript/common-min.js"></script>
-<script type="text/javascript" src="ressources/javascript/image-min.js"></script>
-<script type="text/javascript" src="ressources/javascript/index-min.js"></script>
+<script type="text/javascript" src="ressources/javascript/common.js"></script>
+<script type="text/javascript" src="ressources/javascript/image.js"></script>
+<script type="text/javascript" src="ressources/javascript/index.js"></script>
 
 <link rel="stylesheet" TYPE="text/css" HREF="ressources/css/common.css">
 <link rel="stylesheet" TYPE="text/css" HREF="ressources/css/index.css">
@@ -46,11 +47,12 @@
 	</div>
 </div>
 
-<div id="screenIndex" class="fullScreen">
+<div id="screenIndex" class="fullScreen" data-role="page">
 <!-- TITRE !-->
 <div class="leftZone" id="indexTitle">[CONTENT_VERTICALTITLE]</div>
 	<!-- DIV INDEX ET VIGNETTES !-->
 	<div class="centralZone" id="wrapperAffichageIndex">
+        <div class="debug"></div>
 		<div id="indexSliderContainer">
 			<ul class="indexNavigation">
 				<!-- ONGLETS DE NAVIGATION GENERES A LA VOLEE !-->
@@ -76,7 +78,7 @@
 <!-- Pour les blocks interne, permet d'avoir un layout normal sans utilise *absolute* !-->
 <!-- Permet à l'élement d'afficher/cacher tous ces blocs d'un seul coup !-->
 
-<div id="screenPhoto" class="fullScreen">
+<div id="screenPhoto" class="fullScreen" data-role="page">
 	<!-- photoLefter et photoRighter doivent se trouver AVANT wrapperAffichagePhoto pour avoir trois colonnes.
 	     cf. http://www.alsacreations.com/tuto/lire/588-design-trois-colonnes-positionnement-flottant.html !-->
 	<div  class="leftZone" id="photoLefter"> <!-- A gauche de la photo !-->
@@ -104,7 +106,7 @@
 <div class="footer">
 	<a href="http://www.ezwebgallery.org/">[EZWEBGALLERY_LOGO]</a>
 	[BUTTON_ADDTHIS]
-	<!--<span id="socialNetworks"> </span>!-->	 
+	<!--<span id="socialNetworks"> </span>!-->	
 </div>
 <!-- ****************** !-->
 

@@ -58,3 +58,20 @@ function indexEvents( )
 		
 	}	);
 }
+
+
+function previousMosaic( )
+{
+    if( g_idCurrentIndexPage > 1 ) {        
+        g_$buttonsIndexNavigation.eq(--g_idCurrentIndexPage - 1).click( );
+    }
+}
+
+
+function nextMosaic( )
+{
+    if( g_idCurrentIndexPage < g_nbMosaicPanels ) {        
+        g_$buttonsIndexNavigation.eq(g_idCurrentIndexPage++).click( );
+    }
+}
+

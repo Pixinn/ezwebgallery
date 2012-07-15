@@ -56,7 +56,7 @@ function ButtonDeactivable( handle, onClickFct )
 /****** CALLBACKS DES BOUTONS *******/
 
 		/* Photo suivante */
-	function onClickNext( )
+	function nextPhoto( )
 	{
 		var idOldIndexPage = g_idCurrentIndexPage;
 		//Seulement si le bouton est activé
@@ -84,7 +84,7 @@ function ButtonDeactivable( handle, onClickFct )
 	}
 	
 	/* Photo précédante */
-	function onClickPrevious(){
+	function previousPhoto(){
 		var idOldIndexPage = g_idCurrentIndexPage;
 		
 		if (   g_displayManager.fControlsDisabled === false
@@ -122,14 +122,9 @@ function ButtonDeactivable( handle, onClickFct )
  */
 function imageEvents( )
 {
-		//Code des touches pour les evt clavier nous intéressant
-		var KEY_ARROW_LEFT = 37;
-		var KEY_ARROW_RIGHT = 39;
-		var KEY_ESC = 27;
-
 	  //Instanciation des boutons. Le callback est défini dans le constructeur
-		g_buttonNextPhoto = new ButtonDeactivable( $(BUTTON_NEXTPHOTONAME), onClickNext );
-		g_buttonPreviousPhoto = new ButtonDeactivable( $(BUTTON_PREVIOUSPHOTONAME), onClickPrevious );			
+		g_buttonNextPhoto = new ButtonDeactivable( $(BUTTON_NEXTPHOTONAME), nextPhoto );
+		g_buttonPreviousPhoto = new ButtonDeactivable( $(BUTTON_PREVIOUSPHOTONAME), previousPhoto );			
 		$(BUTTON_RETURNTOINDEXNAME).click( onClickReturnToIndex );
 		
 		//Si clic droit non authorisé -> on surcharge l'evt
@@ -141,51 +136,6 @@ function imageEvents( )
 
 		}
 
-		//EVTs on appuie sur une touche
-		$(window).keydown( function( evt )
-		{			
-			var f_watchedKeyCatched = false;
-			if( g_watchedKeyDown === false 	//On ne gère qu'un keyevt (une touche pressée) à la fois
-					&&  				 								//Cela a aussi pour avantage de ne pas appeler les fcts tant que les touches sont pressées
-					g_displayManager.screenPhotoIsDisplayed() === true ) //Ne pas gérer les flèches quand on est sur l'écran d'index					
-			{
-				var keyPressed = evt.keyCode || evt.which;		
-				switch( keyPressed )
-				{
-				//Passer d'une photo à la suivante / précédante lors de l'appuie sur une flèche
-				case KEY_ARROW_LEFT:
-					g_watchedKeyDown = true;
-					onClickPrevious();
-					f_watchedKeyCatched = true;
-					break;
-				case KEY_ARROW_RIGHT:
-					g_watchedKeyDown = true;
-					onClickNext();
-					f_watchedKeyCatched = true;
-					break;
-				case KEY_ESC:
-					g_watchedKeyDown = true;
-					onClickReturnToIndex();
-					f_watchedKeyCatched = true;
-					break;				
-				}
-			}
-			return !f_watchedKeyCatched;	//pour éviter de continuer à propager l'évent une fois qu'on l'a "utilisé".	
-		});
-		//EVT on relache une touche
-		$(window).keyup( function( evt )
-		{
-			var keyPressed = evt.keyCode || evt.which;		
-			switch( keyPressed )
-			{
-				case KEY_ARROW_LEFT:
-				case KEY_ARROW_RIGHT:
-				case KEY_ESC:
-					g_watchedKeyDown = false;
-					break;
-			}
-			/*return false*/
-		});
 }
 
 

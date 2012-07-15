@@ -136,3 +136,10 @@ a:active {color: black;}
 		width:100%;
 		height:100%;
 }
+
+.debug{
+    color:red;
+    background:black;
+    text-align:left;
+    font-size:2.5em;
+}

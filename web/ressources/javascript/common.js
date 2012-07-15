@@ -85,6 +85,7 @@ var g_displayManager;
 var g_idCurrentPhoto;					/* photo à afficher */
 var g_idPhotoToLoadNext;				/* On essaie d'avoir en permanence g_idCurrentPhoto + g_properties.photos.technical.prefetchSize dans le cache */
 var g_idCurrentIndexPage;				/* Page de vignettes courantes */
+var g_nbMosaicPanels;                   
 //var g_properties;                       //Gallery properties
 //photos
 var g_nbRes;						/* Nombre de resolutions */
@@ -184,7 +185,6 @@ function initGallery( )
 	g_nbThumbFullyLoaded = 0;
 	g_nbThumbnails = 0;
 	g_nbRes = 0;
-	var nbPanneaux;
 	var numIndex;
 	var numThumbnails;
     var nbThumbsByPanel = g_properties.index.mosaic.nbRows * g_properties.index.mosaic.nbCols;
@@ -194,11 +194,11 @@ function initGallery( )
     g_nbRes = g_properties.photos.list[0].sizes.length; //at least one photo in the list
     
 	g_nbPhotos = g_nbThumbnails;
-	nbPanneaux = Math.ceil( g_nbThumbnails / nbThumbsByPanel );
+	g_nbMosaicPanels = Math.ceil( g_nbThumbnails / nbThumbsByPanel );
    
 	
 	/* Récupération et mise en forme de la liste des thumbnails */
-	/* création de g_listeThumbnails[nbPanneaux][NBTHUMBSBYPAGE]  */
+	/* création de g_listeThumbnails[g_nbMosaicPanels][NBTHUMBSBYPAGE]  */
     for( var i = 0 ; i <  g_properties.photos.list.length; i++ ) {
         var photo = g_properties.photos.list[ i ];
         g_listeThumbnails[ photo.filename ] =  i + 1 ;
@@ -206,12 +206,12 @@ function initGallery( )
 	
 	
 	/* Génération des panneaux et des onglets */
-	for ( i = 0; i < nbPanneaux ; i++){
+	for ( i = 0; i < g_nbMosaicPanels ; i++){
 		numIndex = i+1;
 		//Panneaux
 		$(DIV_SCROLLCONTAINER).append( '<div class="' +DIV_SLIDINGPANEL.substr(1,DIV_SLIDINGPANEL.length-1)+ '" id="' +ID_INDEXPREFIX+numIndex+ '"></div>' );
 		//Onglets... seulement si y'en a plusieurs...
-		if (nbPanneaux > 1) {
+		if (g_nbMosaicPanels > 1) {
 			$(DIV_NAVIGATIONINDEX_CONTAINER).append('<li><a href="#' + ID_INDEXPREFIX + numIndex + '" id="' + numIndex + '">' + numIndex + '</a></li>');
 		}
 	}
@@ -348,10 +348,11 @@ function initGallery_step3( )
                                                 .height( mosaicHeight );
 
     // ########## DEBUG ##########
-    /*alert( "indexSliderContainer: " + $("#indexSliderContainer").eq(0).width() + " - " + $("#indexSliderContainer").eq(0).height() + "\n" +
-           "thumbsWrapperContainer: " +  $thumbsWrapperContainer.width() + " - " + $thumbsWrapperContainer.height() + "\n" +
-           "thumbsWrapper: " + $(".thumbsWrapper").eq(0).width() + " - " + $(".thumbsWrapper").eq(0).height() + "\n" +
-           "scrollContainer div sliding: " + $(".scrollContainer").find(".slidingPanel").eq(0).width() + " - " + $(".scrollContainer div.slidingPanel").eq(0).height() ); */
+   /* var viewport = {w: $(window).width(), h: $(window).height() };
+    var dips = { w: screen.width, h: screen.height};
+    var physical = { w: isNaN(window.devicePixelRatio) ? dips.w : dips.w * window.devicePixelRatio, h: isNaN(window.devicePixelRatio) ? dips.h : dips.h * window.devicePixelRatio }
+    var dbgString = "VIEWPORT: " + viewport.w + " - " + viewport.h + " || DIPS: " + dips.w + " - " + dips.h + " || PHYSICAL: " + physical.w + " - " + physical.h;
+    $(".debug").append(dbgString);*/
     // ##########################
                                           
 	//Cacher la barre de loading
@@ -369,6 +370,10 @@ function initGallery_step3( )
 	indexEvents( ); 		// <- Défini dans index.js
 	//Tout ce qui concerne la fenêtre d'affichage des photos
 	imageEvents( );			// <- Défini dans image.js
+    //Key Events
+    keyboardEvents( );
+    //Touch based events
+    touchEvents();
 	/* Evenement resize fenêtre */
 	/* => Concerne l'index et la fenêtre d'affichage des photos */
 	$(window).resize( function( ){ onWindowResize( ); } );
@@ -583,4 +588,112 @@ function dbgTrace( log ){
 	if (window.console) {
 		console.log( log );
 	}
+}
+
+
+
+function keyboardEvents( )
+{
+
+	//Code des touches pour les evt clavier nous intéressant
+	var KEY_ARROW_LEFT = 37;
+	var KEY_ARROW_RIGHT = 39;
+	var KEY_ESC = 27;
+
+	//EVTs on appuie sur une touche
+	$(window).keydown( function( evt )
+	{			
+		var f_watchedKeyCatched = false;
+		if( g_watchedKeyDown === false 	)//On ne gère qu'un keyevt (une touche pressée) à la fois			
+		{
+            var keyPressed = evt.keyCode || evt.which;
+            //PHOTO SCREEN
+            if( g_displayManager.screenPhotoIsDisplayed() === true )
+            {
+                switch( keyPressed )
+                {
+                //Passer d'une photo à la suivante / précédante lors de l'appuie sur une flèche
+                case KEY_ARROW_LEFT:
+                    g_watchedKeyDown = true;
+                    previousPhoto();
+                    f_watchedKeyCatched = true;
+                    break;
+                case KEY_ARROW_RIGHT:
+                    g_watchedKeyDown = true;
+                    nextPhoto();
+                    f_watchedKeyCatched = true;
+                    break;
+                case KEY_ESC:
+                    g_watchedKeyDown = true;
+                    onClickReturnToIndex();
+                    f_watchedKeyCatched = true;
+                    break;				
+                }
+            }
+            //INDEX SCREEN
+            else
+            {
+                switch( keyPressed )
+                {
+                    case KEY_ARROW_LEFT:
+                        g_watchedKeyDown = true;
+                        previousMosaic();
+                        f_watchedKeyCatched = true;
+                        break;
+                    case KEY_ARROW_RIGHT:
+                        g_watchedKeyDown = true;
+                        nextMosaic();
+                        f_watchedKeyCatched = true;
+                        break;
+                }
+            }
+		}
+        
+        
+		return !f_watchedKeyCatched;	//pour éviter de continuer à propager l'évent une fois qu'on l'a "utilisé".	
+	});
+	//EVT on relache une touche
+	$(window).keyup( function( evt )
+	{
+		var keyPressed = evt.keyCode || evt.which;		
+		switch( keyPressed )
+		{
+			case KEY_ARROW_LEFT:
+			case KEY_ARROW_RIGHT:
+			case KEY_ESC:
+				g_watchedKeyDown = false;
+				break;
+		}
+		/*return false*/
+	});
+}
+
+function touchEvents( )
+{
+    $(document).bind('swiperight', function()
+    {
+        if( g_displayManager.screenPhotoIsDisplayed() ) {
+            previousPhoto();
+        }
+        else {
+            previousMosaic();
+        }      
+    });
+    $(document).bind('swipeleft', function()
+    {
+        if( g_displayManager.screenPhotoIsDisplayed() ) {
+            nextPhoto();
+        }
+        else {
+            nextMosaic();
+        }
+    });
+    /*$(document).bind('orientationchange', function()
+    {
+        var viewport = {w: $(window).width(), h: $(window).height() };
+        var dips = { w: screen.width, h: screen.height};
+        var physical = { w: isNaN(window.devicePixelRatio) ? dips.w : dips.w * window.devicePixelRatio, h: isNaN(window.devicePixelRatio) ? dips.h : dips.h * window.devicePixelRatio }
+        var dbgString = "VIEWPORT: " + viewport.w + " - " + viewport.h + " || DIPS: " + dips.w + " - " + dips.h + " || PHYSICAL: " + physical.w + " - " + physical.h;
+        $(".debug").clear().append(dbgString);
+    });*/
 }
