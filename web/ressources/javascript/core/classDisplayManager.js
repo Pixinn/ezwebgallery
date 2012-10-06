@@ -208,9 +208,11 @@ this.enableControls = function( )
 					
 			//Inclusion de la photo dans le html			
 			m_$divPhoto.append( $photo )
-						     .css( "cursor", "default" ) 
-						     .css("height", "auto")	
-						     .css("width", "auto");
+                       .css("max-height", $photo.outerHeight() + "px" )
+                       .css("height", $photo.outerHeight() + "px" );
+						    /* .css( "cursor", "default" ); 
+						     .css("height", "100%")	
+						     .css("width", "100%");*/
 			//--------------------------------//			 
 			
 			
@@ -264,6 +266,7 @@ this.enableControls = function( )
  					     				.verticalCenter( 0 )
 										.width( newWidth );
 									//	.children().width( newWidth ) <- Pose problème car tous les éléments doivent avoir la même largeur !
+            m_$divPhoto.css("height", photo.outerHeight() + "px" );	
 			} 
 
 	}
