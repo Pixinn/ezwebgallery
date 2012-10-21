@@ -43,21 +43,21 @@ a:active {color: black;}
 
 /* boite de chargement */
 #progressbarWrapper{
-		display:none; 
-	 	position: absolute;
-		z-index:100;
-		padding:10px;
-		text-align:left;
-		font-weight:bold;
-		text-transform: uppercase; 
-		border:solid;
-		font-size:	1em;
+    display: none;
+	font-size:	1em;
+    font-weight: bold;
+    margin: auto;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    width: 40%;
 }
 
 /* progress bar container */
 #progressbar{
-		width:360px;
-    height:24px;
+		width:100%;
+        min-height:36px;
     position:relative;
 		display:block;
 		border:solid;
@@ -96,7 +96,8 @@ a:active {color: black;}
 /**********************************************************************/
 .centralZone{
 	height:100%; 
-  overflow: hidden; /* Pour ne pas s'étendre sous les flottants. */
+    overflow: hidden; /* Pour ne pas s'étendre sous les flottants. */
+    text-align:center;
 }
 /* Zone à gauche */
 .leftZone{

@@ -213,8 +213,8 @@ void CSkinParameters::fromUi( )
      indexNav.addSubSelection( indexNavTabSelected );
      indexNav.addSubSelection( indexNavTab );
      m_styleSheet.addSelection( indexNav );
-     //.thumbsWrapperContainer Mosaque
-     CCssSelection thumbsMosaic( QString(".thumbsWrapperContainer"));
+     //.thumbsWrapper Mosaque
+     CCssSelection thumbsMosaic( QString(".thumbsWrapper"));
        // thumbsMosaic.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
         thumbsMosaic.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );
         //thumbsMosaic.setProperty( QString("background-size"), "cover" );
@@ -403,7 +403,7 @@ void CSkinParameters::fromDomDocument( QDomDocument &document )
     CCssSelection thumbnail = m_styleSheet.selection( selectors );
     this->thumbImgBorderSize = thumbnail.property("border-width").remove("px").toInt();
     selectors.clear();
-    selectors << ".thumbsWrapperContainer";
+    selectors << ".thumbsWrapper";
     CCssSelection thumbsMosaic = m_styleSheet.selection( selectors );
 //    this->mosaicBorderSize = thumbsMosaic.property("border-width").remove("px").toInt();
     //Properties
@@ -488,8 +488,8 @@ void CSkinParameters::toUi(  )
         CCssSelection indexNavTabSelectedText = m_styleSheet.selection( path );
             m_p_ui->cColorPicker_BrowsingTabs_Selected_TextColor->setColor( indexNavTabSelectedText.property("color") );
     path.clear();
-    //.thumbsWrapperContainer mosaic
-    path << ".thumbsWrapperContainer";
+    //.thumbsWrapper mosaic
+    path << ".thumbsWrapper";
     CCssSelection thumbsMosaic = m_styleSheet.selection( path );
         m_p_ui->cImagePicker_Mosaic_BckgTexture->setImage( m_ressources.value("Mosaic_BckgTexture").absoluteFilePath() );
         m_p_ui->cColorPicker_Mosaic_BckgColor->setColor( thumbsMosaic.property("background-color") );
@@ -698,7 +698,7 @@ QSize CSkinParameters::mosaicDecoration( unsigned int nbCols, unsigned int nbRow
     CCssSelection thumbnail = m_styleSheet.selection( selectors );
     thumbImgBorderSize = thumbnail.property("border-width").remove("px").toInt();
     selectors.clear();
-    selectors << ".thumbsWrapperContainer";
+    selectors << ".thumbsWrapper";
     CCssSelection thumbsMosaic = m_styleSheet.selection( selectors );
     int mosaicBorderSize = thumbsMosaic.property("border-width").remove("px").toInt();
 

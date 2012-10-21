@@ -14,25 +14,33 @@
 
 <!-- L'ordre des inclusions est important ! !-->
 <script type="text/javascript" src="ressources/javascript/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="ressources/javascript/jquery/plugins/jquery.progressbar.js"></script>
+<!--
 <script type="text/javascript" src="ressources/javascript/jquery/jquery.mobile.min.js"></script>
 <script type="text/javascript" src="ressources/javascript/jquery/plugins/jquery.scrollTo-min.js"></script>
 <script type="text/javascript" src="ressources/javascript/jquery/plugins/jquery.localscroll-min.js"></script>
 <script type="text/javascript" src="ressources/javascript/jquery/plugins/jquery.serialScroll-min.js"></script>
-<script type="text/javascript" src="ressources/javascript/jquery/plugins/jquery.progressbar.js"></script>
 <script type="text/javascript" src="ressources/javascript/tools/md5.js"></script>
-
-<!-- RELEASE !-->
-<script type="text/javascript" src="ressources/javascript/core/classObjetAjustable-min.js"></script>
-<script type="text/javascript" src="ressources/javascript/core/classHashTable-min.js"></script>
-<script type="text/javascript" src="ressources/javascript/core/classTablePhoto-min.js"></script>
-<script type="text/javascript" src="ressources/javascript/core/classDisplayManager-min.js"></script>
-<script type="text/javascript" src="ressources/javascript/core/classFifo-min.js"></script>
-
+!-->
+<!-- RELEASE
+<script type="text/javascript" src="ressources/javascript/core/classObjetAjustable.js"></script>
+<script type="text/javascript" src="ressources/javascript/core/classHashTable.js"></script>
+<script type="text/javascript" src="ressources/javascript/core/classTablePhoto.js"></script>
+<script type="text/javascript" src="ressources/javascript/core/classDisplayManager.js"></script>
+<script type="text/javascript" src="ressources/javascript/core/classFifo.js"></script>
+ !-->
 <script type="text/javascript" src="ressources/parameters.json"></script> 
                                                           
+<!--
 <script type="text/javascript" src="ressources/javascript/common.js"></script>
 <script type="text/javascript" src="ressources/javascript/image.js"></script>
 <script type="text/javascript" src="ressources/javascript/index.js"></script>
+!-->
+<script type="text/javascript" src="ressources/javascript/new/CObserver.js"></script>
+<script type="text/javascript" src="ressources/javascript/new/CScroller.js"></script>
+<script type="text/javascript" src="ressources/javascript/new/CProgressBar.js"></script>
+<script type="text/javascript" src="ressources/javascript/new/CMosaic.js"></script>
+<script type="text/javascript" src="ressources/javascript/new/start.js"></script>
 
 <link rel="stylesheet" TYPE="text/css" HREF="ressources/css/common.css">
 <link rel="stylesheet" TYPE="text/css" HREF="ressources/css/index.css">
@@ -41,32 +49,38 @@
 </head>
 
 <body>
-<div id="progressbarWrapper">
-	Loading...<p></p>
-	<div id="progressbar">
-	</div>
-</div>
+
+<!-- ****************** !-->
+<!-- DIV AFFICHAGE INDEX !-->
+<!-- Div absolute recouvrant tout l'écran !-->
+<!-- Pour les blocks interne, permet d'avoir un layout normal sans utilise *absolute* !-->
+<!-- Permet à l'élement d'afficher/cacher tous ces blocs d'un seul coup !-->
 
 <div id="screenIndex" class="fullScreen" data-role="page">
 <!-- TITRE !-->
 <div class="leftZone" id="indexTitle">[CONTENT_VERTICALTITLE]</div>
 	<!-- DIV INDEX ET VIGNETTES !-->
 	<div class="centralZone" id="wrapperAffichageIndex">
-        <div class="debug"></div>
-		<div id="indexSliderContainer">
+        <div id="progressbarWrapper" style="display:none">
+        Loading...<p></p>
+            <div id="progressbar"></div>
+    </div>
+		<div id="indexSliderContainer" style="display:none" >
 			<ul class="indexNavigation">
 				<!-- ONGLETS DE NAVIGATION GENERES A LA VOLEE !-->
-				<!-- !!! IMPORTANT !!!! cet élément "ul" doit se trouver en première position dans la page. => utilisé pour highlighter l'onglet de l'index affich瞡-->
+				<!-- !!! IMPORTANT !!!! cet élément "ul" doit se trouver en première position dans la page. => utilisé pour highlighter l'onglet de l'index affiché !-->
 			</ul>
-			<div class="thumbsWrapperContainer"> <!-- <= Sert uniquement �fficher un border !=0 sans bug !-->
 				<div class="thumbsWrapper">
 					<div class="scrollContainer">
 						<!-- VIGNETTES GENEREES A LA VOLEE !-->
 					</div>
 				</div>	<!-- ThumbWrapper !-->
-			</div>	<!-- thumbsWrapperContainer !-->
 		</div>	<!-- indexSliderContainer !-->
 	</div>	<!-- wrapperAffichageIndex !-->
+    <div class="footer">
+        <a href="http://www.ezwebgallery.org/">[EZWEBGALLERY_LOGO]</a>
+        [BUTTON_ADDTHIS]
+    </div>
 </div><!-- ScreenIndex !-->
 	
 <!-- ****************** !-->
@@ -103,15 +117,12 @@
 	</div>
 </div> <!-- screenPhoto !-->
 <!-- ****************** !-->
-<div class="footer">
-	<a href="http://www.ezwebgallery.org/">[EZWEBGALLERY_LOGO]</a>
-	[BUTTON_ADDTHIS]
-	<!--<span id="socialNetworks"> </span>!-->	
-</div>
-<!-- ****************** !-->
+
 
 <!-- VIGNETTE (pour reconnaissance par les robots) !-->
-<img src="images/galleryThumbnail.jpg" style="display:none" />
+<div>
+    <img src="images/galleryThumbnail.jpg" style="display:none" />
+</div>
 
 </body>
 </html>

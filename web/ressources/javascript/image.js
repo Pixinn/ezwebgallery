@@ -73,7 +73,7 @@ function ButtonDeactivable( handle, onClickFct )
 					g_$buttonsIndexNavigation.eq(g_idCurrentIndexPage - 1).click( );
 			}
 
-		  	for(var i=0; i<=g_properties.photos.technical.prefetchSize; i++){
+		  	for(var i=0; i <= g_properties.photos.technical.prefetchSize; i++){
 				//Pour une réactivité maximale, on insère les photos en haut de la pile
 		 		g_loadQueue.insert( g_idCurrentPhoto + i , i);
 			}  		
