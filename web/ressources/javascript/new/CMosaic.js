@@ -64,11 +64,12 @@ function CMosaic( p_properties, p_htmlStructure )
             var thumbnail = new Image();
             $(this).append( thumbnail );
             $(thumbnail).load( function( )	{	// callback OnLoad
-                            that.m_oneThumbLoadedObserver.fire( "thumbnailLoaded" );                     
+                            that.m_oneThumbLoadedEvent.fire( "thumbnailLoaded" );                     
                         })
                         .error( function()  {
                             TOOLS.trace("Error Loadind a thumbnail: " + ++that.m_nbThumbnailLoaded);                            
                         })
+                        .attr("id", this.id)
                         // Source de l'image : A METTRE EN DERNIER
                         .attr("src", src = that.m_properties.defines.URL_THUMBS_PATH+that.thumbnailsSet+'/'+thumbName );
                         
@@ -84,7 +85,7 @@ function CMosaic( p_properties, p_htmlStructure )
     this.onThumbnailLoaded = function( )
     {        
         if( ++that.m_nbThumbnailLoaded == that.m_mosaicNbThumbnails ) {
-            that.m_allThumbsLoadedObserver.fire( );
+            that.m_allThumbsLoadedEvent.fire( );
         }
     }
     
@@ -108,6 +109,7 @@ function CMosaic( p_properties, p_htmlStructure )
                                                   .height( mosaicHeight );        
         
         that.m_htmlStructure.index.mosaic.$container.width( $scrollViewport.outerWidth() );
+        that.m_htmlStructure.index.mosaic.$thumbnails = $thumbnails;
         
         that.show(); //Must be visible to set up the scrolling :/
         
@@ -158,15 +160,15 @@ function CMosaic( p_properties, p_htmlStructure )
         that.m_htmlStructure.index.mosaic.$container.verticalCenter( 0 );
     }
     
-    //Returns the loading observer
-    this.getLoadingObserver = function() {
-        return that.m_oneThumbLoadedObserver;
+    //Returns the loading Event
+    this.getLoadingEvent = function() {
+        return that.m_oneThumbLoadedEvent;
     }
     
     
-        //Returns the loaded observer
-    this.getLoadedObserver = function() {
-        return that.m_allThumbsLoadedObserver;
+        //Returns the loaded Event
+    this.getLoadedEvent = function() {
+        return that.m_allThumbsLoadedEvent;
     }
         
     
@@ -213,9 +215,9 @@ function CMosaic( p_properties, p_htmlStructure )
     this.m_nbThumbnailLoaded = 0;
     this.m_ThumbnailSize = 0;
     //Observing the loaded thumbnails
-    this.m_oneThumbLoadedObserver = new CObserver();
-    this.m_oneThumbLoadedObserver.subscribe( this.onThumbnailLoaded );
-    this.m_allThumbsLoadedObserver = new CObserver();
-    this.m_allThumbsLoadedObserver.subscribe( this.onThumbnailsLoaded );
+    this.m_oneThumbLoadedEvent = new CEvent();
+    this.m_oneThumbLoadedEvent.subscribe( this.onThumbnailLoaded );
+    this.m_allThumbsLoadedEvent = new CEvent();
+    this.m_allThumbsLoadedEvent.subscribe( this.onThumbnailsLoaded );
         
 };

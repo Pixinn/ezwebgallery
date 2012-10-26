@@ -68,32 +68,48 @@ $(document).ready(function()
             $scrollContainer : $(".scrollContainer"),
             $tabsContainer : $("ul.indexNavigation")
        }
-    }};
+       },
+    photo : {
+        $screen : $("#screenPhoto"),
+        buttons : {
+                $previous : $("#boutonPrevious"),
+                $next : $("#boutonNext"),
+                $close : $("#boutonIndex")
+        }
+       }
+    };
     
     //Creating instances    
     Mosaic = new CMosaic( g_properties, HtmlStructure );
     progressBar = new CProgressBar ( {$progessBar: HtmlStructure.progressBar.$bar, nbThumbnails: g_properties.photos.list.length} );
-    Mosaic.getLoadingObserver().subscribe( progressBar.onLoad );
-    Mosaic.getLoadedObserver().subscribe( function() { //When all thumbnails are loaded          
+    Mosaic.getLoadingEvent().subscribe( progressBar.onLoad );
+    Mosaic.getLoadedEvent().subscribe( function() { //When all thumbnails are loaded
           //Showing mosaic
           progressBar.hide();
           Mosaic.show();
           //Removing the progressBar
-          Mosaic.getLoadingObserver().unsubscribe( progressBar.onLoad() );
+          Mosaic.getLoadingEvent().unsubscribe( progressBar.onLoad() );
           delete progressBar;
           HtmlStructure.progressBar.$box.remove(  );
           delete HtmlStructure.progressBar.$box;
     } );
     
+    var Display = new CDisplay( HtmlStructure );
+    //User events
+    var UserHandler;
+    Mosaic.getLoadedEvent().subscribe( function() { //at this point, HtmlStructure must be complete
+    //Handling user' interractions
+        UserHandler = new CUserInterractions( HtmlStructure );
+    UserHandler.start();
+        //Subscribing to user events
+        UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );
+        UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( this.id ); } ); //this will be the object clicked
+        UserHandler.getClosePhotoEvent().subscribe( Display.hidePhoto );
+    });
+
     //Building the mosaic / Loading the thumbnails
     progressBar.show();
-    HtmlStructure = Mosaic.buildHtml();
+    HtmlStructure = Mosaic.buildHtml(); //loads the thumbnails and build the html
     
 
-    
-    //Events handlers
-    $(window).resize( function() {
-        Mosaic.onResize();
-    } );
-    
 } );
