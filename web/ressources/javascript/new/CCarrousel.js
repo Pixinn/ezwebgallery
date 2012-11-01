@@ -1,4 +1,4 @@
-﻿/* 
+﻿/*
  *  EZWebGallery:
  *  Copyright (C) 2012 The EZWebGallery Dev Team <dev@ezwebgallery.org>
  *
@@ -16,33 +16,65 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function CCarrousel()
+function CCarrousel( p_properties )
 {
     var that = this;
-    this.loader = new CPhotoLoader();
+    this.properties = p_properties;
     this.html = {
-        $photoContainer : $("#divPhoto")
+        $photoWrapper : $("#wrapperAffichagePhoto"),
+        $photoFrame : $("#cadrePhoto"),
+        $photoDiv : $("#divPhoto"),
+        $photoTitle : $("#photoTitle"),
+        photoClass : "mainPhoto",
+        loaderSrc : "ajax-loader.gif"
     };
-    
-    this.displayPhoto = function( id )
+    this.loader = new CPhotoLoader( p_properties, this.html );
+
+    this.displayPhoto = function( photo )
     {
-        $photo = this.loader.load( id );
-        this.html.$photoContainer.empty()
-                                 .append($photo);
+        //If not the spinner, add the border
+        if( photo.$image.attr("src").indexOf( that.html.loaderSrc ) == -1 ) {
+            photo.$image.removeClass()
+                        .addClass( that.html.photoClass );
+        }
+        that.html.$photoDiv.empty()
+                            .append( photo.$image )
+                            .width( photo.size.w + 2*that.properties.photos.technical.decoration.padding )
+                            .height( photo.size.h + 2*that.properties.photos.technical.decoration.padding );
+        that.html.$photoFrame.width( that.html.$photoDiv.outerWidth() )
+                            .height( that.html.$photoDiv.outerHeight() + that.html.$photoTitle.height())
+                            .verticalCenter( 0 );
+        that.html.$photoDiv.find('img').css("position","relative")
+                                       .verticalCenter( 0 );
     }
-    
-    this.displayNext = function()
+
+
+    this.load = function( id )
     {
-    
+        that.displayPhoto( that.loader.load( id ) );
     }
-    
-    this.displayPrevious = function()
+
+    this.next = function()
     {
-    
+
     }
-    
-    this.onPhotoLoaded = function( photo )
+
+    this.previous = function()
     {
-    
+
     }
+
+    //+++ EVENTS
+
+    this.onPhotoLoaded = function( )
+    {
+       that.displayPhoto( this );
+    }
+
+    this.getPhotoLoadedEvent = function( )
+    {
+        return this.loader.getPhotoLoadedEvent();
+    }
+
+    this.loader.getPhotoLoadedEvent().subscribe( that.onPhotoLoaded );
 }

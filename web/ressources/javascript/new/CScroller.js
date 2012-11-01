@@ -28,17 +28,25 @@
 CScroller = function( scrolloptions )
 {
     this.options = scrolloptions;
-    var self = this;
+    var that = this;
     
     //binding click event to scrolling
     this.options.$navigation.css("cursor", "pointer")
                             .click( function() {
         var target = $(this).attr("target");
-        var $target = self.options.$viewport.find( target );
-        self.scrollTo($(this),$target);
+                                            var $target = that.options.$viewport.find( target );
+                                            that.scrollTo($(this),$target);
     } );
     
-    CScroller.prototype.scrollTo = function( $source, $target ) {
-        scrolloptions.$viewport.animate({scrollLeft: $target.position().left}, self.options.duration,self.options.easing, function() { self.options.onAfter( $source, $target ); }  );
+    CScroller.prototype.scrollTo = function( $clicked, $target ) {
+        that.options.$viewport.animate({scrollLeft: $target.position().left}, that.options.duration,that.options.easing, function() { that.options.onAfter( $clicked, $target ); }  );
     };
+    
+    CScroller.prototype.scrollToPageNr = function( clickedNr, pageNr )
+    {
+        var $src = that.options.$navigation.eq( clickedNr - 1 );        
+        var target = that.options.$navigation.eq( pageNr - 1 ).attr("target");
+        var $target = that.options.$viewport.find( target )
+        that.scrollTo( $src, $target );
+    }
 };

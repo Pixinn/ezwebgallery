@@ -1,4 +1,4 @@
-/* 
+/*
  *  EZWebGallery:
  *  Copyright (C) 2012 The EZWebGallery Dev Team <dev@ezwebgallery.org>
  *
@@ -17,7 +17,8 @@
 */
 
 Defines = {
-    URL_THUMBS_PATH: "thumbnails/"
+    URL_THUMBS_PATH: "thumbnails",
+    IMAGES_PATH: "images"
 };
 
 TOOLS = {
@@ -30,7 +31,7 @@ TOOLS = {
 
 
 /*
- * Pseudo plugin JQuery pour centrer un objet verticalement dans son parent 
+ * Pseudo plugin JQuery pour centrer un objet verticalement dans son parent
  * On peut passer un décalage en paramètre pour ajuster le calcul si l'objet n'est pas seul dans son parent
  * !! -> Nécessite un objet en position RELATIVE !!
  */
@@ -52,25 +53,26 @@ jQuery.fn.verticalCenter = function( offset ) {
 
 
 $(document).ready(function()
-{	
+{
     g_properties.defines = Defines;
-	
+
     HtmlStructure = {
     progressBar : {
         $box : $("#progressbarWrapper"),
         $bar : $("#progressbar"),
-    },     
+    },
     index : {
-        $screen : $("#screenIndex"),   
+        $screen : $("#screenIndex"),
         mosaic : {
             $container : $("#indexSliderContainer"),
             $scrollViewport : $(".thumbsWrapper"),
             $scrollContainer : $(".scrollContainer"),
             $tabsContainer : $("ul.indexNavigation")
-       }
+            }
        },
     photo : {
         $screen : $("#screenPhoto"),
+        $frame : $("#cadrePhoto"),
         buttons : {
                 $previous : $("#boutonPrevious"),
                 $next : $("#boutonNext"),
@@ -78,8 +80,8 @@ $(document).ready(function()
         }
        }
     };
-    
-    //Creating instances    
+
+    //Creating instances
     Mosaic = new CMosaic( g_properties, HtmlStructure );
     progressBar = new CProgressBar ( {$progessBar: HtmlStructure.progressBar.$bar, nbThumbnails: g_properties.photos.list.length} );
     Mosaic.getLoadingEvent().subscribe( progressBar.onLoad );
@@ -93,8 +95,8 @@ $(document).ready(function()
           HtmlStructure.progressBar.$box.remove(  );
           delete HtmlStructure.progressBar.$box;
     } );
-    
-    var Display = new CDisplay( HtmlStructure );
+
+    var Display = new CDisplay( g_properties, HtmlStructure );
     //User events
     var UserHandler;
     Mosaic.getLoadedEvent().subscribe( function() { //at this point, HtmlStructure must be complete
@@ -103,13 +105,18 @@ $(document).ready(function()
     UserHandler.start();
         //Subscribing to user events
         UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );
-        UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( this.id ); } ); //this will be the object clicked
+        UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( parseInt(this.id) ); } ); //this will be the object clicked
         UserHandler.getClosePhotoEvent().subscribe( Display.hidePhoto );
+        UserHandler.getPreviousPhotoEvent().subscribe( Display.onPrevious );
+        UserHandler.getPreviousPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
+        UserHandler.getNextPhotoEvent().subscribe( Display.onNext );
+        UserHandler.getNextPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
+        Display.getPhotoLoadedEvent().subscribe( function() { UserHandler.onPhotoLoaded( this.id ); } );
     });
 
     //Building the mosaic / Loading the thumbnails
     progressBar.show();
     HtmlStructure = Mosaic.buildHtml(); //loads the thumbnails and build the html
-    
+
 
 } );

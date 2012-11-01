@@ -21,9 +21,18 @@ function CUserInterractions( htmlstructure )
 {
     var that = this;
     this.html = htmlstructure;
+    
     this.windowResizedEvent = new CEvent();
     this.thumbnailClickedEvent = new CEvent();
     this.closePhotoEvent = new CEvent();
+    this.previousPhotoEvent = new CEvent();
+    this.nextPhotoEvent = new CEvent();
+    
+    this.buttonEnabledClass = "photoButtonEnabled";
+    this.buttonDisabledClass = "photoButtonDisabled";
+    this.previousPhotoId = -1;
+    this.currentPhotoId = 1;
+    this.nextPhotoId = 2;
     
     this.start = function()
     {
@@ -31,11 +40,35 @@ function CUserInterractions( htmlstructure )
     
         that.html.index.mosaic.$thumbnails.click( function() {
             TOOLS.trace( "thumbnail #" + this.id + " clicked." );
+            that.disablePreviousNext();
             that.thumbnailClickedEvent.fire( this );
         });
         
         that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );        
+        
+        
     };
+    
+    this.disablePreviousNext = function()
+    {
+        that.html.photo.buttons.$previous.removeClass()
+                                                        .addClass( that.buttonDisabledClass )
+                                                        .unbind( "click" );
+        that.html.photo.buttons.$next.removeClass()
+                                                   .addClass( that.buttonDisabledClass )
+                                                   .unbind( "click" );
+    }
+    
+    
+    this.enablePreviousNext = function()
+    {
+        that.html.photo.buttons.$previous.removeClass()
+                                                        .addClass( that.buttonEnabledClass )
+                                                        .one( "click", that.onPreviousPhoto );
+        that.html.photo.buttons.$next.removeClass()
+                                                   .addClass( that.buttonEnabledClass )
+                                                   .one( "click", that.onNextPhoto );
+    }
     
     this.getWindowResizedEvent = function() {
         return that.windowResizedEvent;
@@ -49,6 +82,14 @@ function CUserInterractions( htmlstructure )
         return that.closePhotoEvent;
     }
     
+    this.getPreviousPhotoEvent = function() {
+        return that.previousPhotoEvent;
+    }
+    
+    this.getNextPhotoEvent = function() {
+        return that.nextPhotoEvent;
+    }
+    
     this.onWindowResized = function() {
         that.windowResizedEvent.fire();
     }
@@ -56,4 +97,23 @@ function CUserInterractions( htmlstructure )
     this.onClosePhoto = function() {
         that.closePhotoEvent.fire();
     }
+    
+    this.onPhotoLoaded = function( photoId )
+    {
+        that.previousPhotoId = photoId - 1;
+        that.nextPhotoId = photoId + 1;
+        that.enablePreviousNext();
+    }
+    
+    this.onPreviousPhoto = function() {
+        that.disablePreviousNext();
+        that.previousPhotoEvent.fire( {id: that.previousPhotoId} );
+    }
+    
+    this.onNextPhoto = function() {
+        that.disablePreviousNext();
+        that.nextPhotoEvent.fire( {id: that.nextPhotoId} );
+    }
+   
+    
 }

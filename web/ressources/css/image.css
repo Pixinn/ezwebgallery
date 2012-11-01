@@ -115,7 +115,8 @@ div#wrapperAffichagePhoto{
 /** Contient la photo **/
 
 div#cadrePhoto{
-	position:relative;		/* pour centrage vertical */
+	position:relative;		/* vertical centering */
+	margin:auto;                    /* horizontal centering on modern browsers */
 	cursor:default;
     -moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
