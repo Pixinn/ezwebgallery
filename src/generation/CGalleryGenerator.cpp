@@ -687,9 +687,9 @@ bool CGalleryGenerator::skinning( )
         galleryThumbURL += PHOTOSPATH;
         galleryThumbURL += slash;
         galleryThumbURL += GALLERYTHUMBFILENAME;
-        QString openGraphString = QString("<meta property=\"og:image\" content=\"")+galleryThumbURL+QString("\" / >\n") \
-                                    +QString("<meta property=\"og:title\" content=\"")+m_parameters.m_galleryConfig.title+QString("\" / >\n") \
-                                    +QString("<meta property=\"og:description\" content=\"")+m_parameters.m_galleryConfig.description+QString("\" / >\n")/*\
+        QString openGraphString = QString("<meta property=\"og:image\" content=\"")+galleryThumbURL+QString("\" />\n") \
+                                    +QString("<meta property=\"og:title\" content=\"")+m_parameters.m_galleryConfig.title+QString("\" />\n") \
+                                    +QString("<meta property=\"og:description\" content=\"")+m_parameters.m_galleryConfig.description+QString("\" />\n")/*\
                                     +QString("<meta property=\"fb:admins\" content=\"786810484\"/>" )*/;
         htmlString.replace( "[META_OPENGRAPH]",	openGraphString );
         //------ FOOTER -------//

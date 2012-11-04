@@ -56,7 +56,8 @@ $(document).ready(function()
 {
     g_properties.defines = Defines;
 
-    HtmlStructure = {
+    HtmlStructure = 
+    {
     progressBar : {
         $box : $("#progressbarWrapper"),
         $bar : $("#progressbar"),
@@ -73,6 +74,9 @@ $(document).ready(function()
     photo : {
         $screen : $("#screenPhoto"),
         $frame : $("#cadrePhoto"),
+            $wrapper : $("#wrapperAffichagePhoto"),
+            $div : $("#divPhoto"),
+            $title : $("#photoTitle"),
         buttons : {
                 $previous : $("#boutonPrevious"),
                 $next : $("#boutonNext"),
@@ -101,7 +105,7 @@ $(document).ready(function()
     var UserHandler;
     Mosaic.getLoadedEvent().subscribe( function() { //at this point, HtmlStructure must be complete
     //Handling user' interractions
-        UserHandler = new CUserInterractions( HtmlStructure );
+        UserHandler = new CUserInterractions( g_properties, HtmlStructure );
     UserHandler.start();
         //Subscribing to user events
         UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );
@@ -111,7 +115,7 @@ $(document).ready(function()
         UserHandler.getPreviousPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
         UserHandler.getNextPhotoEvent().subscribe( Display.onNext );
         UserHandler.getNextPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
-        Display.getPhotoLoadedEvent().subscribe( function() { UserHandler.onPhotoLoaded( this.id ); } );
+        Display.getPhotoDisplayedLoadedEvent().subscribe( function() { UserHandler.onPhotoDisplayedLoaded( this.id ); } );
     });
 
     //Building the mosaic / Loading the thumbnails

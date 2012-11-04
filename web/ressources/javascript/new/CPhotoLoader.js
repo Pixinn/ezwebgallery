@@ -24,16 +24,16 @@ function CPhotoLoader( p_properties, p_html )
     this.html = p_html;
 
     this.$spinner = $(new Image());
-    this.$spinner.attr( "src", "ressources/images/ajax-loader.gif");
+    this.$spinner.attr( "src", this.html.spinnerSrc );
     this.photoBuffer = new Array();
 
     this.photoLoadedEvent = new CEvent();
 
     //Loads the proper photo
-    this.load = function( p_id )
+    this.load = function( p_id, space )
     {
         var id = p_id;
-        var photoToLoad = that.computeUrl( id );
+        var photoToLoad = that.computeUrl( id, space );
         photo = new Image();
         $(photo).load( function() {
                 that.photoLoadedEvent.fire( {
@@ -62,55 +62,27 @@ function CPhotoLoader( p_properties, p_html )
         TOOLS.trace( this.id + " " + this.$image.attr("src") + " loaded.");
     }
 
+    
+    
     //Computing the proper url to load
-    this.computeUrl = function( id )
+    this.computeUrl = function( id, space )
     {
-        var ie6BugCorrection = 6;
-        var wastedPixelTop = 33;
-        var wastedPixelBottom = 33;
-        var widthWasted = 0;
-
-        //+++ Computing the maximal available size
-
-        //Computing width used by other divs
-        //NOTE : only sibling divs are considerd
-        //This allows to correct an IE6 bug.
-        for(var i = 0; i < this.html.$photoWrapper.siblings().length; i++){
-            widthWasted += this.html.$photoWrapper.siblings().eq(i).outerWidth( );
-        }
-        //non available space
-        var frameBorderSize = parseInt( this.html.$photoFrame.css("padding-top").replace("px","") );
-        //NB: On ne peut pas utiliser g_$divDisplayZoneName.innerWidth( ), car bug sous IE6 :( */
-        //Du coup il faut que:	+ g_$divDisplayZoneName.siblings()::margin = 0px
-        //+ g_$divDisplayZoneName::border=0 et ::margin=0
-        var height = this.html.$photoWrapper.innerHeight() - 2*frameBorderSize - 2*this.properties.photos.technical.decoration.padding - wastedPixelTop;
-        var width = $(window).width( ) - widthWasted - 2*frameBorderSize - 2*this.properties.photos.technical.decoration.padding - ie6BugCorrection;
-
-        if( height > this.properties.photos.technical.maxSize.height ) {
-            height = this.properties.photos.technical.maxSize.height;
-        }
-        if( width > this.properties.photos.technical.maxSize.width ) {
-            width = this.properties.photos.technical.maxSize.width;
-        }
-
         // Strategy: best quality ?
         var photo;
-        if( this.properties.photos.technical.qualityStrategy === 0)
-        {
-            photo = this.getSmallerImage( {h:height,w:width} , id );
-        }//Fin Optimisation de la qualité
-
+        if( this.properties.photos.technical.qualityStrategy === 0) {
+            photo = this.getSmallerImage( space , id );
+        }
         //Optimisation de l'espace ? -- Marche de façon médiocre avec ie6/ie7 qui ont du mal avec les redimensionnements
-        else
-        {
+        else {
             //On récupère la plus petite image de taille > à l'espace afficache. Le navigateur resizera.
-            photo = this.getBiggerImage( {h:height,w:width} , id );
+            photo = this.getBiggerImage( space , id );
         }// Fin Optimisation de l'espace
 
 
         return photo;
     }
 
+    
     //Traversing all the available image size
     //Return the first fitting
     this.getBiggerImage = function( photoDivHW, numPhoto )
@@ -146,6 +118,7 @@ function CPhotoLoader( p_properties, p_html )
            };
     }
 
+    
     //Returning the first photo > available space
     this.getSmallerImage = function( photoDivHW, numPhoto )
     {

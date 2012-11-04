@@ -16,42 +16,33 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function CCarrousel( p_properties )
+function CCarrousel( p_properties, p_html )
 {
     var that = this;
     this.properties = p_properties;
-    this.html = {
-        $photoWrapper : $("#wrapperAffichagePhoto"),
-        $photoFrame : $("#cadrePhoto"),
-        $photoDiv : $("#divPhoto"),
-        $photoTitle : $("#photoTitle"),
-        photoClass : "mainPhoto",
-        loaderSrc : "ajax-loader.gif"
-    };
+    this.html = p_html;
+    this.html.photoClass = "mainPhoto";
+    this.photoDisplayedLoaded = new CEvent();
+    
     this.loader = new CPhotoLoader( p_properties, this.html );
 
     this.displayPhoto = function( photo )
     {
         //If not the spinner, add the border
-        if( photo.$image.attr("src").indexOf( that.html.loaderSrc ) == -1 ) {
+        if( photo.$image.attr("src").indexOf( that.html.spinnerSrc ) == -1 ) {
             photo.$image.removeClass()
                         .addClass( that.html.photoClass );
         }
-        that.html.$photoDiv.empty()
-                            .append( photo.$image )
-                            .width( photo.size.w + 2*that.properties.photos.technical.decoration.padding )
-                            .height( photo.size.h + 2*that.properties.photos.technical.decoration.padding );
-        that.html.$photoFrame.width( that.html.$photoDiv.outerWidth() )
-                            .height( that.html.$photoDiv.outerHeight() + that.html.$photoTitle.height())
-                            .verticalCenter( 0 );
-        that.html.$photoDiv.find('img').css("position","relative")
-                                       .verticalCenter( 0 );
+        that.html.$div.empty()
+                            .append( photo.$image );
     }
 
 
-    this.load = function( id )
+    this.load = function( id, space )
     {
-        that.displayPhoto( that.loader.load( id ) );
+        var photo = that.loader.load( id, space );
+        that.displayPhoto( photo );
+        return photo.size;
     }
 
     this.next = function()
@@ -69,11 +60,13 @@ function CCarrousel( p_properties )
     this.onPhotoLoaded = function( )
     {
        that.displayPhoto( this );
+       that.photoDisplayedLoaded.fire( this );
     }
 
-    this.getPhotoLoadedEvent = function( )
+    
+    this.getPhotoDisplayedLoadedEvent = function( )
     {
-        return this.loader.getPhotoLoadedEvent();
+        return this.photoDisplayedLoaded;
     }
 
     this.loader.getPhotoLoadedEvent().subscribe( that.onPhotoLoaded );

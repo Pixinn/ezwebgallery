@@ -23,10 +23,11 @@
 	position:relative;		/* pour centrage vertical */
 	cursor:pointer;
 	margin: auto;
-	border: solid;
+	border: solid;    
 }
 .photoButtonDisabled{
 	position: relative;		/* pour centrage vertical */
+    cursor: not-allowed; /*css3*/
 	margin: auto;	
 	border:solid;
 	opacity: 0.5;

@@ -17,10 +17,11 @@
 */
 
 
-function CUserInterractions( htmlstructure )
+function CUserInterractions( p_properties, htmlstructure )
 {
     var that = this;
     this.html = htmlstructure;
+    this.properties = p_properties;
     
     this.windowResizedEvent = new CEvent();
     this.thumbnailClickedEvent = new CEvent();
@@ -52,22 +53,26 @@ function CUserInterractions( htmlstructure )
     this.disablePreviousNext = function()
     {
         that.html.photo.buttons.$previous.removeClass()
-                                                        .addClass( that.buttonDisabledClass )
-                                                        .unbind( "click" );
+                                         .addClass( that.buttonDisabledClass )
+                                         .unbind( "click" );
         that.html.photo.buttons.$next.removeClass()
-                                                   .addClass( that.buttonDisabledClass )
-                                                   .unbind( "click" );
+                                     .addClass( that.buttonDisabledClass )
+                                     .unbind( "click" );
     }
     
     
     this.enablePreviousNext = function()
     {
-        that.html.photo.buttons.$previous.removeClass()
-                                                        .addClass( that.buttonEnabledClass )
-                                                        .one( "click", that.onPreviousPhoto );
-        that.html.photo.buttons.$next.removeClass()
-                                                   .addClass( that.buttonEnabledClass )
-                                                   .one( "click", that.onNextPhoto );
+        if( that.previousPhotoId >= 1 ) {
+            that.html.photo.buttons.$previous.removeClass()
+                                              .addClass( that.buttonEnabledClass )
+                                              .one( "click", that.onPreviousPhoto );
+        }
+        if( that.nextPhotoId <= that.properties.photos.list.length ) {
+            that.html.photo.buttons.$next.removeClass()
+                                          .addClass( that.buttonEnabledClass )
+                                          .one( "click", that.onNextPhoto );
+        }
     }
     
     this.getWindowResizedEvent = function() {
@@ -98,7 +103,7 @@ function CUserInterractions( htmlstructure )
         that.closePhotoEvent.fire();
     }
     
-    this.onPhotoLoaded = function( photoId )
+    this.onPhotoDisplayedLoaded = function( photoId )
     {
         that.previousPhotoId = photoId - 1;
         that.nextPhotoId = photoId + 1;
