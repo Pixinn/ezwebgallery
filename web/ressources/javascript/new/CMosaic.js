@@ -81,6 +81,24 @@ function CMosaic( p_properties, p_htmlStructure )
         return that.htmlStructure;
     };
     
+    
+    this.onPreviousIndex = function()
+    {
+        if( that.currentPageNr > 1 ) {
+            that.currentPageNr--;
+            that.scroller.scrollToPageNr( that.currentPageNr, that.currentPageNr );
+        }
+    }
+    
+    this.onNextIndex = function()
+    {
+        if( that.currentPageNr < that.mosaicNbPanels ) {
+            that.currentPageNr++;
+            that.scroller.scrollToPageNr( that.currentPageNr, that.currentPageNr );
+        }
+    }
+    
+    
     //when a single thumbnail was loaded
     this.onThumbnailLoaded = function( )
     {        

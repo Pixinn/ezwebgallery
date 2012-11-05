@@ -28,6 +28,8 @@ function CUserInterractions( p_properties, htmlstructure )
     this.closePhotoEvent = new CEvent();
     this.previousPhotoEvent = new CEvent();
     this.nextPhotoEvent = new CEvent();
+    this.previousIndexEvent = new CEvent();
+    this.nextIndexEvent = new CEvent();
     
     this.buttonEnabledClass = "photoButtonEnabled";
     this.buttonDisabledClass = "photoButtonDisabled";
@@ -35,9 +37,15 @@ function CUserInterractions( p_properties, htmlstructure )
     this.currentPhotoId = 1;
     this.nextPhotoId = 2;
     
+    var KEY_ARROW_LEFT = 37;
+    var KEY_ARROW_RIGHT = 39;
+    var KEY_ESC = 27;
+    this.watchedKeyDown = false;
+    
     this.start = function()
     {
-        $(window).resize( function() { that.onWindowResized(); } );        
+        $(window).resize( function() { that.onWindowResized(); } )
+                      .keydown( function(evt) { that.onKeyboardIndexSrc(evt); } );        
     
         that.html.index.mosaic.$thumbnails.click( function() {
             TOOLS.trace( "thumbnail #" + this.id + " clicked." );
@@ -95,6 +103,14 @@ function CUserInterractions( p_properties, htmlstructure )
         return that.nextPhotoEvent;
     }
     
+     this.getPreviousIndexEvent = function() {
+        return  that.previousIndexEvent;
+    }
+    
+    this.getNextIndexEvent = function() {
+        return  that.nextIndexEvent;
+    }
+    
     this.onWindowResized = function() {
         that.windowResizedEvent.fire();
     }
@@ -119,6 +135,67 @@ function CUserInterractions( p_properties, htmlstructure )
         that.disablePreviousNext();
         that.nextPhotoEvent.fire( {id: that.nextPhotoId} );
     }
-   
+    
+    this.onIndexScreen  = function()
+    {
+        $(window).unbind("keydown")
+                      .keydown( function( evt) { that.onKeyboardIndexSrc(evt); } );
+    }
+    
+    this.onPhotoScreen  = function()
+    {
+        $(window).unbind("keydown")
+                      .keydown( function( evt) { that.onKeyboardPhotoScr(evt); } );
+    }
+    
+    this.onKeyboardIndexSrc = function( evt )
+    {
+        if( that.watchedKeyDown == false )
+        {
+            var keyPressed = evt.keyCode || evt.which;
+            switch( keyPressed )
+            {
+                case KEY_ARROW_LEFT:
+                    that.watchedKeyDown = true;
+                    that.previousIndexEvent.fire();
+                    that.watchedKeyDown = false;
+                    //f_watchedKeyCatched = true;
+                    break;
+                case KEY_ARROW_RIGHT:
+                    that.watchedKeyDown = true;
+                    that.nextIndexEvent.fire();
+                    that.watchedKeyDown = false;
+                    //f_watchedKeyCatched = true;
+                    break;
+                }
+        }
+    }
+    
+    this.onKeyboardPhotoScr = function( evt )
+    {
+        if( that.watchedKeyDown == false )
+        {
+            var keyPressed = evt.keyCode || evt.which;
+            switch( keyPressed )
+            {
+                //Passer d'une photo à la suivante / précédante lors de l'appuie sur une flèche
+                case KEY_ARROW_LEFT:
+                    that.watchedKeyDown = true;
+                    that.html.photo.buttons.$previous.click(); //using click event to be subject to enable / disable
+                    that.watchedKeyDown = false;
+                    break;
+                case KEY_ARROW_RIGHT:
+                    that.watchedKeyDown = true;
+                    that.html.photo.buttons.$next.click(); //using click event to be subject to enable / disable
+                    that.watchedKeyDown = false;
+                    break;
+                case KEY_ESC:
+                    that.watchedKeyDown = true;
+                    that.onClosePhoto();
+                    that.watchedKeyDown = false;
+                    break;				
+            }
+        }
+    }
     
 }

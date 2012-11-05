@@ -103,10 +103,15 @@ $(document).ready(function()
     var Display = new CDisplay( g_properties, HtmlStructure );
     //User events
     var UserHandler;
-    Mosaic.getLoadedEvent().subscribe( function() { //at this point, HtmlStructure must be complete
-    //Handling user' interractions
+    Mosaic.getLoadedEvent().subscribe( function()
+    {   //at this point, HtmlStructure must be *completed* !
+        //Handling user' interractions
         UserHandler = new CUserInterractions( g_properties, HtmlStructure );
-    UserHandler.start();
+        UserHandler.start();
+        Display.getPhotoDisplayedLoadedEvent().subscribe( function() { UserHandler.onPhotoDisplayedLoaded( this.id ); } );
+        Display.getPhotoScreenEvent().subscribe( UserHandler.onPhotoScreen );
+        Display.getIndexScreenEvent().subscribe( UserHandler.onIndexScreen );
+        
         //Subscribing to user events
         UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );
         UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( parseInt(this.id) ); } ); //this will be the object clicked
@@ -115,7 +120,9 @@ $(document).ready(function()
         UserHandler.getPreviousPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
         UserHandler.getNextPhotoEvent().subscribe( Display.onNext );
         UserHandler.getNextPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
-        Display.getPhotoDisplayedLoadedEvent().subscribe( function() { UserHandler.onPhotoDisplayedLoaded( this.id ); } );
+        UserHandler.getPreviousIndexEvent().subscribe( Mosaic.onPreviousIndex );
+        UserHandler.getNextIndexEvent().subscribe( Mosaic.onNextIndex );        
+        
     });
 
     //Building the mosaic / Loading the thumbnails

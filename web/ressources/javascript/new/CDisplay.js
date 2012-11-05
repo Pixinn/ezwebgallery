@@ -27,6 +27,8 @@ function CDisplay( p_properties, p_htmlStructure )
     this.idCurrentPhoto = -1;
     this.previousEvent = new CEvent();
     this.nextEvent = new CEvent();
+    this.photoScreenEvent = new CEvent();
+    this.indexScreenEvent = new CEvent();
 
     this.availableSpace = {h: 0, w:0};
     this.photoNativeSz = {h:0, w:0};
@@ -50,16 +52,19 @@ function CDisplay( p_properties, p_htmlStructure )
         that.html.photo.$screen.fadeIn(); //photoScreen is located above the index screen: no need to hide it
         that.html.photo.buttons.$next.verticalCenter(0);
         that.html.photo.buttons.$previous.css("top",  that.html.photo.buttons.$next.css("top") ); //no v center on previous to correct an ie8 bug
-
+        
         that.availableSpace = that.computeAvailableSpace();
         that.photoNativeSz = that.carrousel.load( id, that.availableSpace ); //must be placed *after* the fadein or the dimensions will be incorrectly computed
         that.photoCurrentSz = {h:0, w:0};
         that.fitPhoto( );
+        
+        that.photoScreenEvent.fire();
     }
 
 
     this.hidePhoto = function( ) {
         that.html.photo.$screen.fadeOut('fast');
+        that.indexScreenEvent.fire();
     }
 
     //+++ EVENTS
@@ -78,7 +83,16 @@ function CDisplay( p_properties, p_htmlStructure )
     {
         return that.carrousel.getPhotoDisplayedLoadedEvent();
     }
-
+    
+    this.getPhotoScreenEvent = function()
+    {
+        return this.photoScreenEvent;
+    }
+    
+    this.getIndexScreenEvent = function()
+    {
+        return this.indexScreenEvent
+    } 
 
     this.onPrevious = function()
     {
