@@ -79,10 +79,13 @@ echo # + MAGICK_HOME: path to ImageMagick
 echo #
 echo # This script copies all the necessary files to the provided DESTINATION_FOLDER
 echo #
-echo # NOTE: you need to minimize some files located in .\Web\ressources\javascript\
-echo # and place them in .\Web\ressources\javascript\
-echo # You can run compress_js.bat script for that purpose.
-echo #
+echo # NOTES:
+echo # + you need to minimize some files located in .\Web\ressources\javascript\
+echo #   and place them in .\Web\ressources\javascript\
+echo #   You can run compress_js.bat script for that purpose.
+echo # + in order to properly generate the NSI Windows Installer,
+echo #   the destination folder must be ..\distribution\windows
+echo #  
 echo ###############################################################################
 echo.
 echo on

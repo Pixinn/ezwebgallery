@@ -242,7 +242,7 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
 /***************************************************************************************************/
 
 
-MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeeder*/, CProjectParameters& projectParameters, QWidget *parent ) :
+MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& projectParameters, QWidget *parent ) :
     QMainWindow( parent ),
     m_ui(new Ui::MainWin),    
     m_projectParameters( projectParameters ),
@@ -270,7 +270,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     m_p_tagsWindow = new QTextEdit( 0 );
     m_p_tagsWindow->setReadOnly( true );
     m_p_tagsWindow->setWindowTitle( tr("TAG list") );
-    m_p_tagsWindow->resize(720,500);
+    m_p_tagsWindow->resize(720,720);
     m_p_tagsWindow->setHtml( CPlatform::readTranslatedTextFile( "tagList.html" ) );
     //Fenêtre de conception de skin
     m_p_skinDesignerWindow = new WinSkinDesigner( &m_skinParameters /*, this*/ ); //La connection des paramètres avec l'ui se fait dans ce constructeur

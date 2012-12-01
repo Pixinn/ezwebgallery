@@ -687,9 +687,9 @@ bool CGalleryGenerator::skinning( )
         galleryThumbURL += PHOTOSPATH;
         galleryThumbURL += slash;
         galleryThumbURL += GALLERYTHUMBFILENAME;
-        QString openGraphString = QString("<meta property=\"og:image\" content=\"")+galleryThumbURL+QString("\" / >\n") \
-                                    +QString("<meta property=\"og:title\" content=\"")+m_parameters.m_galleryConfig.title+QString("\" / >\n") \
-                                    +QString("<meta property=\"og:description\" content=\"")+m_parameters.m_galleryConfig.description+QString("\" / >\n")/*\
+        QString openGraphString = QString("<meta property=\"og:image\" content=\"")+galleryThumbURL+QString("\" />\n") \
+                                    +QString("<meta property=\"og:title\" content=\"")+m_parameters.m_galleryConfig.title+QString("\" />\n") \
+                                    +QString("<meta property=\"og:description\" content=\"")+m_parameters.m_galleryConfig.description+QString("\" />\n")/*\
                                     +QString("<meta property=\"fb:admins\" content=\"786810484\"/>" )*/;
         htmlString.replace( "[META_OPENGRAPH]",	openGraphString );
         //------ FOOTER -------//
@@ -699,15 +699,9 @@ bool CGalleryGenerator::skinning( )
                                                             + QString("\" alt=\"EZWebGallery\"/>") );
 		//Add-this
         if( m_parameters.m_galleryConfig.f_shareOnSocialNetworks ){
-            QString addthisString = QString("<div class=\"addthis_toolbox addthis_default_style\" style=\"margin-left:50px\">\n")+
-                                    QString("\t<span class=\"addthis_separator\"></span>\n")+
-                                    QString("\t<a href=\"http://addthis.com/bookmark.php?v=250\" class=\"addthis_button_compact\"></a>\n")+
-                                    QString("\t<a class=\"addthis_button_facebook\"></a>\n")+
-                                    QString("\t<a class=\"addthis_button_twitter\"></a>\n")+
-                                    /*QString("\t<a class=\"addthis_button_googlebuzz\"></a>\n")+*/
-                                    QString("\t<a class=\"addthis_button_email\"></a>\n")+
-                                    QString("</div>\n")+
-                                    QString("<script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c0eb6595435a765\"></script>");
+            QString addthisString = QString("<a class=\"addthis_button\" href=\"http://www.addthis.com/bookmark.php?v=300&amp;pubid=xa-50aab6894a58676c\"><img src=\"http://s7.addthis.com/static/btn/v2/lg-share-en.gif\" width=\"125\" height=\"16\" alt=\"Bookmark and Share\" style=\"border:0\"/></a>\n \
+                                            <script type=\"text/javascript\">var addthis_config = { services_compact: \'facebook, twitter, google_plusone_share, pinterest, email, more\', services_exclude: \'print, printfriendly\', ui_offset_top: 10, ui_offset_left: 25 }</script>\n \
+                                            <script type=\"text/javascript\" src=\"http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-50aab6894a58676c\"></script>");
             htmlString.replace( "[BUTTON_ADDTHIS]", addthisString );
         }else{
             htmlString.remove( "[BUTTON_ADDTHIS]" );

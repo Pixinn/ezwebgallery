@@ -43,7 +43,6 @@ public:
         //Exif
         static const QString TAGcameraMaker;
         static const QString TAGcameraModel;
-        static const QString TAGcopyright;
         static const QString TAGtimeOriginal;
         static const QString TAGdateOriginal;
         static const QString TAGyearOriginal;
@@ -53,6 +52,17 @@ public:
         static const QString TAGexposureProgram;
         static const QString TAGflash;
         static const QString TAGisoSpeedRatings;
+        //Iptc
+        static const QString TAGcaption;
+        static const QString TAGcountry;
+        static const QString TAGcity;
+        static const QString TAGsublocation;
+        static const QString TAGkeywords;
+        static const QString TAGauthor;
+        static const QString TAGcredit;
+        static const QString TAGsource;
+        static const QString TAGcopyright;
+        static const QString TAGcontact;
         //Fichier
         static const QString TAGfileBaseName;
         static const QString TAGfileName;
@@ -91,10 +101,9 @@ public:
 private:
         void init();            //Initialisation des membres
 
-       //Membres privs
 	   //METTRE A JOUR operator= en cas de modification !
 private:
-        QMap<QString,QString> m_exifTags;
+        QMap<QString,QString> m_tags;
         QFileInfo m_fileInfo;
         int m_id;
         bool m_f_emoticonsEnabled; // = true par dfaut
