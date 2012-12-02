@@ -26,15 +26,18 @@ function CCarrousel( p_properties, p_html )
     
     this.loader = new CPhotoLoader( p_properties, this.html );
 
+    //In: CPhoto
     this.displayPhoto = function( photo )
     {
+        that.html.$div.find('img').remove();
+        var image = photo.getImage();
         //If not the spinner, add the border
-        if( photo.$image.attr("src").indexOf( that.html.spinnerSrc ) == -1 ) {
-            photo.$image.removeClass()
+        if( photo.isLoaded() == true ) {
+            $( image ).removeClass()
                         .addClass( that.html.photoClass );
         }
-        that.html.$div.empty()
-                            .append( photo.$image );
+        that.html.$div.append( image  );
+        this.currentPhoto = photo;
     }
 
 
@@ -42,7 +45,7 @@ function CCarrousel( p_properties, p_html )
     {
         var photo = that.loader.load( id, space );
         that.displayPhoto( photo );
-        return photo.size;
+        return photo;
     }
 
     this.next = function()
@@ -55,13 +58,19 @@ function CCarrousel( p_properties, p_html )
 
     }
 
+    this.getCurrentPhoto = function()
+    {
+        return that.currentPhoto;
+    }
+
     //+++ EVENTS
 
     this.onPhotoLoaded = function( )
     {
-       that.displayPhoto( this );
+       that.displayPhoto( this ); //this: CPhoto
        that.photoDisplayedLoaded.fire( this );
     }
+    this.loader.getPhotoLoadedEvent().subscribe( that.onPhotoLoaded );
 
     
     this.getPhotoDisplayedLoadedEvent = function( )
@@ -69,5 +78,4 @@ function CCarrousel( p_properties, p_html )
         return this.photoDisplayedLoaded;
     }
 
-    this.loader.getPhotoLoadedEvent().subscribe( that.onPhotoLoaded );
 }

@@ -25,29 +25,23 @@ function CPhotoLoader( p_properties, p_html )
 
     this.$spinner = $(new Image());
     this.$spinner.attr( "src", this.html.spinnerSrc );
-    this.photoBuffer = new Array();
+    this.storage = new CStorage( p_properties.photos.technical.cacheSize );
 
     this.photoLoadedEvent = new CEvent();
 
     //Loads the proper photo
     this.load = function( p_id, space )
     {
-        var id = p_id;
-        var photoToLoad = that.computeUrl( id, space );
-        photo = new Image();
-        $(photo).load( function() {
-                that.photoLoadedEvent.fire( {
-                    $image: $(this),
-                    id: id,
-                    size : { w: this.width, h: this.height }
-                   } )
-                } )
-                .error( function() {
-                    TOOLS.trace("ERROR loading " + $(this).attr("src"));
-                })
-                .attr("src", photoToLoad.url);
+        TOOLS.trace("Loading " + p_id );
+        //var id = p_id;
+        var photoToLoad = that.computeUrl( p_id, space );
+        var photo = that.storage.addPhoto( photoToLoad );
+        photo.load( photoToLoad.url,  function( photoLoaded ) {
+                                                        //photoLoaded.id = id;
+                                                        that.photoLoadedEvent.fire( photoLoaded );
+                                                    } );
 
-                return { $image: that.$spinner, size: photoToLoad.size };
+        return photo;
     }
 
 
@@ -55,11 +49,6 @@ function CPhotoLoader( p_properties, p_html )
     this.getPhotoLoadedEvent = function( )
     {
         return that.photoLoadedEvent;
-    }
-
-    this.onPhotoLoaded = function( )
-    {
-        TOOLS.trace( this.id + " " + this.$image.attr("src") + " loaded.");
     }
 
     
@@ -78,7 +67,8 @@ function CPhotoLoader( p_properties, p_html )
             photo = this.getBiggerImage( space , id );
         }// Fin Optimisation de l'espace
 
-
+        TOOLS.trace( "space: " + space.w  + " " +  space.h +  " / " + photo.url );
+        photo.id = id;
         return photo;
     }
 
@@ -153,6 +143,4 @@ function CPhotoLoader( p_properties, p_html )
 
     }
 
-
-    this.photoLoadedEvent.subscribe( that.onPhotoLoaded );
 }

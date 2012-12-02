@@ -485,7 +485,7 @@ Utilsation du thème par défaut.</translatorcomment>
     <message>
         <location filename="../../ui/mainwin.cpp" line="760"/>
         <source>About EZWebGallery - build date: </source>
-        <translation type="unfinished">A propos d&apos;EZWebGallery - date de compilation : </translation>
+        <translation>A propos d&apos;EZWebGallery - date de compilation : </translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.cpp" line="967"/>

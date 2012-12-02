@@ -49,7 +49,6 @@ function CUserInterractions( p_properties, htmlstructure )
     
         that.html.index.mosaic.$thumbnails.click( function() {
             TOOLS.trace( "thumbnail #" + this.id + " clicked." );
-            that.disablePreviousNext();
             that.thumbnailClickedEvent.fire( this );
         });
         
@@ -60,28 +59,52 @@ function CUserInterractions( p_properties, htmlstructure )
     
     this.disablePreviousNext = function()
     {
-        that.html.photo.buttons.$previous.removeClass()
-                                         .addClass( that.buttonDisabledClass )
-                                         .unbind( "click" );
-        that.html.photo.buttons.$next.removeClass()
-                                     .addClass( that.buttonDisabledClass )
-                                     .unbind( "click" );
+         that.disablePrevious();
+         that.disableNext();
     }
     
     
     this.enablePreviousNext = function()
     {
+        that.enablePrevious();
+        that.enableNext();
+    }
+    
+    this.enablePrevious = function()
+    {
         if( that.previousPhotoId >= 1 ) {
+            TOOLS.trace("enable previous " + that.previousPhotoId);
             that.html.photo.buttons.$previous.removeClass()
                                               .addClass( that.buttonEnabledClass )
                                               .one( "click", that.onPreviousPhoto );
         }
+    }
+    
+    this.disablePrevious = function()
+    {
+        TOOLS.trace("disable previous");
+        that.html.photo.buttons.$previous.removeClass()
+                                         .addClass( that.buttonDisabledClass )
+                                         .unbind( "click" );        
+    }
+    
+    this.enableNext = function()
+    {        
         if( that.nextPhotoId <= that.properties.photos.list.length ) {
+            TOOLS.trace("enable next " + that.nextPhotoId);
             that.html.photo.buttons.$next.removeClass()
                                           .addClass( that.buttonEnabledClass )
                                           .one( "click", that.onNextPhoto );
         }
     }
+    
+      this.disableNext = function()
+      {
+            TOOLS.trace("disable next");
+            that.html.photo.buttons.$next.removeClass()
+                                         .addClass( that.buttonDisabledClass )
+                                         .unbind( "click" );      
+       }
     
     this.getWindowResizedEvent = function() {
         return that.windowResizedEvent;
@@ -123,16 +146,21 @@ function CUserInterractions( p_properties, htmlstructure )
     {
         that.previousPhotoId = photoId - 1;
         that.nextPhotoId = photoId + 1;
+        that.currentPhotoId  = photoId;
         that.enablePreviousNext();
     }
     
     this.onPreviousPhoto = function() {
-        that.disablePreviousNext();
+        if( that.previousPhotoId == 1 ) {
+            that.disablePrevious();
+        }
         that.previousPhotoEvent.fire( {id: that.previousPhotoId} );
     }
     
     this.onNextPhoto = function() {
-        that.disablePreviousNext();
+        if( that.nextPhotoId > that.properties.photos.list.length ) {
+            that.disableNext();
+        }
         that.nextPhotoEvent.fire( {id: that.nextPhotoId} );
     }
     

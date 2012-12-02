@@ -22,7 +22,12 @@ function CEvent( )
     
     CEvent.prototype.subscribe = function( subscriber )
     {
+        if( subscriber != undefined ) {
         this.subscribers.push( subscriber );
+        }
+        else {
+            TOOLS.trace("CEvent::Subscribe error");
+        }
     };
     
     CEvent.prototype.unsubscribe = function( subscriber )

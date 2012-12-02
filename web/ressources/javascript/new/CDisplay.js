@@ -29,15 +29,15 @@ function CDisplay( p_properties, p_htmlStructure )
     this.nextEvent = new CEvent();
     this.photoScreenEvent = new CEvent();
     this.indexScreenEvent = new CEvent();
+    this.disableUISignal = new CEvent();
+    this.displayedPhotoLoadedEvent = new CEvent();
 
     this.availableSpace = {h: 0, w:0};
-    this.photoNativeSz = {h:0, w:0};
-    this.photoCurrentSz = {h:0, w:0};
 
     $(window).resize( function() {
         that.availableSpace = that.computeAvailableSpace();
         if( that.html.photo.$screen.is(":visible") === true ) {
-            that.fitPhoto( );
+            that.fitPhoto( that.carrousel.getCurrentPhoto() );
             that.html.photo.buttons.$previous.verticalCenter(0);
             that.html.photo.buttons.$next.verticalCenter(0);
         }
@@ -54,9 +54,7 @@ function CDisplay( p_properties, p_htmlStructure )
         that.html.photo.buttons.$previous.css("top",  that.html.photo.buttons.$next.css("top") ); //no v center on previous to correct an ie8 bug
         
         that.availableSpace = that.computeAvailableSpace();
-        that.photoNativeSz = that.carrousel.load( id, that.availableSpace ); //must be placed *after* the fadein or the dimensions will be incorrectly computed
-        that.photoCurrentSz = {h:0, w:0};
-        that.fitPhoto( );
+        that.load( id );
         
         that.photoScreenEvent.fire();
     }
@@ -81,44 +79,56 @@ function CDisplay( p_properties, p_htmlStructure )
 
     this.getPhotoDisplayedLoadedEvent = function()
     {
-        return that.carrousel.getPhotoDisplayedLoadedEvent();
+        //return that.carrousel.getPhotoDisplayedLoadedEvent();
+        return that.displayedPhotoLoadedEvent;
     }
     
     this.getPhotoScreenEvent = function()
     {
-        return this.photoScreenEvent;
+        return that.photoScreenEvent;
     }
     
     this.getIndexScreenEvent = function()
     {
-        return this.indexScreenEvent
+        return that.indexScreenEvent
     } 
-
+    
+    this.getDisableUISignal = function()
+    {
+        return that.disableUISignal;
+    }
+    
     this.onPrevious = function()
     {
         that.idCurrentPhoto--;
-        that.photoNativeSz = that.carrousel.load( that.idCurrentPhoto, that.availableSpace );
-        that.photoCurrentSz = {h:0, w:0};
-        that.fitPhoto( );
+        that.load( that.idCurrentPhoto );
     }
 
     this.onNext = function()
     {
         that.idCurrentPhoto++;
-        that.photoNativeSz = that.carrousel.load( that.idCurrentPhoto, that.availableSpace );
-        that.photoCurrentSz = {h:0, w:0};
-        that.fitPhoto( );
+        that.load( that.idCurrentPhoto );
     }
 
     this.onPhotoDisplayedLoaded = function()
     {
-        that.photoNativeSz = {w: this.size.w, h: this.size.h};
-        that.photoCurrentSz = {w:0, h:0};
-        that.fitPhoto();
+        that.displayedPhotoLoadedEvent.fire( this );
+        that.fitPhoto( this );        
     }
     that.carrousel.getPhotoDisplayedLoadedEvent().subscribe( this.onPhotoDisplayedLoaded );
 
     //+++ Private
+    
+    this.load = function( id )
+    {
+        that.disableUISignal.fire();
+        var photo = that.carrousel.load( id, that.availableSpace ); //must be placed *after* the fadein or the dimensions will be incorrectly computed
+        if( photo.isLoaded() == true ) {
+            that.displayedPhotoLoadedEvent.fire( photo );            
+        }
+        that.fitPhoto( photo );
+    }
+    
     //+++ Computing the maximal available size on screen
 
     this.computeAvailableSpace = function( )
@@ -152,38 +162,40 @@ function CDisplay( p_properties, p_htmlStructure )
         return { h: height, w: width };
     }
 
-    this.fitPhoto = function( )
+    this.fitPhoto = function( photo )
     {
-        //if photo is too big, compute a new size to fit. In 2 steps.
-        var ratio = that.photoNativeSz.h / that.photoNativeSz.w;
-        var photoSz = {h: that.photoNativeSz.h, w: that.photoNativeSz.w}; //copying: otherwise, photoSz would be a reference!
-        if( that.photoNativeSz.h > that.availableSpace.h ) {
-            photoSz.h = that.availableSpace.h;
-            photoSz.w = photoSz.h / ratio;
-        }
-        if( photoSz.w > that.availableSpace.w ) {
-            photoSz.w = that.availableSpace.w;
-            photoSz.h = photoSz.w * ratio;
-        }
-        //adapting the photo and its containers
-        if( photoSz.h != that.photoCurrentSz.h || photoSz.w != that.photoCurrentSz.w )
-        {
-            $img = that.html.photo.$div.find('img')
-            //resize the picture itself only if it's not the spinner
-            if( $img.attr("src").indexOf( that.html.photo.spinnerSrc ) == -1 ) {
-                $img.width( photoSz.w )
-                    .height( photoSz.h );
+        var ratio = photo.nativeSize.h / photo.nativeSize.w;
+        var newPhotoSz = {};
+        
+        //Finding the biggest rectangle fitting in the available space
+        if( ratio > 1 ) { //vertical photo
+            newPhotoSz.h = that.availableSpace.h;
+            newPhotoSz.w = Math.round( newPhotoSz.h / ratio );
+            if( newPhotoSz.w  > that.availableSpace.w ) {
+                newPhotoSz.w = that.availableSpace.w;
+                newPhotoSz.h = Math.round( newPhotoSz.w * ratio );
             }
-            that.photoCurrentSz = {h:photoSz.h, w:photoSz.w};
-            that.html.photo.$div.width( photoSz.w + 2*that.properties.photos.technical.decoration.padding )
-                                .height( photoSz.h + 2*that.properties.photos.technical.decoration.padding );
-            that.html.photo.$frame.width( that.html.photo.$div.outerWidth() )
-                                  .height( that.html.photo.$div.outerHeight() + that.html.photo.$title.height());
-             $img.css("position","relative")
-                 .verticalCenter( 0 );
         }
-        //always center the frame
-        that.html.photo.$frame.verticalCenter( 0 );
+        else {//horizontal photo
+            newPhotoSz.w = that.availableSpace.w;
+            newPhotoSz.h = Math.round( newPhotoSz.w * ratio );
+            if( newPhotoSz.h  > that.availableSpace.h ) {
+                newPhotoSz.h = that.availableSpace.h;
+                newPhotoSz.w = Math.round( newPhotoSz.h / ratio );
+            }        
+        }
+        
+        //resizing (capped)
+        photo.resize( newPhotoSz );
+    
+        that.html.photo.$div.width( photo.size.w + 2*that.properties.photos.technical.decoration.padding )
+                            .height( photo.size.h + 2*that.properties.photos.technical.decoration.padding );
+            that.html.photo.$frame.width( that.html.photo.$div.outerWidth() )
+                                        .height( that.html.photo.$div.outerHeight() + that.html.photo.$title.height())
+                                        .css("position","relative")
+                 .verticalCenter( 0 );
+
+        photo.verticalCenter( 0 );
     }
 
 }

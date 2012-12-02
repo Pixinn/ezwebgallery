@@ -475,7 +475,7 @@ Using default skin instead.</translation>
     <message>
         <location filename="../../ui/mainwin.cpp" line="760"/>
         <source>About EZWebGallery - build date: </source>
-        <translation type="unfinished">About EZWebGallery - build date: </translation>
+        <translation>About EZWebGallery - build date: </translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.cpp" line="967"/>

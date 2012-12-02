@@ -24,8 +24,14 @@ Defines = {
 TOOLS = {
     trace: function( log ){
         if (window.console) {
-            console.log( log );
+            var date = new Date();
+            console.log( date.getTime() + ": " + log );
         }
+    },
+    clone: function( obj ) {
+        var cloned  = {};
+        jQuery.extend( cloned, obj );
+        return cloned;
     }
 }
 
@@ -111,6 +117,7 @@ $(document).ready(function()
         Display.getPhotoDisplayedLoadedEvent().subscribe( function() { UserHandler.onPhotoDisplayedLoaded( this.id ); } );
         Display.getPhotoScreenEvent().subscribe( UserHandler.onPhotoScreen );
         Display.getIndexScreenEvent().subscribe( UserHandler.onIndexScreen );
+        Display.getDisableUISignal().subscribe( UserHandler.disablePreviousNext );
         
         //Subscribing to user events
         UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );
