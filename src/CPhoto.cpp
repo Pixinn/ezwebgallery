@@ -27,6 +27,7 @@
 #include <QByteArray>
 
 #include <cstdlib>
+#include <iostream>
 
 #include "CPhoto.h"
 #include "CTaggedString.h"
@@ -74,9 +75,20 @@ bool CMagick::load( const QString & fileName )
         }
         catch( Magick::Error &error ){
             //Echec ouverture de l'image
+            std::cerr << "Caught Magick error: " << error.what() << endl;
             m_errors << QString( error.what() );
             f_success = false;
         }
+        catch( Magick::Warning &warning ){
+            //Echec ouverture de l'image
+            std::cerr << "Caught Magick warning: " << warning.what() << endl;
+            m_errors << QString( warning.what() );
+        }
+        catch( std::exception &error ) { // Process any other exceptions derived from standard C++ exception
+            std::cerr << "Caught C++ STD exception: " << error.what() << endl;
+            m_errors << QString( error.what() );
+            f_success = false;
+        } 
     }
     else //Le fichier n'existe pas ou ne peut pas tre ouvert en lecture
     {

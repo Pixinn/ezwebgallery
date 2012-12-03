@@ -554,49 +554,7 @@ void MainWin::openSession( const QString &sessionFile )
             if( m_projectParameters.version( ) > CPlatform::revisionInt() ){
                 displayMoreRecentMsgBox( );
             }
-            //Le contenu du répertoire d'entrée est-il toujours valable depuis la dernière sauvegarde ?
-            //ie : les photos source ont-elles changé de place depuis ??
-           /* if( m_photoFeeder.isValid() ){               
-                missingPhotos = m_photoDatabase.checkPhotosInDb();
-            }
-            else {
-                missingPhotos << tr("Input folder does not exist.");
-            }
-
-            //Tant que le répertoire d'entrée n'est pas valide on propose de le fournir
-            while( !missingPhotos.isEmpty() )
-            {
-                //Boite de dialogue informant du problème
-                alertBox.setText( tr("Input folder: ","Source folder containing the pictures")
-                                  + m_photoFeeder.getDirectoryPath()
-                                  + tr("\nSome photos cannot be found. They will be removed from the project.\n")
-                                  + tr("Do you want to manually provide their location ?") 
-                                );
-                alertBox.setInformativeText( tr("Error:\n") + missingPhotos.join("\n") );
-                alertBox.setIcon( QMessageBox::Warning );
-                alertBox.setStandardButtons( QMessageBox::Yes | QMessageBox::No);
-                alertBox.setDefaultButton( QMessageBox::Yes );
-                if( alertBox.exec() ==  QMessageBox::Yes ){
-                    //Boite de dialogue pour relocaliser les photos
-                    m_lastSelectedDir  = QFileDialog::getExistingDirectory( this,
-                                             tr("Please select the directory containing the project's photos.","Relocalisation des photos"),
-                                             m_lastSelectedDir,
-                                             QFileDialog::ShowDirsOnly );
-                    if( !m_lastSelectedDir.isEmpty() ){
-                        m_projectParameters.m_galleryConfig.inputDir = m_lastSelectedDir;
-                        m_ui->lineEdit_SourceFolder->setText( m_photoFeeder.getDirectoryPath() );
-                        missingPhotos = checkPhotosInDir( m_photoFeeder.getDirectory() );
-                    }
-                    else{ //L'utilisateur a annulé le choix d'un répertoire
-                         m_lastSelectedDir = QDir::homePath();
-                         missingPhotos.clear();
-                    }
-                }
-                else{
-                    missingPhotos.clear(); //L'utilisateur a décliné: on utilise le répertoire qui était dans la sauvegarde
-                }
-            }
-            */
+            
             m_captionManager.reset();
        
             //Chargement de la skin

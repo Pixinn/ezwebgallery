@@ -34,37 +34,12 @@ QString CMessage::message( e_message message )
     QString returnedMessage;
     switch( message )
     {
-        //-- ERRORS
-        case Err_FileSaving:
-            returnedMessage = QObject::tr("Unspecified error while saving the file: ");
-            break;
-        case Err_FileOpening:
-            returnedMessage = QObject::tr("Unspecified error while opening the file: ");
-            break;
-        case Err_FileCreation:
-            returnedMessage = QObject::tr("Unspecified error while creating the file: ");
-            break;
-        case Err_DirectoryCreation:
-            returnedMessage = QObject::tr("Unspecified error while creating the directory: ");
-            break;
-        case Err_InvalidDirectory:
-            returnedMessage = QObject::tr("Invalid directory: ");
-            break;
-        case Err_SourceFileNotFound:
-            returnedMessage = QObject::tr("Ressource files not found.");
-            break;
-        case Err_WatermarkInvalid:
-            returnedMessage = QObject::tr("Watermark not valid: ");
-            break;
-        case Err_InvalidFiles:
-            returnedMessage = QObject::tr("Some photos cannot be read from the disk.");
-            break;
         //-- OTHER
         case Info_RemovingPhotos:
             returnedMessage = QObject::tr("Some photos can not be found and have been removed from the project.");
             break;
         default:
-            returnedMessage = QObject::tr("Unknown message.");
+            returnedMessage = QObject::tr("Undefined message.");
             break;
     }   
 

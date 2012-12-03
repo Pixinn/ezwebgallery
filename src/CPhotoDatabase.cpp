@@ -27,6 +27,7 @@
 #include "CPlatform.h"
 #include "CPhotoDatabase.h"
 #include "CPhoto.h"
+#include "CError.h"
 
 
 
@@ -352,7 +353,7 @@ QStringList CPhotoDatabase::refresh( const QStringList & fileSet )
         foreach( QString file, invalidFiles ) {
             details.append( file + QString('\n') );
         }
-        CMessage err( CMessage::message(CMessage::Err_InvalidFiles), QString(), details );
+        CMessage err( CError::error(CError::InvalidFiles), QString(), details );
         emit error( err );
     }
 

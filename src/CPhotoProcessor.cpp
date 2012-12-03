@@ -20,9 +20,10 @@
 
 #include <QImage>
 #include <QFile>
+#include <QImageReader>
 
 #include <string>
-#include <QImageReader>
+#include <iostream>
 
 #include "GlobalDefinitions.h"
 #include "CPhotoProcessor.h"
@@ -106,105 +107,36 @@ void CPhotoProcessor::run()
         return;
     }
 
-    //Ouverture du fichier
-    m_mutexFileReading.lock(); //On locke pour optimiser les accs disque
-    f_fileReadingSuccess = photoOriginal.load( m_photoProperties.fileInfo().absoluteFilePath() );
-    m_mutexFileReading.unlock();
-    if( !f_fileReadingSuccess ) //Si echec de la lecture du fichier
+    try //catching exceptions from ImageMagick
     {
-        m_generatedParameters.setMessage( tr("Unable to open the file: ") + m_photoProperties.fileInfo().absoluteFilePath() + QString(" ")
-                                        + tr("Error: ") + photoOriginal.error() );
-        m_generatedParameters.setExitStatus( failure );
-        m_generatedParameters.setPhotoProperties( m_photoProperties);
-        emit processCompleted( m_generatedParameters );
+        //Ouverture du fichier
+        m_mutexFileReading.lock(); //On locke pour optimiser les accs disque
+        f_fileReadingSuccess = photoOriginal.load( m_photoProperties.fileInfo().absoluteFilePath() );
+        m_mutexFileReading.unlock();
+        if( !f_fileReadingSuccess ) //Si echec de la lecture du fichier
+        {
+            m_generatedParameters.setMessage( tr("Unable to open the file: ") + m_photoProperties.fileInfo().absoluteFilePath() + QString(" ")
+                                            + tr("Error: ") + photoOriginal.error() );
+            m_generatedParameters.setExitStatus( failure );
+            m_generatedParameters.setPhotoProperties( m_photoProperties);
+            emit processCompleted( m_generatedParameters );
         
-    	return;
-    }
+    	    return;
+        }
    
-    photoOriginal.orientationExif();  //A faire avant tout resize : sinon les portions width/height peuvent changer et bug...
-    photoMaster = photoOriginal;
+        photoOriginal.orientationExif();  //A faire avant tout resize : sinon les portions width/height peuvent changer et bug...
+        photoMaster = photoOriginal;
     	   
       
-    QDir fileOutPath = m_outPath;
-    filename = m_photoProperties.encodedFilename();
-    // 1 - Processing first photo (size max):
-    //     will be used as a base for all the other to speed up the processings    
-    //////////
-    QString key = QString(RESOLUTIONPATH) + QString::number(1);
-    size = m_photoSizes.value( key );
+        QDir fileOutPath = m_outPath;
+        filename = m_photoProperties.encodedFilename();
+        // 1 - Processing first photo (size max):
+        //     will be used as a base for all the other to speed up the processings    
+        //////////
+        QString key = QString(RESOLUTIONPATH) + QString::number(1);
+        size = m_photoSizes.value( key );
 
-    // 1a - check if task was canceled
-    m_p_mutexRemoteControl->lock();
-    fCancel = *m_fStopRequested;
-    m_p_mutexRemoteControl->unlock();
-    // cancel if requested
-    if( fCancel ) {
-        m_generatedParameters.setExitStatus( stopped );
-        m_generatedParameters.setPhotoProperties( m_photoProperties);
-        emit processCompleted( m_generatedParameters );
-        return;
-    }
-    
-    // 1b - Resizing
-    photoResized = photoMaster;
-    // Performed only if the photo is bigger than the targeted size
-    if( photoMaster.size().width() > size.width() || photoMaster.size().height() > size.height() ) {
-        photoResized.zoom( size ); //Default filter : Lancsoz
-    }
-    photoThumbMaster = photoResized; //Saving a copy before watermarking to generate the thumbnails
-
-    // 1c - Watermarking
-    watermarkParams = m_watermark.parameters( );
-
-    // 1c1 - Genereting if watermark is a string
-    if( watermarkParams.enabled && watermarkParams.type == t_watermark::TEXT )
-    {
-        watermarkParams.text.setExifTags( photoMaster.exifTags( ) );
-        watermarkParams.text.setFileInfo( m_photoProperties.fileInfo() );
-        watermarkParams.text.setId( m_photoProperties.id() );
-        m_watermark.setTaggedString( watermarkParams.text, QFont( watermarkParams.fontName ), QColor( watermarkParams.colorName ) );
-    }
-    // 1c2 - Applying watermark
-    if( m_watermark.isValid() )
-    {                
-        photoResized.watermark( m_watermark, watermarkParams.position,
-                                watermarkParams.orientation, watermarkParams.relativeSize,
-                                watermarkParams.opacity );
-    }
-
-    photoMaster = photoResized; //Saving the master from which to derivate all the differently sized versions
-    m_photoProperties.setExifTags( photoMaster.exifTags( ) );
-
-    // 1d - Sharpening
-    photoResized.unsharpmask( m_sharpening.radius, m_sharpening.sigma, m_sharpening.amount, m_sharpening.threshold );
-        
-    // 1e - Saving
-    saveQuality = m_qualityQueue.dequeue();
-    QString filedir = photosPath + key;
-    fileOutPath.mkdir( filedir );
-    fileOutPath.cd( filedir );
-    fileToWrite =  fileOutPath.absoluteFilePath( filename );
-    if( photoResized.save( fileToWrite, saveQuality ) ){
-        m_generatedParameters.addSize( key, QSize( photoResized.size().width(), photoResized.size().height() ) );
-    }
-    else{ //Failure !
-        m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
-        m_generatedParameters.setExitStatus( failure );
-        m_generatedParameters.setPhotoProperties( m_photoProperties);
-        emit processCompleted( m_generatedParameters );
-	    return;
-    }
-
-    m_photoSizes.remove( key ); //removing the processed (max) size
-
-
-    //2 - Iterating the remaining sizes (at least one)
-    ////////////
-    QMapIterator<QString,QSize> itPhotoSizes( m_photoSizes );
-    while( itPhotoSizes.hasNext() )
-    {
-
-        // 2a - check if task was canceled
+        // 1a - check if task was canceled
         m_p_mutexRemoteControl->lock();
         fCancel = *m_fStopRequested;
         m_p_mutexRemoteControl->unlock();
@@ -215,24 +147,42 @@ void CPhotoProcessor::run()
             emit processCompleted( m_generatedParameters );
             return;
         }
-
-        itPhotoSizes.next();
-        size = itPhotoSizes.value();
-        key = itPhotoSizes.key();
-
-        //2b - Resizing
+    
+        // 1b - Resizing
         photoResized = photoMaster;
         // Performed only if the photo is bigger than the targeted size
         if( photoMaster.size().width() > size.width() || photoMaster.size().height() > size.height() ) {
             photoResized.zoom( size ); //Default filter : Lancsoz
         }
+        photoThumbMaster = photoResized; //Saving a copy before watermarking to generate the thumbnails
 
-        //2c - Sharpening
+        // 1c - Watermarking
+        watermarkParams = m_watermark.parameters( );
+
+        // 1c1 - Genereting if watermark is a string
+        if( watermarkParams.enabled && watermarkParams.type == t_watermark::TEXT )
+        {
+            watermarkParams.text.setExifTags( photoMaster.exifTags( ) );
+            watermarkParams.text.setFileInfo( m_photoProperties.fileInfo() );
+            watermarkParams.text.setId( m_photoProperties.id() );
+            m_watermark.setTaggedString( watermarkParams.text, QFont( watermarkParams.fontName ), QColor( watermarkParams.colorName ) );
+        }
+        // 1c2 - Applying watermark
+        if( m_watermark.isValid() )
+        {                
+            photoResized.watermark( m_watermark, watermarkParams.position,
+                                    watermarkParams.orientation, watermarkParams.relativeSize,
+                                    watermarkParams.opacity );
+        }
+
+        photoMaster = photoResized; //Saving the master from which to derivate all the differently sized versions
+        m_photoProperties.setExifTags( photoMaster.exifTags( ) );
+
+        // 1d - Sharpening
         photoResized.unsharpmask( m_sharpening.radius, m_sharpening.sigma, m_sharpening.amount, m_sharpening.threshold );
-
-        //2d - Saving
+        
+        // 1e - Saving
         saveQuality = m_qualityQueue.dequeue();
-        fileOutPath = m_outPath;
         QString filedir = photosPath + key;
         fileOutPath.mkdir( filedir );
         fileOutPath.cd( filedir );
@@ -245,151 +195,116 @@ void CPhotoProcessor::run()
             m_generatedParameters.setExitStatus( failure );
             m_generatedParameters.setPhotoProperties( m_photoProperties);
             emit processCompleted( m_generatedParameters );
-    	    return;
+	        return;
         }
-    } // while( itPhotoSizes.hasNext() )
+
+        m_photoSizes.remove( key ); //removing the processed (max) size
+
+
+        //2 - Iterating the remaining sizes (at least one)
+        ////////////
+        QMapIterator<QString,QSize> itPhotoSizes( m_photoSizes );
+        while( itPhotoSizes.hasNext() )
+        {
+
+            // 2a - check if task was canceled
+            m_p_mutexRemoteControl->lock();
+            fCancel = *m_fStopRequested;
+            m_p_mutexRemoteControl->unlock();
+            // cancel if requested
+            if( fCancel ) {
+                m_generatedParameters.setExitStatus( stopped );
+                m_generatedParameters.setPhotoProperties( m_photoProperties);
+                emit processCompleted( m_generatedParameters );
+                return;
+            }
+
+            itPhotoSizes.next();
+            size = itPhotoSizes.value();
+            key = itPhotoSizes.key();
+
+            //2b - Resizing
+            photoResized = photoMaster;
+            // Performed only if the photo is bigger than the targeted size
+            if( photoMaster.size().width() > size.width() || photoMaster.size().height() > size.height() ) {
+                photoResized.zoom( size ); //Default filter : Lancsoz
+            }
+
+            //2c - Sharpening
+            photoResized.unsharpmask( m_sharpening.radius, m_sharpening.sigma, m_sharpening.amount, m_sharpening.threshold );
+
+            //2d - Saving
+            saveQuality = m_qualityQueue.dequeue();
+            fileOutPath = m_outPath;
+            QString filedir = photosPath + key;
+            fileOutPath.mkdir( filedir );
+            fileOutPath.cd( filedir );
+            fileToWrite =  fileOutPath.absoluteFilePath( filename );
+            if( photoResized.save( fileToWrite, saveQuality ) ){
+                m_generatedParameters.addSize( key, QSize( photoResized.size().width(), photoResized.size().height() ) );
+            }
+            else{ //Failure !
+                m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
+                m_generatedParameters.setExitStatus( failure );
+                m_generatedParameters.setPhotoProperties( m_photoProperties);
+                emit processCompleted( m_generatedParameters );
+    	        return;
+            }
+        } // while( itPhotoSizes.hasNext() )
 
     
-    //3 - Iterating the required thumbnails
-    ////////////
-    QMapIterator<QString,QSize> itThumbSizes( m_thumbSizes );
-    while( itThumbSizes.hasNext() )
-    {
-        // 3a - check if task was canceled
-        m_p_mutexRemoteControl->lock();
-        fCancel = *m_fStopRequested;
-        m_p_mutexRemoteControl->unlock();
-        //Cancelation
-        if( fCancel ) {
-            m_generatedParameters.setExitStatus( stopped );
-            m_generatedParameters.setPhotoProperties( m_photoProperties);
-            emit processCompleted( m_generatedParameters );
-            return;
-        }
-
-        itThumbSizes.next();
-        size = itThumbSizes.value();
-        key = itThumbSizes.key();
-
-        //3b - Resizing
-        photoResized = photoThumbMaster;  //Without watermark
-        photoResized.zoom( size );
-        photoResized.removeMetadata();    //To gain some space
-
-        //3c - Saving
-        fileOutPath = m_outPath;
-        QString filedir = thumbsPath + key;
-        fileOutPath.mkdir( filedir );
-        fileOutPath.cd( filedir );
-        fileToWrite =  fileOutPath.absoluteFilePath( filename );
-        saveQuality = s_thumbQuality;
-        if( !photoResized.save( fileToWrite, saveQuality ) )
-        { //Echec de la sauvegarde !
-            m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
-            m_generatedParameters.setExitStatus( failure );
-            m_generatedParameters.setPhotoProperties( m_photoProperties);
-            emit processCompleted( m_generatedParameters );
-            return;
-        }
-
-    } // while( itThumbSizes.hasNext() )
-
-
-/*
-    while( m_sizesQueue.size() > 1 ) //Safe :  y a au moins deux rsolutions et une vignette
-    {
-        //Annulation de la tche si demand
-        m_p_mutexRemoteControl->lock();
-        fCancel = *m_fStopRequested;
-        m_p_mutexRemoteControl->unlock();
-        //Annulation de la tche
-        if( fCancel ) {
-            m_generatedParameters.setExitStatus( stopped );
-            m_generatedParameters.setPhotoProperties( m_photoProperties);
-            emit processCompleted( m_generatedParameters );
-            return;
-        }
-            	    	
-        //Toutes les tailles
-        fileOutPath = m_outPath;
-        size = m_sizesQueue.dequeue();
-        photoResized = photoMaster;
-        //On ne resize que si la photo est plus grande que la taille souhaite
-        if( photoMaster.size().width() > size.width() || photoMaster.size().height() > size.height() ) {
-            photoResized.zoom( size ); //Filtre par dfaut : Lancsoz
-        }
-                    
-        //Si c'est la photo de res max, elle est watermarke si besoin, et devient la rfrence (master) pour les photos suivantes
-        if( !f_refPictureComputed )
+        //3 - Iterating the required thumbnails
+        ////////////
+        QMapIterator<QString,QSize> itThumbSizes( m_thumbSizes );
+        while( itThumbSizes.hasNext() )
         {
-            photoThumbMaster = photoResized; //Sauvegarde du master pour les vignettes avant la signature...
-
-            //-- Watermark
-            watermarkParams = m_watermark.parameters( );
-            //1 - Gnration si de type texte
-            if( watermarkParams.enabled && watermarkParams.type == t_watermark::TEXT )
-            {
-                watermarkParams.text.setExifTags( photoMaster.exifTags( ) );
-                watermarkParams.text.setFileInfo( m_photoProperties.fileInfo() );
-                watermarkParams.text.setId( m_photoProperties.id() );
-                m_watermark.setTaggedString( watermarkParams.text, QFont( watermarkParams.fontName ), QColor( watermarkParams.colorName ) );
-            }
-            //2 - Application si valide
-            if( m_watermark.isValid() )
-            {                
-                photoResized.watermark( m_watermark, watermarkParams.position,
-                                        watermarkParams.orientation, watermarkParams.relativeSize,
-                                        watermarkParams.opacity );
+            // 3a - check if task was canceled
+            m_p_mutexRemoteControl->lock();
+            fCancel = *m_fStopRequested;
+            m_p_mutexRemoteControl->unlock();
+            //Cancelation
+            if( fCancel ) {
+                m_generatedParameters.setExitStatus( stopped );
+                m_generatedParameters.setPhotoProperties( m_photoProperties);
+                emit processCompleted( m_generatedParameters );
+                return;
             }
 
-            photoMaster = photoResized; //Il est essentiel de sauver le master AVANT sharpening afin de maximiser la qualit d'image
-            f_refPictureComputed = true;
-            m_photoProperties.setExifTags( photoMaster.exifTags( ) );
-        }
+            itThumbSizes.next();
+            size = itThumbSizes.value();
+            key = itThumbSizes.key();
 
-        //sharpening
-        photoResized.unsharpmask( m_sharpening.radius, m_sharpening.sigma, m_sharpening.amount, m_sharpening.threshold );
-                
-        //Sauvegarde
-        saveQuality = m_qualityQueue.dequeue();
-        fileOutPath.cd( photosPath + QString::number(++i) );
-        filename = m_photoProperties.encodedFilename();
-        fileToWrite =  fileOutPath.absoluteFilePath( filename );
-        if( photoResized.save( fileToWrite, saveQuality ) ){
-            m_generatedParameters.enqueueSize( QSize( photoResized.size().width(), photoResized.size().height() ) );
-        }
-        else{ //Echec de la sauvegarde !
-            m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
+            //3b - Resizing
+            photoResized = photoThumbMaster;  //Without watermark
+            photoResized.zoom( size );
+            photoResized.removeMetadata();    //To gain some space
+
+            //3c - Saving
+            fileOutPath = m_outPath;
+            QString filedir = thumbsPath + key;
+            fileOutPath.mkdir( filedir );
+            fileOutPath.cd( filedir );
+            fileToWrite =  fileOutPath.absoluteFilePath( filename );
+            saveQuality = s_thumbQuality;
+            if( !photoResized.save( fileToWrite, saveQuality ) )
+            { //Echec de la sauvegarde !
+                m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
+                m_generatedParameters.setExitStatus( failure );
+                m_generatedParameters.setPhotoProperties( m_photoProperties);
+                emit processCompleted( m_generatedParameters );
+                return;
+            }
+
+        } // while( itThumbSizes.hasNext() )
+    }//try
+    catch( std::exception &error ) { //Process any other exceptions derived from standard C++ exception
+            std::cerr << "Caught C++ STD exception: " << error.what() << endl;
+            m_generatedParameters.setMessage( tr("An unexpected error occured!\n") + m_photoProperties.fileInfo().absoluteFilePath() + "\n" + error.what() );
             m_generatedParameters.setExitStatus( failure );
             m_generatedParameters.setPhotoProperties( m_photoProperties);
             emit processCompleted( m_generatedParameters );
-    	    return;
-        }
+    }  
 
-    }//Fin While - Gnration des photos
-
-    //Gnration de la vignette
-    size = m_sizesQueue.dequeue();
-    filename = m_photoProperties.encodedFilename();
-
-    photoResized = photoThumbMaster;
-    photoResized.zoom( size );
-    photoResized.removeMetadata(); //Enlve les mtadonnes pour gagner en place
-
-    //Sauvegarde vignette
-    fileOutPath = m_outPath;
-    fileOutPath.cd( thumbsPath );
-    fileToWrite =  fileOutPath.absoluteFilePath( filename );
-    saveQuality = m_qualityQueue.dequeue();
-    if( !photoResized.save( fileToWrite, saveQuality ) )
-    { //Echec de la sauvegarde !
-        m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
-        m_generatedParameters.setExitStatus( failure );
-        m_generatedParameters.setPhotoProperties( m_photoProperties);
-        emit processCompleted( m_generatedParameters );
-        return;
-    }
-*/
     // Success !
     m_generatedParameters.setExitStatus( success );
     m_generatedParameters.setPhotoProperties( m_photoProperties);

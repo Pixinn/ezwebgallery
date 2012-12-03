@@ -160,7 +160,7 @@ private:
     CSkinParameters m_skinParameters;
     QString m_lastSelectedDir;
     //Photo feeder
-    CPhotoFeederDirectory &m_photoFeeder; //This ui knows the nature of feeder use
+    CPhotoFeederDirectory &m_photoFeeder; //This ui knows the nature of feeder used
     //Photo Database
     CPhotoDatabase &m_photoDatabase;
     //Generation

@@ -32,18 +32,6 @@ public:
 
     enum e_message
     {
-        //Errors
-        Err_FileSaving,
-        Err_FileOpening,
-        Err_FileCreation,
-        Err_DirectoryCreation,
-        Err_InvalidDirectory,
-        Err_SourceFileNotFound,
-        Err_WatermarkInvalid,
-        Err_InvalidFiles,
-        //Warning
-
-        //Other
         Info_RemovingPhotos,
     };
 
