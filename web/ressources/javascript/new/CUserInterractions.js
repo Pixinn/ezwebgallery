@@ -27,6 +27,7 @@ function CUserInterractions( p_properties, htmlstructure )
     this.thumbnailClickedEvent = new CEvent();
     this.closePhotoEvent = new CEvent();
     this.previousPhotoEvent = new CEvent();
+    this.previousPhotoEvent = new CEvent();
     this.nextPhotoEvent = new CEvent();
     this.previousIndexEvent = new CEvent();
     this.nextIndexEvent = new CEvent();
@@ -49,6 +50,7 @@ function CUserInterractions( p_properties, htmlstructure )
     
         that.html.index.mosaic.$thumbnails.click( function() {
             TOOLS.trace( "thumbnail #" + this.id + " clicked." );
+            //that.disablePreviousNext();
             that.thumbnailClickedEvent.fire( this );
         });
         

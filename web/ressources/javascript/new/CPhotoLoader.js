@@ -19,6 +19,9 @@
 function CPhotoLoader( p_properties, p_html )
 {
     var that = this;
+    
+    this.NEXT = 1;
+    this.PREVIOUS = -1;
 
     this.properties = p_properties;
     this.html = p_html;
@@ -26,24 +29,46 @@ function CPhotoLoader( p_properties, p_html )
     this.$spinner = $(new Image());
     this.$spinner.attr( "src", this.html.spinnerSrc );
     this.storage = new CStorage( p_properties.photos.technical.cacheSize );
+    this.prefetchingQueue = new CFifo();
+    this.space = { h: 0, w: 0 };
 
     this.photoLoadedEvent = new CEvent();
 
-    //Loads the proper photo
-    this.load = function( p_id, space )
-    {
-        TOOLS.trace("Loading " + p_id );
-        //var id = p_id;
-        var photoToLoad = that.computeUrl( p_id, space );
-        var photo = that.storage.addPhoto( photoToLoad );
-        photo.load( photoToLoad.url,  function( photoLoaded ) {
-                                                        //photoLoaded.id = id;
-                                                        that.photoLoadedEvent.fire( photoLoaded );
-                                                    } );
 
+    //Fetches the propoer photo
+    this.fetch = function( id )
+    {
+        TOOLS.trace("Fetching " + id );
+        var photoToLoad = that.computeUrl( id );
+        var photo = that.storage.addPhoto( photoToLoad );
+        if( photo.isLoaded() == false ) { //loading the photo if it has not already been loaded
+            photo.load( photoToLoad.url,  function( photoLoaded ) {
+                                                            that.photoLoadedEvent.fire( photoLoaded );
+                                                            if( that.prefetchingQueue.size() > 0 ) { //Prefetching the photos in the queue if any
+                                                                that.fetch( that.prefetchingQueue.pop() ); //Loading next photo
+                                                            }
+                                                        } );
+        }
+        else { //if already loaded the next photo still has to be prefetched
+            if( that.prefetchingQueue.size() > 0 ) { //Prefetching the photos in the queue if any
+                that.fetch( that.prefetchingQueue.pop() ); //Loading next photo
+            }
+        }
         return photo;
     }
-
+    
+    //Loads the proper photo
+    this.load = function( id, direction )
+    {      
+        //inserting the next photo to prefetch to the queue
+        for( var i = that.properties.photos.technical.prefetchSize; i > 0; i-- ) {
+            var toPrefetch = id + ( direction * i );
+            if( toPrefetch <= that.properties.photos.list.length && toPrefetch > 0 ) {
+                that.prefetchingQueue.pushFirst( toPrefetch );
+            }
+        }
+        return that.fetch( id );
+    }
 
     //Events
     this.getPhotoLoadedEvent = function( )
@@ -54,20 +79,20 @@ function CPhotoLoader( p_properties, p_html )
     
     
     //Computing the proper url to load
-    this.computeUrl = function( id, space )
+    this.computeUrl = function( id )
     {
         // Strategy: best quality ?
         var photo;
         if( this.properties.photos.technical.qualityStrategy === 0) {
-            photo = this.getSmallerImage( space , id );
+            photo = this.getSmallerImage( id );
         }
         //Optimisation de l'espace ? -- Marche de façon médiocre avec ie6/ie7 qui ont du mal avec les redimensionnements
         else {
             //On récupère la plus petite image de taille > à l'espace afficache. Le navigateur resizera.
-            photo = this.getBiggerImage( space , id );
+            photo = this.getBiggerImage( id );
         }// Fin Optimisation de l'espace
 
-        TOOLS.trace( "space: " + space.w  + " " +  space.h +  " / " + photo.url );
+        TOOLS.trace( "space: " + that.space.w  + " " +  that.space.h +  " / " + photo.url );
         photo.id = id;
         return photo;
     }
@@ -75,7 +100,7 @@ function CPhotoLoader( p_properties, p_html )
     
     //Traversing all the available image size
     //Return the first fitting
-    this.getBiggerImage = function( photoDivHW, numPhoto )
+    this.getBiggerImage = function( numPhoto )
     {
         var f_OK = false;
         var sizes = this.properties.photos.list[ numPhoto - 1].sizes;
@@ -83,7 +108,7 @@ function CPhotoLoader( p_properties, p_html )
         //Extracting all suitable sizes
         $.each( sizes, function( key, size )
         {
-            if( size.width >= photoDivHW.w || size.height >= photoDivHW.h ) //suitable size found
+            if( size.width >= that.space.w || size.height >= that.space.h ) //suitable size found
             {
                 suitableSizes[ key ] = size;
                 f_OK = true;
@@ -110,7 +135,7 @@ function CPhotoLoader( p_properties, p_html )
 
     
     //Returning the first photo > available space
-    this.getSmallerImage = function( photoDivHW, numPhoto )
+    this.getSmallerImage = function( numPhoto )
     {
         var f_OK = false;
         var sizes = this.properties.photos.list[ numPhoto - 1].sizes;
@@ -118,7 +143,7 @@ function CPhotoLoader( p_properties, p_html )
         //Extracting all suitable sizes
         $.each( sizes, function( key, size )
         {
-            if( size.width <= photoDivHW.w && size.height <= photoDivHW.h ) //suitable size found
+            if( size.width <= that.space.w && size.height <= that.space.h ) //suitable size found
             {
                 suitableSizes[ key ] = size;
                 f_OK = true;

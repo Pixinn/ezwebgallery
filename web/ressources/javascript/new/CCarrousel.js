@@ -25,14 +25,17 @@ function CCarrousel( p_properties, p_html )
     this.photoDisplayedLoaded = new CEvent();
     
     this.loader = new CPhotoLoader( p_properties, this.html );
+    this.prevPhoto = -1;
+    this.currPhoto = -1;
+    this.nextPhoto = -1;
 
     //In: CPhoto
     this.displayPhoto = function( photo )
-    {
+    {   
         that.html.$div.find('img').remove();
         var image = photo.getImage();
-        //If not the spinner, add the border
-        if( photo.isLoaded() == true ) {
+        
+        if( photo.isLoaded() == true ) { //If not the spinner, add the border
             $( image ).removeClass()
                         .addClass( that.html.photoClass );
         }
@@ -41,34 +44,61 @@ function CCarrousel( p_properties, p_html )
     }
 
 
-    this.load = function( id, space )
+    this.load = function( id )
     {
-        var photo = that.loader.load( id, space );
+        that.setCurrentPhoto( id );   
+        var photo = that.loader.load( id, that.loader.NEXT );
         that.displayPhoto( photo );
         return photo;
     }
 
-    this.next = function()
+    this.next = function( newid )
     {
-
+        that.setCurrentPhoto( newid );
+        //+TBC
+        var photo = that.loader.load( that.currPhoto, that.loader.NEXT );
+        that.displayPhoto( photo );
+        return photo;
+        //-TBC
     }
 
-    this.previous = function()
+    this.previous = function( newid )
     {
-
+        that.setCurrentPhoto( newid );
+        //+TBC
+        var photo = that.loader.load( that.currPhoto, that.loader.PREVIOUS );
+        that.displayPhoto( photo );
+        return photo;
+        //-TBC
     }
-
+    
     this.getCurrentPhoto = function()
     {
         return that.currentPhoto;
     }
+    
+    //updates the avalaible space
+    this.setSpace = function( space )
+    {
+        that.loader.space = space;
+    }
 
+    //+++ PRIVATE
+    this.setCurrentPhoto = function( id )
+    {
+        that.currPhoto = id;        
+        that.prevPhoto = id - 1;
+        that.nextPhoto = id + 1;
+    }
+    
     //+++ EVENTS
 
-    this.onPhotoLoaded = function( )
+    this.onPhotoLoaded = function(  )
     {
-       that.displayPhoto( this ); //this: CPhoto
-       that.photoDisplayedLoaded.fire( this );
+        if( this.id == that.currPhoto )  { //this: CPhoto 
+            that.displayPhoto( this ); 
+            that.photoDisplayedLoaded.fire( this );
+        }
     }
     this.loader.getPhotoLoadedEvent().subscribe( that.onPhotoLoaded );
 

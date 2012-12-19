@@ -118,6 +118,7 @@ $(document).ready(function()
         Display.getPhotoScreenEvent().subscribe( UserHandler.onPhotoScreen );
         Display.getIndexScreenEvent().subscribe( UserHandler.onIndexScreen );
         Display.getDisableUISignal().subscribe( UserHandler.disablePreviousNext );
+        Display.getEnableUISignal().subscribe( UserHandler.enablePreviousNext );
         
         //Subscribing to user events
         UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );

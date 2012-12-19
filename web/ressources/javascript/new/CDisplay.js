@@ -30,12 +30,13 @@ function CDisplay( p_properties, p_htmlStructure )
     this.photoScreenEvent = new CEvent();
     this.indexScreenEvent = new CEvent();
     this.disableUISignal = new CEvent();
+    this.enableUISignal = new CEvent();
     this.displayedPhotoLoadedEvent = new CEvent();
 
     this.availableSpace = {h: 0, w:0};
 
     $(window).resize( function() {
-        that.availableSpace = that.computeAvailableSpace();
+        that.setSpace( that.computeAvailableSpace() );
         if( that.html.photo.$screen.is(":visible") === true ) {
             that.fitPhoto( that.carrousel.getCurrentPhoto() );
             that.html.photo.buttons.$previous.verticalCenter(0);
@@ -53,8 +54,8 @@ function CDisplay( p_properties, p_htmlStructure )
         that.html.photo.buttons.$next.verticalCenter(0);
         that.html.photo.buttons.$previous.css("top",  that.html.photo.buttons.$next.css("top") ); //no v center on previous to correct an ie8 bug
         
-        that.availableSpace = that.computeAvailableSpace();
-        that.load( id );
+        that.setSpace( that.computeAvailableSpace() );
+        that.load( id, that.carrousel.load );
         
         that.photoScreenEvent.fire();
     }
@@ -64,6 +65,7 @@ function CDisplay( p_properties, p_htmlStructure )
         that.html.photo.$screen.fadeOut('fast');
         that.indexScreenEvent.fire();
     }
+    
 
     //+++ EVENTS
 
@@ -79,7 +81,6 @@ function CDisplay( p_properties, p_htmlStructure )
 
     this.getPhotoDisplayedLoadedEvent = function()
     {
-        //return that.carrousel.getPhotoDisplayedLoadedEvent();
         return that.displayedPhotoLoadedEvent;
     }
     
@@ -98,16 +99,22 @@ function CDisplay( p_properties, p_htmlStructure )
         return that.disableUISignal;
     }
     
+    this.getEnableUISignal = function()
+    {
+        return that.enableUISignal;
+    }
+
+
     this.onPrevious = function()
     {
         that.idCurrentPhoto--;
-        that.load( that.idCurrentPhoto );
+        that.load( that.idCurrentPhoto, that.carrousel.previous );
     }
 
     this.onNext = function()
     {
         that.idCurrentPhoto++;
-        that.load( that.idCurrentPhoto );
+        that.load( that.idCurrentPhoto, that.carrousel.next );
     }
 
     this.onPhotoDisplayedLoaded = function()
@@ -119,18 +126,24 @@ function CDisplay( p_properties, p_htmlStructure )
 
     //+++ Private
     
-    this.load = function( id )
+    this.setSpace = function( space )
+    {
+        that.availableSpace = space;
+        that.carrousel.setSpace( space );
+    }
+    
+    this.load = function( id, loadFct ) //loadFct( id ) : function used to fetch the photo
     {
         that.disableUISignal.fire();
-        var photo = that.carrousel.load( id, that.availableSpace ); //must be placed *after* the fadein or the dimensions will be incorrectly computed
+        var photo = loadFct( id ); //must be placed *after* the fadein or the dimensions will be incorrectly computed
         if( photo.isLoaded() == true ) {
             that.displayedPhotoLoadedEvent.fire( photo );            
         }
         that.fitPhoto( photo );
     }
     
+    
     //+++ Computing the maximal available size on screen
-
     this.computeAvailableSpace = function( )
     {
         var ie6BugCorrection = 6;
@@ -190,10 +203,10 @@ function CDisplay( p_properties, p_htmlStructure )
     
         that.html.photo.$div.width( photo.size.w + 2*that.properties.photos.technical.decoration.padding )
                             .height( photo.size.h + 2*that.properties.photos.technical.decoration.padding );
-            that.html.photo.$frame.width( that.html.photo.$div.outerWidth() )
+        that.html.photo.$frame.width( that.html.photo.$div.outerWidth() )
                                         .height( that.html.photo.$div.outerHeight() + that.html.photo.$title.height())
                                         .css("position","relative")
-                 .verticalCenter( 0 );
+                                        .verticalCenter( 0 );   
 
         photo.verticalCenter( 0 );
     }
