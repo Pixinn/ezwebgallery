@@ -16,7 +16,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <QCoreApplication>
 #include <QDesktopServices>
 #include <QSettings>
@@ -43,6 +42,7 @@
 
 #include "mainwin.h"
 #include "CPlatform.h"
+#include "CWarning.h"
 
 using namespace std;
 
@@ -165,21 +165,19 @@ void MainWin::onProgressBar( int completion, QString color, QString message, int
 
     this->m_ui->progressBar_Generation->setValue( completion );
     this->m_ui->statusbar->showMessage( message, timeout );
-    onLogMsg( message );
+    onLogMsg( CMessage( message ) );
 }
 
-void MainWin::onLogMsg( QString str )
+void MainWin::onLogMsg( const IMessage &msg )
 {
-    m_debugMessages << QDateTime::currentDateTime().toString( "dd.MM.yyyy - hh:mm:ss.zzz\t" ) + str;
-    if( m_p_logDisplay->isVisible() ){
-        m_p_logDisplay->append( m_debugMessages.last() );
-    }    
+    m_p_logDisplay->setTextColor( msg.color() );
+    m_p_logDisplay->append( QDateTime::currentDateTime().toString( "dd.MM.yyyy - hh:mm:ss.zzz\t" ) + msg.message() );
 }
 
 
 void MainWin::onForceStoppedFinished( QStringList errorMessages )
 {
-    onLogMsg("Force Stop");
+    onLogMsg(CWarning( tr("Forced Stop") ));
 
     //On affiche un message d'erreur
     if( errorMessages.size() > 0){
@@ -564,7 +562,9 @@ void MainWin::openSession( const QString &sessionFile )
             //Si des erreurs sont survenues
             if( !errors.isEmpty() )
             {
-                onLogMsg( QString("[Skin]. A problem occured when opening the file: ") + skinToLoad + errors.join("\n") );               
+                CError error( "A problem occured when opening the file: ",  skinToLoad + errors.join("\n") );
+                onLogMsg( error );               
+                //onLogMsg( QString("[Skin]. A problem occured when opening the file: ") + skinToLoad + errors.join("\n") );               
                         
                 QMessageBox msgBox( this );
                 msgBox.setInformativeText( tr("Cannot load the skin: ") + skinToLoad + tr(".\n\nUsing default skin instead.") );
@@ -573,7 +573,8 @@ void MainWin::openSession( const QString &sessionFile )
                 msgBox.exec();                                     
             }
             else {    
-                onLogMsg( QString("[Skin]. Skin loaded: ") + m_skinParameters.name() );
+                onLogMsg( CMessage("Skin loaded: " + m_skinParameters.name()) );
+                //onLogMsg( QString("[Skin]. Skin loaded: ") + m_skinParameters.name() );
             }
             
         } //Fin du traitement de la session chargée
@@ -581,7 +582,9 @@ void MainWin::openSession( const QString &sessionFile )
         
     else //Erreur de chargement de la session
     {   
-        onLogMsg( "[Session]. Error: " + sessionFile + "not loaded" );
+        //onLogMsg( "[Session]. Error: " + sessionFile + "not loaded" );
+        CError error( "[Session]", sessionFile + " not loaded" );
+        onLogMsg( error );
         QMessageBox* alertBox = new QMessageBox( QMessageBox::Critical, tr("Error"), CError::error(CError::FileOpening), QMessageBox::Close);
         alertBox->setDetailedText( sessionFile );
         alertBox->exec();
@@ -683,13 +686,8 @@ void MainWin::showTagsWindow( )
 void MainWin::showLogWindow( )
 {
     if( !m_p_logDisplay->isVisible() ){
-        QStringListIterator iterator(m_debugMessages);    
-        m_p_logDisplay->clear( );
-        while ( iterator.hasNext() ){
-            m_p_logDisplay->append( iterator.next() );
-        }        
-        m_p_logDisplay->show( );       
-    } 
+        m_p_logDisplay->show( );
+    }
 }
 
 
@@ -946,7 +944,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
     QVariant photoSelected = m_photoDatabase.model().data( indexPhotoName, Qt::DisplayRole );
     QString photoFilename = photoSelected.toString();
     QFileInfo photoFileInfo( m_photoFeeder.getDirectory(), photoFilename );
-    onLogMsg( QString("[Thumbnail]. Affichage Vignette: ") + photoFilename  );
+    onLogMsg( CMessage( tr("Displaying thumbnail: ") + photoFilename  ) );
 
     m_ui->label_thumbPhoto->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
    
@@ -970,11 +968,11 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 
 
 //--------------------------------
-//--------- Clearing the fields of the thumbnaiol tab
+//--------- Clearing the fields of the thumbnail tab
 //--------------------------------
 void MainWin::clearThumbnailTab( void )
 {
-    onLogMsg( QString("[Thumbnail]. Clearing.") );
+    onLogMsg( CMessage("Clearing thumbnails") );
     m_ui->label_thumbPhoto->clear();
     m_ui->textEdit_captionPreview->clear();
     m_ui->lineEdit_Caption->clear();
@@ -1046,7 +1044,7 @@ void MainWin::skinNameChanged( QString newName )
 void MainWin::skinPathChanged( QString filePath )
 {
     m_projectParameters.m_galleryConfig.skinPath = filePath;
-    onLogMsg( QString("[Skin]. Skin Path: ") + filePath );
+    onLogMsg( CMessage( "Skin Path: " + filePath ) );
 }
 
 

@@ -17,12 +17,11 @@
 */
 
 
-
-#include <QObject>
-
 #include "CError.h"
 #include "GlobalDefinitions.h"
 
+
+const QColor CError::s_color("red");
 
 /*******************************************************************
 * error( e_errors error )
@@ -64,4 +63,34 @@ QString CError::error( e_errors error )
     }   
 
     return returnedError;
+}
+
+CError::CError( void ) :
+    m_summary(),
+    m_details()
+{   }
+
+CError::CError( const QString& summary = QString(),  const QString& details = QString() ) :
+    m_summary( summary ),
+    m_details( details )
+{   }
+
+QString CError::message( void ) const
+{
+    return tr("Error: ") + m_summary + "\n" + m_details;
+}
+
+QColor CError::color( void ) const
+{
+    return s_color;
+}
+
+QString CError::summary( void ) const
+{
+    return m_summary;
+}
+
+QString CError::details( void ) const
+{
+    return m_details;
 }

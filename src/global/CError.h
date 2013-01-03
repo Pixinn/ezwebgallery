@@ -1,6 +1,6 @@
 ﻿/* 
  *  EZWebGallery:
- *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
+ *  Copyright (C) 2011-2012 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,13 +21,12 @@
 #ifndef CError_H
 #define CError_H
 
-#include <QObject>
 #include <QString>
 
+#include "IMessage.h"
 
-class CError : public QObject
+class CError : public IMessage
 {
-    Q_OBJECT
 
 public:
 
@@ -43,31 +42,23 @@ public:
         InvalidFiles
     };
 
-    CError() : QObject()
-        {   }
-    CError( const CError& other ) :
-        QObject(),
-        m_summary( other.m_summary ),
-        m_details( other.m_details )
-        {   }
-    CError( const QString& summary,  const QString& details = QString() ) :
-        QObject(),
-        m_summary( summary ),
-        m_details( details )
-        {   }
+    CError( const CError& other );
 
-    static QString error( e_errors );  //Returns a properly translated error
+    CError( void );
+    CError( const QString& summary,  const QString& details );
 
-    void setSummary( const QString& summary ) { m_summary = summary; }
-    void setDetails( const QString& details ) { m_summary = details; }
+    static QString error( e_errors );  //Returns a properly translated standard error
 
-    QString summary( void ) const { return m_summary; }
-    QString details( void ) const { return m_details; }
+    QString message( void ) const;
+
+    QColor color( void ) const;
+    QString summary( void ) const;
+    QString details( void ) const;
 
 private:
+    static const QColor s_color;
     QString m_summary;
     QString m_details;
 };
 
 #endif // CError_H
-

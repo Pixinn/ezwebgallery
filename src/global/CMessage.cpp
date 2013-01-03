@@ -1,6 +1,6 @@
 ﻿/* 
  *  EZWebGallery:
- *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
+ *  Copyright (C) 2011-2012 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,17 +17,17 @@
 */
 
 
-
-#include <QObject>
-
 #include "CMessage.h"
 #include "GlobalDefinitions.h"
 
 
+const QColor CMessage::s_color( 63,63,63 );
+
 /*******************************************************************
-* warning( e_warnings warning )
+* message( e_message message )
 * ------------------------
-* Returns a properly translated warning
+* Returns a properly translated message
+* TR not available on static QStrig as their instanciation is too early
 ********************************************************************/
 QString CMessage::message( e_message message )
 {
@@ -45,3 +45,63 @@ QString CMessage::message( e_message message )
 
     return returnedMessage;
 }
+
+
+CMessage::CMessage( void ) :
+    m_summary(),
+    m_info(),
+    m_details()
+{}
+
+CMessage::CMessage( const QString& summary ) :
+    m_summary( summary ),
+    m_info(),
+    m_details()
+    {   }
+
+CMessage::CMessage( const QString& summary, const QString& info ) :
+    m_summary( summary ),
+    m_info( info ),
+    m_details()
+    {   }
+
+CMessage::CMessage( const QString& summary, const QString& info, const QString& details ) :
+    m_summary( summary ),
+    m_info( info ),
+    m_details( details )
+    {   }
+
+CMessage::CMessage( const CMessage& other ) :
+    m_summary( other.m_summary ),
+    m_info( other.m_info ),
+    m_details( other.m_details )
+    {   }
+
+QString CMessage::message( void ) const
+{
+    QString message = m_summary;
+    if( !m_info.isEmpty() ) { 
+        message += ("\n" + m_info);
+    }
+    if( !m_details.isEmpty() ) { 
+        message += ("\n" + m_details);
+    }
+
+    return message;
+}
+
+QColor CMessage::color( void ) const
+{
+    return s_color;
+}
+
+QString CMessage::summary( void ) const
+{
+    return m_summary;
+}
+
+QString CMessage::details( void ) const
+{
+    return m_details;
+}
+

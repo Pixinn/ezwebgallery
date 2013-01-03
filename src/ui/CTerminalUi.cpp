@@ -63,7 +63,9 @@ CTerminalUi::~CTerminalUi( )
 
 ////////// SLOTS //////////
 
-void CTerminalUi::onLogMsg( QString  ){ }
+void CTerminalUi::onLogMsg( const IMessage &msg  ){
+    msg.message();
+}
 
 void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
 {

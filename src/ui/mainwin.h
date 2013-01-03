@@ -127,7 +127,7 @@ public slots:
     //Generation
     void generateGallery( void );
     //-- externes
-    void onLogMsg( QString );
+    void onLogMsg(  const IMessage & );
     void onProgressBar( int completion, QString color, QString message, int timeout = 0 );
     void onGalleryGenerationFinished( QList<CPhotoProperties>  );
     void onForceStoppedFinished( QStringList );
@@ -148,7 +148,7 @@ private:
     WinSkinDesigner* m_p_skinDesignerWindow;
     WinConfigure* m_p_configureWindow;
     enum { eGenerating, eNotGenerating } m_stateGeneration;
-    QStringList m_debugMessages;
+    //QList< QSharedPointer<IMessage*> > m_logMessages;
     QStringList m_recentSessions;           //Liste contenant les NBMAXRECENTFILES derniers fichiers projets ouverts
     QAction *m_recentSessionsActions[NBMAXRECENTFILES];
     CLanguageManager m_languageManager;

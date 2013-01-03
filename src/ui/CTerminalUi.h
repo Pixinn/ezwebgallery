@@ -44,7 +44,7 @@ signals:
     void done( void );
 public slots:
     void run( void );                        //Contient le code  xcuter pour lancer la gnration
-    void onLogMsg( QString );
+    void onLogMsg( const IMessage & );
     void onProgressBar( int completion, QString color, QString message, int timeout = 0 ); //Affiche un % d'avancement
     void onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties>);
     void onForceStoppedFinished( QStringList );

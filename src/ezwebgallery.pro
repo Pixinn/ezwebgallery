@@ -75,7 +75,9 @@ HEADERS += generation/CGalleryGenerator.h \
     global/CPlatform.h \
     global/GlobalDefinitions.h \
     global/CError.h \
+    global/IMessage.h \
     global/CMessage.h \
+    global/CWarning.h \
     global/CDebug.h \
     widgets/CImagePicker.h \
     widgets/CColorPicker.h \
@@ -121,7 +123,8 @@ SOURCES += main.cpp \
     CPhotoFeederDirectory.cpp \
     CPhotoDatabase.cpp \
     CThumbnailLoader.cpp \
-    Json.cpp
+    Json.cpp \
+    global/CWarning.cpp
 
 FORMS += ui/mainwin.ui \
     ui/WinSkinDesigner.ui \
