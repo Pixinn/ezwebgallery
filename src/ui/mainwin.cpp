@@ -43,6 +43,9 @@
 #include "mainwin.h"
 #include "CPlatform.h"
 #include "CWarning.h"
+#include "CError.h"
+#include "CMessage.h"
+#include "CLogger.h"
 
 using namespace std;
 
@@ -155,8 +158,7 @@ void MainWin::watermarkAutoColorChecked( int state )
     }
 }
 
-
-void MainWin::onProgressBar( int completion, QString color, QString message, int timeout )
+void MainWin::onProgressBar( int completion, QString color, PtrMessage msg, int timeout )
 {
     //La couleur de la barre ne change pas..
     QPalette barPalette = m_ui->progressBar_Generation->palette();
@@ -164,20 +166,20 @@ void MainWin::onProgressBar( int completion, QString color, QString message, int
     this->m_ui->progressBar_Generation->setPalette( barPalette );
 
     this->m_ui->progressBar_Generation->setValue( completion );
-    this->m_ui->statusbar->showMessage( message, timeout );
-    onLogMsg( CMessage( message ) );
+    this->m_ui->statusbar->showMessage( msg->message(), timeout );
+    CLogger::getInstance().log( PtrMessage(new CMessage( msg->message() )) );
 }
 
-void MainWin::onLogMsg( const IMessage &msg )
+void MainWin::onLogMsg( PtrMessage msg )
 {
-    m_p_logDisplay->setTextColor( msg.color() );
-    m_p_logDisplay->append( QDateTime::currentDateTime().toString( "dd.MM.yyyy - hh:mm:ss.zzz\t" ) + msg.message() );
+    m_p_logDisplay->setTextColor( msg->color() );
+    m_p_logDisplay->append( QDateTime::currentDateTime().toString( "dd.MM.yyyy - hh:mm:ss.zzz\t" ) + msg->message() );
 }
 
 
 void MainWin::onForceStoppedFinished( QStringList errorMessages )
 {
-    onLogMsg(CWarning( tr("Forced Stop") ));
+    onLogMsg( PtrMessage(new CWarning( tr("Forced Stop") )) );
 
     //On affiche un message d'erreur
     if( errorMessages.size() > 0){
@@ -562,8 +564,8 @@ void MainWin::openSession( const QString &sessionFile )
             //Si des erreurs sont survenues
             if( !errors.isEmpty() )
             {
-                CError error( "A problem occured when opening the file: ",  skinToLoad + errors.join("\n") );
-                onLogMsg( error );               
+               
+                CLogger::getInstance().log( PtrMessage(new CError( "A problem occured when opening the file: ",  skinToLoad + errors.join("\n") )) );               
                 //onLogMsg( QString("[Skin]. A problem occured when opening the file: ") + skinToLoad + errors.join("\n") );               
                         
                 QMessageBox msgBox( this );
@@ -573,8 +575,8 @@ void MainWin::openSession( const QString &sessionFile )
                 msgBox.exec();                                     
             }
             else {    
-                onLogMsg( CMessage("Skin loaded: " + m_skinParameters.name()) );
-                //onLogMsg( QString("[Skin]. Skin loaded: ") + m_skinParameters.name() );
+                onLogMsg( PtrMessage(new CMessage("Skin loaded: " + m_skinParameters.name())) );
+                //CLogger::getInstance().log( QString("[Skin]. Skin loaded: ") + m_skinParameters.name() );
             }
             
         } //Fin du traitement de la session chargée
@@ -583,8 +585,7 @@ void MainWin::openSession( const QString &sessionFile )
     else //Erreur de chargement de la session
     {   
         //onLogMsg( "[Session]. Error: " + sessionFile + "not loaded" );
-        CError error( "[Session]", sessionFile + " not loaded" );
-        onLogMsg( error );
+        CLogger::getInstance().log( PtrMessage(new CError( "[Session]", sessionFile + " not loaded" )) );
         QMessageBox* alertBox = new QMessageBox( QMessageBox::Critical, tr("Error"), CError::error(CError::FileOpening), QMessageBox::Close);
         alertBox->setDetailedText( sessionFile );
         alertBox->exec();
@@ -896,7 +897,7 @@ void MainWin::generateGallery( )
                 return; //On abandonne la génération !
             }
             //Vérification de la liste des photos d'entrée et reconstruction des légendes si besoin
-            onProgressBar( 0, "green", tr("Building photo list.") );
+            onProgressBar( 0, "green", PtrMessage(new CMessage(tr("Building photo list."))) );
             QStringList photosModified = m_photoDatabase.photosModified(); //to be executed before refresh() or you'll miss when some photo are removed
             QStringList newPhotos = m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
             m_captionManager.reset();
@@ -944,7 +945,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
     QVariant photoSelected = m_photoDatabase.model().data( indexPhotoName, Qt::DisplayRole );
     QString photoFilename = photoSelected.toString();
     QFileInfo photoFileInfo( m_photoFeeder.getDirectory(), photoFilename );
-    onLogMsg( CMessage( tr("Displaying thumbnail: ") + photoFilename  ) );
+    CLogger::getInstance().log( PtrMessage(new CMessage( tr("Displaying thumbnail: ") + photoFilename  )) );
 
     m_ui->label_thumbPhoto->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
    
@@ -972,7 +973,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 //--------------------------------
 void MainWin::clearThumbnailTab( void )
 {
-    onLogMsg( CMessage("Clearing thumbnails") );
+    CLogger::getInstance().log( PtrMessage( new CMessage("Clearing thumbnails")) );
     m_ui->label_thumbPhoto->clear();
     m_ui->textEdit_captionPreview->clear();
     m_ui->lineEdit_Caption->clear();
@@ -1044,7 +1045,7 @@ void MainWin::skinNameChanged( QString newName )
 void MainWin::skinPathChanged( QString filePath )
 {
     m_projectParameters.m_galleryConfig.skinPath = filePath;
-    onLogMsg( CMessage( "Skin Path: " + filePath ) );
+    CLogger::getInstance().log( PtrMessage(new CMessage( "Skin Path: " + filePath )) );
 }
 
 

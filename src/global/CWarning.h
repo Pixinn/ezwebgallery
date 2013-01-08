@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  *  EZWebGallery:
  *  Copyright (C) 2011-2012 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -18,37 +18,22 @@
 
 
 
-#ifndef CError_H
-#define CError_H
+#ifndef CWarning_H
+#define CWarning_H
 
 #include <QString>
 
 #include "IMessage.h"
 
-class CError : public IMessage
+class CWarning : public IMessage
 {
 
 public:
 
-    enum e_errors
-    {
-        Internal,
-        FileSaving,
-        FileOpening,
-        FileCreation,
-        DirectoryCreation,
-        InvalidDirectory,
-        SourceFileNotFound,
-        WatermarkInvalid,
-        InvalidFiles
-    };
-
-    CError( const CError& other );
-
-    CError( void );
-    CError( const QString& summary,  const QString& details );
-
-    static QString error( e_errors );  //Returns a properly translated standard error
+    CWarning( const CWarning& other );
+    CWarning( const QString& summary );
+    CWarning( const QString& summary,  const QString& details );
+    ~CWarning(){}
 
     QString message( void ) const;
 
@@ -62,4 +47,5 @@ private:
     QString m_details;
 };
 
-#endif // CError_H
+
+#endif

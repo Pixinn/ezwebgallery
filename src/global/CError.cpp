@@ -16,6 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <cstdlib>
+#include <iostream>
 
 #include "CError.h"
 #include "GlobalDefinitions.h"
@@ -33,6 +35,9 @@ QString CError::error( e_errors error )
     QString returnedError;
     switch( error )
     {
+        case Internal:
+            returnedError = QObject::tr("Internal Error.");
+            break;
         case FileSaving:
             returnedError = QObject::tr("Unspecified error while saving the file: ");
             break;
@@ -70,10 +75,12 @@ CError::CError( void ) :
     m_details()
 {   }
 
-CError::CError( const QString& summary = QString(),  const QString& details = QString() ) :
+CError::CError( const QString& summary,  const QString& details ) :
     m_summary( summary ),
     m_details( details )
-{   }
+{
+    std::cerr << summary.toAscii().data() << details.toAscii().data() << std::endl;
+}
 
 QString CError::message( void ) const
 {

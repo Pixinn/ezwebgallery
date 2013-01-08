@@ -56,8 +56,8 @@ class CGalleryGenerator : public QThread
 
     //// Signaux/Slots ////
 signals:
-    void debugSignal( QString );		      //Ecrire dans une fentre de Debug
-    void progressBarSignal( int completion, QString color, QString message ); //Faire voluer la progressBar
+    //void debugSignal( QString );		      //Ecrire dans une fentre de Debug
+    void progressBarSignal( int completion, QString color, PtrMessage message ); //Faire voluer la progressBar
     void generationFinishedSignal( /*bool success*/ QList<CPhotoProperties> );   //Gnration de toutes les photos termine
     void forceStoppedFinishedSignal( QStringList );        //L'arrt forc des thread est termin. Passage des messages d'erreur.
     void abordGenerationSignal( );
@@ -98,7 +98,7 @@ private:
 
     //-- interfaçage UI
     void debugDisplay( QString );		//Affichage d'un message de debug
-    void displayProgressBar( int completion, QString color, QString message ); //Affiche un % d'avancement sur la progressBar    
+    void displayProgressBar( int completion, QString color, const PtrMessage &message ); //Affiche un % d'avancement sur la progressBar    
     //-- tools	
     bool areImageAndThumbs( void ); //Returns true if the photos and the thumbnails tobe generated are present in the proper dirs
     QMap<QString,QSize> computeThumbSizes( void ); //Computes the size of the thumbs to be generated

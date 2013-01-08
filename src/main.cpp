@@ -32,7 +32,7 @@
 #include <cstdio>
 #include <iostream>
 
-#include "CDebug.h"
+#include "CLogger.h"
 #include "CPhotoDatabase.h"
 #include "CPhotoFeederDirectory.h"
 #include "IUserInterface.h"
@@ -64,25 +64,27 @@ int main(int argc, char *argv[])
     CProjectParameters& projectParameters = *new CProjectParameters( );
     CGalleryGenerator& galleryGenerator = *new CGalleryGenerator();
 
+    //Qt
+    qRegisterMetaType<PtrMessage>("PtrMessage");
     
     //Deux possibilités : ouverture de la fenêtre ou éxecution à partir d'un terminal
     // ----------------- MODE FENETRE
     if( argc == 1 )
     {
-        //Instanciation fentre
+        //Instanciation fenetre
         MainWin* appWindow = new MainWin( galleryGenerator, projectParameters  );
 
         //Connections UI<->Générateur
-        QObject::connect( &galleryGenerator, SIGNAL( debugSignal(QString)), appWindow, SLOT(onLogMsg(CMessage)) );
-        QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, QString ) ), appWindow, SLOT( onProgressBar( int, QString, QString ) ) );
+       // QObject::connect( &galleryGenerator, SIGNAL( debugSignal(QString)), appWindow, SLOT(onLogMsg(CMessage)) );
+        QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, PtrMessage ) ), appWindow, SLOT( onProgressBar( int, QString, PtrMessage ) ), Qt::QueuedConnection );
         QObject::connect( &galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), appWindow, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
         QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appWindow, SLOT( onForceStoppedFinished( QStringList ) ) );
         // DB -> UI
         QObject::connect( &photoDatabase, SIGNAL( error( CMessage ) ), appWindow, SLOT( error( CMessage ) ) );
         QObject::connect( &photoDatabase, SIGNAL( warning( CMessage ) ), appWindow, SLOT( warning( CMessage ) ) );
         QObject::connect( &photoDatabase, SIGNAL( message( CMessage ) ), appWindow, SLOT( information( CMessage ) ) );
-        // Debug -> UI
-        QObject::connect( &(CDebug::getInstance()), SIGNAL( displayMessage( QString ) ), appWindow, SLOT( onLogMsg( CMessage ) ) );
+        // Logger
+        QObject::connect( &(CLogger::getInstance()), SIGNAL( displayMessage( PtrMessage ) ), appWindow, SLOT( onLogMsg( PtrMessage ) ) );
 
         //Affichage fenêtre et éxécution
         appWindow->show( );
@@ -99,7 +101,7 @@ int main(int argc, char *argv[])
 
         //Connections UI<->Générateur
         QObject::connect( &galleryGenerator, SIGNAL( debugSignal(QString)), appCLI, SLOT(onLogMsg(CMessage)) );
-        QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, QString ) ), appCLI, SLOT( onProgressBar( int, QString, QString ) ) );
+        QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, PtrMessage ) ), appCLI, SLOT( onProgressBar( int, QString, PtrMessage ) ), Qt::QueuedConnection );
         QObject::connect( &galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), appCLI, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
         QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appCLI, SLOT( onForceStoppedFinished( QStringList ) ) );
         // DB -> UI

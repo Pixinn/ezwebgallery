@@ -31,6 +31,9 @@
 
 #include "CPhoto.h"
 #include "CTaggedString.h"
+#include "CLogger.h"
+#include "CWarning.h"
+#include "CError.h"
 
 using namespace std;
 using namespace Magick;
@@ -74,25 +77,24 @@ bool CMagick::load( const QString & fileName )
             this->read( filenameUtf8 );		
         }
         catch( Magick::Error &error ){
-            //Echec ouverture de l'image
-            std::cerr << "Caught Magick error: " << error.what() << endl;
+            CLogger::getInstance().log( PtrMessage( new CError(QObject::tr("Caught a Magick error: "), error.what() ) ) );
             m_errors << QString( error.what() );
             f_success = false;
         }
         catch( Magick::Warning &warning ){
-            //Echec ouverture de l'image
-            std::cerr << "Caught Magick warning: " << warning.what() << endl;
+            CLogger::getInstance().log( PtrMessage( new CWarning(QObject::tr("Caught a Magick warning: "), warning.what() ) ) );
             m_errors << QString( warning.what() );
         }
         catch( std::exception &error ) { // Process any other exceptions derived from standard C++ exception
-            std::cerr << "Caught C++ STD exception: " << error.what() << endl;
+            CLogger::getInstance().log( PtrMessage( new CError(QObject::tr("Caught a C++ STD exception: "), error.what() ) ) );
             m_errors << QString( error.what() );
             f_success = false;
         } 
     }
-    else //Le fichier n'existe pas ou ne peut pas tre ouvert en lecture
+    else //File doesn't exist or cannot be read
     {
         m_errors << QObject::tr("File doesn't exist");
+        CLogger::getInstance().log( PtrMessage(new CError(m_errors.last(), fileName)) );        
         f_success = false;
     }
 

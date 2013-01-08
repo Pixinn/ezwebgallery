@@ -38,6 +38,9 @@
 #include "CPlatform.h"
 #include "CCss.h"
 #include "CDirChecker.h"
+#include "CLogger.h"
+#include "CMessage.h"
+#include "CError.h"
 
 using namespace Magick;
 using namespace JSON;
@@ -151,7 +154,7 @@ bool CGalleryGenerator::generateGallery( CProjectParameters &projectParameters, 
 		
 		inputDir = m_parameters.m_galleryConfig.inputDir;
 
-        displayProgressBar( 0, "green", "0%" );
+        displayProgressBar( 0, "green", PtrMessage(new CMessage("0%")) );
 
         m_photoPropertiesList.clear();
         foreach( CPhotoProperties* properties, photoProperties )    {
@@ -183,12 +186,12 @@ bool CGalleryGenerator::isGenerationInProgress( )
     return isRunning;
 }
 
-void CGalleryGenerator::debugDisplay( QString msg )
-{
-    emit debugSignal( msg );
-}
+//void CGalleryGenerator::debugDisplay( QString msg )
+//{
+//    emit debugSignal( msg );
+//}
 
-void CGalleryGenerator::displayProgressBar( int completion, QString color, QString message )
+void CGalleryGenerator::displayProgressBar( int completion, QString color, const PtrMessage &message )
 {
     emit progressBarSignal( completion, color, message );
 }
@@ -325,7 +328,7 @@ void CGalleryGenerator::initGeneration( )
 //////////////////////////////////////////////////////////
 bool CGalleryGenerator::generateFileStructure( )
 {
-   displayProgressBar( 0, "green", tr("Generating the file structure...") );
+   displayProgressBar( 0, "green", PtrMessage(new CMessage(tr("Generating the file structure..."))) );
 
     //--- Photos
     const QString photosFilesPath( QString(PHOTOSPATH) + "/res" );
@@ -467,7 +470,7 @@ int CGalleryGenerator::generatePhotos( )
 
     //- Cration  et lancement de la file de traitements photos
     outPath = m_parameters.m_galleryConfig.outputDir;
-    displayProgressBar( 0, "green", tr("Generating the photos : ")+QString::number(0)+"%" );
+    displayProgressBar( 0, "green", PtrMessage(new CMessage(tr("Generating the photos : "), QString::number(0)+"%" )) );
     m_mutexControlProcessors.lock(); //Pour ne pas que les threads dmarrent trop tt
     
     foreach( CPhotoProperties photoProperties, m_photoPropertiesList )
@@ -484,7 +487,7 @@ int CGalleryGenerator::generatePhotos( )
 
         if( !connect( photoToProcess, SIGNAL( processCompleted(CGeneratedPhotoSetParameters) ), this, SLOT( onPhotoProcessDone(CGeneratedPhotoSetParameters) ), Qt::QueuedConnection ) )
         {
-            this->debugDisplay("Erreur connection #" + QString::number(idPhotoToProcess) );
+            CLogger::getInstance().log(PtrMessage( new CError( CError::error(CError::Internal), tr("Cannot connect photoprocessor: ") + QString::number(idPhotoToProcess)) ));
             return m_nbPhotosToProcess; //AJOUTER UNE SORTIE PAR ERREUR !!!
         }
 
@@ -613,7 +616,7 @@ bool CGalleryGenerator::skinning( )
  	//-------- Copie des fichiers de la skin --------//
     QDir outSkinPath( m_parameters.m_galleryConfig.outputDir );
 
-    displayProgressBar( 100, "green", tr("Skinning...") );
+    displayProgressBar( 100, "green", PtrMessage(new CMessage(tr("Skinning..."))) );
 	
     //---------- COPIE DES FICHIERS RESSOURCES --------//
     outSkinPath = QDir( m_parameters.m_galleryConfig.outputDir );        
@@ -789,7 +792,7 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
 		//Affichage de l'avancement
         completion = (int)(((float)nbPhotosProcessed/(float)m_nbPhotosToProcess)*100);
         if( nbPhotoProcessFailed == 0 && f_wip ){
-            displayProgressBar( completion, "green", tr("Generating the photos : ")+QString::number(completion)+"%" );
+            displayProgressBar( completion, "green", PtrMessage(new CMessage( tr("Generating the photos : "), QString::number(completion)+"%")) );
         }
        
         //Rcupration des tailles gnres par le process
@@ -804,7 +807,7 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
                 emit jobDone( );
             }
             else{
-                this->debugDisplay("UNSPECIFIED FAILURE !!!");
+                CLogger::getInstance().log(PtrMessage( new CError(CError::error(CError::Internal), tr("Unspecified.")) ));
                 emit abordGenerationSignal( );
                 break; //On ne devrait vraiment pas se trouver ici...
             }
@@ -845,7 +848,7 @@ void CGalleryGenerator::onAbordGeneration( )
         m_mutex.lock();
             m_f_WorkInProgress = false;
         m_mutex.unlock();
-        this->debugDisplay("emit forcedFinished");
+        //this->debugDisplay("emit forcedFinished");
         emit forceStoppedFinishedSignal( m_msgErrorList ); //Asynchrone
     }
 

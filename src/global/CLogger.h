@@ -19,35 +19,35 @@
 
 
 
-#ifndef CDEBUG_H
-#define CDEBUG_H
+#ifndef CLOGGER_H
+#define CLOGGER_H
 
 #include <QObject>
-#include <QString>
+#include <QTextEdit>
 
-class CDebug :
-    public QObject
+#include "IMessage.h"
+
+
+class CLogger : public QObject
 {
 
     Q_OBJECT
 
-public:
-    CDebug(void) { }
-    ~CDebug(void) { }
-    static CDebug& getInstance( void ) {
+public:    
+    ~CLogger(void) { }
+    
+    static CLogger& getInstance( void ) {
         return s_instance;
     }
 
-    void message( const QString &msg ) {
-        emit displayMessage( msg );
-    }
+    void log( PtrMessage );
 
 signals:
-    void displayMessage( QString );
+    void displayMessage( PtrMessage ); 
 
 private:
-    static CDebug s_instance;
-
+    explicit CLogger(void);
+    static CLogger s_instance;
 };
 
 #endif

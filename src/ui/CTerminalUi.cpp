@@ -63,8 +63,8 @@ CTerminalUi::~CTerminalUi( )
 
 ////////// SLOTS //////////
 
-void CTerminalUi::onLogMsg( const IMessage &msg  ){
-    msg.message();
+void CTerminalUi::onLogMsg( PtrMessage msg  ){
+    msg->message();
 }
 
 void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
@@ -86,9 +86,9 @@ void CTerminalUi::onGalleryGenerationFinished( QList<CPhotoProperties> propertie
     emit done();
 }
 
-void CTerminalUi::onProgressBar( int, QString, QString msg, int )
+void CTerminalUi::onProgressBar( int, QString, PtrMessage msg, int )
 {
-    cout << msg << endl;
+    cout << msg->message() << endl;
 }
 
 void CTerminalUi::information( CMessage message )

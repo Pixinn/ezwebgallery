@@ -45,8 +45,8 @@ class IUserInterface/*: public QMainWindow *///Pour pouvoir proposer des slots, 
 // d'hériter deux fois indirectement de QObject. Ce qui est embtant pour les UI qui doivent ventuellement elles mme hriter d'un QWidget
 public:
    //public slots
-   virtual void onLogMsg( const IMessage & ) = 0; //Message to Log
-   virtual void onProgressBar( int completion, QString color, QString message, int timeout = 0 ) = 0; //Affiche un % d'avancement sur la progressBar et un message assi dans la statusbar
+   virtual void onLogMsg( PtrMessage ) = 0; //Message to Log
+   virtual void onProgressBar( int completion, QString color, PtrMessage message, int timeout = 0 ) = 0; //Affiche un % d'avancement sur la progressBar et un message assi dans la statusbar
    virtual void onGalleryGenerationFinished( QList<CPhotoProperties>  ) = 0; //Fin nominale de la gnration de la galerie
    virtual void onForceStoppedFinished( QStringList ) = 0; //Fin prmature de la gnration de la galerie
    virtual void error( CMessage ) = 0;          //An error occured
