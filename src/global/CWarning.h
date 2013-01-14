@@ -40,11 +40,14 @@ public:
     QColor color( void ) const;
     QString summary( void ) const;
     QString details( void ) const;
+    //QString informativeText( void ) const;
 
 private:
     static const QColor s_color;
     QString m_summary;
+    //QString m_info;
     QString m_details;
+    
 };
 
 

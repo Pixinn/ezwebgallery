@@ -69,7 +69,7 @@ class MainWin : public QMainWindow, IUserInterface
 public:
     MainWin( CGalleryGenerator &/*, IPhotoFeeder &*/, CProjectParameters &, QWidget *parent = 0);
     ~MainWin();
-    //void setGenerator( CGalleryGenerator* );
+    void init( void );
 
 protected:
     void changeEvent(QEvent *e);
@@ -135,9 +135,9 @@ public slots:
     void clearThumbnailTab( void ); //Clear the fields of the thumbnail tab
     void thumnailChanged( int ); //Une photo a t choisie pour devenir vignette de la galerie
     void displayCaption( QString );        //Affiche le texte dans le lineEdit de la legende
-    void error( CMessage );           //An error occured
-    void warning( CMessage );         //A warning occured
-    void information( CMessage );     //Display an iformative message
+    void error( PtrMessage );           //An error occured
+    void warning( PtrMessage );         //A warning occured
+    void information( PtrMessage );     //Display an iformative message
 
 /******** ATTRIBUTS *********/
 private:

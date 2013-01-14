@@ -105,3 +105,7 @@ QString CMessage::details( void ) const
     return m_details;
 }
 
+QString CMessage::informativeText( void ) const
+{ 
+    return m_info;
+}

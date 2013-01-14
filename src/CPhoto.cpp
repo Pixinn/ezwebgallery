@@ -119,10 +119,20 @@ bool CMagick::save(  const QString & fileToWrite, const int quality )
         f_success = true;
         this->write( filenameUtf8 );
     }
-    catch( Magick::Error &error ){ //Erreur lors de la sauvegarde        
-        m_errors <<  QString( error.what() ) ;
+    catch( Magick::Error &error ){
+        CLogger::getInstance().log( PtrMessage( new CError(QObject::tr("Caught a Magick error: "), error.what() ) ) );
+        m_errors << QString( error.what() );
         f_success = false;
     }
+    catch( Magick::Warning &warning ){
+        CLogger::getInstance().log( PtrMessage( new CWarning(QObject::tr("Caught a Magick warning: "), warning.what() ) ) );
+        m_errors << QString( warning.what() );
+    }
+    catch( std::exception &error ) { // Process any other exceptions derived from standard C++ exception
+        CLogger::getInstance().log( PtrMessage( new CError(QObject::tr("Caught a C++ STD exception: "), error.what() ) ) );
+        m_errors << QString( error.what() );
+        f_success = false;
+    } 
 
 
     return f_success;

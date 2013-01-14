@@ -26,7 +26,7 @@
 #include "CLogger.h"
 #include "CTaggedString.h"
 #include "CPhotoDatabase.h"
-#include "CMessage.h"
+#include "CWarning.h"
 
 
 /*********************** STRUCTURES DE DONNEES ************************/
@@ -355,8 +355,8 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
             foreach( QString file, missingFiles ) {
                 details.append( file + QString('\n') );
             }
-            CMessage info( CMessage::message(CMessage::Info_RemovingPhotos), QString(), details );
-            emit message( info );
+            details.remove( details.lastIndexOf('\n'), 1);
+            emit warning( PtrMessage(new CWarning(CMessage::message(CMessage::Info_RemovingPhotos), details)) );
         }
     }
 

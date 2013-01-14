@@ -28,6 +28,7 @@
 #include "CPhotoDatabase.h"
 #include "CPhoto.h"
 #include "CError.h"
+#include "CWarning.h"
 
 
 
@@ -335,15 +336,15 @@ QStringList CPhotoDatabase::refresh( const QStringList & fileSet )
 
     }
 
-    //3 - Emit an info for the file removed from the db
+    //3 - Emit a warning for the file removed from the db
     if( !removedfiles.isEmpty() )
     {
         QString details;
         foreach( QString file, removedfiles ) {
             details.append( file + QString('\n') );
         }
-        CMessage info( CMessage::message(CMessage::Info_RemovingPhotos), QString(), details );
-        emit message( info );
+        details.remove( details.lastIndexOf('\n'), 1);
+        emit warning( PtrMessage( new CWarning( CMessage::message(CMessage::Info_RemovingPhotos), details ) ) );
     }
     
     //4 - Emit an error if there are invalid Files
@@ -353,8 +354,8 @@ QStringList CPhotoDatabase::refresh( const QStringList & fileSet )
         foreach( QString file, invalidFiles ) {
             details.append( file + QString('\n') );
         }
-        CMessage err( CError::error(CError::InvalidFiles), QString(), details );
-        emit error( err );
+        details.remove( details.lastIndexOf('\n'), 1);
+        emit error( PtrMessage(new CError( CError::error(CError::InvalidFiles), details )) );
     }
 
 
@@ -377,9 +378,6 @@ bool CPhotoDatabase::refreshFileInfo( const QString & filename )
 
     if( m_db.contains( filename ) ) {
         CPhotoDatabaseElem* elem = m_db.value( filename );
-        //QFileInfo fileInfo(elem->fileInfo().absoluteFilePath());
-        //elem->setFileInfo( fileInfo );
-        //elem->setLastModificationTime( fileInfo.lastModified() );
         elem->refreshFileInfo();
         f_result = true;
     }
@@ -412,7 +410,7 @@ QStringList CPhotoDatabase::checkPhotosInDb( void )
         foreach( QString file, missingPhotos ){
             details += file + QString("\n");
         }
-        emit error( CMessage(summary, QString(), details) );
+        emit error( PtrMessage( new CError(summary, details) ) );
     }
     
     return missingPhotos;

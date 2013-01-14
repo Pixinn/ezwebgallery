@@ -12,5 +12,6 @@ CLogger::CLogger(void) : QObject()
 
 void CLogger::log( PtrMessage msg )
 {
+    QString dbg( msg->message() );
     emit displayMessage( msg );
 }

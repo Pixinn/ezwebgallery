@@ -27,6 +27,8 @@
 
 #include "GlobalDefinitions.h"
 #include "CPhotoProcessor.h"
+#include "CLogger.h"
+#include "CError.h"
 
 using namespace std;
 
@@ -36,8 +38,6 @@ using namespace std;
 
 //--- Variable statique
 QMutex CPhotoProcessor::m_mutexFileReading;  //Mutex partag pour viter les acces disques concurrents
-const CError CPhotoProcessor::MsgError; //Shared?!!???
-
 
 
 CPhotoProcessor::CPhotoProcessor(   CPhotoProperties photoProperties,
@@ -115,8 +115,7 @@ void CPhotoProcessor::run()
         m_mutexFileReading.unlock();
         if( !f_fileReadingSuccess ) //Si echec de la lecture du fichier
         {
-            m_generatedParameters.setMessage( tr("Unable to open the file: ") + m_photoProperties.fileInfo().absoluteFilePath() + QString(" ")
-                                            + tr("Error: ") + photoOriginal.error() );
+            m_generatedParameters.setMessage( PtrMessage(new CError(CError::FileOpening,  m_photoProperties.fileInfo().absoluteFilePath() + " " +  photoOriginal.error())) );
             m_generatedParameters.setExitStatus( failure );
             m_generatedParameters.setPhotoProperties( m_photoProperties);
             emit processCompleted( m_generatedParameters );
@@ -191,7 +190,7 @@ void CPhotoProcessor::run()
             m_generatedParameters.addSize( key, QSize( photoResized.size().width(), photoResized.size().height() ) );
         }
         else{ //Failure !
-            m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
+            m_generatedParameters.setMessage( PtrMessage(new CError(CError::FileSaving, fileToWrite + " " + photoResized.error())) );
             m_generatedParameters.setExitStatus( failure );
             m_generatedParameters.setPhotoProperties( m_photoProperties);
             emit processCompleted( m_generatedParameters );
@@ -244,7 +243,7 @@ void CPhotoProcessor::run()
                 m_generatedParameters.addSize( key, QSize( photoResized.size().width(), photoResized.size().height() ) );
             }
             else{ //Failure !
-                m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
+                m_generatedParameters.setMessage( PtrMessage(new CError(CError::FileSaving, fileToWrite + " " + photoResized.error())) );
                 m_generatedParameters.setExitStatus( failure );
                 m_generatedParameters.setPhotoProperties( m_photoProperties);
                 emit processCompleted( m_generatedParameters );
@@ -288,7 +287,7 @@ void CPhotoProcessor::run()
             saveQuality = s_thumbQuality;
             if( !photoResized.save( fileToWrite, saveQuality ) )
             { //Echec de la sauvegarde !
-                m_generatedParameters.setMessage( MsgError.error(CError::FileSaving) + fileToWrite + tr(" error: ") + photoResized.error() );
+                m_generatedParameters.setMessage( PtrMessage(new CError(CError::FileSaving, fileToWrite + " " + photoResized.error())) );
                 m_generatedParameters.setExitStatus( failure );
                 m_generatedParameters.setPhotoProperties( m_photoProperties);
                 emit processCompleted( m_generatedParameters );
@@ -298,8 +297,9 @@ void CPhotoProcessor::run()
         } // while( itThumbSizes.hasNext() )
     }//try
     catch( std::exception &error ) { //Process any other exceptions derived from standard C++ exception
-            std::cerr << "Caught C++ STD exception: " << error.what() << endl;
-            m_generatedParameters.setMessage( tr("An unexpected error occured!\n") + m_photoProperties.fileInfo().absoluteFilePath() + "\n" + error.what() );
+            PtrMessage err( new CError(CError::Internal, m_photoProperties.fileInfo().absoluteFilePath() + " " + error.what()));
+            CLogger::getInstance().log( err );
+            m_generatedParameters.setMessage( err );
             m_generatedParameters.setExitStatus( failure );
             m_generatedParameters.setPhotoProperties( m_photoProperties);
             emit processCompleted( m_generatedParameters );
@@ -331,15 +331,12 @@ CGeneratedPhotoSetParameters::CGeneratedPhotoSetParameters( const CGeneratedPhot
     this->m_generatedSizes = other.m_generatedSizes;
     this->m_photoProperties = other.m_photoProperties;
     this->m_exitStatus = other.m_exitStatus;
-    this->m_message = other.m_message;
+    this->m_pMessage = other.m_pMessage;
 }
 
 CGeneratedPhotoSetParameters::~CGeneratedPhotoSetParameters( ){
 }
 
-/*void CGeneratedPhotoSetParameters::enqueueSize( QSize toQueue ){
-    m_generatedSizesQueue.enqueue( toQueue );
-}*/
 
 void CGeneratedPhotoSetParameters::addSize(const QString& path, const QSize& size )
 {
@@ -347,17 +344,13 @@ void CGeneratedPhotoSetParameters::addSize(const QString& path, const QSize& siz
 }
 
 
-void CGeneratedPhotoSetParameters::setMessage( const QString & message ){
-    m_message = message;
+void CGeneratedPhotoSetParameters::setMessage( const PtrMessage & message ){
+    m_pMessage = message;
 }
 
 void CGeneratedPhotoSetParameters::setExitStatus( const e_photoProcessStatus exitStatus ){
     m_exitStatus = exitStatus;
 }
-/*
-QQueue<QSize> CGeneratedPhotoSetParameters::generatedSizesQueue(){
-    return m_generatedSizesQueue;
-}*/
 
 const QMap<QString, QSize>& CGeneratedPhotoSetParameters::generatedSizes( void ) const {
     return m_generatedSizes;
@@ -367,5 +360,5 @@ e_photoProcessStatus CGeneratedPhotoSetParameters::exitStatus( ){
     return m_exitStatus;
 }
 QString CGeneratedPhotoSetParameters::message( ){
-    return m_message;
+    return m_pMessage->message();
 }

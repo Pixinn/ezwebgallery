@@ -23,6 +23,7 @@ const QColor CWarning::s_color("blue");
 
 CWarning::CWarning( const CWarning& other ) :
     m_summary( other.m_summary ),
+    //m_info( other.m_info ),
     m_details( other.m_details )
 {   }
 
@@ -60,3 +61,8 @@ QString CWarning::details( void ) const
 {
     return m_details;
 }
+
+//QString CWarning::informativeText( void ) const
+//{ 
+//    return m_info;
+//}

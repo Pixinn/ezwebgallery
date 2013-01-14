@@ -172,6 +172,7 @@ void MainWin::onProgressBar( int completion, QString color, PtrMessage msg, int 
 
 void MainWin::onLogMsg( PtrMessage msg )
 {
+    QString dbg( msg->message() );
     m_p_logDisplay->setTextColor( msg->color() );
     m_p_logDisplay->append( QDateTime::currentDateTime().toString( "dd.MM.yyyy - hh:mm:ss.zzz\t" ) + msg->message() );
 }
@@ -289,7 +290,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& proje
     //Paramètres (=Session)
     connect( &m_projectParameters, SIGNAL(loaded(QString)), this, SLOT(sessionLoaded(QString)));
     connect( &m_projectParameters, SIGNAL(saved(QString)), this, SLOT(sessionSaved(QString)));
-    connect( &m_projectParameters, SIGNAL(message(CMessage)), this, SLOT(information(CMessage)));
+    connect( &m_projectParameters, SIGNAL(warning(PtrMessage)), this, SLOT(warning(PtrMessage)));
     //Afficher la fenêtre de tags
     connect( this->m_ui->action_DisplayTags, SIGNAL(triggered()), this, SLOT(showTagsWindow()));
     connect( this->m_ui->pushButton_CaptionShortcuts, SIGNAL(clicked()), this, SLOT(showTagsWindow()));
@@ -340,9 +341,16 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& proje
     connect( this->m_ui->comboBox_WatermarkType, SIGNAL(activated(int)), this, SLOT(watermarkTypeChanged(int)) );
     connect( this->m_ui->groupBox_Watermark, SIGNAL(toggled(bool)), this, SLOT(watermarkGroupChecked(bool)) );
     connect( this->m_ui->checkBox_WatermarkTextColorAuto, SIGNAL(stateChanged(int)), this, SLOT(watermarkAutoColorChecked(int)));
-    
+}
 
-    /**** Init ****/	
+MainWin::~MainWin()
+{
+    delete m_p_configureWindow;
+    delete m_p_skinDesignerWindow;
+}
+
+void MainWin::init( void )
+{
     //Traduction de l'interface
     m_languageManager.translate();
     //Session
@@ -381,17 +389,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& proje
             openSession( fileToLoad );
         }
     }
-
-
 }
-
-MainWin::~MainWin()
-{
-    delete m_p_configureWindow;
-    delete m_p_skinDesignerWindow;
-}
-
-
 
 void MainWin::changeEvent(QEvent *e)
 {
@@ -575,8 +573,8 @@ void MainWin::openSession( const QString &sessionFile )
                 msgBox.exec();                                     
             }
             else {    
-                onLogMsg( PtrMessage(new CMessage("Skin loaded: " + m_skinParameters.name())) );
-                //CLogger::getInstance().log( QString("[Skin]. Skin loaded: ") + m_skinParameters.name() );
+                //onLogMsg( PtrMessage(new CMessage("Skin loaded: " + m_skinParameters.name())) );
+                CLogger::getInstance().log( PtrMessage(new CMessage("Skin loaded: " + m_skinParameters.name())) );
             }
             
         } //Fin du traitement de la session chargée
@@ -997,34 +995,37 @@ void MainWin::displayCaption( QString text )
     this->m_ui->lineEdit_Caption->setText( text );
 }
 
-void MainWin::error( CMessage err )
+void MainWin::error( PtrMessage err )
 {
+    CLogger::getInstance().log( err );
     QMessageBox modalErrorBox( this );
-    modalErrorBox.setText( err.summary() );
-    modalErrorBox.setInformativeText( err.informativeText() );
-    modalErrorBox.setDetailedText( err.details() );
+    modalErrorBox.setText( err->summary() );
+//    modalErrorBox.setInformativeText( err->informativeText() );
+    modalErrorBox.setDetailedText( err->details() );
     modalErrorBox.setIcon( QMessageBox::Critical );
     modalErrorBox.exec();
 }
 
 
-void MainWin::warning( CMessage warning )
+void MainWin::warning( PtrMessage warning )
 {
+    CLogger::getInstance().log( warning );
     QMessageBox modalErrorBox( this );
-    modalErrorBox.setText( warning.summary() );
-    modalErrorBox.setInformativeText( warning.informativeText() );
-    modalErrorBox.setDetailedText( warning.details() );
+    modalErrorBox.setText( warning->summary() );
+   // modalErrorBox.setInformativeText( warning->informativeText() );
+    modalErrorBox.setDetailedText( warning->details() );
     modalErrorBox.setIcon( QMessageBox::Warning );
     modalErrorBox.exec();
 }
 
 
-void MainWin::information( CMessage info )
+void MainWin::information( PtrMessage info )
 {
+    CLogger::getInstance().log( info );
     QMessageBox modalErrorBox( 0 );
-    modalErrorBox.setText( info.summary() );
-    modalErrorBox.setInformativeText( info.informativeText() );
-    modalErrorBox.setDetailedText( info.details() );
+    modalErrorBox.setText( info->summary() );
+//    modalErrorBox.setInformativeText( info->informativeText() );
+    modalErrorBox.setDetailedText( info->details() );
     modalErrorBox.setIcon( QMessageBox::Information );
     modalErrorBox.exec();
 }
@@ -1054,6 +1055,8 @@ void MainWin::skinPathChanged( QString filePath )
 
 
 /****************************************** PRIVATE MEMBERS ************************************************/
+
+
 bool MainWin::checkForGeneration( QString &errorMsg )
 {
     QString destDir = QDir::cleanPath( m_ui->lineEdit_DestinationFolder->text() );

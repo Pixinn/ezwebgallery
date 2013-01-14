@@ -1,4 +1,4 @@
-/* 
+/*
  *  EZWebGallery:
  *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -52,11 +52,8 @@ class CGalleryGenerator : public QThread
 {
     Q_OBJECT
 
-    const CMessage MsgError;
-
     //// Signaux/Slots ////
 signals:
-    //void debugSignal( QString );		      //Ecrire dans une fentre de Debug
     void progressBarSignal( int completion, QString color, PtrMessage message ); //Faire voluer la progressBar
     void generationFinishedSignal( /*bool success*/ QList<CPhotoProperties> );   //Gnration de toutes les photos termine
     void forceStoppedFinishedSignal( QStringList );        //L'arrt forc des thread est termin. Passage des messages d'erreur.
@@ -85,9 +82,9 @@ public:
     bool generateGallery( CProjectParameters &, const CSkinParameters &, const QList<CPhotoProperties*> );
     bool isGenerationInProgress( void );
     void abordGeneration( void );
-    
+
 protected:
-    void run( );    
+    void run( );
 
 private:
     //-- definition
@@ -98,8 +95,8 @@ private:
 
     //-- interfaçage UI
     void debugDisplay( QString );		//Affichage d'un message de debug
-    void displayProgressBar( int completion, QString color, const PtrMessage &message ); //Affiche un % d'avancement sur la progressBar    
-    //-- tools	
+    void displayProgressBar( int completion, QString color, const PtrMessage &message ); //Affiche un % d'avancement sur la progressBar
+    //-- tools
     bool areImageAndThumbs( void ); //Returns true if the photos and the thumbnails tobe generated are present in the proper dirs
     QMap<QString,QSize> computeThumbSizes( void ); //Computes the size of the thumbs to be generated
     QMap<QString,QSize> computePhotoSizes( void ); //Computes the size of the photos to be generated
@@ -116,7 +113,7 @@ private:
     QState* m_p_skinning;
     QState* m_p_abording;
     //Paramètres de la galerie
-    CProjectParameters m_parameters;    
+    CProjectParameters m_parameters;
     QStringList m_captionsList;
     JSON::Root m_jsonRoot;
     CSkinParameters m_skinParameters;
@@ -139,7 +136,7 @@ private:
     //Threading synchro
     QMutex m_mutex;                       //Mutex pour protger les valeurs des slots potentiellement accds par d'autres threads
     QMutex m_mutexControlProcessors;      //Mutex partag avec mes photoprocessors afin de les piloter
-    
+
 };
 
 #endif // CGalleryGenerator_H

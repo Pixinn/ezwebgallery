@@ -32,6 +32,8 @@
 #include "CCaption.h"
 #include "CPhotoDatabase.h"
 #include "CPhotoFeederDirectory.h"
+#include "CLogger.h"
+#include "CWarning.h"
 
 
 /******************************************* Variables statiques *********************/
@@ -55,7 +57,7 @@ CTerminalUi::CTerminalUi( CGalleryGenerator & galleryGenerator, const QString &p
 
     m_languageManager.translate();
 
-    connect( &m_projectParameters, SIGNAL(message(CMessage)), this, SLOT(information(CMessage)));
+    connect( &m_projectParameters, SIGNAL(warning(PtrMessage)), this, SLOT(warning(PtrMessage)));
 }
 
 CTerminalUi::~CTerminalUi( )
@@ -64,7 +66,8 @@ CTerminalUi::~CTerminalUi( )
 ////////// SLOTS //////////
 
 void CTerminalUi::onLogMsg( PtrMessage msg  ){
-    msg->message();
+    QString message = msg->message();
+    cout << message << endl;
 }
 
 void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
@@ -91,43 +94,23 @@ void CTerminalUi::onProgressBar( int, QString, PtrMessage msg, int )
     cout << msg->message() << endl;
 }
 
-void CTerminalUi::information( CMessage message )
+void CTerminalUi::information( PtrMessage message )
 {
-    QString summary = message.summary();
-    QString details = message.details();
-    cout << "INFO: " << message.informativeText() << endl;
-    if( !summary.isEmpty() ) {
-        cout << summary << endl;
-    }
-    if( !details.isEmpty() ) {
-        cout << details << endl;
-    }
+    cout << "INFO: " << endl;
+    CLogger::getInstance().log( message );
 }
 
-void CTerminalUi::warning( CMessage message )
+void CTerminalUi::warning( PtrMessage message )
 {
-    QString summary = message.summary();
-    QString details = message.details();
-    cout << "WARNING: " << message.informativeText() << endl;
-    if( !summary.isEmpty() ) {
-        cout << summary << endl;
-    }
-    if( !details.isEmpty() ) {
-        cout << details << endl;
-    }
+    QString warning( "\n" + tr("WARNING") + "\n" );
+    warning += message->message() + "\n";
+    CLogger::getInstance().log( PtrMessage(new CWarning(warning)) );
 }
 
-void CTerminalUi::error( CMessage message )
+void CTerminalUi::error( PtrMessage message )
 {
-    QString summary = message.summary();
-    QString details = message.details();
-    cout << "ERROR: " << message.informativeText() << endl;
-    if( !summary.isEmpty() ) {
-        cout << summary << endl;
-    }
-    if( !details.isEmpty() ) {
-        cout << details << endl;
-    }
+    cout << "ERROR: " << endl;
+    CLogger::getInstance().log( message );
 }
 
 ////////////////////////// RUN ///////////////////////

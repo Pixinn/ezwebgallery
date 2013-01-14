@@ -38,7 +38,7 @@ CPhotoFeederDirectory CPhotoFeederDirectory::s_instance( QDir::homePath() );
 //        emit update( getPhotoList() );
     }
     else {
-        emit error( CMessage( CError::error( CError::DirectoryCreation ), directoryPath) );
+        emit error( PtrMessage (new CError( CError::error( CError::DirectoryCreation ), directoryPath)) );
     }
 
     return m_directory.exists();
@@ -59,7 +59,7 @@ CPhotoFeederDirectory CPhotoFeederDirectory::s_instance( QDir::homePath() );
         emit update( getPhotoList() );
     }
     else {
-        emit error(CMessage( CError::error( CError::DirectoryCreation ), directory.absolutePath() ));
+        emit error( PtrMessage( new CError(CError::error( CError::DirectoryCreation ), directory.absolutePath() )) );
     }
 
     return m_directory.exists();

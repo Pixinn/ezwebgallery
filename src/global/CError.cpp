@@ -75,12 +75,25 @@ CError::CError( void ) :
     m_details()
 {   }
 
+CError::CError( e_errors err, const QString& details ) :
+    m_summary( CError::error( err ) ),
+    m_details( details )
+{
+    // NOT THREAD SAFE !! std::cerr << m_summary.toAscii().data() << details.toAscii().data() << std::endl;
+}
+
 CError::CError( const QString& summary,  const QString& details ) :
     m_summary( summary ),
     m_details( details )
 {
-    std::cerr << summary.toAscii().data() << details.toAscii().data() << std::endl;
+    // NOT THREAD SAFE !! std::cerr << m_summary.toAscii().data() << m_details.toAscii().data() << std::endl;
 }
+
+CError::CError( const CError& other ) :
+    m_summary( other.m_summary ),
+   // m_info( other.m_info ),
+    m_details( other.m_details )
+{   }
 
 QString CError::message( void ) const
 {
@@ -101,3 +114,8 @@ QString CError::details( void ) const
 {
     return m_details;
 }
+
+//QString CError::informativeText( void ) const
+//{ 
+//    return m_info;
+//}

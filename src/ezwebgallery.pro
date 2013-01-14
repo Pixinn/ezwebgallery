@@ -75,10 +75,10 @@ HEADERS += generation/CGalleryGenerator.h \
     global/CPlatform.h \
     global/GlobalDefinitions.h \
     global/CError.h \
-    global/IMessage.h \
-    global/CMessage.h \
     global/CWarning.h \
-    global/CDebug.h \
+    global/CMessage.h \
+    global/IMessage.h \
+    global/CLogger.h \
     widgets/CImagePicker.h \
     widgets/CColorPicker.h \
     CPhotoProperties.h \
@@ -106,9 +106,10 @@ SOURCES += main.cpp \
     ui/WinConfigure.cpp \
     ui/CLanguageManager.cpp \
     global/CError.cpp \
+    global/CWarning.cpp \
     global/CMessage.cpp \
     global/CPlatform.cpp \
-    global/CDebug.cpp \
+    global/CLogger.cpp \
     widgets/CImagePicker.cpp \
     widgets/CColorPicker.cpp \
     CPhotoProperties.cpp \
@@ -123,8 +124,7 @@ SOURCES += main.cpp \
     CPhotoFeederDirectory.cpp \
     CPhotoDatabase.cpp \
     CThumbnailLoader.cpp \
-    Json.cpp \
-    global/CWarning.cpp
+    Json.cpp
 
 FORMS += ui/mainwin.ui \
     ui/WinSkinDesigner.ui \

@@ -36,6 +36,7 @@ public:
     virtual QColor color(void) const = 0;
     virtual QString message(void) const = 0;
     virtual QString summary( void ) const = 0;
+    //virtual QString informativeText( void ) const = 0;
     virtual QString details( void ) const = 0;
 };
 

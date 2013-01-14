@@ -46,6 +46,7 @@ public:
     CError( const CError& other );
 
     CError( void );
+    CError( e_errors, const QString& details );
     CError( const QString& summary,  const QString& details );
 
     static QString error( e_errors );  //Returns a properly translated standard error
@@ -55,11 +56,14 @@ public:
     QColor color( void ) const;
     QString summary( void ) const;
     QString details( void ) const;
+    //QString informativeText( void ) const;
 
 private:
     static const QColor s_color;
     QString m_summary;
+    //QString m_info;
     QString m_details;
+    
 };
 
 #endif // CError_H

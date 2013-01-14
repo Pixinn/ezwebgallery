@@ -1,0 +1,17 @@
+build
+deploy
+deployment
+deployment/Setup_EZWebGallery
+src/GeneratedFiles
+src/builddate.h
+src/ezwebgallery.pro.user
+src/ezwebgallery.sdf
+src/ezwebgallery.sln
+src/ezwebgallery.suo
+src/ezwebgallery.vcxproj.user
+src/ipch
+src/vc100.pdb
+src/ui/ui_mainwin.h
+src/ui/ui_WinConfigure.h
+src/ui/ui_WinSkinDesigner.h
+deployment/Setup_EZWebGallery_20121121.exe

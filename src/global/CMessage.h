@@ -42,11 +42,10 @@ public:
     static QString message( e_message );  //Returns a properly translated warning
 
     QString message( void ) const;
-    QColor color( void ) const;
     QString summary( void ) const;
     QString details( void ) const;
-
-    inline QString informativeText( void ) const { return m_info; }
+    QString informativeText( void ) const;
+    QColor color( void ) const;
 
 
 private:
