@@ -44,13 +44,13 @@ signals:
     void done( void );
 public slots:
     void run( void );                        //Contient le code  xcuter pour lancer la gnration
-    void onLogMsg( QString );
-    void onProgressBar( int completion, QString color, QString message, int timeout = 0 ); //Affiche un % d'avancement
+    void onLogMsg( PtrMessage );
+    void onProgressBar( int completion, QString color, PtrMessage message, int timeout = 0 ); //Affiche un % d'avancement
     void onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties>);
     void onForceStoppedFinished( QStringList );
-    void error( CMessage );         //An error occured
-    void warning( CMessage );       //A warning occured
-    void information( CMessage );   //Display an iformative message
+    void error( PtrMessage );         //An error occured
+    void warning( PtrMessage );       //A warning occured
+    void information( PtrMessage );   //Display an iformative message
 
 protected:
     void keyPressEvent ( QKeyEvent * event );

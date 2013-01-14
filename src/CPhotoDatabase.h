@@ -168,9 +168,9 @@
         const QStringListModel& model( void ) const { return m_model; } //returns a reference to a QModel representation of the filenames
 
     signals:
-        void warning( CMessage );   //a warning occured
-        void error( CMessage );   //an error occured
-        void message( CMessage );   //send an informative message
+        void warning( PtrMessage );   //a warning occured
+        void error( PtrMessage );   //an error occured
+        void message( PtrMessage );   //send an informative message
         void layoutChanged( ); //The layout of the db changed
         void thumbnailLoaded( int ); //A thumbnail has been loaded and added to the db
 

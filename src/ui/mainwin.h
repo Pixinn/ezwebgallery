@@ -69,7 +69,7 @@ class MainWin : public QMainWindow, IUserInterface
 public:
     MainWin( CGalleryGenerator &/*, IPhotoFeeder &*/, CProjectParameters &, QWidget *parent = 0);
     ~MainWin();
-    //void setGenerator( CGalleryGenerator* );
+    void init( void );
 
 protected:
     void changeEvent(QEvent *e);
@@ -127,17 +127,17 @@ public slots:
     //Generation
     void generateGallery( void );
     //-- externes
-    void onLogMsg( QString );
-    void onProgressBar( int completion, QString color, QString message, int timeout = 0 );
+    void onLogMsg( PtrMessage );
+    void onProgressBar( int completion, QString color, PtrMessage msg, int timeout = 0 );
     void onGalleryGenerationFinished( QList<CPhotoProperties>  );
     void onForceStoppedFinished( QStringList );
     void displayThumbnail( QModelIndex ); //Affiche la vignette  lgender correspondant  l'index
     void clearThumbnailTab( void ); //Clear the fields of the thumbnail tab
     void thumnailChanged( int ); //Une photo a t choisie pour devenir vignette de la galerie
     void displayCaption( QString );        //Affiche le texte dans le lineEdit de la legende
-    void error( CMessage );           //An error occured
-    void warning( CMessage );         //A warning occured
-    void information( CMessage );     //Display an iformative message
+    void error( PtrMessage );           //An error occured
+    void warning( PtrMessage );         //A warning occured
+    void information( PtrMessage );     //Display an iformative message
 
 /******** ATTRIBUTS *********/
 private:
@@ -148,7 +148,7 @@ private:
     WinSkinDesigner* m_p_skinDesignerWindow;
     WinConfigure* m_p_configureWindow;
     enum { eGenerating, eNotGenerating } m_stateGeneration;
-    QStringList m_debugMessages;
+    //QList< QSharedPointer<IMessage*> > m_logMessages;
     QStringList m_recentSessions;           //Liste contenant les NBMAXRECENTFILES derniers fichiers projets ouverts
     QAction *m_recentSessionsActions[NBMAXRECENTFILES];
     CLanguageManager m_languageManager;
@@ -160,7 +160,7 @@ private:
     CSkinParameters m_skinParameters;
     QString m_lastSelectedDir;
     //Photo feeder
-    CPhotoFeederDirectory &m_photoFeeder; //This ui knows the nature of feeder use
+    CPhotoFeederDirectory &m_photoFeeder; //This ui knows the nature of feeder used
     //Photo Database
     CPhotoDatabase &m_photoDatabase;
     //Generation

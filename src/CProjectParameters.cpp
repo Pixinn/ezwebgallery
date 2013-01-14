@@ -23,10 +23,10 @@
 #include "ui_mainwin.h"     //Gnr par qmake. Ncessaire pour accs  la classe gnre par le formulaire .ui
 
 #include "CPlatform.h"
-#include "CDebug.h"
+#include "CLogger.h"
 #include "CTaggedString.h"
 #include "CPhotoDatabase.h"
-#include "CMessage.h"
+#include "CWarning.h"
 
 
 /*********************** STRUCTURES DE DONNEES ************************/
@@ -300,7 +300,8 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     else {
         m_galleryConfig.inputDir.clear();
         //emit message( inputFolder + tr(" doesn't exists") );
-        CDebug::getInstance().message( inputFolder + tr(" doesn't exists") );
+        PtrMessage message( new CMessage( tr("Folder doesnt exist: "), inputFolder ) );
+        CLogger::getInstance().log( message );
     }
     m_galleryConfig.outputDir =  galleryConfElem.firstChildElement( "outputFolder" ).text(); //DO NOT TEST IF THIS DIR STILL EXIST: it breaks cli!! It will be created if needed.
 
@@ -340,7 +341,8 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
 
     //deprecated fileformat
     if( m_version < s_versionFilePath ) {
-        CDebug::getInstance().message( tr("Importing deprecated project: ") + QString::number( m_version ) );
+        PtrMessage message( new CMessage( tr("Importing deprecated project: "), QString::number( m_version )) );
+        CLogger::getInstance().log( message );
         CPhotoDatabase::getInstance().importDeprecated( photoListElem, inputFolder );
     }
     //current file format
@@ -353,8 +355,8 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
             foreach( QString file, missingFiles ) {
                 details.append( file + QString('\n') );
             }
-            CMessage info( CMessage::message(CMessage::Info_RemovingPhotos), QString(), details );
-            emit message( info );
+            details.remove( details.lastIndexOf('\n'), 1);
+            emit warning( PtrMessage(new CWarning(CMessage::message(CMessage::Info_RemovingPhotos), details)) );
         }
     }
 

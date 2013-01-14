@@ -61,14 +61,12 @@ class CGeneratedPhotoSetParameters : public QObject
         CGeneratedPhotoSetParameters( );
         CGeneratedPhotoSetParameters(const CGeneratedPhotoSetParameters &);
         ~CGeneratedPhotoSetParameters( );
-        //void enqueueSize( QSize );
         inline void addSize(const QString&, const QSize& );
         void setPhotoProperties( const CPhotoProperties& properties )   {
             m_photoProperties = properties;
         }
-        void setMessage( const QString & );
+        void setMessage( const PtrMessage & );
         void setExitStatus( const e_photoProcessStatus );
-//        QQueue<QSize> generatedSizesQueue( );
         const QMap<QString, QSize>& generatedSizes( void ) const;
         e_photoProcessStatus exitStatus( );
         QString message( );
@@ -76,9 +74,8 @@ class CGeneratedPhotoSetParameters : public QObject
 
     private:
         CPhotoProperties m_photoProperties;
-        //QQueue<QSize> m_generatedSizesQueue;
         QMap<QString,QSize> m_generatedSizes;
-        QString m_message;
+        PtrMessage m_pMessage;
         e_photoProcessStatus m_exitStatus;
 };
 
@@ -95,8 +92,7 @@ class CPhotoProcessor : public QObject, public QRunnable
     Q_OBJECT    
 
     //variable statiques
-    static QMutex m_mutexFileReading; //Mutex partag pour viter lesacces disques concurrents
-    static const CError MsgError;
+    static QMutex m_mutexFileReading; //Mutex partag pour viter les acces disques concurrents
     
     signals:
         void processCompleted( CGeneratedPhotoSetParameters );

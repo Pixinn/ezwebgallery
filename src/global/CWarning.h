@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  *  EZWebGallery:
  *  Copyright (C) 2011-2012 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
@@ -18,42 +18,37 @@
 
 
 
-#ifndef CMessage_H
-#define CMessage_H
+#ifndef CWarning_H
+#define CWarning_H
+
+#include <QString>
 
 #include "IMessage.h"
 
-class CMessage : public IMessage
+class CWarning : public IMessage
 {
 
 public:
 
-    enum e_message
-    {
-        Info_RemovingPhotos
-    };
-
-    CMessage( void );
-    CMessage( const CMessage& other );
-    CMessage( const QString& summary );
-    CMessage( const QString& summary, const QString& info );
-    CMessage( const QString& summary, const QString& info, const QString& details );
-
-    static QString message( e_message );  //Returns a properly translated warning
+    CWarning( const CWarning& other );
+    CWarning( const QString& summary );
+    CWarning( const QString& summary,  const QString& details );
+    ~CWarning(){}
 
     QString message( void ) const;
+
+    QColor color( void ) const;
     QString summary( void ) const;
     QString details( void ) const;
-    QString informativeText( void ) const;
-    QColor color( void ) const;
-
+    //QString informativeText( void ) const;
 
 private:
     static const QColor s_color;
     QString m_summary;
-    QString m_info;
+    //QString m_info;
     QString m_details;
+    
 };
 
-#endif // CMessage_H
 
+#endif
