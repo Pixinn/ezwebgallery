@@ -19,7 +19,7 @@ if not [%2] == [] goto :error
 
 :process
 
-SET JS_PATH=web\ressources\javascript
+SET JS_PATH=..\web\ressources\javascript
 
 md %1\core
 

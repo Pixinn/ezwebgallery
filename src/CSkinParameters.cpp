@@ -915,7 +915,7 @@ void CSkinParameters::check( QStringList* errorList, QStringList* warningList)
 ********************************************************************/
 QString CSkinParameters::defaultSkin()
 {
-    QString defaultSkinPath = CPlatform::applicationDirPath() + QString("/") + QString(SKINPATH) +  QString("/") + QString(DEFAULTSKINNAME) + QString(SKINSESSIONEXTENSION); 
+    QString defaultSkinPath = CPlatform::skinDirPath() +  QString("/") + QString(DEFAULTSKINNAME) + QString(SKINSESSIONEXTENSION);
     return defaultSkinPath;
 }
 

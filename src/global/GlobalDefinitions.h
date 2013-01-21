@@ -55,14 +55,10 @@
 #define IMAGEFILEEXTENSION ".jpg"
 
 /**** skins ****/
-#define SKINPATH           "skins"                                  /*Path depuis le rpertoire de l'appli*/
 #define DEFAULTSKINNAME    "default"
 #define SKINRESDIR         "ressources"
 #define SKINRESIMGDIR      "images"
 #define SKINCSSFILENAME    "skin.css"                             /*Fichier css qu'index.html doit inclure*/
-
-/*** Fichiers  copier ***/
-#define RESSOURCES     "res"
 
 
 #endif // GLOBALDEFINITIONS_H

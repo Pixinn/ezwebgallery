@@ -19,7 +19,7 @@ echo "###### Minifying javascript files "
 echo " "
 
 SCRIPTDIR="$( cd "$( dirname "$0" )" && pwd )"
-JS_PATH=$SCRIPTDIR/web/ressources/javascript  
+JS_PATH=$SCRIPTDIR/../web/ressources/javascript  
 DESTDIR=$1
 
 mkdir -p $DESTDIR/core

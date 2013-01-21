@@ -40,6 +40,7 @@ public:
     CPlatform();
     static QFont defaultFont();
     static QString applicationDirPath();        //Renvoie le rpertoire o a t install l'application
+    static QString resourceDirPath( void );
     static QString skinDirPath();               //Renvoie le rpertoire o se situent les skin fournies
     static QString revision();
     static unsigned int revisionInt();       //Renvoie la rvision du projet

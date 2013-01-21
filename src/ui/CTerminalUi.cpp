@@ -96,8 +96,8 @@ void CTerminalUi::onProgressBar( int, QString, PtrMessage msg, int )
 
 void CTerminalUi::information( PtrMessage message )
 {
-    cout << "INFO: " << endl;
-    CLogger::getInstance().log( message );
+    QString info( "\n" + tr("INFO") + "\n" );
+    CLogger::getInstance().log( PtrMessage(new CMessage(info,message->message())) );
 }
 
 void CTerminalUi::warning( PtrMessage message )
@@ -109,8 +109,8 @@ void CTerminalUi::warning( PtrMessage message )
 
 void CTerminalUi::error( PtrMessage message )
 {
-    cout << "ERROR: " << endl;
-    CLogger::getInstance().log( message );
+    QString err( "\n" + tr("ERROR") + "\n" );
+    CLogger::getInstance().log( PtrMessage(new CError(err,message->message())) );
 }
 
 ////////////////////////// RUN ///////////////////////

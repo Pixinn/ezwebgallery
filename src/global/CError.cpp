@@ -54,7 +54,7 @@ QString CError::error( e_errors error )
             returnedError = QObject::tr("Invalid directory: ");
             break;
         case SourceFileNotFound:
-            returnedError = QObject::tr("Ressource files not found.");
+            returnedError = QObject::tr("Resource files not found.");
             break;
         case WatermarkInvalid:
             returnedError = QObject::tr("Watermark not valid: ");
