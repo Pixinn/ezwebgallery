@@ -1,4 +1,4 @@
-﻿#!/bin/sh
+#!/bin/sh
 
 if [ $# -eq 3 ]; then
 

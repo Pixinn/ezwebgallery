@@ -1,7 +1,7 @@
 
 CONFIG  += debug_and_release \
 #       += link_prl
-        
+
 QT += xml
 
 ### User defined variables ###
@@ -50,12 +50,12 @@ unix|macx {
             QMAKE_EXTRA_TARGETS += versiontarget
     }
 }
-    
+
 LIBS += -lMagick++ -lMagickCore -lMagickWand
 
 UI_DIR = $${PWD}/src/ui
 
-INCLUDEPATH +=  ./src \  
+INCLUDEPATH +=  ./src \
                 ./src/generation \
                 ./src/widgets \
                 ./src/ui \
@@ -120,7 +120,7 @@ SOURCES += ./src/main.cpp \
     ./src/CTaggedString.cpp \
     ./src/CCaption.cpp \
     ./src/CCaptionManager.cpp \
-    ./src/CProjectParameters.cpp \    
+    ./src/CProjectParameters.cpp \
     ./src/CSkinParameters.cpp \
     ./src/CPhotoFeederDirectory.cpp \
     ./src/CPhotoDatabase.cpp \
@@ -154,12 +154,14 @@ unix {
         skins.path = /usr/share/$$TARGET
         skins.files = $$DESTDIR/skins
         icon.path = /usr/share/$$TARGET
-        icon.files = $$PWD/ressources/images/EZWG-Icone.svg
+        icon.files = $$PWD/src/ressources/images/EZWG-Icone.svg
         desktop.path = /usr/share/applications/
-        desktop.files = $$PWD/ressources/linux/ezwebgallery.desktop
+        desktop.files = $$PWD/src/ressources/linux/ezwebgallery.desktop
         INSTALLS += binfile
         INSTALLS += skins
         INSTALLS += data
+        INSTALLS += icon
+        INSTALLS += desktop
 }
 
 
