@@ -2,12 +2,14 @@
 Read the following for a better understanding on how to generate a release of
 EZWebGallery.
 
-* On Linux you can run "make install": EZWebGallery will then be installed in
-  /opt/ezwebgallery.
-  If you are running windows or want to perform a manual installation, follow
-  these instructions:
+UBUNTU or DEBIAN:
 
-    0 - Linux only : set the execute permission of the two sh script files on.
+    run "sudo qmake && make install".
+    
+    You can build a function debug ezwebgallery after the first proper installation.
+
+WINDOWS
+
     1 - "compress_javascript" will compress the javascript files using
         YUI_COMPRESSOR. The "web files" are nows ready to be included in a
         release using the 2nd script. If you are using Ubuntu, YUI_COMPRESSOR
@@ -15,15 +17,12 @@ EZWebGallery.
     2 - "create_release" builds the proper file structure into the target
         directory and copies the required files, Including the compressed
         js files generated using the 1st script.
-    3 - Linux only: "deploy" builds the release binary then run the two previous 
-        scripts, thus building from scratch a folder containing all the files
-        needed to deploy EZWebGallery.
 
-IMPORTANT NOTE:
----------------
-In order to run EZWebGallery, the directories "res" and "skins"
-have to be placed alongside the binary. Thus, if you want to debug a binary,
-YOU HAVE TO manually copy them into the debug directory.
+    IMPORTANT NOTE (Windows only):
+    ---------------
+    In order to run EZWebGallery, the directories "res" and "skins"
+    have to be placed alongside the binary. Thus, if you want to debug a binary,
+    YOU HAVE TO manually copy them into the debug directory.
 
 
 

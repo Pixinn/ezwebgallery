@@ -1,0 +1,5 @@
+ezwebgallery (0.19-0ubuntu1) precise; urgency=low
+
+  * Initial Release. (LP:: #1100974)
+
+ -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Thu, 17 Jan 2013 22:53:11 +0100

@@ -34,17 +34,17 @@ Release {
 # The windows equivalent is done via some custom prebuild step defined  in the vcxproj file.
 unix|macx {
     Debug{
-#           scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh && mkdir -p $$DESTDIR/skins && mkdir $$DESTDIR/res )
+#           scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh )
 #           versiontarget.target = builddate.h
-#            versiontarget.commands = $$system(bzr version-info --custom --template=\'$${LITERAL_HASH}define BUILD_DATE \"{build_date}\"\' > src/builddate.h)
+#            versiontarget.commands = $$system( $$SCRIPTDIR/date.sh > src/builddate.h )
 #            versiontarget.depends = FORCE
 #            PRE_TARGETDEPS += builddate.h
 #            QMAKE_EXTRA_TARGETS += versiontarget
     }
     Release{
-            scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh && mkdir -p $$DESTDIR/skins && mkdir $$DESTDIR/res )
+            scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh )
             versiontarget.target = builddate.h
-            versiontarget.commands = $$system(bzr version-info --custom --template=\'$${LITERAL_HASH}define BUILD_DATE \"{build_date}\"\' > src/builddate.h)
+            versiontarget.commands = $$system( $$SCRIPTDIR/date.sh > src/builddate.h )
             versiontarget.depends = FORCE
             PRE_TARGETDEPS += builddate.h
             QMAKE_EXTRA_TARGETS += versiontarget
@@ -138,11 +138,11 @@ RESOURCES = ./src/ressources/GalleryDesigner.qrc
 win32:RC_FILE = ./src/ressources/win32/GalleryDesigner.rc
 
 ### POST BUILD STEPS : calling the deployment script
-unix|macx {
-    Release{ QMAKE_POST_LINK += $$SCRIPTDIR/compress_javascript.sh $$MINJS_DIR && \
-                                $$SCRIPTDIR/create_release.sh $$DESTDIR/$$TARGET $$MINJS_DIR $$DESTDIR
-    }
-}
+# unix|macx {
+#    Release{ QMAKE_POST_LINK += $$SCRIPTDIR/compress_javascript.sh $$MINJS_DIR && \
+#                                $$SCRIPTDIR/create_release.sh $$DESTDIR/$$TARGET $$MINJS_DIR $$DESTDIR
+#    }
+#}
 
 
 ### DEPLOYMENT
@@ -150,13 +150,13 @@ unix {
         binfile.files += $$DESTDIR/$$TARGET
         binfile.path = /usr/bin/
         data.path = /usr/share/$$TARGET
-        data.files = $$DESTDIR/data
+        data.files = $$PWD/deployment/common/data
         skins.path = /usr/share/$$TARGET
-        skins.files = $$DESTDIR/skins
+        skins.files = $$PWD/skins
         icon.path = /usr/share/$$TARGET
-        icon.files = $$PWD/src/ressources/images/EZWG-Icone.svg
+        icon.files = $$PWD/deployment/linux/ezwebgallery-256px.png
         desktop.path = /usr/share/applications/
-        desktop.files = $$PWD/src/ressources/linux/ezwebgallery.desktop
+        desktop.files = $$PWD/deployment/linux/ezwebgallery.desktop
         INSTALLS += binfile
         INSTALLS += skins
         INSTALLS += data
