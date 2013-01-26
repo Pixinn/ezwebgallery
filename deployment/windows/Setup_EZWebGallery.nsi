@@ -37,7 +37,7 @@ UninstPage uninstConfirm
 UninstPage instfiles
 
 
-LicenseData "GPL_v3.txt"
+LicenseData "..\common\GPL_v3.txt"
 ;--------------------------------
 
  Function .onInit
@@ -70,7 +70,7 @@ Section "EZWebGallery"
   
   ;Files to copy
   SetOverwrite on
-  File /r ..\..\distribution\windows\*
+  File /r ..\..\..\distribution\windows\*
   
   ;Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\EZWebGallery "Install_Dir" "$INSTDIR"

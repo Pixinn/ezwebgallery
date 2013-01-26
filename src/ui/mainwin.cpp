@@ -563,18 +563,17 @@ void MainWin::openSession( const QString &sessionFile )
             if( !errors.isEmpty() )
             {
                
-                CLogger::getInstance().log( PtrMessage(new CError( "A problem occured when opening the file: ",  skinToLoad + errors.join("\n") )) );               
+                CLogger::getInstance().log( PtrMessage(new CError( tr("A problem occured when opening the file: "),  skinToLoad + errors.join("\n") )) );               
                 //onLogMsg( QString("[Skin]. A problem occured when opening the file: ") + skinToLoad + errors.join("\n") );               
                         
                 QMessageBox msgBox( this );
-                msgBox.setInformativeText( tr("Cannot load the skin: ") + skinToLoad + tr(".\n\nUsing default skin instead.") );
+                msgBox.setInformativeText( tr("Cannot load the skin: ") + skinToLoad + "\n\n" + tr("Using default skin instead.") );
                 msgBox.setDetailedText( errors.join("\n") );
                 msgBox.setIcon( QMessageBox::Information );
                 msgBox.exec();                                     
             }
             else {    
-                //onLogMsg( PtrMessage(new CMessage("Skin loaded: " + m_skinParameters.name())) );
-                CLogger::getInstance().log( PtrMessage(new CMessage("Skin loaded: " + m_skinParameters.name())) );
+                CLogger::getInstance().log( PtrMessage(new CMessage( tr("Skin loaded: ") + m_skinParameters.name())) );
             }
             
         } //Fin du traitement de la session chargée
@@ -582,7 +581,6 @@ void MainWin::openSession( const QString &sessionFile )
         
     else //Erreur de chargement de la session
     {   
-        //onLogMsg( "[Session]. Error: " + sessionFile + "not loaded" );
         CLogger::getInstance().log( PtrMessage(new CError( "[Session]", sessionFile + " not loaded" )) );
         QMessageBox* alertBox = new QMessageBox( QMessageBox::Critical, tr("Error"), CError::error(CError::FileOpening), QMessageBox::Close);
         alertBox->setDetailedText( sessionFile );
@@ -971,7 +969,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 //--------------------------------
 void MainWin::clearThumbnailTab( void )
 {
-    CLogger::getInstance().log( PtrMessage( new CMessage("Clearing thumbnails")) );
+    CLogger::getInstance().log( PtrMessage( new CMessage(tr("Clearing thumbnails"))) );
     m_ui->label_thumbPhoto->clear();
     m_ui->textEdit_captionPreview->clear();
     m_ui->lineEdit_Caption->clear();
@@ -1046,7 +1044,7 @@ void MainWin::skinNameChanged( QString newName )
 void MainWin::skinPathChanged( QString filePath )
 {
     m_projectParameters.m_galleryConfig.skinPath = filePath;
-    CLogger::getInstance().log( PtrMessage(new CMessage( "Skin Path: " + filePath )) );
+    CLogger::getInstance().log( PtrMessage(new CMessage(tr("Skin Path: ") + filePath )) );
 }
 
 

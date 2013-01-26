@@ -1,0 +1,15 @@
+source: ezwebgallery
+Section: utils
+Priority: optional
+Maintainer: Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>
+Build-Depends: qt4-qmake, libqt4-dev, libmagick++-dev, cdbs, debhelper (>= 8)
+Standards-Version: 3.9.3
+Homepage: http://www.ezwebgallery.org
+
+Package: ezwebgallery
+Architecture: any
+Depends: libmagick++4, ${shlibs:Depends}, ${misc:Depends}
+Description: Generates web photo galleries in a few clicks.
+    Select a folder containing photos and generate a web photo gallery
+    in a few clicks. Galleries are optimized to be watched on any desktop
+    and mobile browsers and are skinnable.

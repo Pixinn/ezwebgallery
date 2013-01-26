@@ -334,7 +334,6 @@ bool CGalleryGenerator::generateFileStructure( )
     const QString photosFilesPath( QString(PHOTOSPATH) + "/res" );
     const QString thumbsFilesPath( THUMBSPATH );
     QDir outPath( m_parameters.m_galleryConfig.outputDir );
-    QDir srcPath( CPlatform::applicationDirPath()  );
 
     if ( !outPath.mkpath( thumbsFilesPath ) ){
         m_msgErrorList.append( CError::error(CError::DirectoryCreation) + thumbsFilesPath );
@@ -351,8 +350,8 @@ bool CGalleryGenerator::generateFileStructure( )
 
     //Copie des fichiers ressources (ie non modifiable, ne faisant pas partie des skins)
     outPath = QDir( m_parameters.m_galleryConfig.outputDir );
-    srcPath = CPlatform::applicationDirPath();
-    if( !srcPath.cd( QString(RESSOURCES) ) ){
+    QDir srcPath( CPlatform::resourceDirPath()  );;
+    if( !srcPath.exists() ){
         m_msgErrorList.append(  CError::error(CError::SourceFileNotFound) );
         emit abordGenerationSignal( );
         return false;

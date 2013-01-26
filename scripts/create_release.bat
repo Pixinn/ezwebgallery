@@ -1,4 +1,4 @@
-cls
+﻿cls
 
 echo off
 
@@ -9,30 +9,30 @@ if not [%4] == [] goto :error
 
 md %3
 
-md %3\res
-md %3\res\ressources
-md %3\res\ressources\php
-md %3\res\ressources\images
-md %3\res\ressources\images\smileys
-md %3\res\ressources\css
-md %3\res\ressources\javascript\jquery
-md %3\res\ressources\javascript\jquery\plugins
-md %3\res\ressources\javascript\tools
-md %3\res\ressources\javascript\core
+md %3\data
+md %3\data\ressources
+md %3\data\ressources\php
+md %3\data\ressources\images
+md %3\data\ressources\images\smileys
+md %3\data\ressources\css
+md %3\data\ressources\javascript\jquery
+md %3\data\ressources\javascript\jquery\plugins
+md %3\data\ressources\javascript\tools
+md %3\data\ressources\javascript\core
 
-copy ".\Web\index.html" %3\res
-copy ".\Web\ressources\php\*.php" %3\res\ressources\php
-copy ".\Web\ressources\images\*.*" %3\res\ressources\images
-copy ".\Web\ressources\images\smileys\*.*" %3\res\ressources\images\smileys
-copy ".\Web\ressources\css\*.css" %3\res\ressources\css
-copy ".\Web\ressources\javascript\jquery\*.js" %3\res\ressources\javascript\jquery
-copy ".\Web\ressources\javascript\jquery\plugins\*.js" %3\res\ressources\javascript\jquery\plugins
-copy ".\Web\ressources\javascript\tools\*.js" %3\res\ressources\javascript\tools
-copy "%2\*-min.js" %3\res\ressources\javascript\
-copy "%2\core\*-min.js" %3\res\ressources\javascript\core
+copy "..\Web\index.html" %3\data
+copy "..\Web\ressources\php\*.php" %3\data\ressources\php
+copy "..\Web\ressources\images\*.*" %3\data\ressources\images
+copy "..\Web\ressources\images\smileys\*.*" %3\data\ressources\images\smileys
+copy "..\Web\ressources\css\*.css" %3\data\ressources\css
+copy "..\Web\ressources\javascript\jquery\*.js" %3\data\ressources\javascript\jquery
+copy "..\Web\ressources\javascript\jquery\plugins\*.js" %3\data\ressources\javascript\jquery\plugins
+copy "..\Web\ressources\javascript\tools\*.js" %3\data\ressources\javascript\tools
+copy "%2\*-min.js" %3\data\ressources\javascript\
+copy "%2\core\*-min.js" %3\data\ressources\javascript\core
 
 md %3\skins
-xcopy /e .\Skins %3\skins\ 
+xcopy /e .\Skins %3\skins\
 
 copy %QTDIR%\bin\QtCore4.dll %3
 copy %QTDIR%\bin\QtGui4.dll %3
@@ -85,7 +85,7 @@ echo #   and place them in .\Web\ressources\javascript\
 echo #   You can run compress_js.bat script for that purpose.
 echo # + in order to properly generate the NSI Windows Installer,
 echo #   the destination folder must be ..\distribution\windows
-echo #  
+echo #
 echo ###############################################################################
 echo.
 echo on
