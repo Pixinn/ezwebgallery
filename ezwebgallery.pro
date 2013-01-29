@@ -138,9 +138,8 @@ RESOURCES = ./src/ressources/GalleryDesigner.qrc
 win32:RC_FILE = ./src/ressources/win32/GalleryDesigner.rc
 
 ### POST BUILD STEPS : calling the deployment script
-# unix|macx {
-#    Release{ QMAKE_POST_LINK += $$SCRIPTDIR/compress_javascript.sh $$MINJS_DIR && \
-#                                $$SCRIPTDIR/create_release.sh $$DESTDIR/$$TARGET $$MINJS_DIR $$DESTDIR
+#unix {
+#    Release{ QMAKE_POST_LINK += $$SCRIPTDIR/prepare_release.sh
 #    }
 #}
 
@@ -177,7 +176,22 @@ QMAKE_CLEAN += $$MINJS_DIR/common-min.js \
                $$MINJS_DIR/core/classTablePhoto-min.js \
                $$MINJS_DIR/core/ \
                $$PWD/src/builddate.h \
-               -r $$BUILDDIR
+               -r $$BUILDDIR \
+               -r $$PWD/deployment/common/data/ressources
 
-QMAKE_DISTCLEAN += -r $$BUILDDIR
+QMAKE_DISTCLEAN += -r   $$BUILDDIR/ \
+                   -r   $$PWD/src/GeneratedFiles/ \
+                   -r   $$PWD/src/ipch/ \
+                        $$PWD/src/builddate.h \
+                        $$PWD/src/ezwebgallery.pro.user \
+                        $$PWD/src/ezwebgallery.sdf \ 
+                        $$PWD/src/ezwebgallery.sln \
+                        $$PWD/src/ezwebgallery.suo \
+                        $$PWD/src/ezwebgallery.vcxproj.user \
+                        $$PWD/src/ezwebgallery.opensdf \
+                        $$PWD/src/vc100.pdb \
+                        $$PWD/deployment/*.exe \
+                        $$PWD/Makefile* \
+                        $$PWD/*.pro.*
+                   
 

@@ -1,5 +1,5 @@
-ezwebgallery (0.19.3-0ubuntu1) precise; urgency=low
+ezwebgallery (0.19.3.1-0ubuntu1) precise; urgency=low
 
-  * Initial Release working on precise and quantal.
+  * Some refinements to increase the compliance with Debian' policies  
 
- -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Thu, 17 Jan 2013 22:53:11 +0100
+ -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Thu, 29 Jan 2013 23:55:11 +0100

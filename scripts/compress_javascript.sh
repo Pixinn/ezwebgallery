@@ -14,9 +14,7 @@
 
 if [ $# -eq 1 ]; then
 
-echo " "
-echo "###### Minifying javascript files "
-echo " "
+echo "...Minifying javascript files"
 
 SCRIPTDIR="$( cd "$( dirname "$0" )" && pwd )"
 JS_PATH=$SCRIPTDIR/../web/ressources/javascript  
