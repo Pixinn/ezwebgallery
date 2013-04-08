@@ -1,6 +1,6 @@
 ﻿/* 
  *  EZWebGallery:
- *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
+ *  Copyright (C) 2011-2012 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,56 +17,95 @@
 */
 
 
-
-#include <QObject>
-
 #include "CMessage.h"
 #include "GlobalDefinitions.h"
 
 
+const QColor CMessage::s_color( 63,63,63 );
+
 /*******************************************************************
-* warning( e_warnings warning )
+* message( e_message message )
 * ------------------------
-* Returns a properly translated warning
+* Returns a properly translated message
+* TR not available on static QStrig as their instanciation is too early
 ********************************************************************/
 QString CMessage::message( e_message message )
 {
     QString returnedMessage;
     switch( message )
     {
-        //-- ERRORS
-        case Err_FileSaving:
-            returnedMessage = QObject::tr("Unspecified error while saving the file: ");
-            break;
-        case Err_FileOpening:
-            returnedMessage = QObject::tr("Unspecified error while opening the file: ");
-            break;
-        case Err_FileCreation:
-            returnedMessage = QObject::tr("Unspecified error while creating the file: ");
-            break;
-        case Err_DirectoryCreation:
-            returnedMessage = QObject::tr("Unspecified error while creating the directory: ");
-            break;
-        case Err_InvalidDirectory:
-            returnedMessage = QObject::tr("Invalid directory: ");
-            break;
-        case Err_SourceFileNotFound:
-            returnedMessage = QObject::tr("Ressource files not found.");
-            break;
-        case Err_WatermarkInvalid:
-            returnedMessage = QObject::tr("Watermark not valid: ");
-            break;
-        case Err_InvalidFiles:
-            returnedMessage = QObject::tr("Some photos cannot be read from the disk.");
-            break;
         //-- OTHER
         case Info_RemovingPhotos:
             returnedMessage = QObject::tr("Some photos can not be found and have been removed from the project.");
             break;
         default:
-            returnedMessage = QObject::tr("Unknown message.");
+            returnedMessage = QObject::tr("Undefined message.");
             break;
     }   
 
     return returnedMessage;
+}
+
+
+CMessage::CMessage( void ) :
+    m_summary(),
+    m_info(),
+    m_details()
+{}
+
+CMessage::CMessage( const QString& summary ) :
+    m_summary( summary ),
+    m_info(),
+    m_details()
+    {   }
+
+CMessage::CMessage( const QString& summary, const QString& info ) :
+    m_summary( summary ),
+    m_info( info ),
+    m_details()
+    {   }
+
+CMessage::CMessage( const QString& summary, const QString& info, const QString& details ) :
+    m_summary( summary ),
+    m_info( info ),
+    m_details( details )
+    {   }
+
+CMessage::CMessage( const CMessage& other ) :
+    m_summary( other.m_summary ),
+    m_info( other.m_info ),
+    m_details( other.m_details )
+    {   }
+
+QString CMessage::message( void ) const
+{
+    QString message = m_summary;
+    if( !m_info.isEmpty() ) { 
+        message += ("\n" + m_info);
+    }
+    if( !m_details.isEmpty() ) { 
+        message += ("\n" + m_details);
+    }
+
+    return message;
+}
+
+QColor CMessage::color( void ) const
+{
+    return s_color;
+}
+
+QString CMessage::summary( void ) const
+{
+    return m_summary;
+}
+
+QString CMessage::details( void ) const
+{
+    return m_details;
+}
+
+QString CMessage::informativeText( void ) const
+{ 
+    return m_info;
 }

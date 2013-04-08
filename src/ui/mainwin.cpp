@@ -16,7 +16,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <QCoreApplication>
 #include <QDesktopServices>
 #include <QSettings>
@@ -43,6 +42,10 @@
 
 #include "mainwin.h"
 #include "CPlatform.h"
+#include "CWarning.h"
+#include "CError.h"
+#include "CMessage.h"
+#include "CLogger.h"
 
 using namespace std;
 
@@ -155,8 +158,7 @@ void MainWin::watermarkAutoColorChecked( int state )
     }
 }
 
-
-void MainWin::onProgressBar( int completion, QString color, QString message, int timeout )
+void MainWin::onProgressBar( int completion, QString color, PtrMessage msg, int timeout )
 {
     //La couleur de la barre ne change pas..
     QPalette barPalette = m_ui->progressBar_Generation->palette();
@@ -164,22 +166,21 @@ void MainWin::onProgressBar( int completion, QString color, QString message, int
     this->m_ui->progressBar_Generation->setPalette( barPalette );
 
     this->m_ui->progressBar_Generation->setValue( completion );
-    this->m_ui->statusbar->showMessage( message, timeout );
-    onLogMsg( message );
+    this->m_ui->statusbar->showMessage( msg->message(), timeout );
+    CLogger::getInstance().log( PtrMessage(new CMessage( msg->message() )) );
 }
 
-void MainWin::onLogMsg( QString str )
+void MainWin::onLogMsg( PtrMessage msg )
 {
-    m_debugMessages << QDateTime::currentDateTime().toString( "dd.MM.yyyy - hh:mm:ss.zzz\t" ) + str;
-    if( m_p_logDisplay->isVisible() ){
-        m_p_logDisplay->append( m_debugMessages.last() );
-    }    
+    QString dbg( msg->message() );
+    m_p_logDisplay->setTextColor( msg->color() );
+    m_p_logDisplay->append( QDateTime::currentDateTime().toString( "dd.MM.yyyy - hh:mm:ss.zzz\t" ) + msg->message() );
 }
 
 
 void MainWin::onForceStoppedFinished( QStringList errorMessages )
 {
-    onLogMsg("Force Stop");
+    onLogMsg( PtrMessage(new CWarning( tr("Forced Stop") )) );
 
     //On affiche un message d'erreur
     if( errorMessages.size() > 0){
@@ -242,7 +243,7 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
 /***************************************************************************************************/
 
 
-MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeeder*/, CProjectParameters& projectParameters, QWidget *parent ) :
+MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& projectParameters, QWidget *parent ) :
     QMainWindow( parent ),
     m_ui(new Ui::MainWin),    
     m_projectParameters( projectParameters ),
@@ -270,7 +271,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     m_p_tagsWindow = new QTextEdit( 0 );
     m_p_tagsWindow->setReadOnly( true );
     m_p_tagsWindow->setWindowTitle( tr("TAG list") );
-    m_p_tagsWindow->resize(720,500);
+    m_p_tagsWindow->resize(720,720);
     m_p_tagsWindow->setHtml( CPlatform::readTranslatedTextFile( "tagList.html" ) );
     //Fenêtre de conception de skin
     m_p_skinDesignerWindow = new WinSkinDesigner( &m_skinParameters /*, this*/ ); //La connection des paramètres avec l'ui se fait dans ce constructeur
@@ -289,7 +290,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     //Paramètres (=Session)
     connect( &m_projectParameters, SIGNAL(loaded(QString)), this, SLOT(sessionLoaded(QString)));
     connect( &m_projectParameters, SIGNAL(saved(QString)), this, SLOT(sessionSaved(QString)));
-    connect( &m_projectParameters, SIGNAL(message(CMessage)), this, SLOT(information(CMessage)));
+    connect( &m_projectParameters, SIGNAL(warning(PtrMessage)), this, SLOT(warning(PtrMessage)));
     //Afficher la fenêtre de tags
     connect( this->m_ui->action_DisplayTags, SIGNAL(triggered()), this, SLOT(showTagsWindow()));
     connect( this->m_ui->pushButton_CaptionShortcuts, SIGNAL(clicked()), this, SLOT(showTagsWindow()));
@@ -340,9 +341,16 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
     connect( this->m_ui->comboBox_WatermarkType, SIGNAL(activated(int)), this, SLOT(watermarkTypeChanged(int)) );
     connect( this->m_ui->groupBox_Watermark, SIGNAL(toggled(bool)), this, SLOT(watermarkGroupChecked(bool)) );
     connect( this->m_ui->checkBox_WatermarkTextColorAuto, SIGNAL(stateChanged(int)), this, SLOT(watermarkAutoColorChecked(int)));
-    
+}
 
-    /**** Init ****/	
+MainWin::~MainWin()
+{
+    delete m_p_configureWindow;
+    delete m_p_skinDesignerWindow;
+}
+
+void MainWin::init( void )
+{
     //Traduction de l'interface
     m_languageManager.translate();
     //Session
@@ -381,17 +389,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator/*, IPhotoFeeder &photoFeed
             openSession( fileToLoad );
         }
     }
-
-
 }
-
-MainWin::~MainWin()
-{
-    delete m_p_configureWindow;
-    delete m_p_skinDesignerWindow;
-}
-
-
 
 void MainWin::changeEvent(QEvent *e)
 {
@@ -554,49 +552,7 @@ void MainWin::openSession( const QString &sessionFile )
             if( m_projectParameters.version( ) > CPlatform::revisionInt() ){
                 displayMoreRecentMsgBox( );
             }
-            //Le contenu du répertoire d'entrée est-il toujours valable depuis la dernière sauvegarde ?
-            //ie : les photos source ont-elles changé de place depuis ??
-           /* if( m_photoFeeder.isValid() ){               
-                missingPhotos = m_photoDatabase.checkPhotosInDb();
-            }
-            else {
-                missingPhotos << tr("Input folder does not exist.");
-            }
-
-            //Tant que le répertoire d'entrée n'est pas valide on propose de le fournir
-            while( !missingPhotos.isEmpty() )
-            {
-                //Boite de dialogue informant du problème
-                alertBox.setText( tr("Input folder: ","Source folder containing the pictures")
-                                  + m_photoFeeder.getDirectoryPath()
-                                  + tr("\nSome photos cannot be found. They will be removed from the project.\n")
-                                  + tr("Do you want to manually provide their location ?") 
-                                );
-                alertBox.setInformativeText( tr("Error:\n") + missingPhotos.join("\n") );
-                alertBox.setIcon( QMessageBox::Warning );
-                alertBox.setStandardButtons( QMessageBox::Yes | QMessageBox::No);
-                alertBox.setDefaultButton( QMessageBox::Yes );
-                if( alertBox.exec() ==  QMessageBox::Yes ){
-                    //Boite de dialogue pour relocaliser les photos
-                    m_lastSelectedDir  = QFileDialog::getExistingDirectory( this,
-                                             tr("Please select the directory containing the project's photos.","Relocalisation des photos"),
-                                             m_lastSelectedDir,
-                                             QFileDialog::ShowDirsOnly );
-                    if( !m_lastSelectedDir.isEmpty() ){
-                        m_projectParameters.m_galleryConfig.inputDir = m_lastSelectedDir;
-                        m_ui->lineEdit_SourceFolder->setText( m_photoFeeder.getDirectoryPath() );
-                        missingPhotos = checkPhotosInDir( m_photoFeeder.getDirectory() );
-                    }
-                    else{ //L'utilisateur a annulé le choix d'un répertoire
-                         m_lastSelectedDir = QDir::homePath();
-                         missingPhotos.clear();
-                    }
-                }
-                else{
-                    missingPhotos.clear(); //L'utilisateur a décliné: on utilise le répertoire qui était dans la sauvegarde
-                }
-            }
-            */
+            
             m_captionManager.reset();
        
             //Chargement de la skin
@@ -606,16 +562,18 @@ void MainWin::openSession( const QString &sessionFile )
             //Si des erreurs sont survenues
             if( !errors.isEmpty() )
             {
-                onLogMsg( QString("[Skin]. A problem occured when opening the file: ") + skinToLoad + errors.join("\n") );               
+               
+                CLogger::getInstance().log( PtrMessage(new CError( tr("A problem occured when opening the file: "),  skinToLoad + errors.join("\n") )) );               
+                //onLogMsg( QString("[Skin]. A problem occured when opening the file: ") + skinToLoad + errors.join("\n") );               
                         
                 QMessageBox msgBox( this );
-                msgBox.setInformativeText( tr("Cannot load the skin: ") + skinToLoad + tr(".\n\nUsing default skin instead.") );
+                msgBox.setInformativeText( tr("Cannot load the skin: ") + skinToLoad + "\n\n" + tr("Using default skin instead.") );
                 msgBox.setDetailedText( errors.join("\n") );
                 msgBox.setIcon( QMessageBox::Information );
                 msgBox.exec();                                     
             }
             else {    
-                onLogMsg( QString("[Skin]. Skin loaded: ") + m_skinParameters.name() );
+                CLogger::getInstance().log( PtrMessage(new CMessage( tr("Skin loaded: ") + m_skinParameters.name())) );
             }
             
         } //Fin du traitement de la session chargée
@@ -623,7 +581,7 @@ void MainWin::openSession( const QString &sessionFile )
         
     else //Erreur de chargement de la session
     {   
-        onLogMsg( "[Session]. Error: " + sessionFile + "not loaded" );
+        CLogger::getInstance().log( PtrMessage(new CError( "[Session]", sessionFile + " not loaded" )) );
         QMessageBox* alertBox = new QMessageBox( QMessageBox::Critical, tr("Error"), CError::error(CError::FileOpening), QMessageBox::Close);
         alertBox->setDetailedText( sessionFile );
         alertBox->exec();
@@ -725,13 +683,8 @@ void MainWin::showTagsWindow( )
 void MainWin::showLogWindow( )
 {
     if( !m_p_logDisplay->isVisible() ){
-        QStringListIterator iterator(m_debugMessages);    
-        m_p_logDisplay->clear( );
-        while ( iterator.hasNext() ){
-            m_p_logDisplay->append( iterator.next() );
-        }        
-        m_p_logDisplay->show( );       
-    } 
+        m_p_logDisplay->show( );
+    }
 }
 
 
@@ -940,7 +893,7 @@ void MainWin::generateGallery( )
                 return; //On abandonne la génération !
             }
             //Vérification de la liste des photos d'entrée et reconstruction des légendes si besoin
-            onProgressBar( 0, "green", tr("Building photo list.") );
+            onProgressBar( 0, "green", PtrMessage(new CMessage(tr("Building photo list."))) );
             QStringList photosModified = m_photoDatabase.photosModified(); //to be executed before refresh() or you'll miss when some photo are removed
             QStringList newPhotos = m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
             m_captionManager.reset();
@@ -988,7 +941,7 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
     QVariant photoSelected = m_photoDatabase.model().data( indexPhotoName, Qt::DisplayRole );
     QString photoFilename = photoSelected.toString();
     QFileInfo photoFileInfo( m_photoFeeder.getDirectory(), photoFilename );
-    onLogMsg( QString("[Thumbnail]. Affichage Vignette: ") + photoFilename  );
+    CLogger::getInstance().log( PtrMessage(new CMessage( tr("Displaying thumbnail: ") + photoFilename  )) );
 
     m_ui->label_thumbPhoto->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
    
@@ -1012,11 +965,11 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
 
 
 //--------------------------------
-//--------- Clearing the fields of the thumbnaiol tab
+//--------- Clearing the fields of the thumbnail tab
 //--------------------------------
 void MainWin::clearThumbnailTab( void )
 {
-    onLogMsg( QString("[Thumbnail]. Clearing.") );
+    CLogger::getInstance().log( PtrMessage( new CMessage(tr("Clearing thumbnails"))) );
     m_ui->label_thumbPhoto->clear();
     m_ui->textEdit_captionPreview->clear();
     m_ui->lineEdit_Caption->clear();
@@ -1037,37 +990,37 @@ void MainWin::thumnailChanged( int state )
 
 void MainWin::displayCaption( QString text )
 {
-    this->m_ui->lineEdit_Caption->setText( text );
+    m_ui->lineEdit_Caption->setText( text );
 }
 
-void MainWin::error( CMessage err )
+void MainWin::error( PtrMessage err )
 {
+    CLogger::getInstance().log( err );
     QMessageBox modalErrorBox( this );
-    modalErrorBox.setText( err.summary() );
-    modalErrorBox.setInformativeText( err.informativeText() );
-    modalErrorBox.setDetailedText( err.details() );
+    modalErrorBox.setText( err->summary() );
+    modalErrorBox.setDetailedText( err->details() );
     modalErrorBox.setIcon( QMessageBox::Critical );
     modalErrorBox.exec();
 }
 
 
-void MainWin::warning( CMessage warning )
+void MainWin::warning( PtrMessage warning )
 {
+    CLogger::getInstance().log( warning );
     QMessageBox modalErrorBox( this );
-    modalErrorBox.setText( warning.summary() );
-    modalErrorBox.setInformativeText( warning.informativeText() );
-    modalErrorBox.setDetailedText( warning.details() );
+    modalErrorBox.setText( warning->summary() );
+    modalErrorBox.setDetailedText( warning->details() );
     modalErrorBox.setIcon( QMessageBox::Warning );
     modalErrorBox.exec();
 }
 
 
-void MainWin::information( CMessage info )
+void MainWin::information( PtrMessage info )
 {
+    CLogger::getInstance().log( info );
     QMessageBox modalErrorBox( 0 );
-    modalErrorBox.setText( info.summary() );
-    modalErrorBox.setInformativeText( info.informativeText() );
-    modalErrorBox.setDetailedText( info.details() );
+    modalErrorBox.setText( info->summary() );
+    modalErrorBox.setDetailedText( info->details() );
     modalErrorBox.setIcon( QMessageBox::Information );
     modalErrorBox.exec();
 }
@@ -1088,7 +1041,7 @@ void MainWin::skinNameChanged( QString newName )
 void MainWin::skinPathChanged( QString filePath )
 {
     m_projectParameters.m_galleryConfig.skinPath = filePath;
-    onLogMsg( QString("[Skin]. Skin Path: ") + filePath );
+    CLogger::getInstance().log( PtrMessage(new CMessage(tr("Skin Path: ") + filePath )) );
 }
 
 
@@ -1097,6 +1050,8 @@ void MainWin::skinPathChanged( QString filePath )
 
 
 /****************************************** PRIVATE MEMBERS ************************************************/
+
+
 bool MainWin::checkForGeneration( QString &errorMsg )
 {
     QString destDir = QDir::cleanPath( m_ui->lineEdit_DestinationFolder->text() );

@@ -1,0 +1,138 @@
+/* 
+ *  EZWebGallery:
+ *  Copyright (C) 2011 The EZWebGallery Dev Team <dev@ezwebgallery.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+html {font-size: 100%;
+	 height: 100%;
+	 overflow:hidden;} /* Important pour ie6 */
+
+body {
+  padding:0px;
+  border:0px;
+  margin:0px;
+  height:100%;  /* Indispensable pour que les div puissent avoir height=100% */
+  						  /* voir : http://www.alsacreations.com/actu/lire/92-vous-avez-dit-height100.html */
+  overflow:hidden; /* Important pour ie6 */
+  text-align:center;
+  font-size:1em;
+}
+
+/* Liens --> Normalement surchargé mais utile si lien placé sur page principale */
+/* On l'air de ne pas êtres surchargés sous IE6 */
+a:link {color: black;}
+a:visited {color: black;}
+a:active {color: black;}
+
+
+
+/* **** Progress bar. voir http://digitalbush.com/projects/progress-bar-plugin/ **** */
+
+/* boite de chargement */
+#progressbarWrapper{
+		display:none; 
+	 	position: absolute;
+		z-index:100;
+		padding:10px;
+		text-align:left;
+		font-weight:bold;
+		text-transform: uppercase; 
+		border:solid;
+		font-size:	1em;
+}
+
+/* progress bar container */
+#progressbar{
+		width:360px;
+    height:24px;
+    position:relative;
+		display:block;
+		border:solid;
+		/*font-family:	Georgia, "DejaVu Serif", Norasi, serif;	*/
+		font-size:	1em;
+}
+/* color bar */
+#progressbar div.progress{
+        position:absolute;
+        width:0;
+        height:100%;
+        overflow:hidden;
+}
+/* text on bar */
+#progressbar div.progress .text{
+        position:absolute;
+        text-align:center;
+}
+/* text off bar */
+#progressbar div.text{
+        position:absolute;
+        width:100%;
+        height:100%;
+        text-align:center;
+}
+
+
+/********************************************************************/
+/* Zone s'affichant à coté de flottants dans un design 2/3 colonnes */
+/********************************************************************/
+/* ATTENTION : NE PAS LUI DEFINIR DE MARGE LATERALE */
+/* Bug possible concernant "overflow" sous ie6. voir pour correctif :  */
+/* http://www.alsacreations.com/tuto/lire/588-design-trois-colonnes-positionnement-flottant.html */
+/* Dans un design 3 colonnes, les float gauche et droites doivent être
+ * placés dans le html AVANT la zone centrale.
+/**********************************************************************/
+.centralZone{
+	height:100%; 
+  overflow: hidden; /* Pour ne pas s'étendre sous les flottants. */
+}
+/* Zone à gauche */
+.leftZone{
+	float:left;
+	height:100%;
+}
+/* Zone à droite */
+.rightZone{
+	float:right;
+	height:100%;
+}
+/* Pied de page */
+.footer{
+	position:relative;
+	padding: 0px 30px 0px 30px;
+	margin-top:-3em;
+	text-align:left;
+}
+.footer #socialNetworks{
+	margin-left:30px;
+}
+.footer #logo{
+	float:right;
+	border:0px;
+	cursor:pointer;
+}
+
+
+/************************************************/
+
+.fullScreen{
+	 	position: absolute;
+		padding:0px;
+		margin:0px;
+		top:0px;
+		left:0px;
+		width:100%;
+		height:100%;
+}

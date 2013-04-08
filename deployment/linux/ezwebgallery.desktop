@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=0.19.3
+Type=Application
+Terminal=false
+Icon[fr_FR]=/usr/share/ezwebgallery/ezwebgallery-256px.png
+Name[fr_FR]=EZWebGallery
+Exec=ezwebgallery
+Comment[fr_FR]=Générez une galerie photo en ligne en quelques clics !
+Name=EZWebGallery
+GenericName=EZWebGallery
+Comment=Generate web photo galleries in a few clicks!
+Icon=/usr/share/ezwebgallery/ezwebgallery-256px.png
+Categories=Qt;Utility;Photography

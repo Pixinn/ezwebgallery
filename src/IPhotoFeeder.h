@@ -22,7 +22,7 @@
 #include <QStringList>
 
 #include "CPhotoProperties.h"
-#include "CMessage.h"
+#include "IMessage.h"
 
 
 /*****************************************
@@ -50,7 +50,7 @@ signals:
      /*void build( QList<CPhotoProperties> ); //Build from scratch using a list of photoproperties
      void build( QStringList );  //Build from scratch using a list containing  absolute filepaths      */
      void update( QStringList );  //Update a list containing absolute filepaths     
-     void error( CMessage );       //An error occured
+     void error( PtrMessage );       //An error occured
 };
 
 #endif

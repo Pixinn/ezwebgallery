@@ -16,13 +16,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-
-#include <QObject>
+#include <cstdlib>
+#include <iostream>
 
 #include "CError.h"
 #include "GlobalDefinitions.h"
 
+
+const QColor CError::s_color("red");
 
 /*******************************************************************
 * error( e_errors error )
@@ -34,6 +35,9 @@ QString CError::error( e_errors error )
     QString returnedError;
     switch( error )
     {
+        case Internal:
+            returnedError = QObject::tr("Internal Error.");
+            break;
         case FileSaving:
             returnedError = QObject::tr("Unspecified error while saving the file: ");
             break;
@@ -50,7 +54,7 @@ QString CError::error( e_errors error )
             returnedError = QObject::tr("Invalid directory: ");
             break;
         case SourceFileNotFound:
-            returnedError = QObject::tr("Ressource files not found.");
+            returnedError = QObject::tr("Resource files not found.");
             break;
         case WatermarkInvalid:
             returnedError = QObject::tr("Watermark not valid: ");
@@ -65,3 +69,53 @@ QString CError::error( e_errors error )
 
     return returnedError;
 }
+
+CError::CError( void ) :
+    m_summary(),
+    m_details()
+{   }
+
+CError::CError( e_errors err, const QString& details ) :
+    m_summary( CError::error( err ) ),
+    m_details( details )
+{
+    // NOT THREAD SAFE !! std::cerr << m_summary.toAscii().data() << details.toAscii().data() << std::endl;
+}
+
+CError::CError( const QString& summary,  const QString& details ) :
+    m_summary( summary ),
+    m_details( details )
+{
+    // NOT THREAD SAFE !! std::cerr << m_summary.toAscii().data() << m_details.toAscii().data() << std::endl;
+}
+
+CError::CError( const CError& other ) :
+    m_summary( other.m_summary ),
+   // m_info( other.m_info ),
+    m_details( other.m_details )
+{   }
+
+QString CError::message( void ) const
+{
+    return tr("Error: ") + m_summary + "\n" + m_details;
+}
+
+QColor CError::color( void ) const
+{
+    return s_color;
+}
+
+QString CError::summary( void ) const
+{
+    return m_summary;
+}
+
+QString CError::details( void ) const
+{
+    return m_details;
+}
+
+//QString CError::informativeText( void ) const
+//{ 
+//    return m_info;
+//}

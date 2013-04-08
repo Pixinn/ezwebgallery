@@ -1,6 +1,6 @@
 ﻿/* 
  *  EZWebGallery:
- *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
+ *  Copyright (C) 2011-2012 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,58 +21,35 @@
 #ifndef CMessage_H
 #define CMessage_H
 
-#include <QObject>
-#include <QString>
+#include "IMessage.h"
 
-class CMessage : public QObject
+class CMessage : public IMessage
 {
-    Q_OBJECT
 
 public:
 
     enum e_message
     {
-        //Errors
-        Err_FileSaving,
-        Err_FileOpening,
-        Err_FileCreation,
-        Err_DirectoryCreation,
-        Err_InvalidDirectory,
-        Err_SourceFileNotFound,
-        Err_WatermarkInvalid,
-        Err_InvalidFiles,
-        //Warning
-
-        //Other
-        Info_RemovingPhotos,
+        Info_RemovingPhotos
     };
 
-    CMessage() : QObject()
-        {   }
-    CMessage( const CMessage& other ) :
-        QObject(),
-        m_summary( other.m_summary ),
-        m_info( other.m_info ),
-        m_details( other.m_details )
-        {   }
-    CMessage( const QString& summary, const QString& info = QString(), const QString& details = QString() ) :
-        QObject(),
-        m_summary( summary ),
-        m_info( info ),
-        m_details( details )
-        {   }
+    CMessage( void );
+    CMessage( const CMessage& other );
+    CMessage( const QString& summary );
+    CMessage( const QString& summary, const QString& info );
+    CMessage( const QString& summary, const QString& info, const QString& details );
 
     static QString message( e_message );  //Returns a properly translated warning
 
-    void setSummary( const QString& summary ) { m_summary = summary; }
-    void setInformativeText( const QString& info ) { m_info = info; }
-    void setDetails( const QString& details ) { m_summary = details; }
+    QString message( void ) const;
+    QString summary( void ) const;
+    QString details( void ) const;
+    QString informativeText( void ) const;
+    QColor color( void ) const;
 
-    QString summary( void ) const { return m_summary; }
-    QString informativeText( void ) const { return m_info; }
-    QString details( void ) const { return m_details; }
 
 private:
+    static const QColor s_color;
     QString m_summary;
     QString m_info;
     QString m_details;

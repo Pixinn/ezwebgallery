@@ -148,14 +148,17 @@ QString CPlatform::applicationDirPath()
 
 
 /**************************
-* applicationDirPath()
+* skinDirPath()
 * ----------
 * Retourne le répertoire où se trouvent les skins fournies
 ***************************/
 QString CPlatform::skinDirPath()
 {
-    QString skinDir = applicationDirPath() + QString("/skins");
-    return skinDir;
+#ifdef Q_WS_WIN
+    return applicationDirPath() + QString("/skins");
+#else
+    return QString("/usr/share/ezwebgallery/skins");
+#endif
 }
 
 
@@ -179,7 +182,22 @@ QString CPlatform::appDataDir()
 
 
 /**************************
-* appDataDir()
+* resourceDirPath()
+* ----------
+* Retourne le répertoire contenant les resources
+***************************/
+QString CPlatform::resourceDirPath( void )
+{
+#ifdef Q_WS_WIN
+    return applicationDirPath() + QString("/data");
+#else
+    return QString("/usr/share/ezwebgallery/data");
+#endif
+}
+
+
+/**************************
+* forbiddenCharacters()
 * ----------
 * Retourne les caractères interdits.
 * ex: pour nommer un nom de fichier

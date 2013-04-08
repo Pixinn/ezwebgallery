@@ -117,17 +117,15 @@ class CPhoto : public CMagick
         QMap<QString,QString> exifTags( );          //Slection de tags exifs intressants
 
     private:
+        //operations
         void readExifTags( );
         QString rationalToDoubleStr( const std::string &rational );  //Converti un tag exif "rationel" en double
 
-    private:
+        //attributes
         QMap<QString,QString> m_exifTags;
 
-        //Membres privs statiques
-    private:
         static const QString EXIFcameraMaker;
         static const QString EXIFcameraModel;
-        static const QString EXIFcopyright;
         static const QString EXIFdateTimeOriginal;
         static const QString EXIFfocalLength;
         static const QString EXIFfNumber;
@@ -135,6 +133,17 @@ class CPhoto : public CMagick
         static const QString EXIFexposureProgram;
         static const QString EXIFflash;
         static const QString EXIFisoSpeedRatings;
+
+        static const QString TAGcaption;
+        static const QString TAGcountry;
+        static const QString TAGcity;
+        static const QString TAGsublocation;
+        static const QString TAGkeywords;
+        static const QString TAGauthor;
+        static const QString TAGcredit;
+        static const QString TAGsource;
+        static const QString TAGcopyright;
+        static const QString TAGcontact;
 };
 
 

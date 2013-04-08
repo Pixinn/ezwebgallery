@@ -27,9 +27,13 @@
 #include <QByteArray>
 
 #include <cstdlib>
+#include <iostream>
 
 #include "CPhoto.h"
 #include "CTaggedString.h"
+#include "CLogger.h"
+#include "CWarning.h"
+#include "CError.h"
 
 using namespace std;
 using namespace Magick;
@@ -73,14 +77,24 @@ bool CMagick::load( const QString & fileName )
             this->read( filenameUtf8 );		
         }
         catch( Magick::Error &error ){
-            //Echec ouverture de l'image
+            CLogger::getInstance().log( PtrMessage( new CError(QObject::tr("Caught a Magick error: "), error.what() ) ) );
             m_errors << QString( error.what() );
             f_success = false;
         }
+        catch( Magick::Warning &warning ){
+            CLogger::getInstance().log( PtrMessage( new CWarning(QObject::tr("Caught a Magick warning: "), warning.what() ) ) );
+            m_errors << QString( warning.what() );
+        }
+        catch( std::exception &error ) { // Process any other exceptions derived from standard C++ exception
+            CLogger::getInstance().log( PtrMessage( new CError(QObject::tr("Caught a C++ STD exception: "), error.what() ) ) );
+            m_errors << QString( error.what() );
+            f_success = false;
+        } 
     }
-    else //Le fichier n'existe pas ou ne peut pas tre ouvert en lecture
+    else //File doesn't exist or cannot be read
     {
         m_errors << QObject::tr("File doesn't exist");
+        CLogger::getInstance().log( PtrMessage(new CError(m_errors.last(), fileName)) );        
         f_success = false;
     }
 
@@ -105,10 +119,20 @@ bool CMagick::save(  const QString & fileToWrite, const int quality )
         f_success = true;
         this->write( filenameUtf8 );
     }
-    catch( Magick::Error &error ){ //Erreur lors de la sauvegarde        
-        m_errors <<  QString( error.what() ) ;
+    catch( Magick::Error &error ){
+        CLogger::getInstance().log( PtrMessage( new CError(QObject::tr("Caught a Magick error: "), error.what() ) ) );
+        m_errors << QString( error.what() );
         f_success = false;
     }
+    catch( Magick::Warning &warning ){
+        CLogger::getInstance().log( PtrMessage( new CWarning(QObject::tr("Caught a Magick warning: "), warning.what() ) ) );
+        m_errors << QString( warning.what() );
+    }
+    catch( std::exception &error ) { // Process any other exceptions derived from standard C++ exception
+        CLogger::getInstance().log( PtrMessage( new CError(QObject::tr("Caught a C++ STD exception: "), error.what() ) ) );
+        m_errors << QString( error.what() );
+        f_success = false;
+    } 
 
 
     return f_success;
@@ -354,9 +378,9 @@ t_watermark CWatermark::parameters( )
 
 
 //--- Membres statiques
+//For EXIF Tags, see http://www.imagemagick.org/script/escape.php and http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
 const QString CPhoto::EXIFcameraMaker("EXIF:Make");
 const QString CPhoto::EXIFcameraModel("EXIF:Model");
-const QString CPhoto::EXIFcopyright("EXIF:Copyright");
 const QString CPhoto::EXIFdateTimeOriginal("EXIF:DateTimeOriginal");
 const QString CPhoto::EXIFfocalLength("EXIF:FocalLength");
 const QString CPhoto::EXIFfNumber("EXIF:FNumber");
@@ -365,6 +389,17 @@ const QString CPhoto::EXIFexposureProgram("EXIF:ExposureProgram");
 const QString CPhoto::EXIFflash("EXIF:Flash");
 const QString CPhoto::EXIFisoSpeedRatings("EXIF:ISOSpeedRatings");
 
+//For IPTC Code, see http://www.imagemagick.org/script/escape.php and http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/IPTC.html
+const QString CPhoto::TAGcaption("IPTC:2:120");
+const QString CPhoto::TAGcountry("IPTC:2:101");
+const QString CPhoto::TAGcity("IPTC:2:90");
+const QString CPhoto::TAGsublocation("IPTC:2:92");
+const QString CPhoto::TAGkeywords("IPTC:2:25");
+const QString CPhoto::TAGauthor("IPTC:2:80");
+const QString CPhoto::TAGcredit("IPTC:2:110");
+const QString CPhoto::TAGsource("IPTC:2:115");
+const QString CPhoto::TAGcopyright("IPTC:2:116");
+const QString CPhoto::TAGcontact("IPTC:2:118");
 
 
 /*******************************************************************
@@ -754,13 +789,22 @@ void CPhoto::readExifTags( )
     int flash;
 
     //Lectures simples
-    m_exifTags.insert( CTaggedString::TAGcameraMaker,         QString(attribute( EXIFcameraMaker.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGcameraModel,         QString( attribute( EXIFcameraModel.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGcopyright,           QString( attribute( EXIFcopyright.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGfocalLength,         rationalToDoubleStr( attribute( EXIFfocalLength.toAscii().constData() ).c_str()) + QString("mm") );
-    m_exifTags.insert( CTaggedString::TAGexposureTime,        rationalToDoubleStr( attribute( EXIFexposureTime.toAscii().constData() ).c_str()) + QString("s") );
-    m_exifTags.insert( CTaggedString::TAGfNumber,             QString("f/") + rationalToDoubleStr( attribute( EXIFfNumber.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGisoSpeedRatings,     QString( attribute( EXIFisoSpeedRatings.toAscii().constData() ).c_str()) );    
+    m_exifTags.insert( CTaggedString::TAGcameraMaker,     QString(attribute( EXIFcameraMaker.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcameraModel,     QString( attribute( EXIFcameraModel.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGfocalLength,     rationalToDoubleStr( attribute( EXIFfocalLength.toAscii().constData() ).c_str()) + QString("mm") );
+    m_exifTags.insert( CTaggedString::TAGexposureTime,    rationalToDoubleStr( attribute( EXIFexposureTime.toAscii().constData() ).c_str()) + QString("s") );
+    m_exifTags.insert( CTaggedString::TAGfNumber,         QString("f/") + rationalToDoubleStr( attribute( EXIFfNumber.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGisoSpeedRatings, QString( attribute( EXIFisoSpeedRatings.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcaption,        QString::fromUtf8( attribute( TAGcaption.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcountry,        QString::fromUtf8(attribute( TAGcountry.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcity,           QString::fromUtf8(attribute( TAGcity.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGsublocation,    QString::fromUtf8(attribute( TAGsublocation.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGkeywords,       QString::fromUtf8(attribute( TAGkeywords.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGauthor,         QString::fromUtf8(attribute( TAGauthor.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcredit,         QString::fromUtf8(attribute( TAGcredit.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGsource,         QString::fromUtf8(attribute( TAGsource.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcopyright,      QString::fromUtf8(attribute( TAGcopyright.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcontact,        QString::fromUtf8(attribute( TAGcontact.toAscii().constData() ).c_str()) );
 
     //--- Interprtation
     //- Programme

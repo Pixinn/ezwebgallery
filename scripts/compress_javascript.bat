@@ -1,5 +1,5 @@
 echo off
-cls
+
 echo.
 echo ###############################################################################
 echo #
@@ -19,8 +19,9 @@ if not [%2] == [] goto :error
 
 :process
 
-SET JS_PATH=web\ressources\javascript
+SET JS_PATH=..\web\ressources\javascript
 
+md %1
 md %1\core
 
 echo on
@@ -35,7 +36,6 @@ java -jar  %YUI_COMPRESSOR% --charset UTF-8 -o %1\core\classHashTable-min.js  %J
 java -jar  %YUI_COMPRESSOR% --charset UTF-8 -o %1\core\classObjetAjustable-min.js  %JS_PATH%\core\classObjetAjustable.js
 java -jar  %YUI_COMPRESSOR% --charset UTF-8 -o %1\core\classTablePhoto-min.js  %JS_PATH%\core\classTablePhoto.js
 
-pause
 
 goto :end
 

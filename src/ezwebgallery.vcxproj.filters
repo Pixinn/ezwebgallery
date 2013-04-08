@@ -211,32 +211,11 @@
     <ClCompile Include="GeneratedFiles\Release\moc_IPhotoFeeder.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_CError.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_CError.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="global\CError.cpp">
       <Filter>Source Files\global</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_CMessage.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_CMessage.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="global\CMessage.cpp">
       <Filter>Source Files\global</Filter>
-    </ClCompile>
-    <ClCompile Include="global\CDebug.cpp">
-      <Filter>Source Files\global</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_CDebug.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_CDebug.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="CThumbnailLoader.cpp">
       <Filter>Source Files</Filter>
@@ -261,6 +240,24 @@
     </ClCompile>
     <ClCompile Include="generation\CDirChecker.cpp">
       <Filter>Source Files\generation</Filter>
+    </ClCompile>
+    <ClCompile Include="global\CWarning.cpp">
+      <Filter>Source Files\global</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_IMessage.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_IMessage.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CLogger.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CLogger.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="global\CLogger.cpp">
+      <Filter>Source Files\global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -324,6 +321,12 @@
     <ClInclude Include="generation\CDirChecker.h">
       <Filter>Header Files\generation</Filter>
     </ClInclude>
+    <CustomBuild Include="global\IMessage.h">
+      <Filter>Header Files\global</Filter>
+    </CustomBuild>
+    <CustomBuild Include="global\CLogger.h">
+      <Filter>Header Files\global</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <None Include="ressources\languages\GalleryDesigner_en.ts">
@@ -521,25 +524,21 @@
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
@@ -763,9 +762,6 @@
     <CustomBuild Include="global\CMessage.h">
       <Filter>Header Files\global</Filter>
     </CustomBuild>
-    <CustomBuild Include="global\CDebug.h">
-      <Filter>Header Files\global</Filter>
-    </CustomBuild>
     <CustomBuild Include="CPhoto.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -809,5 +805,10 @@
     <ResourceCompile Include="ressources\win32\GalleryDesigner.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="global\CWarning.h">
+      <Filter>Header Files\global</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

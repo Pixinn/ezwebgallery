@@ -31,7 +31,6 @@
 //Exif
 const QString CTaggedString::TAGcameraMaker("[EXIF:CameraMaker]");
 const QString CTaggedString::TAGcameraModel("[EXIF:CameraModel]");
-const QString CTaggedString::TAGcopyright("[EXIF:Copyright]");
 const QString CTaggedString::TAGtimeOriginal("[EXIF:Time]");
 const QString CTaggedString::TAGdateOriginal("[EXIF:Date]");
 const QString CTaggedString::TAGyearOriginal("[EXIF:Year]");
@@ -41,6 +40,17 @@ const QString CTaggedString::TAGexposureTime("[EXIF:ExposureTime]");
 const QString CTaggedString::TAGexposureProgram("[EXIF:ExposureProgram]");
 const QString CTaggedString::TAGflash("[EXIF:Flash]");
 const QString CTaggedString::TAGisoSpeedRatings("[EXIF:Iso]");
+//Iptc
+const QString CTaggedString::TAGcaption("[IPTC:Caption]");
+const QString CTaggedString::TAGcountry("[IPTC:Country]");
+const QString CTaggedString::TAGcity("[IPTC:City]");
+const QString CTaggedString::TAGsublocation("[IPTC:Sublocation]");
+const QString CTaggedString::TAGkeywords("[IPTC:Keywords]");
+const QString CTaggedString::TAGauthor("[IPTC:Author]");
+const QString CTaggedString::TAGcredit("[IPTC:Credit]");
+const QString CTaggedString::TAGsource("[IPTC:Source]");
+const QString CTaggedString::TAGcopyright("[IPTC:Copyright]");
+const QString CTaggedString::TAGcontact("[IPTC:Contact]");
 //Fichier
 const QString CTaggedString::TAGfileBaseName("[FILE:BaseName]");
 const QString CTaggedString::TAGfileName("[FILE:Name]");
@@ -104,7 +114,7 @@ CTaggedString::CTaggedString( const CTaggedString &other )
          p_char++;
      }
     //Les autres champs
-	this->m_exifTags = other.m_exifTags;
+	this->m_tags = other.m_tags;
 	this->m_fileInfo = other.m_fileInfo;
 	this->m_id = other.m_id;
     this->m_f_emoticonsEnabled = other.m_f_emoticonsEnabled;
@@ -117,18 +127,6 @@ CTaggedString::CTaggedString( const CTaggedString &other )
 ********************************************************************/
 void CTaggedString::init()
 {
-    m_exifTags.insert( TAGcameraMaker, QObject::tr("Undefined") );
-    m_exifTags.insert( TAGcameraModel, QObject::tr("Undefined") );
-    m_exifTags.insert( TAGcopyright, QObject::tr("Undefined") );
-    m_exifTags.insert( TAGtimeOriginal, QObject::tr("Undefined") );
-    m_exifTags.insert( TAGdateOriginal, QObject::tr("Undefined") );
-    m_exifTags.insert( TAGyearOriginal, QObject::tr("Undefined") );
-    m_exifTags.insert( TAGfocalLength, QObject::tr("Undefined") );
-    m_exifTags.insert( TAGfNumber, QObject::tr("Undefined") );
-    m_exifTags.insert( TAGexposureTime, QObject::tr("Undefined") );
-    m_exifTags.insert( TAGexposureProgram, QObject::tr("Undefined") );
-    m_exifTags.insert( TAGflash, QObject::tr("Undefined") );
-    m_exifTags.insert( TAGisoSpeedRatings, QObject::tr("Undefined") );
     m_id = -1;
     m_f_emoticonsEnabled = true;
 }
@@ -149,7 +147,7 @@ CTaggedString & CTaggedString::operator=(const CTaggedString &other )
          p_char++;
      }
 	//Les autres champs
-	this->m_exifTags = other.m_exifTags;
+	this->m_tags = other.m_tags;
 	this->m_fileInfo = other.m_fileInfo;
 	this->m_id = other.m_id;
     this->m_f_emoticonsEnabled = other.m_f_emoticonsEnabled;
@@ -187,7 +185,7 @@ void CTaggedString::setString( const QString &string )
 ********************************************************************/
 void CTaggedString::setExifTags( const QMap<QString,QString> & exifTags )
 {   
-    m_exifTags = exifTags;
+    m_tags = exifTags;
 }
 
 /*******************************************************************
@@ -226,8 +224,8 @@ QString CTaggedString::render( int preview ) const
     QString rendered = *this;
     
     //Exif
-    foreach( QString tag, m_exifTags.keys() ) {
-        rendered = rendered.replace( tag, m_exifTags.value( tag ) );
+    foreach( QString tag, m_tags.keys() ) {
+        rendered = rendered.replace( tag, m_tags.value( tag ) );
     }
     //Fichier
     rendered = rendered.replace( TAGfileBaseName, m_fileInfo.baseName() );

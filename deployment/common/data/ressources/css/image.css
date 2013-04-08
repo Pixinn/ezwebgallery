@@ -1,0 +1,169 @@
+/* 
+ *  EZWebGallery:
+ *  Copyright (C) 2011 The EZWebGallery Dev Team <dev@ezwebgallery.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+/*************** BOUTONS *************/
+
+.photoButtonEnabled{
+	position:relative;		/* pour centrage vertical */
+	cursor:pointer;
+	margin: auto;
+	border: solid;
+}
+.photoButtonDisabled{
+	position: relative;		/* pour centrage vertical */
+	margin: auto;	
+	border:solid;
+	opacity: 0.5;
+	filter:alpha(opacity=50); /*ie ...*/
+}
+
+
+#boutonIndex{
+    display:block;
+    cursor:pointer;
+    background-color:black;
+    float:right;
+    border: 1px;
+    border-color: black;
+}
+
+#boutonIndex:hover{
+    background-color:#CC0000;
+}
+
+/* ---- */
+
+
+
+
+/********** TEXT ***********/
+.navigationtext {
+  font-family: Arial;
+  font-weight: bold;
+  background:#FFFFFF;
+}
+
+.navigationtext {
+  font-family: Arial;
+  font-weight: bold;
+}
+
+
+
+/*********************** LAYOUT ECRAN *********************/
+/* Toute la "page" photo est contenue dans screenPhoto */
+/*  div en position *absolute* recouvrant tout l'écran.
+		Permet d'avoir un *z-index* et d'afficher les div contenus en tenant compte de ce z-index */
+#screenPhoto{
+		z-index:60;
+		display:none;
+		background-color:black;
+}
+
+
+div.photoHeader{
+	width:100%;
+	height:100px;		/* MODIFIABLE */
+	background-color:transparent;	/* MODIFIABLE */
+}
+div.photoFooter{
+	width:100%;
+	height:100px;		/* MODIFIABLE */
+	background-color:transparent ;	/* MODIFIABLE */
+}
+
+/* 	Les background-color: transparent sont urilisés si on veut un fond uni et donc si aucun des 3 div
+	n'a d'image ou de couleur de fond
+*/	
+div#photoLefter{
+	margin: 0px; /* OBLIGATOIRE !! Sinon pb pour calculer taille max photo */
+	background-color: transparent;
+}
+div#photoRighter{	
+	margin: 0px; /* OBLIGATOIRE !! Sinon pb pour calculer taille max photo */
+	background-color: transparent;
+}
+	
+div#wrapperAffichagePhoto{
+	background-color: transparent;
+}
+/**********************************************************/
+
+
+  
+
+
+
+
+/************** PHOTO *************/
+/** Contient la photo **/
+
+div#cadrePhoto{
+	position:relative;		/* pour centrage vertical */
+	cursor:default;
+    -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+
+div#divPhoto{
+	display:block;
+	background-color:black;
+}
+
+.mainPhoto{	/* La photo proprement dite. Classe ajoutée au runtime */
+	margin: 0px;
+	border:solid;
+}
+
+
+/************************************/
+
+
+/************* Spinner **************/
+/** Image affichée au centre de divPhoto au moment du load **/
+.Spinner{
+	position:relative;		/* pour centrage vertical */
+	border: none;
+	cursor:progress;
+}
+/*************************************/
+
+/*************** Légende  ******************/
+div.photoCaption {
+	display:block;      /*OBLIGATOIRE SINON BUG SOUS IE6 */
+	width: 100%;        /*OBLIGATOIRE SINON BUG SOUS IE6 */
+	text-align:center;  /*OBLIGATOIRE SINON BUG SOUS IE6 */
+	font-variant: normal;
+	border: solid;
+	border-width: 0px; /*OBLIGATOIRE SINON BUG SOUS IE6 */
+	padding : 5px 0px 0px 0px;
+    min-height: 10px;  /* Bouton - padding */
+}
+/**************************************/
+	
+/********************* Titre ******************/
+div#photoTitle{
+	display:block;           /*OBLIGATOIRE SINON BUG SOUS IE6 */
+	width: 100%;			 /*OBLIGATOIRE SINON BUG SOUS IE6 */
+	font-style:normal;		/* MODIFIABLE */ 
+	text-align:center;		 /*OBLIGATOIRE SINON BUG SOUS IE6 */
+	/*padding:0px 0px 5px 0px;*/
+    min-height: 15px;
+}
