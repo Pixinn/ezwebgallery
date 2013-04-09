@@ -1,6 +1,6 @@
 /* 
  *  EZWebGallery:
- *  Copyright (C) 2012 The EZWebGallery Dev Team <dev@ezwebgallery.org>
+ *  Copyright (C) 2013 Christophe Meneboeuf <xtof@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

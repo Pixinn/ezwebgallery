@@ -1,6 +1,6 @@
 ﻿/* 
  *  EZWebGallery:
- *  Copyright (C) 2012 The EZWebGallery Dev Team <dev@ezwebgallery.org>
+ *  Copyright (C) 2013 Christophe Meneboeuf <xtof@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,6 +38,9 @@ function CUserInterractions( p_properties, htmlstructure )
     this.currentPhotoId = 1;
     this.nextPhotoId = 2;
     
+    this.fCurrentlyScrolling = false;
+    this.fEnablePreviousNextRequired = false;
+    
     var KEY_ARROW_LEFT = 37;
     var KEY_ARROW_RIGHT = 39;
     var KEY_ESC = 27;
@@ -50,7 +53,6 @@ function CUserInterractions( p_properties, htmlstructure )
     
         that.html.index.mosaic.$thumbnails.click( function() {
             TOOLS.trace( "thumbnail #" + this.id + " clicked." );
-            //that.disablePreviousNext();
             that.thumbnailClickedEvent.fire( this );
         });
         
@@ -68,8 +70,14 @@ function CUserInterractions( p_properties, htmlstructure )
     
     this.enablePreviousNext = function()
     {
-        that.enablePrevious();
-        that.enableNext();
+        if(  !that.fCurrentlyScrolling ) { //Enabling buttons while scrolling is error prone
+            that.enablePrevious();
+            that.enableNext();
+            that.fEnablePreviousNextRequired = false;
+        }
+        else {
+            that.fEnablePreviousNextRequired = true;
+        }
     }
     
     this.enablePrevious = function()
@@ -153,29 +161,41 @@ function CUserInterractions( p_properties, htmlstructure )
     }
     
     this.onPreviousPhoto = function() {
-        if( that.previousPhotoId == 1 ) {
-            that.disablePrevious();
-        }
+        that.disablePrevious();
         that.previousPhotoEvent.fire( {id: that.previousPhotoId} );
     }
     
     this.onNextPhoto = function() {
-        if( that.nextPhotoId > that.properties.photos.list.length ) {
-            that.disableNext();
-        }
+        that.disableNext();
         that.nextPhotoEvent.fire( {id: that.nextPhotoId} );
+    }
+    
+    this.onScrolling = function() {
+        that.fCurrentlyScrolling = true;
+    }
+    
+    this.onScrolled = function() {
+        that.fCurrentlyScrolling = false;        
+        that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
+        that.html.photo.$div.click( function() { that.onClosePhoto(); } );
+        if( that.fEnablePreviousNextRequired ) {
+            that.fEnablePreviousNextRequired = false;
+            that.enablePreviousNext();
+        }
     }
     
     this.onIndexScreen  = function()
     {
         $(window).unbind("keydown")
                       .keydown( function( evt) { that.onKeyboardIndexSrc(evt); } );
+        that.html.photo.$div.unbind("click");
     }
     
     this.onPhotoScreen  = function()
     {
         $(window).unbind("keydown")
                       .keydown( function( evt) { that.onKeyboardPhotoScr(evt); } );
+        that.html.photo.$div.click( function() { that.onClosePhoto(); } );
     }
     
     this.onKeyboardIndexSrc = function( evt )
@@ -189,14 +209,13 @@ function CUserInterractions( p_properties, htmlstructure )
                     that.watchedKeyDown = true;
                     that.previousIndexEvent.fire();
                     that.watchedKeyDown = false;
-                    //f_watchedKeyCatched = true;
                     break;
                 case KEY_ARROW_RIGHT:
                     that.watchedKeyDown = true;
                     that.nextIndexEvent.fire();
                     that.watchedKeyDown = false;
-                    //f_watchedKeyCatched = true;
                     break;
+                default: break;
                 }
         }
     }

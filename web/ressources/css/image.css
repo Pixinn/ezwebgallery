@@ -107,7 +107,33 @@ div#wrapperAffichagePhoto{
 /**********************************************************/
 
 
+ /*************** CAROUSSEL *************/
+#photoViewport {
+    background: transparent;
+    position:relative;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+  }
   
+  
+#slidesContainer {
+    background:transparent;
+    width:300%;
+    height:100%;
+    position: relative;
+    top: 0px;
+    left: 0px;
+ }
+ 
+div.slide {
+    background:transparent;
+    width:33.333%;
+    height:100%;
+    text-align:center;
+    float:left;
+  }
+ 
 
 
 
@@ -128,6 +154,11 @@ div#divPhoto{
 	display:block;
 	background-color:black;
 }
+
+div#divPhoto img{
+    cursor:pointer;
+}
+
 
 .mainPhoto{	/* La photo proprement dite. Classe ajoutée au runtime */
 	margin: 0px;

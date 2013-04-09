@@ -1,6 +1,6 @@
 /*
  *  EZWebGallery:
- *  Copyright (C) 2012 The EZWebGallery Dev Team <dev@ezwebgallery.org>
+ *  Copyright (C) 2013 Christophe Meneboeuf <xtof@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,9 +40,6 @@ function CPhoto( id, targetedSize )
                                     that.f_loaded = true;
                                     callback( that );
                                 } )
-                               .error( function() {
-                                    TOOLS.trace("ERROR loading " + $(this).attr("src"));
-                                })
                                .attr( "src", url );
             
         }
@@ -82,7 +79,5 @@ function CPhoto( id, targetedSize )
     {
         return this.f_loaded;
     }
-    
-    
     
 }

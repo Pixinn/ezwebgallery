@@ -1,6 +1,6 @@
 ﻿/*
  *  EZWebGallery:
- *  Copyright (C) 2012 The EZWebGallery Dev Team <dev@ezwebgallery.org>
+ *  Copyright (C) 2013 Christophe Meneboeuf <xtof@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,55 +22,94 @@ function CCarrousel( p_properties, p_html )
     this.properties = p_properties;
     this.html = p_html;
     this.html.photoClass = "mainPhoto";
-    this.photoDisplayedLoaded = new CEvent();
+    this.html.$viewport = $("#photoViewport");
+    this.html.$slides = $(".slide");
+    this.html.$deprecated = "NULL";
+    this.html.$previous  = $("#previousSlide");
+    this.html.$current  = $("#currentSlide");
+    this.html.$next  = $("#nextSlide");
+    this.photoDisplayedLoadedEvent = new CEvent();
+    this.scrollingEvent = new CEvent();
+    this.scrolledEvent = new CEvent();
     
     this.loader = new CPhotoLoader( p_properties, this.html );
+    
+    this.scrolledAmount = 0;
     this.prevPhoto = -1;
     this.currPhoto = -1;
-    this.nextPhoto = -1;
+    this.nextPhoto = -1; 
 
     //In: CPhoto
-    this.displayPhoto = function( photo )
+    this.displayPhoto = function( photo, $slide )
     {   
-        that.html.$div.find('img').remove();
+        var $div = $slide.find("#divPhoto");
+        $div.find('img').remove();
         var image = photo.getImage();
+        $image = $( image );
         
         if( photo.isLoaded() == true ) { //If not the spinner, add the border
-            $( image ).removeClass()
-                        .addClass( that.html.photoClass );
+            $image.removeClass()
+                       .addClass( that.html.photoClass );
         }
-        that.html.$div.append( image  );
-        this.currentPhoto = photo;
+        $div.append( image );                
+        
+        $div.width( $image.outerWidth() )
+              .height( $image.outerHeight() );
+         $div.parent().width( $div.outerWidth() )
+                          .height( $div.outerHeight() + $div.siblings().outerHeight() ) //photo + title + caption
+                          .verticalCenter( 0 );
+                          
+        TOOLS.trace( "parent: " + $("#cadrePhoto").width() +  " - " + $("#cadrePhoto").parent().height() );
+        TOOLS.trace( "div: " + $div.width() +  " - " + $div.height() );
+        TOOLS.trace( "img: " + $image.width() +  " - " + $image.height() );
+    }
+    
+    //Centers the viewport on the current slide
+    this.centerViewport = function()
+    {
+        that.html.$viewport.scrollLeft( that.html.$current.position().left );
     }
 
+    this.previous = function( newid )
+    {
+        that.setCurrentPhoto( newid );
+                       
+        var photo = that.loader.load( that.currPhoto, that.loader.PREVIOUS );
+        that.currentPhoto = photo;
+        that.insertPhotoFrame( that.html.$previous );
+        that.displayPhoto( photo, that.html.$previous );
+        
+        that.scroll( that.html.$previous );
+        
+        return photo;
+    }
 
     this.load = function( id )
     {
         that.setCurrentPhoto( id );   
-        var photo = that.loader.load( id, that.loader.NEXT );
-        that.displayPhoto( photo );
+        var photo = that.loader.load( id, that.loader.NEXT );        
+        that.displayPhoto( photo, that.html.$current );
+        
+        that.html.$viewport.scrollLeft( that.html.$current.position().left ); //centering on current photo
+        that.currentPhoto = photo;
+        
         return photo;
     }
 
     this.next = function( newid )
     {
         that.setCurrentPhoto( newid );
-        //+TBC
+                       
         var photo = that.loader.load( that.currPhoto, that.loader.NEXT );
-        that.displayPhoto( photo );
+        that.currentPhoto = photo;
+        that.insertPhotoFrame( that.html.$next );
+        that.displayPhoto( photo, that.html.$next );
+        
+        that.scroll( that.html.$next );
+        
         return photo;
-        //-TBC
     }
 
-    this.previous = function( newid )
-    {
-        that.setCurrentPhoto( newid );
-        //+TBC
-        var photo = that.loader.load( that.currPhoto, that.loader.PREVIOUS );
-        that.displayPhoto( photo );
-        return photo;
-        //-TBC
-    }
     
     this.getCurrentPhoto = function()
     {
@@ -84,6 +123,19 @@ function CCarrousel( p_properties, p_html )
     }
 
     //+++ PRIVATE
+    this.updateHandles = function()
+    {
+        that.html.$deprecated = $(".deprecated");
+        that.html.$previous  = $("#previousSlide"); 
+        that.html.$current  = $("#currentSlide");
+        that.html.$next  = $("#nextSlide");
+        that.html.$frame = that.html.$current.find("#cadrePhoto");
+        that.html.$div = that.html.$frame.find("#divPhoto");
+        that.html.$title = that.html.$frame.find("#photoTitle");
+        that.html.buttons.$close = that.html.$title.find("#boutonIndex");    
+        that.html.$slides = $(".slide");
+    }
+    
     this.setCurrentPhoto = function( id )
     {
         that.currPhoto = id;        
@@ -91,21 +143,78 @@ function CCarrousel( p_properties, p_html )
         that.nextPhoto = id + 1;
     }
     
+    this.scroll = function( $target )
+    {
+        that.scrollingEvent.fire();
+        that.scrolledAmount = $target.position().left;        
+        
+        //updating slides attributes and handles.
+        //"deprecated" will be erased from the hmt structure after the scrolling
+        that.html.$frame.addClass("deprecated");
+        if( $target == that.html.$previous ) { //backward scrolling
+            that.html.$viewport.animate({scrollLeft: that.scrolledAmount}, "fast", "swing", function() {that.onScrolled("BACKWARD");}  );
+            that.html.$next.addClass("deprecated");        
+            that.html.$current.attr("id","nextSlide");
+            that.html.$previous.attr("id","currentSlide");        
+        }
+        else { //forward scrolling
+            that.html.$viewport.animate({scrollLeft: that.scrolledAmount}, "fast", "swing", function() {that.onScrolled("FORWARD");}  );
+            that.html.$previous.addClass("deprecated");        
+            that.html.$current.attr("id","previousSlide");
+            that.html.$next.attr("id","currentSlide");   
+        }
+
+        that.updateHandles();
+    }
+    
+    this.insertPhotoFrame = function( $slide )
+    {
+        $slide.append( "<div id=\"cadrePhoto\"><div id=\"photoTitle\"><img id=\"boutonIndex\" src=\"ressources/images/close.gif\"></div><div id=\"divPhoto\"></div></div>" );
+    }
+    
     //+++ EVENTS
 
     this.onPhotoLoaded = function(  )
-    {
-        if( this.id == that.currPhoto )  { //this: CPhoto 
-            that.displayPhoto( this ); 
-            that.photoDisplayedLoaded.fire( this );
+    {    //typeof this: CPhoto
+        if( this.id == that.currPhoto )  { 
+            that.displayPhoto( this, that.html.$current ); 
+            that.photoDisplayedLoadedEvent.fire( this );
         }
     }
     this.loader.getPhotoLoadedEvent().subscribe( that.onPhotoLoaded );
+    
+    this.onScrolled = function( direction )
+    {
+        //updating page's structure
+        that.html.$deprecated.remove(); //removing the deprecated structures changes the slide under the viewport                   
+        if( direction == "FORWARD" ) {
+            that.html.$viewport.scrollLeft( that.html.$current.outerWidth() ); //quickly recenter the viewport on the new current slide 
+            that.html.$current.parent().append( "<div id=\"nextSlide\" class=\"slide\"></div>" );                  
+        }
+        else {
+            that.html.$current.parent().prepend( "<div id=\"previousSlide\" class=\"slide\"></div>" );
+            that.html.$viewport.scrollLeft( that.html.$current.outerWidth() ); //quickly recenter the viewport on the new current slide 
+        }
 
+        that.updateHandles();
+        that.scrolledEvent.fire();
+    }
+
+    //--- EVENTS
     
     this.getPhotoDisplayedLoadedEvent = function( )
     {
-        return this.photoDisplayedLoaded;
+        return that.photoDisplayedLoadedEvent;
+    }
+    
+    this.getScrollingEvent = function()
+    {
+        return that.scrollingEvent;
+    }
+    
+    this.getScrolledEvent = function() 
+    {
+        return that.scrolledEvent;
     }
 
 }

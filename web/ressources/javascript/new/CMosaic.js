@@ -1,6 +1,6 @@
 ﻿/* 
  *  EZWebGallery:
- *  Copyright (C) 2012 The EZWebGallery Dev Team <dev@ezwebgallery.org>
+ *  Copyright (C) 2013 Christophe Meneboeuf <xtof@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -66,12 +66,8 @@ function CMosaic( p_properties, p_htmlStructure )
             $(thumbnail).load( function( )	{	// callback OnLoad
                             that.oneThumbLoadedEvent.fire( "thumbnailLoaded" );                     
                         })
-                        .error( function()  {
-                            TOOLS.trace("Error Loadind a thumbnail: " + ++that.nbThumbnailLoaded);                            
-                        })
                         .attr("id", this.id)
-                        // Source de l'image : A METTRE EN DERNIER
-                        .attr("src", src = that.properties.defines.URL_THUMBS_PATH+'/'+that.thumbnailsSet+'/'+thumbName );
+                        .attr("src", src = that.properties.defines.URL_THUMBS_PATH+'/'+that.thumbnailsSet+'/'+thumbName );  // src will load the Image: MUST BE THE LAST ATTRIBUTE TO SET!!
                         
         } );
         
@@ -161,8 +157,7 @@ function CMosaic( p_properties, p_htmlStructure )
     //showing the mosaic
     this.show = function()
     {
-        that.htmlStructure.index.mosaic.$container.show()
-                                                                          .verticalCenter(0);
+        that.htmlStructure.index.mosaic.$container.show().verticalCenter(0);
         that.htmlStructure.index.mosaic.$thumbBoxes.find('img').verticalCenter(0);
     }
     

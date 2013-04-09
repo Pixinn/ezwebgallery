@@ -1,6 +1,6 @@
 ﻿/*
  *  EZWebGallery:
- *  Copyright (C) 2012 The EZWebGallery Dev Team <dev@ezwebgallery.org>
+ *  Copyright (C) 2013 Christophe Meneboeuf <xtof@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,10 +37,12 @@ function CDisplay( p_properties, p_htmlStructure )
 
     $(window).resize( function() {
         that.setSpace( that.computeAvailableSpace() );
-        if( that.html.photo.$screen.is(":visible") === true ) {
+        if( that.html.photo.$screen.is(":visible") === true )
+        {
             that.fitPhoto( that.carrousel.getCurrentPhoto() );
             that.html.photo.buttons.$previous.verticalCenter(0);
             that.html.photo.buttons.$next.verticalCenter(0);
+            that.carrousel.centerViewport(); //We need to reposition the viewport to adapt to the new slides' size
         }
     } );
 
@@ -103,6 +105,16 @@ function CDisplay( p_properties, p_htmlStructure )
     {
         return that.enableUISignal;
     }
+    
+    this.getScrollingEvent = function()
+    {
+        return that.carrousel.getScrollingEvent();
+    }
+    
+    this.getScrolledEvent = function()
+    {
+        return that.carrousel.getScrolledEvent();
+    }
 
 
     this.onPrevious = function()
@@ -123,7 +135,7 @@ function CDisplay( p_properties, p_htmlStructure )
         that.fitPhoto( this );        
     }
     that.carrousel.getPhotoDisplayedLoadedEvent().subscribe( this.onPhotoDisplayedLoaded );
-
+    
     //+++ Private
     
     this.setSpace = function( space )
@@ -208,7 +220,7 @@ function CDisplay( p_properties, p_htmlStructure )
                                         .css("position","relative")
                                         .verticalCenter( 0 );   
 
-        photo.verticalCenter( 0 );
+        photo.verticalCenter( 0 );       
     }
 
 }

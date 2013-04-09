@@ -718,8 +718,6 @@ bool CGalleryGenerator::skinning( )
             verticalTitle.append( m_parameters.m_galleryConfig.title.at(i) );
         }
         htmlString.replace( "[CONTENT_VERTICALTITLE]", verticalTitle );
-        //Titre au dessus des photos
-        htmlString.replace( "[CONTENT_PHOTOTITLE]", m_parameters.m_galleryConfig.title );
 
         //------ BOUTONS (SCREEN PHOTO) -------//
         //Previous
@@ -730,10 +728,6 @@ bool CGalleryGenerator::skinning( )
         htmlString.replace( "[BUTTON_NEXTPHOTO]", QString("<img alt=\"") + tr("Next photo")
                                                             +QString("\" class=\"photoButtonEnabled\" id=\"boutonNext\" src=\"ressources/images/")
                                                             +m_skinParameters.buttonImage( CSkinParameters::buttonNext )+QString("\" />") );
-        //Index
-        htmlString.replace( "[BUTTON_INDEX]", QString("<img alt=\"") + tr("Browse the gallery")
-                                                        +QString("\" class=\"photoButtonEnabled\" id=\"boutonIndex\" src=\"ressources/images/")
-                                                        +m_skinParameters.buttonImage( CSkinParameters::buttonIndex )+QString("\" />") );
 
         //---------------------//
 

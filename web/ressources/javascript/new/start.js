@@ -1,6 +1,6 @@
 /*
  *  EZWebGallery:
- *  Copyright (C) 2012 The EZWebGallery Dev Team <dev@ezwebgallery.org>
+ *  Copyright (C) 2013 Christophe Meneboeuf <xtof@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -57,7 +57,14 @@ jQuery.fn.verticalCenter = function( offset ) {
   });
 };
 
+//Never called as attr("src",...) are not ajax loadings
+$(document).ajaxError( function()
+{
+    TOOLS.trace("Error ajax: " + $(this).attr("src") );                            
+});
 
+
+//Starting point
 $(document).ready(function()
 {
     g_properties.defines = Defines;
@@ -67,6 +74,7 @@ $(document).ready(function()
     progressBar : {
         $box : $("#progressbarWrapper"),
         $bar : $("#progressbar"),
+        
     },
     index : {
         $screen : $("#screenIndex"),
@@ -80,9 +88,9 @@ $(document).ready(function()
     photo : {
         $screen : $("#screenPhoto"),
         $frame : $("#cadrePhoto"),
-            $wrapper : $("#wrapperAffichagePhoto"),
-            $div : $("#divPhoto"),
-            $title : $("#photoTitle"),
+        $wrapper : $("#wrapperAffichagePhoto"),
+        $div : $("#divPhoto"),
+        $title : $("#photoTitle"),
         buttons : {
                 $previous : $("#boutonPrevious"),
                 $next : $("#boutonNext"),
@@ -110,7 +118,8 @@ $(document).ready(function()
     //User events
     var UserHandler;
     Mosaic.getLoadedEvent().subscribe( function()
-    {   //at this point, HtmlStructure must be *completed* !
+    {   
+        //at this point, HtmlStructure must be *completed* !
         //Handling user' interractions
         UserHandler = new CUserInterractions( g_properties, HtmlStructure );
         UserHandler.start();
@@ -119,6 +128,8 @@ $(document).ready(function()
         Display.getIndexScreenEvent().subscribe( UserHandler.onIndexScreen );
         Display.getDisableUISignal().subscribe( UserHandler.disablePreviousNext );
         Display.getEnableUISignal().subscribe( UserHandler.enablePreviousNext );
+        Display.getScrollingEvent().subscribe( UserHandler.onScrolling );
+        Display.getScrolledEvent().subscribe( UserHandler.onScrolled );
         
         //Subscribing to user events
         UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );
@@ -129,8 +140,7 @@ $(document).ready(function()
         UserHandler.getNextPhotoEvent().subscribe( Display.onNext );
         UserHandler.getNextPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
         UserHandler.getPreviousIndexEvent().subscribe( Mosaic.onPreviousIndex );
-        UserHandler.getNextIndexEvent().subscribe( Mosaic.onNextIndex );        
-        
+        UserHandler.getNextIndexEvent().subscribe( Mosaic.onNextIndex );
     });
 
     //Building the mosaic / Loading the thumbnails
