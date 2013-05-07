@@ -77,10 +77,6 @@ ul.indexNavigation li.navTabSelected{
 /******* PANNEAUX COULISSANT ********/
 /* Plein de div et containeurs en cascade */
 
-/* Obligé de le rajouter car on ne peut pas mettre de border à thumbsWrapper */
-.thumbsWrapperContainer{
-	border: solid;
-}
 
 /* Contient les vignettes qui glissent. Cible de l'effet */
 /* Bug si border != 0. Le script ne les prend pas en compte lorsqu'il slide */
@@ -89,16 +85,18 @@ ul.indexNavigation li.navTabSelected{
 		margin: 0px;
 		overflow: hidden;
 		position:relative; /*Nécessaire sinon bug IE !*/
-        background: transparent;
+        border: solid;
 }
 	
+.scrollContainer {
+    position: relative;
+}
 	
 /* Panneau (ie 1 page) dans le container qui scrolle */
 .scrollContainer div.slidingPanel {
 		float:left;
-		position:relative;  /*Nécessaire sinon bug IE !*/
         background: transparent; /* MODIFIABLE */
-        /*	background-image:   url(../images/Crayon.jpg );*/	/* DECOMMENTER si on veut que le fond glisse également*/
+        
 }
 		
 	

@@ -20,7 +20,6 @@ md %DATADIR%\data\ressources\css
 md %DATADIR%\data\ressources\javascript\jquery
 md %DATADIR%\data\ressources\javascript\jquery\plugins
 md %DATADIR%\data\ressources\javascript\tools
-md %DATADIR%\data\ressources\javascript\core
 
 REM --- MINIMZING JS
 call compress_javascript.bat %DATADIR%\data\ressources\javascript
