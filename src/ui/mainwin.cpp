@@ -696,13 +696,7 @@ void MainWin::showConfigureWindow( )
 
 void MainWin::onlineManual( )
 {
-
-    QString manual = QString( "http://www.ezwebgallery.org/spip.php?article6" ); //Version française
-    //Ouvrir l'url en français
-    if( CPlatform::language() != "fr" ){
-        manual = QString( "http://www.ezwebgallery.org/spip.php?article11" );
-    }
-    QUrl url = QUrl( manual );
+    QUrl url = QUrl( "http://www.ezwebgallery.org/documentation/" );
     QDesktopServices::openUrl( url );
 }
 
