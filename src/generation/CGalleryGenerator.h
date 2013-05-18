@@ -56,7 +56,7 @@ class CGalleryGenerator : public QThread
 signals:
     void progressBarSignal( int completion, QString color, PtrMessage message ); //Faire voluer la progressBar
     void generationFinishedSignal( /*bool success*/ QList<CPhotoProperties> );   //Gnration de toutes les photos termine
-    void forceStoppedFinishedSignal( QStringList );        //L'arrt forc des thread est termin. Passage des messages d'erreur.
+    void forceStoppedFinishedSignal( PtrMessageList );        //L'arrt forc des thread est termin. Passage des messages d'erreur.
     void abordGenerationSignal( );
     void startGenerationSignal( );
     void jobDone( );
@@ -124,7 +124,7 @@ private:
     QMap<QString,QSize> m_thumbSizes;
     QList<CPhotoProperties> m_photoPropertiesList;
     QThreadPool* m_p_photoProcessorPool;    //Pool des threads effectuant les traitements. Un thread par photo
-    QStringList m_msgErrorList;
+    PtrMessageList m_msgErrorList;
     QMap<int, QMap<QString,QSize> > m_photoSizes;      //Contient les files des tailles des photos gnres <id,file>
     QMap<int, QMap<QString,QString> > m_photoExifTags; //Contient les donnes exifs intressantes des photos <id,exif>
     volatile int m_nbPhotosToProcess;

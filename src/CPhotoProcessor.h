@@ -69,7 +69,7 @@ class CGeneratedPhotoSetParameters : public QObject
         void setExitStatus( const e_photoProcessStatus );
         const QMap<QString, QSize>& generatedSizes( void ) const;
         e_photoProcessStatus exitStatus( );
-        QString message( );
+        PtrMessage message( );
         CPhotoProperties photoProperties( void ) { return m_photoProperties; }
 
     private:

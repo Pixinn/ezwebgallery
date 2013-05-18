@@ -70,12 +70,11 @@ void CTerminalUi::onLogMsg( PtrMessage msg  ){
     cout << message << endl;
 }
 
-void CTerminalUi::onForceStoppedFinished( QStringList listMsg )
+void CTerminalUi::onForceStoppedFinished( PtrMessageList listMsg )
 {
-    if( listMsg.size() > 0){
-        QStringListIterator iterator = QStringListIterator( listMsg );
-        while( iterator.hasNext() ){
-            cerr << iterator.next() << endl;
+    if( listMsg.size() > 0){        
+        for( PtrMessageList::iterator i = listMsg.begin(); i < listMsg.end(); i++ ){
+            cerr << (*i)->message() << endl;
         }
     }
     cout << tr("Generation cancelled.") << endl;

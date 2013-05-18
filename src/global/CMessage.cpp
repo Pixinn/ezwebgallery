@@ -109,3 +109,8 @@ QString CMessage::informativeText( void ) const
 { 
     return m_info;
 }
+
+bool CMessage::isEmpty( void ) const
+{
+    return( m_info.isEmpty() & m_details.isEmpty() & m_summary.isEmpty() );
+}

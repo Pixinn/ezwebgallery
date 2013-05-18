@@ -336,13 +336,13 @@ bool CGalleryGenerator::generateFileStructure( )
     QDir outPath( m_parameters.m_galleryConfig.outputDir );
 
     if ( !outPath.mkpath( thumbsFilesPath ) ){
-        m_msgErrorList.append( CError::error(CError::DirectoryCreation) + thumbsFilesPath );
+        m_msgErrorList.append( PtrMessage(new CError( CError::error(CError::DirectoryCreation), thumbsFilesPath)) );
         emit abordGenerationSignal( );
         return false;
     }
     for(int i = 1; i <= m_parameters.m_photosConfig.nbIntermediateResolutions; i++){
         if( !outPath.mkpath( photosFilesPath + QString::number(i) ) ){
-            m_msgErrorList.append( CError::error(CError::DirectoryCreation) + photosFilesPath + QString::number(i) );
+            m_msgErrorList.append( PtrMessage(new CError(CError::error(CError::DirectoryCreation), photosFilesPath + QString::number(i))) );
             emit abordGenerationSignal( );
             return false;
         }
@@ -352,13 +352,13 @@ bool CGalleryGenerator::generateFileStructure( )
     outPath = QDir( m_parameters.m_galleryConfig.outputDir );
     QDir srcPath( CPlatform::resourceDirPath()  );;
     if( !srcPath.exists() ){
-        m_msgErrorList.append(  CError::error(CError::SourceFileNotFound) );
+        m_msgErrorList.append(  PtrMessage(new CError(CError::error(CError::SourceFileNotFound), srcPath.absolutePath())) );
         emit abordGenerationSignal( );
         return false;
     }
-    QString copyErrorMessage;
-    if( !CPlatform::copyDirectory( srcPath, outPath, copyErrorMessage ) ){
-        m_msgErrorList.append( copyErrorMessage );
+    PtrMessage copyError( new CError( CPlatform::copyDirectory( srcPath, outPath ) ) ); //Copying directory
+    if( !copyError->isEmpty() ){
+        m_msgErrorList.append(copyError);
         emit abordGenerationSignal( );
         return false;
     }
@@ -422,7 +422,7 @@ int CGalleryGenerator::generatePhotos( )
             watermarkImage.setImage( watermarkParams.imageFile );
             //Vrification de la validit du watermark
             if( !watermarkImage.isValid() ){
-                m_msgErrorList.append( CError::error(CError::WatermarkInvalid) + watermarkImage.error() );
+                m_msgErrorList.append( PtrMessage(new CError( CError::WatermarkInvalid, watermarkImage.error() )) );
                 emit abordGenerationSignal( );
                 return false;
             }
@@ -586,7 +586,7 @@ bool CGalleryGenerator::generateJsFiles( )
     jsonPath.cd( RESPATH );
     QFile jsonFile( jsonPath.absoluteFilePath( "parameters.json" ) );
     if (!jsonFile.open(QIODevice::WriteOnly)){ //omitting QIODevice::Text to get UNIX end-of-line even on Windows
-         m_msgErrorList.append( CError::error(CError::FileOpening) +  jsonFile.fileName() );
+         m_msgErrorList.append( PtrMessage(new CError(CError::FileOpening,  jsonFile.fileName())) );
          emit abordGenerationSignal( );
          return false;
     }
@@ -620,13 +620,16 @@ bool CGalleryGenerator::skinning( )
     //---------- COPIE DES FICHIERS RESSOURCES --------//
     outSkinPath = QDir( m_parameters.m_galleryConfig.outputDir );
     if( !outSkinPath.mkpath( RESIMGPATH ) ){
-        m_msgErrorList.append( CError::error(CError::FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(RESIMGPATH) );
+        m_msgErrorList.append( PtrMessage(new CError(CError::FileCreation, outSkinPath.absolutePath() + QString("/") + QString(RESIMGPATH))) );
         emit abordGenerationSignal( );
         return false;
     }
     outSkinPath.cd( RESIMGPATH );
     if( !m_skinParameters.copyRessources(outSkinPath) ){
-        m_msgErrorList.append( m_skinParameters.errors() );
+        foreach( QString error,  m_skinParameters.errors() ) { //TEMPORARY STOP GAP TO COMPILE!!!  m_skinParameters.errors() should return CErrors !
+            m_msgErrorList.append( PtrMessage(new CError(error,"")) );
+        }
+        //m_msgErrorList.append( m_skinParameters.errors() );
         emit abordGenerationSignal( );
         return false;
     }
@@ -635,14 +638,14 @@ bool CGalleryGenerator::skinning( )
     //--- Ouverture du fichier
     outSkinPath = QDir( m_parameters.m_galleryConfig.outputDir );
     if( !outSkinPath.mkpath( CSSPATH ) ){
-        m_msgErrorList.append( CError::error(CError::FileCreation) + outSkinPath.absolutePath() + QString("/") + QString(CSSPATH) );
+        m_msgErrorList.append( PtrMessage(new CError(CError::FileCreation, outSkinPath.absolutePath() + QString("/") + QString(CSSPATH))) );
         emit abordGenerationSignal( );
         return false;
     }
     outSkinPath.cd( CSSPATH );
     QFile skinCssFile( outSkinPath.absoluteFilePath( CSSSKINFILENAME ) );
     if (!skinCssFile.open(QIODevice::WriteOnly | QIODevice::WriteOnly | QIODevice::Text)){
-            m_msgErrorList.append( CError::error(CError::FileOpening) +  skinCssFile.fileName() );
+            m_msgErrorList.append( PtrMessage(new CError(CError::FileOpening, skinCssFile.fileName())) );
             emit abordGenerationSignal( );
             return false;
     }
@@ -742,7 +745,7 @@ bool CGalleryGenerator::skinning( )
 
     } //fin modifications html
     else{
-        m_msgErrorList.append( CError::error(CError::FileOpening) +  htmlFile.fileName() );
+        m_msgErrorList.append(PtrMessage(new CError(CError::FileOpening, htmlFile.fileName())) );
         emit abordGenerationSignal( );
         return false;
     }
@@ -814,7 +817,7 @@ void CGalleryGenerator::onPhotoProcessDone( CGeneratedPhotoSetParameters generat
      break;
 
      case failure:
-            m_msgErrorList << generatedPhotoParams.message();
+         m_msgErrorList.append( generatedPhotoParams.message() );
      case stopped:
      default:
         m_mutex.lock();

@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
         //Connections UI<->Générateur
         QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, PtrMessage ) ), appWindow, SLOT( onProgressBar( int, QString, PtrMessage ) ) );
         QObject::connect( &galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), appWindow, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
-        QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appWindow, SLOT( onForceStoppedFinished( QStringList ) ) );
+        QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( PtrMessageList ) ), appWindow, SLOT( onForceStoppedFinished( PtrMessageList ) ) );
         // DB -> UI
         QObject::connect( &photoDatabase, SIGNAL( error( PtrMessage ) ), appWindow, SLOT( error( PtrMessage ) ) );
         QObject::connect( &photoDatabase, SIGNAL( warning( PtrMessage ) ), appWindow, SLOT( warning( PtrMessage ) ) );
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
         //Connections UI<->Générateur
         QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, PtrMessage ) ), appCLI, SLOT( onProgressBar( int, QString, PtrMessage ) ) );
         QObject::connect( &galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), appCLI, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
-        QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( QStringList ) ), appCLI, SLOT( onForceStoppedFinished( QStringList ) ) );
+        QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( PtrMessageList ) ), appCLI, SLOT( onForceStoppedFinished( PtrMessageList ) ) );
         // DB -> UI
         QObject::connect( &photoDatabase, SIGNAL( error( PtrMessage ) ), appCLI, SLOT( error( PtrMessage ) ) );
         QObject::connect( &photoDatabase, SIGNAL( warning( PtrMessage ) ), appCLI, SLOT( warning( PtrMessage ) ) );

@@ -80,9 +80,9 @@ public:
     bool copyRessources( QDir /*, QStringList &*/ );             //Copie les fichiers de ressources vers le rpertoire spcifi
     void check( QStringList* , QStringList* );                   //Vrifie la skin et retourne les erreur et avertissements
     static QString defaultSkin( void );                          //Renvoie le chemin absolu de la skin par dfaut
-    QString error( void ) { return m_lastError; }                //Retourne la dernire erreur survenue
-    QStringList errors( void ) { return m_lastErrors; }          //Retourne la dernire srie d'erreurs survenues
-    unsigned int version( void ) { return m_version; }           //Retourne le status du IParameters
+    inline QString error( void ) { return m_lastError; }                //Retourne la dernire erreur survenue
+    inline QStringList errors( void ) { return m_lastErrors; }          //Retourne la dernire srie d'erreurs survenues
+    inline unsigned int version( void ) { return m_version; }           //Retourne le status du IParameters
     inline bool initialized( void ) { return f_initialized; }
 
 private:

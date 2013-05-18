@@ -172,26 +172,23 @@ void MainWin::onProgressBar( int completion, QString color, PtrMessage msg, int 
 
 void MainWin::onLogMsg( PtrMessage msg )
 {
-    QString dbg( msg->message() );
     m_p_logDisplay->setTextColor( msg->color() );
     m_p_logDisplay->append( QDateTime::currentDateTime().toString( "dd.MM.yyyy - hh:mm:ss.zzz\t" ) + msg->message() );
 }
 
 
-void MainWin::onForceStoppedFinished( QStringList errorMessages )
+void MainWin::onForceStoppedFinished( PtrMessageList errorMessages )
 {
     onLogMsg( PtrMessage(new CWarning( tr("Forced Stop") )) );
-
     //On affiche un message d'erreur
     if( errorMessages.size() > 0){
-
-        QStringListIterator iterator = QStringListIterator( errorMessages );
+        
         QString errors;
-        while( iterator.hasNext() ){
-            errors.append( iterator.next() + QString("\n") );
+        for(  PtrMessageList::iterator i = errorMessages.begin(); i < errorMessages.end(); i++ ){
+            errors.append( (*i)->message() + QString("\n") );
+            onLogMsg( *i );
         }
-        QMessageBox* alertBox = new QMessageBox ( QMessageBox::Critical, tr("Error"),
-                                                  errors );
+        QMessageBox* alertBox = new QMessageBox ( QMessageBox::Critical, tr("Error"), errors );
         alertBox->exec();
         delete alertBox;
     }

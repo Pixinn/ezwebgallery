@@ -256,9 +256,9 @@ QStringList CPlatform::getImagesInDir( const QDir &dir, QStringList filter )
 * Return: true si succès, false si échec
 **************************/
 //Inspiré par niak74 : http://www.siteduzero.com/forum-83-434816-p1-qt---supprimer-un-dossier.html
-bool CPlatform::copyDirectory( QDir source, QDir destination, QString &errorMsg )
+CError CPlatform::copyDirectory( QDir source, QDir destination )
 {
-    //QDir currentDestPath = destination;
+    CError err;
     source.setFilter(QDir::NoDotAndDotDot | QDir::AllEntries);
 
     foreach(QFileInfo fileInfo, source.entryInfoList())
@@ -269,34 +269,35 @@ bool CPlatform::copyDirectory( QDir source, QDir destination, QString &errorMsg 
             QFileInfo destDirInfo( destination.absoluteFilePath(fileInfo.fileName()) );
             if( !destDirInfo.exists() ){ //Si le répertoire n'existe pas déjà, on le créé
                 if ( !destination.mkdir( fileInfo.fileName() ) ){ //Erreur lors de la création du rep
-                    errorMsg = CError::error(CError::DirectoryCreation) + destination.absolutePath() + "/" + fileInfo.fileName();
-                    return false;
+                    return CError( CError::DirectoryCreation, destination.absolutePath() + "/" + fileInfo.fileName() );
                 }
             }
             currentDestPath.cd( fileInfo.fileName() ); //On entre dans le répertoire
-            if( !copyDirectory(fileInfo.filePath(), currentDestPath, errorMsg) ){ //On le clone => récursivité !
-                return false;
+            err = copyDirectory(fileInfo.filePath(), currentDestPath); //On le clone => récursivité !
+            if( !err.isEmpty() ) {
+                return err;
             }
+            //if( !copyDirectory(fileInfo.filePath(), currentDestPath, errorMsg) ){ 
+            //    return false;
+            //}
         }
         else{
             // Si le fichier existe déjà : le supprimer
             QFileInfo destFileInfo( destination.absoluteFilePath(fileInfo.fileName()) );
             if( destFileInfo.exists() ){
                 if( !destination.remove( destFileInfo.fileName() ) ){//Impossible de supprimer le fichier
-                    errorMsg = CError::error(CError::FileCreation) + source.absoluteFilePath(fileInfo.fileName());
-                    return false;
+                    return CError(CError::FileCreation, source.absoluteFilePath(fileInfo.fileName()) );
                 }
             }
             if(!QFile::copy( fileInfo.absoluteFilePath(), destination.absoluteFilePath(fileInfo.fileName()) ) ){
-                errorMsg = CError::error(CError::FileCreation) + source.absoluteFilePath(fileInfo.fileName());
-                return false;
+                return CError( CError::FileCreation ,source.absoluteFilePath(fileInfo.fileName()) );
             }
 
         }
 
     }
 
-    return true;
+    return err; //Empty error
 }
 
 /*************************

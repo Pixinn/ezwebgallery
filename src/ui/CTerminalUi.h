@@ -47,7 +47,7 @@ public slots:
     void onLogMsg( PtrMessage );
     void onProgressBar( int completion, QString color, PtrMessage message, int timeout = 0 ); //Affiche un % d'avancement
     void onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties>);
-    void onForceStoppedFinished( QStringList );
+    void onForceStoppedFinished( PtrMessageList );
     void error( PtrMessage );         //An error occured
     void warning( PtrMessage );       //A warning occured
     void information( PtrMessage );   //Display an iformative message

@@ -27,6 +27,7 @@
 
 class CError : public IMessage
 {
+    Q_OBJECT 
 
 public:
 
@@ -43,7 +44,8 @@ public:
         InvalidFiles
     };
 
-    CError( const CError& other );
+    CError( const CError& src );
+    CError& CError::operator=(const CError &src);
 
     CError( void );
     CError( e_errors, const QString& details );
@@ -56,12 +58,11 @@ public:
     QColor color( void ) const;
     QString summary( void ) const;
     QString details( void ) const;
-    //QString informativeText( void ) const;
+    bool isEmpty( void ) const;
 
 private:
     static const QColor s_color;
     QString m_summary;
-    //QString m_info;
     QString m_details;
     
 };
