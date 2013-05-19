@@ -47,7 +47,7 @@ public:
     WinSkinDesigner( CSkinParameters*, QWidget *parent = 0 );
     ~WinSkinDesigner();
     bool isUnsaved( );
-    QStringList openSkin( const QString &);  //Ouvrir un thme
+    QList<CError> openSkin( const QString &);  //Ouvrir un thme
     int displayUnsavedMsgBox( );             //Affiche une message box indiquant que la skin n'a pas t savegarde
     int displayMoreRecentMsgBox( );          //Affiche un avertissement si on essaie d'ouvrir une skin plus rcente que le programme
     void retranslate();                      //Traduit l'UI dans une nouvelle langue    

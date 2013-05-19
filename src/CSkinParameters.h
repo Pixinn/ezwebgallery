@@ -23,6 +23,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <QList>
 #include <QMap>
 #include <QFileInfo>
 #include <QDir>
@@ -71,17 +72,19 @@ public:
     CCssSheet toCss( );                                          //Cr une feuille de style CSS
     QString buttonImage( int );                                  //Renvoie le nom du fichier de l'icone dsire
     QDomDocument toDomDocument( );                               //Gnre un QDomDocument rempli des paramtres
-    //void setDir( const QString & );                            //Indique le rpertoire de la skin
     QSize unavailableSpace( unsigned int, unsigned int );        //Returns space unavailable for the thumbnails on the index page
     QSize mosaicDecoration( unsigned int, unsigned int );        //Returns space used by the mosaic decoration on the index page
 
     bool load( const QString &);                                 //Chargement de la skin
-    bool saveSkin( const QString &/*, QStringList &*/ );         //Sauvegarde la skin. Retourne false si erreurs
-    bool copyRessources( QDir /*, QStringList &*/ );             //Copie les fichiers de ressources vers le rpertoire spcifi
+    bool saveSkin( const QString & );         //Sauvegarde la skin. Retourne false si erreurs
+    bool copyRessources( QDir );             //Copie les fichiers de ressources vers le rpertoire spcifi
     void check( QStringList* , QStringList* );                   //Vrifie la skin et retourne les erreur et avertissements
     static QString defaultSkin( void );                          //Renvoie le chemin absolu de la skin par dfaut
-    inline QString error( void ) { return m_lastError; }                //Retourne la dernire erreur survenue
-    inline QStringList errors( void ) { return m_lastErrors; }          //Retourne la dernire srie d'erreurs survenues
+    inline QList<CError> errors( void ) { //Retourne la dernire srie d'erreurs survenues
+        QList<CError> errors = m_lastErrors;
+        m_lastErrors.clear();
+        return errors;
+    }
     inline unsigned int version( void ) { return m_version; }           //Retourne le status du IParameters
     inline bool initialized( void ) { return f_initialized; }
 
@@ -90,15 +93,13 @@ private:
     QString getImagePath( const QString & );                     //Retourne le chemin absolu vers l'image
     void constructRessources( );                                 //Construit le tableau de ressources
     void removeEmptyRessources( );				                 //Enlve les fichiers vides de la liste de ressources
-    QString translateError( int );                               //Renvoie l'erreur traduite dans la langue de l'ui
 
 public:
     //Pour calculs
     unsigned int thumbImgBorderSize;
     unsigned int thumbBoxBorderSize;
     unsigned int photoPaddingSize;
-    /*unsigned int mosaicBorderSize;
-    unsigned int titleOuterWidth;*/
+
     //Boutons
     enum Buttons{ //Sert  passer un paramtre  la fonction buttonImage( int )
         buttonNext = 0,
@@ -110,21 +111,13 @@ private:
     QString m_name;                             //Le nom de la skin
     QString m_ressourcesPath;                   //Chemin vers les ressources ncessaires
     QString m_filePath;                         //Chemin vers la skin
-    QString m_lastError;                        //Dernire erreur survenue
-    QStringList m_lastErrors;                   //Liste des dernires erreurs survenues
+    QList<CError> m_lastErrors;                 //Liste des dernires erreurs survenues
     Ui::SkinDesigner* m_p_ui;
     t_misc m_misc;
     QMap<QString,QFileInfo> m_ressources;      //widget name ; file info
     CCssSheet m_styleSheet;
     unsigned int m_version;
     bool f_initialized;
-    //Enumration des erreurs possibles
-    enum e_errors{
-        noError,
-        overwrittingDefault,
-        destFolder,
-        loadingError
-    };
 };
 
 #endif // CSKINPARAMETERS_H

@@ -553,19 +553,20 @@ void MainWin::openSession( const QString &sessionFile )
             m_captionManager.reset();
        
             //Chargement de la skin
-            QStringList errors;
+            QList<CError> errors;
             QString skinToLoad = m_projectParameters.m_galleryConfig.skinPath; //On sauve dans une variable car sera changé en "default" si erreur de chargement et donc le err msg affichera "default"
             errors = m_p_skinDesignerWindow->openSkin( skinToLoad );
             //Si des erreurs sont survenues
             if( !errors.isEmpty() )
-            {
-               
-                CLogger::getInstance().log( PtrMessage(new CError( tr("A problem occured when opening the file: "),  skinToLoad + errors.join("\n") )) );               
-                //onLogMsg( QString("[Skin]. A problem occured when opening the file: ") + skinToLoad + errors.join("\n") );               
-                        
+            {      
+                QStringList errorsStr;
+                foreach( CError error, errors ) {
+                    errorsStr << error.message();
+                    CLogger::getInstance().log( PtrMessage(new CError(error)) );
+                }                                                              
                 QMessageBox msgBox( this );
-                msgBox.setInformativeText( tr("Cannot load the skin: ") + skinToLoad + "\n\n" + tr("Using default skin instead.") );
-                msgBox.setDetailedText( errors.join("\n") );
+                msgBox.setInformativeText( CError::error(CError::SkinOpening) );
+                msgBox.setDetailedText( errorsStr.join("\n") );
                 msgBox.setIcon( QMessageBox::Information );
                 msgBox.exec();                                     
             }

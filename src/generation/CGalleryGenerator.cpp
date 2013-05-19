@@ -626,10 +626,9 @@ bool CGalleryGenerator::skinning( )
     }
     outSkinPath.cd( RESIMGPATH );
     if( !m_skinParameters.copyRessources(outSkinPath) ){
-        foreach( QString error,  m_skinParameters.errors() ) { //TEMPORARY STOP GAP TO COMPILE!!!  m_skinParameters.errors() should return CErrors !
-            m_msgErrorList.append( PtrMessage(new CError(error,"")) );
+        foreach( CError error,  m_skinParameters.errors() ) {
+            m_msgErrorList.append( PtrMessage(new CError(error)) );
         }
-        //m_msgErrorList.append( m_skinParameters.errors() );
         emit abordGenerationSignal( );
         return false;
     }

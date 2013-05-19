@@ -41,11 +41,12 @@ public:
         InvalidDirectory,
         SourceFileNotFound,
         WatermarkInvalid,
-        InvalidFiles
+        InvalidFiles,
+        SkinOpening
     };
 
     CError( const CError& src );
-    CError& CError::operator=(const CError &src);
+    CError& operator=(const CError &src);
 
     CError( void );
     CError( e_errors, const QString& details );
