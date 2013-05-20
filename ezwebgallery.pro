@@ -177,7 +177,7 @@ QMAKE_CLEAN += $$MINJS_DIR/common-min.js \
                $$MINJS_DIR/core/ \
                $$PWD/src/builddate.h \
                -r $$BUILDDIR \
-               -r $$PWD/deployment/common/data/ressources
+         #     -r $$PWD/deployment/common/data/ressources
 
 QMAKE_DISTCLEAN += -r   $$BUILDDIR/ \
                    -r   $$PWD/src/GeneratedFiles/ \
