@@ -39,7 +39,6 @@ class CTerminalUi : public QObject, public IUserInterface
 public:
     CTerminalUi( CGalleryGenerator &, const QString &projectFile );
     ~CTerminalUi( void );
-    void show( void );                //Redfinition car on ne veut pas qu'une fentre apparaisse...
 signals:
     void done( void );
 public slots:
@@ -56,6 +55,8 @@ protected:
     void keyPressEvent ( QKeyEvent * event );
 
 private:
+    void show( void );                //Redfinition car on ne veut pas qu'une fentre apparaisse...
+
     //Sorties console
     static QTextStream cout;
     static QTextStream cerr;

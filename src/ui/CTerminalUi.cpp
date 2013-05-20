@@ -81,9 +81,8 @@ void CTerminalUi::onForceStoppedFinished( PtrMessageList listMsg )
     emit done();
 }
 
-void CTerminalUi::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesList )
+void CTerminalUi::onGalleryGenerationFinished( QList<CPhotoProperties> )
 {
-    propertiesList.size(); //to avoid a warning
     cout << tr("Generation successfully completed.") << endl;
     emit done();
 }
@@ -133,9 +132,11 @@ void CTerminalUi::run( )
     }
     //Chargement de la skin
     if( !m_skinParameters.load( m_projectParameters.m_galleryConfig.skinPath ) ){
-        cerr << tr("Cannot load the skin: ") << m_projectParameters.m_galleryConfig.skinPath << endl;
-        emit done();
+        PtrMessageList errs;
+        errs.append( PtrMessage(new CError(m_skinParameters.errors().last())));
+        onForceStoppedFinished( errs );
         return;
+
     }
     else{
         cout <<  m_projectParameters.m_galleryConfig.skinPath << tr(" loaded.") << endl;
@@ -148,8 +149,9 @@ void CTerminalUi::run( )
         if( outputDir.mkpath( m_projectParameters.m_galleryConfig.outputDir )){
             cout << tr("Output folder successfully created.") << endl;
         }else{
-            cerr << tr("Folder creation impossible.") << endl;
-            emit done();
+            PtrMessageList errs;
+            errs.append( PtrMessage(new CError(CError::DirectoryCreation, m_projectParameters.m_galleryConfig.outputDir)) );
+            onForceStoppedFinished( errs );
             return;
         }
     }

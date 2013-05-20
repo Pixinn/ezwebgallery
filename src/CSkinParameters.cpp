@@ -867,7 +867,7 @@ bool CSkinParameters::load( const QString &skinFileName )
         return true;
     }
     else{
-        m_lastErrors.append( CError( tr("An error occurred while loading the skin file:"), *errorMsg) );
+        m_lastErrors.append( CError( tr("An error occurred while loading the skin file ") + skinFileName, *errorMsg) );
         delete errorMsg;
         return false;
     }

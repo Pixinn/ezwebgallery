@@ -95,29 +95,31 @@ int main(int argc, char *argv[])
     }
     // ----------------- EXECUTION DANS UN TERMINAL
     else
-    {
+    {  
         //Instanciation UI
         CTerminalUi* appCLI = new CTerminalUi( galleryGenerator, appli.arguments().at(1) );
 
+        bool fConnected = true;
         //Connections UI<->Générateur
-        QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, PtrMessage ) ), appCLI, SLOT( onProgressBar( int, QString, PtrMessage ) ) );
-        QObject::connect( &galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), appCLI, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
-        QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( PtrMessageList ) ), appCLI, SLOT( onForceStoppedFinished( PtrMessageList ) ) );
+        fConnected &= QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, PtrMessage ) ), appCLI, SLOT( onProgressBar( int, QString, PtrMessage ) ) );
+        fConnected &= QObject::connect( &galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), appCLI, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
+        fConnected &= QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( PtrMessageList ) ), appCLI, SLOT( onForceStoppedFinished( PtrMessageList ) ) );
         // DB -> UI
-        QObject::connect( &photoDatabase, SIGNAL( error( PtrMessage ) ), appCLI, SLOT( error( PtrMessage ) ) );
-        QObject::connect( &photoDatabase, SIGNAL( warning( PtrMessage ) ), appCLI, SLOT( warning( PtrMessage ) ) );
-        QObject::connect( &photoDatabase, SIGNAL( message( PtrMessage ) ), appCLI, SLOT( information( PtrMessage ) ) );
+        fConnected &= QObject::connect( &photoDatabase, SIGNAL( error( PtrMessage ) ), appCLI, SLOT( error( PtrMessage ) ) );
+        fConnected &= QObject::connect( &photoDatabase, SIGNAL( warning( PtrMessage ) ), appCLI, SLOT( warning( PtrMessage ) ) );
+        fConnected &= QObject::connect( &photoDatabase, SIGNAL( message( PtrMessage ) ), appCLI, SLOT( information( PtrMessage ) ) );
         // Logger
-        QObject::connect( &(CLogger::getInstance()), SIGNAL( displayMessage(PtrMessage) ), appCLI, SLOT( onLogMsg(PtrMessage) ) );
+        fConnected &= QObject::connect( &(CLogger::getInstance()), SIGNAL( displayMessage(PtrMessage) ), appCLI, SLOT( onLogMsg(PtrMessage) ) );
         //Excution
-        QObject::connect( appCLI, SIGNAL(done()), &appli, SLOT(quit()));
+        fConnected &= QObject::connect( appCLI, SIGNAL(done()), &appli, SLOT(quit()), Qt::QueuedConnection);
         QTimer::singleShot( 1000, appCLI, SLOT(run()) );
         exitValue = appli.exec(); //La boucle d'excution fait partir le timer qui lance terminalDisplay->run()
-        appCLI->deleteLater();
+
+        delete appCLI;
     }
 
     galleryGenerator.quit();
-    galleryGenerator.deleteLater();
+    galleryGenerator.deleteLater(); //Stopping thread can take some time
     delete &projectParameters;
     
     return exitValue;
