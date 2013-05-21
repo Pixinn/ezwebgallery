@@ -130,7 +130,7 @@ public slots:
     void onLogMsg( PtrMessage );
     void onProgressBar( int completion, QString color, PtrMessage msg, int timeout = 0 );
     void onGalleryGenerationFinished( QList<CPhotoProperties>  );
-    void onForceStoppedFinished( QStringList );
+    void onForceStoppedFinished( PtrMessageList );
     void displayThumbnail( QModelIndex ); //Affiche la vignette  lgender correspondant  l'index
     void clearThumbnailTab( void ); //Clear the fields of the thumbnail tab
     void thumnailChanged( int ); //Une photo a t choisie pour devenir vignette de la galerie

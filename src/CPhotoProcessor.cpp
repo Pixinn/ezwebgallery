@@ -359,6 +359,6 @@ const QMap<QString, QSize>& CGeneratedPhotoSetParameters::generatedSizes( void )
 e_photoProcessStatus CGeneratedPhotoSetParameters::exitStatus( ){
     return m_exitStatus;
 }
-QString CGeneratedPhotoSetParameters::message( ){
-    return m_pMessage->message();
+PtrMessage CGeneratedPhotoSetParameters::message( ){
+    return m_pMessage;
 }

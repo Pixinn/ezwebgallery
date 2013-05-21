@@ -29,6 +29,8 @@
 #include <QRegExp>
 #include <QDate>
 
+class CError;
+
 /*****************************
  * CPlatform
  * ----------------------
@@ -53,7 +55,7 @@ public:
 
     //Outils. Quand ils y en aura plus -> crer une classe CTools
     static QStringList getImagesInDir( const QDir &, QStringList filter = QStringList() ); //Retourne la liste des images d'un rpertoire
-    static bool copyDirectory( QDir source, QDir destination, QString &errorMsg ); //Copie rcursive du contenu du rpertoire source vers le rpertoire destination
+    static CError copyDirectory( QDir source, QDir destination ); //Copie rcursive du contenu du rpertoire source vers le rpertoire destination
     static QString readTranslatedTextFile( const QString &baseName ); //Charge la bonne version d'un fichier texte prsent dans les ressources en fonction de la langue de l'ui
 
 private:

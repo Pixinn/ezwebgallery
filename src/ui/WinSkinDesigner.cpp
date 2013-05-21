@@ -27,7 +27,7 @@
 #include "ui/ui_WinSkinDesigner.h" //Gnr par qmake
 #include "GlobalDefinitions.h"
 #include "CPlatform.h"
-
+#include "CLogger.h"
 
 //--- Variables statiques ----//
 const QString WinSkinDesigner::WindowTitle = QString(QObject::tr("Skin Designer"));
@@ -53,11 +53,8 @@ WinSkinDesigner::WinSkinDesigner( CSkinParameters* skinParameters, QWidget *pare
     //Filling the text comboboxes
     m_ui->comboBox_Box_FontFamily->insertItems( 0, WinSkinDesigner::FontFamilies );
     m_ui->comboBox_PhotoCaption_FontFamily->insertItems( 0, WinSkinDesigner::FontFamilies );
-    //m_ui->comboBox_PhotoTitle_FontFamily->insertItems( 0, WinSkinDesigner::FontFamilies );
     m_ui->comboBox_VTitleText_FontFamily->insertItems( 0, WinSkinDesigner::FontFamilies );
     m_ui->comboBox_PhotoCaption_FontWeight->insertItems( 0, WinSkinDesigner::FontWeights );
-    //m_ui->comboBox_PhotoTitle_FontWeight->insertItems( 0, WinSkinDesigner::FontWeights );
-    //m_ui->comboBox_PhotoTitle_FontVariant->insertItems( 0, WinSkinDesigner::FontVariants );
  
     //Empty skin
     m_emptySkin.setUi( m_ui );
@@ -120,14 +117,14 @@ bool WinSkinDesigner::isUnsaved( )
 * in  : (QString) fichier  ouvrir
 * return : (QStringList) Liste des erreurs survenue. Vide si aucune
 ********************************************************************/
-QStringList WinSkinDesigner::openSkin( const QString &fileToLoad )
+QList<CError> WinSkinDesigner::openSkin( const QString &fileToLoad )
 {
-    QStringList errors;
+    QList<CError> errors;
 
      if( !m_p_parameters->load( fileToLoad ) )
     {
         //Chargement chou
-        errors << m_p_parameters->error();       
+        errors << m_p_parameters->errors();       
 
         //On bascule sur la skin par dfaut
         m_p_parameters->setName( "default" );                  
@@ -202,22 +199,19 @@ bool WinSkinDesigner::saveSkinFile( QString skinFileName )
             skinFileName.append( QString(SKINSESSIONEXTENSION) );
         }
 
-        /*m_p_parameters->saveSkin(skinFileName , errorMsgs);*/
-
-        //Grer une ventuelle erreur
+        //Gérer une ventuelle erreur
         if( !m_p_parameters->saveSkin(skinFileName) )
         {
-            QStringList errorMsgs = m_p_parameters->errors();
-            QString errorsDetail;
-            
-            foreach( QString error, errorMsgs){
-                errorsDetail.append( error + QString("\n") );
-            }
+            QStringList errorsStr;
+            foreach( CError error,  m_p_parameters->errors() ) {
+                errorsStr << error.message();
+                CLogger::getInstance().log( PtrMessage(new CError(error)) );
+            }  
 
             QMessageBox* alertBox = new QMessageBox( QMessageBox::Critical, tr("Error"),
                                                      CError::error(CError::FileSaving),
                                                      QMessageBox::Close );
-            alertBox->setDetailedText( errorsDetail );
+            alertBox->setDetailedText( errorsStr.join("\n") );
             alertBox->exec();
             delete alertBox;
             return false;
@@ -261,7 +255,20 @@ void WinSkinDesigner::onOpenRecentSkin( )
         if( ret != QMessageBox::Cancel )
         {
             fileToLoad = action->data().toString();        
-            m_p_parameters->load( fileToLoad ); //<- faudrait checker erreur...
+            QList<CError> errors = openSkin( fileToLoad );
+            if( !errors.isEmpty() )
+            {      
+                QStringList errorsStr;
+                foreach( CError error, errors ) {
+                    errorsStr << error.message();
+                    CLogger::getInstance().log( PtrMessage(new CError(error)) );
+                }                                                              
+                QMessageBox msgBox( this );
+                msgBox.setInformativeText( CError::error(CError::SkinOpening) );
+                msgBox.setDetailedText( errorsStr.join("\n") );
+                msgBox.setIcon( QMessageBox::Information );
+                msgBox.exec();                                     
+            }
             //Affichage d'un message si la version de la skin est plus rcente que l'application
             if( m_p_parameters->version( ) > CPlatform::revisionInt() ){
                 displayMoreRecentMsgBox( );
@@ -298,7 +305,20 @@ void WinSkinDesigner::onOpenSkin( )
         //Chargement de la skin
         if( !skinFile.isEmpty() )
         {
-            m_p_parameters->load( skinFile ); //<- Faudrait checker erreur
+            QList<CError> errors = openSkin( skinFile );
+            if( !errors.isEmpty() )
+            {      
+                QStringList errorsStr;
+                foreach( CError error, errors ) {
+                    errorsStr << error.message();
+                    CLogger::getInstance().log( PtrMessage(new CError(error)) );
+                }                                                              
+                QMessageBox msgBox( this );
+                msgBox.setInformativeText( CError::error(CError::SkinOpening) );
+                msgBox.setDetailedText( errorsStr.join("\n") );
+                msgBox.setIcon( QMessageBox::Information );
+                msgBox.exec();                                     
+            }
             //Affichage d'un message si la version de la skin est plus rcente que l'application
             if( m_p_parameters->version( ) > CPlatform::revisionInt() ){
                 displayMoreRecentMsgBox( );

@@ -737,7 +737,7 @@ QMap<QString,QFileInfo>  CSkinParameters::ressourceFiles( ){
 * in dir : rpertoire o sauver la skin
 * return : False si erreurs
 ********************************************************************/
-bool CSkinParameters::saveSkin( const QString &destFile/*, QStringList &errorMsgs*/ )
+bool CSkinParameters::saveSkin( const QString &destFile )
 {
     QString clearedString;    
 
@@ -748,8 +748,9 @@ bool CSkinParameters::saveSkin( const QString &destFile/*, QStringList &errorMsg
     fromUi( );
 
     //--- Vrification que l'on essaie pas d'craser la skin par dfaut
-    if( QFileInfo(destFile) == QFileInfo(CSkinParameters::defaultSkin()) ){ //QFileInfo ncessaire pour vrifier qu'il s'agit bien d'un mme fichier:
-        m_lastErrors << translateError( overwrittingDefault );                          //comparer le path est trop limit. Exemple: pb de case sensitive sous windows.
+    QFileInfo defaultSkin(CSkinParameters::defaultSkin());
+    if( QFileInfo(destFile) == defaultSkin ){ //QFileInfo ncessaire pour vrifier qu'il s'agit bien d'un mme fichier:
+        m_lastErrors.append( CError(  tr("Cannot overwrite default skin."), defaultSkin.absoluteFilePath() ) );        //comparer le path est trop limit. Exemple: pb de case sensitive sous windows.
         return false;
     }
     //--- Cration du XML
@@ -768,10 +769,9 @@ bool CSkinParameters::saveSkin( const QString &destFile/*, QStringList &errorMsg
     QDir outSkinPath = QFileInfo( destFile ).absolutePath();
     m_ressourcesPath = QFileInfo( destFile ).fileName().remove(SKINSESSIONEXTENSION) + QString("_files/");
     const QString skinImgPath =  m_ressourcesPath + QString(SKINRESIMGDIR);
-    outSkinPath.mkpath( skinImgPath );
-    if( !outSkinPath.cd( skinImgPath ) ){
-         m_lastErrors << translateError( destFolder );
-         return false; //Il faut absolument un point de sortie : sinon on risque d'effacer des fichiers n'importe o !
+    if( !outSkinPath.mkpath( skinImgPath ) || !outSkinPath.cd( skinImgPath ) ){
+        m_lastErrors.append( CError(CError::DirectoryCreation, skinImgPath) );
+        return false; //Il faut absolument un point de sortie : sinon on risque d'effacer des fichiers n'importe ou !
     }
     //On efface le contenu du rpertoire pour viter que les fichiers ne s'accumulent    
     outSkinPath.setFilter( QDir::Files );
@@ -784,8 +784,7 @@ bool CSkinParameters::saveSkin( const QString &destFile/*, QStringList &errorMsg
         }
     }
     //Copie des fichiers
-    bool f_copySuccessful = copyRessources( outSkinPath/*, errorMsgs*/ );
-    m_lastErrors.removeDuplicates();
+    bool f_copySuccessful = copyRessources( outSkinPath );
     if( f_copySuccessful ){
         m_filePath = destFile;
         emit skinSaved( destFile );
@@ -817,12 +816,12 @@ bool CSkinParameters::copyRessources( QDir outputDir/*, QStringList &errorMsg*/ 
             if( destFileInfo.exists() )
             {
                 if( !outputDir.remove( destFileInfo.fileName() ) ){//Impossible de supprimer le fichier
-                    m_lastErrors.append( CError::error(CError::FileCreation) + destFileInfo.absoluteFilePath() );
+                    m_lastErrors.append( CError(CError::FileCreation, destFileInfo.absoluteFilePath()) );
                 }
             }
             //Copie
             if( !QFile::copy( resourceFile.absoluteFilePath(), destFileInfo.absoluteFilePath()) ){
-                m_lastErrors.append( CError::error(CError::FileCreation) + destFileInfo.absoluteFilePath() );
+                m_lastErrors.append( CError(CError::FileCreation, destFileInfo.absoluteFilePath()) );
             }
         }
     }
@@ -852,6 +851,11 @@ bool CSkinParameters::load( const QString &skinFileName )
     QString skinFileNameCopy = skinFileName;
     QFile skinFile( skinFileName );
 
+    if( !QFile(skinFileName).exists() ) {
+        m_lastErrors.append( CError( CError::FileOpening, skinFileName) );
+        return false;
+    }
+
     if( skinDoc.setContent( &skinFile, false, errorMsg, &ln, &col ) )
     {
         m_ressourcesPath = skinFileNameCopy.remove(SKINSESSIONEXTENSION) + QString("_files/");
@@ -863,7 +867,7 @@ bool CSkinParameters::load( const QString &skinFileName )
         return true;
     }
     else{
-        m_lastErrors << *errorMsg;
+        m_lastErrors.append( CError( tr("An error occurred while loading the skin file ") + skinFileName, *errorMsg) );
         delete errorMsg;
         return false;
     }
@@ -980,39 +984,6 @@ void CSkinParameters::removeEmptyRessources( )
 	}
 }
 
-/*******************************************************************
-* error( int error )
-* ------------------------
-* retourne la traduction de l'erreur passe en paramtre
-* NB: on est oblig de pass par une fonction, car lupdate parse les
-* fonctions  la recherche de tr("") afin de construire les fichiers ls.
-* Donc on ne peut pas traduire de static const QSTRING ou de #define !
-********************************************************************/
-QString CSkinParameters::translateError( int error )
-{
-    QString returnedError;
-
-    switch( error )
-    {
-        case noError:
-            returnedError = tr("No error.");
-            break;
-        case overwrittingDefault:
-            returnedError = tr("Cannot overwrite default skin.");
-            break;
-        case destFolder:
-            returnedError = tr("Destination folder doesn't exists.");
-            break;
-        case loadingError:
-            returnedError = tr("Cannot load the skin.");
-        default:
-            returnedError = tr("Unknown error.");
-            break;
-    }
-
-    return returnedError;
-}
-
 
 /*******************************************************************
 * buttonImage( int button )
@@ -1027,9 +998,6 @@ QString CSkinParameters::buttonImage( int button )
 
     switch( button )
     {
-    /*case CSkinParameters::buttonIndex:
-        filename = m_ressources.value("PhotoButtonIndex").fileName();
-        break;*/
     case CSkinParameters::buttonNext:
         filename = m_ressources.value("PhotoButtonNext").fileName();
         break;

@@ -36,34 +36,37 @@ QString CError::error( e_errors error )
     switch( error )
     {
         case Internal:
-            returnedError = QObject::tr("Internal Error.");
+            returnedError = QObject::tr("Internal Error. ");
             break;
         case FileSaving:
-            returnedError = QObject::tr("Unspecified error while saving the file: ");
+            returnedError = QObject::tr("An error occured while saving the file. ");
             break;
         case FileOpening:
-            returnedError = QObject::tr("Unspecified error while opening the file: ");
+            returnedError = QObject::tr("An error occured while opening the file. ");
             break;
         case FileCreation:
-            returnedError = QObject::tr("Unspecified error while creating the file: ");
+            returnedError = QObject::tr("An error occured while creating the file. ");
             break;
         case DirectoryCreation:
-            returnedError = QObject::tr("Unspecified error while creating the directory: ");
+            returnedError = QObject::tr("An error occured while creating the directory. ");
             break;
         case InvalidDirectory:
-            returnedError = QObject::tr("Invalid directory: ");
+            returnedError = QObject::tr("Invalid directory. ");
             break;
         case SourceFileNotFound:
-            returnedError = QObject::tr("Resource files not found.");
+            returnedError = QObject::tr("Resource files not found. ");
             break;
         case WatermarkInvalid:
-            returnedError = QObject::tr("Watermark not valid: ");
+            returnedError = QObject::tr("Watermark not valid. ");
             break;
         case InvalidFiles:
             returnedError = QObject::tr("Some photos cannot be read from the disk. ");
             break;
+        case SkinOpening:
+            returnedError = QObject::tr("Cannot load the skin. Using default skin instead.");
+            break;
         default:
-            returnedError = QObject::tr("Unknown error.");
+            returnedError = QObject::tr("Unknown error. ");
             break;
     }   
 
@@ -89,11 +92,19 @@ CError::CError( const QString& summary,  const QString& details ) :
     // NOT THREAD SAFE !! std::cerr << m_summary.toAscii().data() << m_details.toAscii().data() << std::endl;
 }
 
-CError::CError( const CError& other ) :
-    m_summary( other.m_summary ),
-   // m_info( other.m_info ),
-    m_details( other.m_details )
+CError::CError( const CError& src ) :
+    m_summary( src.m_summary ),
+    m_details( src.m_details )
 {   }
+
+CError& CError::operator=(const CError &src)
+{
+    if( this != &src) {
+        this->m_summary = src.m_summary;
+        this->m_details = src.m_details;
+    }
+    return *this;
+}
 
 QString CError::message( void ) const
 {
@@ -115,7 +126,7 @@ QString CError::details( void ) const
     return m_details;
 }
 
-//QString CError::informativeText( void ) const
-//{ 
-//    return m_info;
-//}
+bool CError::isEmpty( void ) const
+{
+    return( m_summary.isEmpty() & m_details.isEmpty() );
+}

@@ -16,6 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QRegExp>
 
 #include "CCaption.h"
 
@@ -211,6 +212,7 @@ QString CCaption::render( int preview )
     //Mais pas si preview ;)
     if( preview == CTaggedString::NOPREVIEW ) {
         rendered.replace( QString("\""), QString("\\\"") );
+        rendered.replace( QRegExp("[\\n\\r]{1,}"), QString("<br/>") );
     }
 
     return rendered;

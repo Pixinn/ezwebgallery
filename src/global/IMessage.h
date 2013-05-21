@@ -29,21 +29,23 @@
 
 class IMessage : public QObject
 {
-    Q_OBJECT 
+    Q_OBJECT
 
 public:
-    //IMessage( void ){}
     virtual QColor color(void) const = 0;
     virtual QString message(void) const = 0;
     virtual QString summary( void ) const = 0;
-    //virtual QString informativeText( void ) const = 0;
     virtual QString details( void ) const = 0;
+    virtual bool isEmpty( void ) const = 0;
 };
 
 Q_DECLARE_INTERFACE(IMessage,"com.trolltech.EZWebGallery.IMessage/1.0")
 
 typedef QSharedPointer<IMessage> PtrMessage;
 Q_DECLARE_METATYPE(PtrMessage);
+
+typedef QList<PtrMessage> PtrMessageList;
+Q_DECLARE_METATYPE(PtrMessageList);
 
  
 #endif //IMessage_H

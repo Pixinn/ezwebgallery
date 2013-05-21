@@ -62,7 +62,7 @@ QString CWarning::details( void ) const
     return m_details;
 }
 
-//QString CWarning::informativeText( void ) const
-//{ 
-//    return m_info;
-//}
+bool CWarning::isEmpty( void ) const
+{
+    return (  m_summary.isEmpty() & m_details.isEmpty() );
+}

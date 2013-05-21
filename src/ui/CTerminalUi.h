@@ -39,7 +39,6 @@ class CTerminalUi : public QObject, public IUserInterface
 public:
     CTerminalUi( CGalleryGenerator &, const QString &projectFile );
     ~CTerminalUi( void );
-    void show( void );                //Redfinition car on ne veut pas qu'une fentre apparaisse...
 signals:
     void done( void );
 public slots:
@@ -47,7 +46,7 @@ public slots:
     void onLogMsg( PtrMessage );
     void onProgressBar( int completion, QString color, PtrMessage message, int timeout = 0 ); //Affiche un % d'avancement
     void onGalleryGenerationFinished( /*bool success*/QList<CPhotoProperties>);
-    void onForceStoppedFinished( QStringList );
+    void onForceStoppedFinished( PtrMessageList );
     void error( PtrMessage );         //An error occured
     void warning( PtrMessage );       //A warning occured
     void information( PtrMessage );   //Display an iformative message
@@ -56,6 +55,8 @@ protected:
     void keyPressEvent ( QKeyEvent * event );
 
 private:
+    void show( void );                //Redfinition car on ne veut pas qu'une fentre apparaisse...
+
     //Sorties console
     static QTextStream cout;
     static QTextStream cerr;

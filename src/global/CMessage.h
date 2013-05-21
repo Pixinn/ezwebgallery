@@ -25,6 +25,7 @@
 
 class CMessage : public IMessage
 {
+    Q_OBJECT
 
 public:
 
@@ -46,6 +47,7 @@ public:
     QString details( void ) const;
     QString informativeText( void ) const;
     QColor color( void ) const;
+    bool isEmpty( void ) const;
 
 
 private:
