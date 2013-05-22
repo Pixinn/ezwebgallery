@@ -18,7 +18,8 @@
 
 Defines = {
     URL_THUMBS_PATH: "thumbnails",
-    IMAGES_PATH: "images"
+    IMAGES_PATH: "images",
+    FPS: 25
 };
 
 TOOLS = {
@@ -68,7 +69,8 @@ $(document).ajaxError( function()
 $(document).ready(function()
 {
     g_properties.defines = Defines;
-
+    jQuery.fx.interval = 1000/Defines.FPS;
+    
     HtmlStructure = 
     {
     progressBar : {
@@ -113,10 +115,11 @@ $(document).ready(function()
           HtmlStructure.progressBar.$box.remove(  );
           delete HtmlStructure.progressBar.$box;
     } );
-
-    var Display = new CDisplay( g_properties, HtmlStructure );
-    //User events
-    var UserHandler;
+    
+    var Display = new CDisplay( g_properties, HtmlStructure );    
+    var UserHandler; //Managing user events
+    
+    // --- ENTERING THIS FUNCTION WHEN THE THUMBNAILS ARE LOADED
     Mosaic.getLoadedEvent().subscribe( function()
     {   
         //at this point, HtmlStructure must be *completed* !
@@ -133,7 +136,7 @@ $(document).ready(function()
         
         //Subscribing to user events
         UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );
-        UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( parseInt(this.id) ); } ); //this will be the object clicked
+        UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( parseInt(this.id) ); } ); //this, will be the object clicked
         UserHandler.getClosePhotoEvent().subscribe( Display.hidePhoto );
         UserHandler.getPreviousPhotoEvent().subscribe( Display.onPrevious );
         UserHandler.getPreviousPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
@@ -141,11 +144,13 @@ $(document).ready(function()
         UserHandler.getNextPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
         UserHandler.getPreviousIndexEvent().subscribe( Mosaic.onPreviousIndex );
         UserHandler.getNextIndexEvent().subscribe( Mosaic.onNextIndex );
+        
+        //Display according to URL
+        Display.displayCurrentUrl(); // --> STARTING POINT FOR THE USER <--
     });
 
     //Building the mosaic / Loading the thumbnails
     progressBar.show();
     HtmlStructure = Mosaic.buildHtml(); //loads the thumbnails and build the html
-
 
 } );

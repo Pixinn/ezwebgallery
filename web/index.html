@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+﻿<!DOCTYPE html> 
 <html>
 <head>
     [HTML_TITLE]
@@ -13,7 +13,12 @@
     [META_OPENGRAPH]
 
     <!-- L'ordre des inclusions est important ! !-->
-    <script type="text/javascript" src="ressources/javascript/jquery/jquery.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="ressources/javascript/jquery/jquery-1.x-min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+        <script type="text/javascript" src="ressources/javascript/jquery/jquery-2.x-min.js"></script>
+    <!--<![endif]-->
     <script type="text/javascript" src="ressources/javascript/jquery/plugins/jquery.progressbar.js"></script>
 
     <script type="text/javascript" src="ressources/parameters.json"></script> 
@@ -109,7 +114,9 @@
                             <div id="divPhoto">
                                 <!-- runtime generated content !-->                        
                             </div>
-                            <!-- runtime generated content !-->
+                            <div class="photoCaption">
+                                <!-- runtime generated content !-->
+                            </div>
                         </div>
                     </div>
                     <div class="slide" id="nextSlide">

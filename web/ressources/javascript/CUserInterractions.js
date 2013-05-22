@@ -56,9 +56,8 @@ function CUserInterractions( p_properties, htmlstructure )
             that.thumbnailClickedEvent.fire( this );
         });
         
-        that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );        
-        
-        
+        that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
+        that.disablePreviousNext();                
     };
     
     this.disablePreviousNext = function()

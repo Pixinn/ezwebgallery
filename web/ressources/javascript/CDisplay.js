@@ -24,9 +24,8 @@ function CDisplay( p_properties, p_htmlStructure )
 
     this.properties = p_properties;
     this.carrousel = new CCarrousel( p_properties, this.html.photo );
+    this.url = new CUrl( p_properties.photos.list );
     this.idCurrentPhoto = -1;
-    this.previousEvent = new CEvent();
-    this.nextEvent = new CEvent();
     this.photoScreenEvent = new CEvent();
     this.indexScreenEvent = new CEvent();
     this.disableUISignal = new CEvent();
@@ -48,10 +47,16 @@ function CDisplay( p_properties, p_htmlStructure )
 
 
     // ++++ Methods ++++ //
+    
+    this.displayCurrentUrl = function()
+    {
+        that.url.display( that.displayPhoto );
+    }
 
     this.displayPhoto = function( id )
     {
         that.idCurrentPhoto = id;
+        that.url.setHash( id );
         that.html.photo.$screen.fadeIn(); //photoScreen is located above the index screen: no need to hide it
         that.html.photo.buttons.$next.verticalCenter(0);
         that.html.photo.buttons.$previous.css("top",  that.html.photo.buttons.$next.css("top") ); //no v center on previous to correct an ie8 bug
@@ -59,27 +64,18 @@ function CDisplay( p_properties, p_htmlStructure )
         that.setSpace( that.computeAvailableSpace() );
         that.load( id, that.carrousel.load );
         
-        that.photoScreenEvent.fire();
+        that.photoScreenEvent.fire(  {id: id} );
     }
 
-
+    //back to index
     this.hidePhoto = function( ) {
-        that.html.photo.$screen.fadeOut('fast');
+        that.url.clearHash();
+        that.html.photo.$screen.fadeOut('fast');        
         that.indexScreenEvent.fire();
     }
     
 
     //+++ EVENTS
-
-    this.getPreviousEvent = function()
-    {
-        return that.previousEvent;
-    }
-
-    this.getNextEvent = function()
-    {
-        return that.nextEvent;
-    }
 
     this.getPhotoDisplayedLoadedEvent = function()
     {
@@ -119,13 +115,13 @@ function CDisplay( p_properties, p_htmlStructure )
 
     this.onPrevious = function()
     {
-        that.idCurrentPhoto--;
+        that.url.setHash( --that.idCurrentPhoto );
         that.load( that.idCurrentPhoto, that.carrousel.previous );
     }
 
     this.onNext = function()
     {
-        that.idCurrentPhoto++;
+        that.url.setHash( ++that.idCurrentPhoto );
         that.load( that.idCurrentPhoto, that.carrousel.next );
     }
 
