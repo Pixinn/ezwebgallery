@@ -42,7 +42,7 @@ function CStorage( nbItems )
             that.storage.addItem(  photoToLoad.url, new CPhoto( photoToLoad.id, photoToLoad.size ) )
             that.updateAges( photoToLoad.url );            
         }
-        
+        TOOLS.trace("Cache free space: " + (that.nbItems - that.storage.getLength()) );
         return that.storage.getItem( photoToLoad.url );
     }
     
@@ -55,6 +55,7 @@ function CStorage( nbItems )
         if( that.storage.getLength() >= that.nbItems ) {
             var toBeRemoved = that.ages[ that.nbItems - 1 ];
             that.storage.removeItem( toBeRemoved ); //no need to update ages array
+            TOOLS.trace("removing " + toBeRemoved );
         }
     }
     

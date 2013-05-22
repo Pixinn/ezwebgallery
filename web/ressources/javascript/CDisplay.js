@@ -216,7 +216,7 @@ function CDisplay( p_properties, p_htmlStructure )
         that.html.photo.$div.width( photo.size.w + 2*that.properties.photos.technical.decoration.padding )
                             .height( photo.size.h + 2*that.properties.photos.technical.decoration.padding );
         that.html.photo.$frame.width( that.html.photo.$div.outerWidth() )
-                                        .height( that.html.photo.$div.outerHeight() + that.html.photo.$title.height())
+                                        .height( that.html.photo.$div.outerHeight() + that.html.photo.$title.outerHeight() +that.html.photo.$caption.outerHeight() )
                                         .css("position","relative")
                                         .verticalCenter( 0 );   
 

@@ -51,9 +51,9 @@ function CPhotoLoader( p_properties, p_html )
         }
         else { //if already loaded the next photo still has to be prefetched
             if( that.prefetchingQueue.size() > 0 ) { //Prefetching the photos in the queue if any
-                that.fetch( that.prefetchingQueue.pop() ); //Loading next photo
+                that.fetch( that.prefetchingQueue.pop() ); //Loading next photo: recursive call
             }
-        }
+        }        
         return photo;
     }
     

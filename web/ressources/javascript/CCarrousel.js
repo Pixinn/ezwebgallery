@@ -33,6 +33,7 @@ function CCarrousel( p_properties, p_html )
     this.scrolledEvent = new CEvent();
     
     this.loader = new CPhotoLoader( p_properties, this.html );
+    this.frameFactory = new CFrameFactory( p_properties.photos.list );
     
     this.scrolledAmount = 0;
     this.prevPhoto = -1;
@@ -42,7 +43,7 @@ function CCarrousel( p_properties, p_html )
     //In: CPhoto
     this.displayPhoto = function( photo, $slide )
     {   
-        var $div = $slide.find("#divPhoto");
+        var $div = $slide.find( that.frameFactory.getStrPhoto() );
         $div.find('img').remove();
         var image = photo.getImage();
         $image = $( image );
@@ -59,7 +60,7 @@ function CCarrousel( p_properties, p_html )
                           .height( $div.outerHeight() + $div.siblings().outerHeight() ) //photo + title + caption
                           .verticalCenter( 0 );
                           
-        TOOLS.trace( "parent: " + $("#cadrePhoto").width() +  " - " + $("#cadrePhoto").parent().height() );
+        TOOLS.trace( "parent: " + $( that.frameFactory.getStrFrame() ).width() +  " - " + $( that.frameFactory.getStrFrame() ).parent().height() );
         TOOLS.trace( "div: " + $div.width() +  " - " + $div.height() );
         TOOLS.trace( "img: " + $image.width() +  " - " + $image.height() );
     }
@@ -76,7 +77,7 @@ function CCarrousel( p_properties, p_html )
                        
         var photo = that.loader.load( that.currPhoto, that.loader.PREVIOUS );
         that.currentPhoto = photo;
-        that.insertPhotoFrame( that.html.$previous );
+        that.frameFactory.frame( that.html.$previous, newid-1 );
         that.displayPhoto( photo, that.html.$previous );
         
         that.scroll( that.html.$previous );
@@ -89,6 +90,7 @@ function CCarrousel( p_properties, p_html )
         that.setCurrentPhoto( id );   
         var photo = that.loader.load( id, that.loader.NEXT );        
         that.displayPhoto( photo, that.html.$current );
+        that.frameFactory.caption( that.html.$caption, id-1 );
         
         that.html.$viewport.scrollLeft( that.html.$current.position().left ); //centering on current photo
         that.currentPhoto = photo;
@@ -102,7 +104,7 @@ function CCarrousel( p_properties, p_html )
                        
         var photo = that.loader.load( that.currPhoto, that.loader.NEXT );
         that.currentPhoto = photo;
-        that.insertPhotoFrame( that.html.$next );
+        that.frameFactory.frame( that.html.$next, newid-1 );
         that.displayPhoto( photo, that.html.$next );
         
         that.scroll( that.html.$next );
@@ -129,10 +131,11 @@ function CCarrousel( p_properties, p_html )
         that.html.$previous  = $("#previousSlide"); 
         that.html.$current  = $("#currentSlide");
         that.html.$next  = $("#nextSlide");
-        that.html.$frame = that.html.$current.find("#cadrePhoto");
-        that.html.$div = that.html.$frame.find("#divPhoto");
-        that.html.$title = that.html.$frame.find("#photoTitle");
-        that.html.buttons.$close = that.html.$title.find("#boutonIndex");    
+        that.html.$frame = that.html.$current.find( that.frameFactory.getStrFrame() );
+        that.html.$div = that.html.$frame.find( that.frameFactory.getStrPhoto() );
+        that.html.$title = that.html.$frame.find( that.frameFactory.getStrTitle() );
+        that.html.$caption = that.html.$frame.find( that.frameFactory.getStrCaption() );
+        that.html.buttons.$close = that.html.$title.find( that.frameFactory.getStrClose() );    
         that.html.$slides = $(".slide");
     }
     
@@ -166,12 +169,7 @@ function CCarrousel( p_properties, p_html )
 
         that.updateHandles();
     }
-    
-    this.insertPhotoFrame = function( $slide )
-    {
-        $slide.append( "<div id=\"cadrePhoto\"><div id=\"photoTitle\"><img id=\"boutonIndex\" src=\"ressources/images/close.gif\"></div><div id=\"divPhoto\"></div></div>" );
-    }
-    
+        
     //+++ EVENTS
 
     this.onPhotoLoaded = function(  )

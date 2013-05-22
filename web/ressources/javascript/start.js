@@ -91,6 +91,7 @@ $(document).ready(function()
         $wrapper : $("#wrapperAffichagePhoto"),
         $div : $("#divPhoto"),
         $title : $("#photoTitle"),
+        $caption :$(".photoCaption"),
         buttons : {
                 $previous : $("#boutonPrevious"),
                 $next : $("#boutonNext"),
@@ -109,7 +110,6 @@ $(document).ready(function()
           Mosaic.show();
           //Removing the progressBar
           Mosaic.getLoadingEvent().unsubscribe( progressBar.onLoad() );
-          delete progressBar;
           HtmlStructure.progressBar.$box.remove(  );
           delete HtmlStructure.progressBar.$box;
     } );

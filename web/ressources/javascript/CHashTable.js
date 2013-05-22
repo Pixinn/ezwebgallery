@@ -32,20 +32,15 @@
    
 	this.removeItem = function(in_key)
 	{
-		//var tmp_value;
 		if (typeof(that.items[in_key]) != 'undefined') {
 			that.len--;
-			//var tmp_value = that.items[in_key];
-			delete that.items[in_key];
+			delete that.items[in_key]; //removes the element from the table, does not destroy it! A job for the GC
 		}
-	   
-		//return tmp_value;
 	}
 	
 	this.addItem = function(in_key, in_value)
 	{
-		if (typeof(in_value) != 'undefined' /* in_value valide */ &&
-		typeof(that.items[in_key]) == 'undefined' /* Item non déjà présent */) {
+		if (  typeof(in_value) != 'undefined'  && typeof(that.items[in_key]) == 'undefined' /* Item non déjà présent */)  {
 			that.len++;
 			that.items[in_key] = in_value;
 			return in_value;
@@ -69,4 +64,3 @@
 		return that.len;
 	}
 }
-/* Fin Classe HashTable */

@@ -186,7 +186,7 @@ div.photoCaption {
 	font-variant: normal;
 	border: solid;
 	border-width: 0px; /*OBLIGATOIRE SINON BUG SOUS IE6 */
-	padding : 5px 0px 0px 0px;
+	padding : 0.2em 0 0.2em 0;
     min-height: 10px;  /* Bouton - padding */
 }
 /**************************************/
@@ -197,6 +197,5 @@ div#photoTitle{
 	width: 100%;			 /*OBLIGATOIRE SINON BUG SOUS IE6 */
 	font-style:normal;		/* MODIFIABLE */ 
 	text-align:center;		 /*OBLIGATOIRE SINON BUG SOUS IE6 */
-	/*padding:0px 0px 5px 0px;*/
     min-height: 15px;
 }
