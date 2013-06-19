@@ -4,7 +4,7 @@ EZWebGallery.
 
 UBUNTU or DEBIAN:
 
-    run "sudo qmake && make install".
+    run "sudo qmake-qt4 && make install".
     
     You can build a function debug ezwebgallery after the first proper installation.
 

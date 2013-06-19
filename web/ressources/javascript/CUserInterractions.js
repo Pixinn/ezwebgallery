@@ -51,10 +51,7 @@ function CUserInterractions( p_properties, htmlstructure )
         $(window).resize( function() { that.onWindowResized(); } )
                       .keydown( function(evt) { that.onKeyboardIndexSrc(evt); } );        
     
-        that.html.index.mosaic.$thumbnails.click( function() {
-            TOOLS.trace( "thumbnail #" + this.id + " clicked." );
-            that.thumbnailClickedEvent.fire( this );
-        });
+        that.enableThumbnailClick();
         
         that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
         that.disablePreviousNext();                
@@ -114,6 +111,14 @@ function CUserInterractions( p_properties, htmlstructure )
                                          .addClass( that.buttonDisabledClass )
                                          .unbind( "click" );      
        }
+       
+    this.enableThumbnailClick = function()
+    {
+        that.html.index.mosaic.$thumbnails.click( function() {
+            TOOLS.trace( "thumbnail #" + this.id + " clicked." );
+            that.thumbnailClickedEvent.fire( this );
+        });
+    }     
     
     this.getWindowResizedEvent = function() {
         return that.windowResizedEvent;
@@ -188,6 +193,7 @@ function CUserInterractions( p_properties, htmlstructure )
         $(window).unbind("keydown")
                       .keydown( function( evt) { that.onKeyboardIndexSrc(evt); } );
         that.html.photo.$div.unbind("click");
+        that.enableThumbnailClick();
     }
     
     this.onPhotoScreen  = function()
@@ -195,6 +201,7 @@ function CUserInterractions( p_properties, htmlstructure )
         $(window).unbind("keydown")
                       .keydown( function( evt) { that.onKeyboardPhotoScr(evt); } );
         that.html.photo.$div.click( function() { that.onClosePhoto(); } );
+        that.html.index.mosaic.$thumbnails.unbind("click");
     }
     
     this.onKeyboardIndexSrc = function( evt )
