@@ -29,8 +29,6 @@ function CUserInterractions( p_properties, htmlstructure )
     this.previousPhotoEvent = new CEvent();
     this.previousPhotoEvent = new CEvent();
     this.nextPhotoEvent = new CEvent();
-    this.previousIndexEvent = new CEvent();
-    this.nextIndexEvent = new CEvent();
     
     this.buttonEnabledClass = "photoButtonEnabled";
     this.buttonDisabledClass = "photoButtonDisabled";
@@ -48,8 +46,7 @@ function CUserInterractions( p_properties, htmlstructure )
     
     this.start = function()
     {
-        $(window).resize( function() { that.onWindowResized(); } )
-                      .keydown( function(evt) { that.onKeyboardIndexSrc(evt); } );        
+        $(window).resize( function() { that.onWindowResized(); } );
     
         that.enableThumbnailClick();
         
@@ -140,14 +137,6 @@ function CUserInterractions( p_properties, htmlstructure )
         return that.nextPhotoEvent;
     }
     
-     this.getPreviousIndexEvent = function() {
-        return  that.previousIndexEvent;
-    }
-    
-    this.getNextIndexEvent = function() {
-        return  that.nextIndexEvent;
-    }
-    
     this.onWindowResized = function() {
         that.windowResizedEvent.fire();
     }
@@ -190,8 +179,7 @@ function CUserInterractions( p_properties, htmlstructure )
     
     this.onIndexScreen  = function()
     {
-        $(window).unbind("keydown")
-                      .keydown( function( evt) { that.onKeyboardIndexSrc(evt); } );
+        $(window).unbind("keydown");
         that.html.photo.$div.unbind("click");
         that.enableThumbnailClick();
     }
@@ -202,28 +190,6 @@ function CUserInterractions( p_properties, htmlstructure )
                       .keydown( function( evt) { that.onKeyboardPhotoScr(evt); } );
         that.html.photo.$div.click( function() { that.onClosePhoto(); } );
         that.html.index.mosaic.$thumbnails.unbind("click");
-    }
-    
-    this.onKeyboardIndexSrc = function( evt )
-    {
-        if( that.watchedKeyDown == false )
-        {
-            var keyPressed = evt.keyCode || evt.which;
-            switch( keyPressed )
-            {
-                case KEY_ARROW_LEFT:
-                    that.watchedKeyDown = true;
-                    that.previousIndexEvent.fire();
-                    that.watchedKeyDown = false;
-                    break;
-                case KEY_ARROW_RIGHT:
-                    that.watchedKeyDown = true;
-                    that.nextIndexEvent.fire();
-                    that.watchedKeyDown = false;
-                    break;
-                default: break;
-                }
-        }
     }
     
     this.onKeyboardPhotoScr = function( evt )

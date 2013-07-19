@@ -171,7 +171,7 @@ function CDisplay( p_properties, p_htmlStructure )
         //Du coup il faut que:	+ g_$divDisplayZoneName.siblings()::margin = 0px
         //+ g_$divDisplayZoneName::border=0 et ::margin=0
         var height = that.html.photo.$wrapper.innerHeight() - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - wastedPixelTop;
-        var width = $(window).width( ) - widthWasted - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - ie6BugCorrection;
+        var width =  that.html.$window.innerWidth( ) - widthWasted - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - ie6BugCorrection;
 
         if( height > that.properties.photos.technical.maxSize.height ) {
             height = that.properties.photos.technical.maxSize.height;

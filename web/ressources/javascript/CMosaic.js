@@ -26,73 +26,34 @@ function CMosaic( p_properties, p_htmlStructure )
     //Building the thumbnail mosaic
     this.buildHtml = function( ) 
     {  
-        var divSlidingPanelName = "slidingPanel";
         var divThumbBoxName = "thumbBox";
-        
-        //Generating panels and tabs
-        for( var numIndex = 1; numIndex <= that.mosaicNbPanels; numIndex++ ) {
-            that.htmlStructure.index.mosaic.$scrollContainer.append( '<div class="' + divSlidingPanelName + '" id=\"index' + numIndex + '\"></div>' );
-        }
-        var $pannels = $("." + divSlidingPanelName);
-                
-        //Generating the tabs
-        for( var numIndex = 1; numIndex <= that.mosaicNbPanels; numIndex++ ) {
-            that.htmlStructure.index.mosaic.$tabsContainer.append('<li class=\"tab\" id=\"' + numIndex + '\" target="#index' + numIndex + '\">'+ numIndex + '</li>');
-        }
-        that.htmlStructure.index.mosaic.$tabs = that.htmlStructure.index.mosaic.$tabsContainer.find('li');
+        that.htmlStructure.index.mosaic.$handle.hide();
         
         //Generating the thumbnail containers        
-        var thumbNr = 1;
-        for (var pannel = 0; pannel < $pannels.length; pannel++)
-        {
-            var i = 1;
-            while( ( i <= that.mosaicNbThumbsByPanels ) && ( thumbNr <= that.mosaicNbThumbnails ) ) {
-                $pannels.eq(pannel).append('<div class="'+ divThumbBoxName +'" id="' + thumbNr + '"></div>');	
-                thumbNr++;
-                i++;
-            }       
+        for( var thumbNr = 1; thumbNr <= that.mosaicNbThumbnails; thumbNr++ ) {
+            that.htmlStructure.index.mosaic.$handle.append('<div class="'+ divThumbBoxName +'" id="' + thumbNr + '"></div>');
         }
         var $thumbBoxes = $("." + divThumbBoxName);
         that.htmlStructure.index.mosaic.$thumbBoxes = $thumbBoxes;
         
         //Loading the thumbnails        
-        this.thumbnailsSet = this.computeThumbnailsSet();
-        that.ThumbnailSize = that.properties.index.mosaic.sizes[ this.thumbnailsSet ]
+        that.thumbnailsSet =that.computeThumbnailsSet();
+        that.ThumbnailSize = that.properties.index.mosaic.sizes[that.thumbnailsSet ]
         $thumbBoxes.each( function( index )
         {
             var thumbName = that.properties.photos.list[ index ].filename;
             var thumbnail = new Image();
             $(this).append( thumbnail );
             $(thumbnail).load( function( )	{	// callback OnLoad
-                            that.oneThumbLoadedEvent.fire( "thumbnailLoaded" );                     
+                            that.oneThumbLoadedEvent.fire( this );   // this : thumbnail::Image
                         })
-                        .attr("id", this.id)
+                        .attr("id",this.id)
                         .attr("src", src = that.properties.defines.URL_THUMBS_PATH+'/'+that.thumbnailsSet+'/'+thumbName );  // src will load the Image: MUST BE THE LAST ATTRIBUTE TO SET!!
                         
         } );
         
-        
-        //Returning the updated html structure
-        that.htmlStructure.index.mosaic.$pannels = $pannels;
         return that.htmlStructure;
     };
-    
-    
-    this.onPreviousIndex = function()
-    {
-        if( that.currentPageNr > 1 ) {
-            that.currentPageNr--;
-            that.scroller.scrollToPageNr( that.currentPageNr, that.currentPageNr );
-        }
-    }
-    
-    this.onNextIndex = function()
-    {
-        if( that.currentPageNr < that.mosaicNbPanels ) {
-            that.currentPageNr++;
-            that.scroller.scrollToPageNr( that.currentPageNr, that.currentPageNr );
-        }
-    }
     
     
     //when a single thumbnail was loaded
@@ -107,7 +68,6 @@ function CMosaic( p_properties, p_htmlStructure )
     this.onThumbnailsLoaded = function( )
     {               
         //resizing the mosaic according to the thumb set chosen
-        var $scrollViewport = that.htmlStructure.index.mosaic.$scrollViewport;
         var $thumbBoxes = that.htmlStructure.index.mosaic.$thumbBoxes;
         var $thumbnails = $thumbBoxes.find( 'img' );
         var thumbBorderWidth = $thumbnails.first().css("border-top-width");
@@ -115,72 +75,39 @@ function CMosaic( p_properties, p_htmlStructure )
         $thumbBoxes.width( that.ThumbnailSize + 2*thumbBorderWidth )
                    .height( that.ThumbnailSize + 2*thumbBorderWidth);
         var mosaicWidth = that.properties.index.mosaic.nbCols * $thumbBoxes.outerWidth();
-        var mosaicHeight = that.properties.index.mosaic.nbRows * $thumbBoxes.outerHeight();
-        
-        $scrollViewport.width( mosaicWidth )
-                      .height( mosaicHeight );
-        that.htmlStructure.index.mosaic.$pannels.width( mosaicWidth )
-                                                  .height( mosaicHeight );        
-        
-        that.htmlStructure.index.mosaic.$container.width( $scrollViewport.outerWidth() );
+        that.htmlStructure.index.mosaic.$handle.show(); //show necessary for that.htmlStructure.index.mosaic.$title.outerHeight()
+        var mosaicHeight = Math.ceil(that.mosaicNbThumbnails / that.properties.index.mosaic.nbCols) * $thumbBoxes.outerHeight() +  that.htmlStructure.index.mosaic.$title.outerHeight();
+        //updating structure
         that.htmlStructure.index.mosaic.$thumbnails = $thumbnails;
-        
-        that.show(); //Must be visible to set up the scrolling :/
-        
-        // --- scrolling
-        var $pannels = that.htmlStructure.index.mosaic.$pannels;
-        var $scrollcontainer = that.htmlStructure.index.mosaic.$scrollContainer;
-        $pannels.css({  'float' : 'left',
-                               'position' : 'relative' // IE fix to ensure overflow is hidden
-        }); 
-        // calculate a new width for the container (so it holds all panels)
-        $scrollcontainer.css('width', $pannels[0].offsetWidth * $pannels.length);
-        $scrollViewport.scrollLeft( 0 );
-        
-        //binding the scrolling to the mosaic
-        var scrollOptions = {
-          $viewport: $scrollViewport,
-          $navigation: that.htmlStructure.index.mosaic.$tabs,
-          duration: 500, 
-          easing: 'swing',
-          onAfter: that.highlightNav
-        };
-
-         that.scroller = new CScroller( scrollOptions );
-         
-         that.hide();
-                 
-        //highlights the first navigation tab
-        that.highlightNav ( that.htmlStructure.index.mosaic.$tabs.eq(0) );
+        //displaying mosaic
+        that.htmlStructure.index.mosaic.$handle.width( mosaicWidth )
+                                                  .height( mosaicHeight );        
     };
     
     //showing the mosaic
     this.show = function()
     {
-        that.htmlStructure.index.mosaic.$container.show().verticalCenter(0);
-        that.htmlStructure.index.mosaic.$thumbBoxes.find('img').verticalCenter(0);
+        that.htmlStructure.index.mosaic.$thumbnails.verticalCenter(0);
     }
     
     this.hide = function()
     {
-        that.htmlStructure.index.mosaic.$container.hide();
+        that.htmlStructure.index.mosaic.$handle.hide();
     }
     
     
     //On window resize
     this.onResize = function()
     {
-        that.htmlStructure.index.mosaic.$container.verticalCenter( 0 );
+      // that.htmlStructure.index.mosaic.$container.verticalCenter( 0 );
     }
     
     //On previous
     this.onPreviousNext = function( evt )
     {
-        var newPage = Math.ceil( evt.id / (that.properties.index.mosaic.nbRows * that.properties.index.mosaic.nbCols) );
-        if( newPage != that.currentPageNr ) {
-            TOOLS.trace( "Mosaic - new page: " + newPage );
-            that.scroller.scrollToPageNr( newPage, newPage );
-        }
+        var $firstThumbBox = that.htmlStructure.index.mosaic.$thumbBoxes.eq(0);
+        var $thumbBox =  that.htmlStructure.index.mosaic.$thumbBoxes.eq( evt.id - 1 );
+        $("body").scrollTop( $thumbBox.offset().top - $firstThumbBox.offset().top );
     }
    
     
@@ -202,14 +129,14 @@ function CMosaic( p_properties, p_htmlStructure )
     {
         var fSetFound = false;
         var thumbSet = that.properties.index.mosaic.defaultSet;    //if no suitable set is found
-        var availableWidth = that.htmlStructure.index.$screen.width() - that.properties.index.mosaic.unavailable.horizontal - that.mosaicSizeMargin/2;
-        var availableHeight = that.htmlStructure.index.$screen.height() - that.properties.index.mosaic.unavailable.vertical - that.mosaicSizeMargin;
+        var availableWidth = that.htmlStructure.$window.innerWidth() - that.properties.index.mosaic.unavailable.horizontal - that.mosaicSizeMargin/2; //$window.innerWidth(): "visual viewport" width: http://www.quirksmode.org/mobile/viewports2.html
+        var availableHeight = that.htmlStructure.$window.innerHeight() - that.properties.index.mosaic.unavailable.vertical - that.mosaicSizeMargin;
         
         $.each( that.properties.index.mosaic.sizes, function( key, size ) //iterating on the object using jQuery
         {
             if (   !fSetFound
                 && (availableWidth > size * that.properties.index.mosaic.nbCols)
-                && (availableHeight > size * that.properties.index.mosaic.nbRows) )
+                /*&& (availableHeight > size * that.properties.index.mosaic.nbRows)*/ )
             {
                 thumbSet = key;
                 fSetFound = true;
@@ -219,13 +146,6 @@ function CMosaic( p_properties, p_htmlStructure )
         return thumbSet;
     };
     
-    //Highlights the selected navigation tab and update the current page number
-    this.highlightNav = function ( $toHighlight )
-    {  
-        $(".navTabSelected").removeClass("navTabSelected");
-        $toHighlight.addClass("navTabSelected");
-        that.currentPageNr = parseInt( $toHighlight.attr("id") );
-    }
     
         // ++++ Attributes ++++ //
     //General

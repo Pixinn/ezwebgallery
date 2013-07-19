@@ -25,19 +25,21 @@
     <script type="text/javascript" src="ressources/parameters.json"></script> 
     <script type="text/javascript" src="ressources/javascript/ezwg-min.js"></script> 
     <!-- DEBUG
-    <script type="text/javascript" src="ressources/CEvent.js"></script>
-    <script type="text/javascript" src="ressources/CHashTable.js"></script>
-    <script type="text/javascript" src="ressources/CPhoto.js"></script>
-    <script type="text/javascript" src="ressources/CFifo.js"></script>
-    <script type="text/javascript" src="ressources/CStorage.js"></script>
-    <script type="text/javascript" src="ressources/CUserInterractions.js"></script>
-    <script type="text/javascript" src="ressources/CCarrousel.js"></script>
-    <script type="text/javascript" src="ressources/CPhotoLoader.js"></script>
-    <script type="text/javascript" src="ressources/CDisplay.js"></script>
-    <script type="text/javascript" src="ressources/CScroller.js"></script>
-    <script type="text/javascript" src="ressources/CProgressBar.js"></script>
-    <script type="text/javascript" src="ressources/CMosaic.js"></script>
-    <script type="text/javascript" src="ressources/start.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CEvent.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CHashTable.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CPhoto.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CFifo.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CStorage.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CUserInterractions.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CFrameFactory.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CCarrousel.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CPhotoLoader.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CUrl.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CDisplay.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CScroller.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CProgressBar.js"></script>
+    <script type="text/javascript" src="ressources/javascript/CMosaic.js"></script>
+    <script type="text/javascript" src="ressources/javascript/start.js"></script>
     !-->
 
     <link rel="stylesheet" TYPE="text/css" HREF="ressources/css/common.css">
@@ -47,43 +49,40 @@
     
 </head>
 
-<body>
+<body style="overflow:auto">
 
-    <!-- ****************** !-->
-    <!-- DIV AFFICHAGE INDEX !-->
-    <!-- Div absolute recouvrant tout l'écran !-->
-    <!-- Pour les blocks interne, permet d'avoir un layout normal sans utilise *absolute* !-->
-    <!-- Permet à l'élement d'afficher/cacher tous ces blocs d'un seul coup !-->
 
-    <div id="screenIndex" class="fullScreen" data-role="page">
-    <!-- TITRE !-->
-    <div class="leftZone" id="indexTitle">[CONTENT_VERTICALTITLE]</div>
-        <!-- DIV INDEX ET VIGNETTES !-->
-        <div class="centralZone" id="wrapperAffichageIndex">
-            <div id="progressbarWrapper" style="display:none">
+<div id="screenProgress" class="fullScreen"  >
+        <div id="progressbarWrapper">
                 Loading...<p></p>
                 <div id="progressbar"></div>
             </div>
-            <div id="indexSliderContainer" style="display:none" >
-                <ul class="indexNavigation">
-                    <!-- ONGLETS DE NAVIGATION GENERES A LA VOLEE !-->
-                    <!-- !!! IMPORTANT !!!! cet élément "ul" doit se trouver en première position dans la page. => utilisé pour highlighter l'onglet de l'index affiché !-->
-                </ul>
-                    <div class="thumbsWrapper">
-                        <div class="scrollContainer">
-                            <!-- VIGNETTES GENEREES A LA VOLEE !-->
+</div>        
+
+<!-- ****************** !-->
+<!-- DIV AFFICHAGE INDEX !-->
+<!-- Div absolute recouvrant tout l'écran !-->
+<!-- Pour les blocks internes, permet d'avoir un layout normal sans utilise *absolute* !-->
+<!-- Permet à l'élement d'afficher/cacher tous ces blocs d'un seul coup !-->
+
+
+<div id="screenIndex">
+    
+    <div class="centralZone">        
+        <div id="mosaic" >           
+            <div id="indexTitle">[CONTENT_TITLE]</div>  <!-- TITRE !-->
+            <!-- VIGNETTES !--> 
                         </div>
-                    </div>	<!-- ThumbWrapper !-->
-            </div>	<!-- indexSliderContainer !-->
-        </div>
-        <div class="footer">
-            <a href="http://www.ezwebgallery.org/">[EZWEBGALLERY_LOGO]</a>
+
+        <div class="footer">            
+			<a href="http://www.ezwebgallery.org/">[EZWEBGALLERY_LOGO]</a>
             [BUTTON_ADDTHIS]
         </div>
-    </div><!-- ScreenIndex !-->
+        </div>
         
-    <!-- ****************** !-->
+</div><!-- ScreenIndex !-->
 
+<!-- ****************** !-->
 
     <!-- ****************** !-->
     <!-- DIV AFFICHAGE PHOTO !-->
@@ -91,7 +90,7 @@
     <!-- Pour les blocks interne, permet d'avoir un layout normal sans utilise *absolute* !-->
     <!-- Permet à l'élement d'afficher/cacher tous ces blocs d'un seul coup !-->
 
-    <div id="screenPhoto" class="fullScreen" data-role="page">
+    <div id="screenPhoto" class="fullScreen">
         <!-- photoLefter et photoRighter doivent se trouver AVANT wrapperAffichagePhoto pour avoir trois colonnes.
              cf. http://www.alsacreations.com/tuto/lire/588-design-trois-colonnes-positionnement-flottant.html !-->
         <div  class="leftZone" id="photoLefter"> <!-- A gauche de la photo !-->

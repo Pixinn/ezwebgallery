@@ -58,6 +58,21 @@ jQuery.fn.verticalCenter = function( offset ) {
   });
 };
 
+
+
+/*
+ * Fit a JQuery object in a given width
+ */
+jQuery.fn.fit = function( width ) {
+  return this.each(function(  ){
+    var obj = jQuery(this);
+    var ratio = obj.width() / obj.height();
+    obj.width( width )
+        .height( width / ratio );
+     
+  });
+};
+
 //Never called as attr("src",...) are not ajax loadings
 $(document).ajaxError( function()
 {
@@ -73,18 +88,17 @@ $(document).ready(function()
     
     HtmlStructure = 
     {
+    $window : $(window),
     progressBar : {
+        $screen : $("#screenProgress"),
         $box : $("#progressbarWrapper"),
-        $bar : $("#progressbar"),
-        
+        $bar : $("#progressbar")        
     },
     index : {
         $screen : $("#screenIndex"),
         mosaic : {
-            $container : $("#indexSliderContainer"),
-            $scrollViewport : $(".thumbsWrapper"),
-            $scrollContainer : $(".scrollContainer"),
-            $tabsContainer : $("ul.indexNavigation")
+            $handle : $("#mosaic"),
+            $title : $("#indexTitle")
             }
        },
     photo : {
@@ -104,7 +118,7 @@ $(document).ready(function()
 
     //Creating instances
     Mosaic = new CMosaic( g_properties, HtmlStructure );
-    progressBar = new CProgressBar ( {$progessBar: HtmlStructure.progressBar.$bar, nbThumbnails: g_properties.photos.list.length} );
+    progressBar = new CProgressBar ( {$screen: $("#screenPogress"), $progessBar: HtmlStructure.progressBar.$bar, nbThumbnails: g_properties.photos.list.length} );
     Mosaic.getLoadingEvent().subscribe( progressBar.onLoad );
     Mosaic.getLoadedEvent().subscribe( function() { //When all thumbnails are loaded
           //Showing mosaic
@@ -112,8 +126,8 @@ $(document).ready(function()
           Mosaic.show();
           //Removing the progressBar
           Mosaic.getLoadingEvent().unsubscribe( progressBar.onLoad() );
-          HtmlStructure.progressBar.$box.remove(  );
-          delete HtmlStructure.progressBar.$box;
+          HtmlStructure.progressBar.$screen.remove(  );
+          delete HtmlStructure.progressBar.$screen;
     } );
     
     var Display = new CDisplay( g_properties, HtmlStructure );    
@@ -142,8 +156,6 @@ $(document).ready(function()
         UserHandler.getPreviousPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
         UserHandler.getNextPhotoEvent().subscribe( Display.onNext );
         UserHandler.getNextPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
-        UserHandler.getPreviousIndexEvent().subscribe( Mosaic.onPreviousIndex );
-        UserHandler.getNextIndexEvent().subscribe( Mosaic.onNextIndex );
         
         //Display according to URL
         Display.displayCurrentUrl(); // --> STARTING POINT FOR THE USER <--
@@ -151,6 +163,7 @@ $(document).ready(function()
 
     //Building the mosaic / Loading the thumbnails
     progressBar.show();
+    //HtmlStructure.index.$screen.hide();
     HtmlStructure = Mosaic.buildHtml(); //loads the thumbnails and build the html
 
 } );

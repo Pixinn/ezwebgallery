@@ -20,13 +20,13 @@ CProgressBar = function( options )
     
     CProgressBar.prototype.show = function()
     {
-         that.options.$progessBar.parent().show()
-                                             .verticalCenter( 0 );
+         that.options.$screen.show();
+         that.options.$progessBar.parent().verticalCenter( 0 );
     }
     
     CProgressBar.prototype.hide = function()
     {
-         that.options.$progessBar.parent().hide();
+         that.options.$screen.hide();
     }
     
 }

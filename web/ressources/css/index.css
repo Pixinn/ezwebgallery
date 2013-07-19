@@ -16,6 +16,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#screenProgress {
+        z-index:100;
+}
+
 #screenIndex{
 		display:block;
 		position:relative; /* Pour résoudre un bug de ie6 : comme indexwrapper est relatif il faut aussi que son parent soit relatif pour que overflow::hidden marche bien */
@@ -24,19 +28,21 @@
 
 div#indexTitle{
 	font-variant: small-caps;
-	border:solid;
+    margin : 40px 40px 0 40px; /* margin need to correspond to mosaic's rounded border */
+    padding: 0.1em 0 0.1em 0;
+	/*border:solid;
 	border-top-width:	0px;
-	border-bottom-width:	0px;
+	border-bottom-width:	0px;*/
 }
  
  
 #indexSliderContainer{
 		position: relative; /* Pour centrage */
-		display:none;
+		display:block;
 		top:0px;
 		padding: 10px;	/* Permet d'avoir l'onglet sélectionné qui dépasse (sinon il est en dehors du cadre) */
 		margin: auto;	/* Nécessaire pour le centrage horizontal */
-		height: auto;
+		/*height: auto;*/
 		text-align: center;
 	}
 	
@@ -97,6 +103,24 @@ ul.indexNavigation li.navTabSelected{
 		float:left;
         background: transparent; /* MODIFIABLE */
         
+}
+
+
+#screenIndex {
+    display:block;
+    min-height:100%;
+    min-width:100%;
+    overflow:auto;
+}
+
+/* Mosaic */
+#mosaic {
+    display: block;
+    margin: 5em auto;
+    border-radius: 40px 40px 5px 5px; 
+    -moz-border-radius: 40px 40px 5px 5px; 
+    -webkit-border-radius: 40px 40px 5px 5px; 
+    border: 0px solid #800000;
 }
 		
 	

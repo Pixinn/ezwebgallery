@@ -43,7 +43,7 @@ a:active {color: black;}
 
 /* boite de chargement */
 #progressbarWrapper{
-    display: none;
+    display: block;
 	font-size:	1em;
     font-weight: bold;
     margin: auto;
