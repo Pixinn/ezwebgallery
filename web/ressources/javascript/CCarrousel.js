@@ -155,13 +155,15 @@ function CCarrousel( p_properties, p_html )
         //"deprecated" will be erased from the hmt structure after the scrolling
         that.html.$frame.addClass("deprecated");
         if( $target == that.html.$previous ) { //backward scrolling
-            that.html.$viewport.animate({scrollLeft: that.scrolledAmount}, "fast", "swing", function() {that.onScrolled("BACKWARD");}  );
+            //that.html.$viewport.animate({scrollLeft: that.scrolledAmount}, "fast", "swing", function() {that.onScrolled("BACKWARD");}  );
+            $("#slidesContainer").animate({left: "+="+that.html.$current.outerWidth()+"px"}, "fast", "swing", function() {that.onScrolled("BACKWARD");}  );
             that.html.$next.addClass("deprecated");        
             that.html.$current.attr("id","nextSlide");
             that.html.$previous.attr("id","currentSlide");        
         }
         else { //forward scrolling
-            that.html.$viewport.animate({scrollLeft: that.scrolledAmount}, "fast", "swing", function() {that.onScrolled("FORWARD");}  );
+            //that.html.$viewport.animate({scrollLeft: that.scrolledAmount}, "fast", "swing", function() {that.onScrolled("FORWARD");}  );
+            $("#slidesContainer").animate({left: "-="+that.html.$current.outerWidth()+"px"}, "fast", "swing", function() {that.onScrolled("FORWARD");}  );
             that.html.$previous.addClass("deprecated");        
             that.html.$current.attr("id","previousSlide");
             that.html.$next.attr("id","currentSlide");   
@@ -186,12 +188,14 @@ function CCarrousel( p_properties, p_html )
         //updating page's structure
         that.html.$deprecated.remove(); //removing the deprecated structures changes the slide under the viewport                   
         if( direction == "FORWARD" ) {
-            that.html.$viewport.scrollLeft( that.html.$current.outerWidth() ); //quickly recenter the viewport on the new current slide 
+            //that.html.$viewport.scrollLeft( -that.html.$current.outerWidth() ); //quickly recenter the viewport on the new current slide 
+            $("#slidesContainer").css("left", "0px");
             that.html.$current.parent().append( "<div id=\"nextSlide\" class=\"slide\"></div>" );                  
         }
         else {
             that.html.$current.parent().prepend( "<div id=\"previousSlide\" class=\"slide\"></div>" );
-            that.html.$viewport.scrollLeft( that.html.$current.outerWidth() ); //quickly recenter the viewport on the new current slide 
+            $("#slidesContainer").css("left", "0px");
+            //that.html.$viewport.scrollLeft( that.html.$current.outerWidth() ); //quickly recenter the viewport on the new current slide 
         }
 
         that.updateHandles();
