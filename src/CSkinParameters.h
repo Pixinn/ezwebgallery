@@ -37,14 +37,6 @@ namespace Ui { //Voir le bas du fichier ui_skinDesigner.h
     class SkinDesigner;
 }
 
-
-//----- Structures internes ------//
-typedef struct {
-    int titlePosition;
-}t_misc;
-
-//Position du titre :  mettre en phase avec l'index du menu droulant correspondant dans la GUI
-#define TITLE_POSITION_LEFT 0
 #define SKIN_TAG_NAME       "Skin"
 
 class CSkinParameters : public QObject, IParameters<Ui::SkinDesigner>
@@ -72,8 +64,8 @@ public:
     QString buttonImage( int );                                  //Renvoie le nom du fichier de l'icone dsire
     QDomDocument toDomDocument( );                               //Gnre un QDomDocument rempli des paramtres
     //void setDir( const QString & );                            //Indique le rpertoire de la skin
-    QSize unavailableSpace( unsigned int, unsigned int );        //Returns space unavailable for the thumbnails on the index page
-    QSize mosaicDecoration( unsigned int, unsigned int );        //Returns space used by the mosaic decoration on the index page
+    QSize unavailableSpace( unsigned int );        //Returns space unavailable for the thumbnails on the index page
+    QSize mosaicDecoration( unsigned int );        //Returns space used by the mosaic decoration on the index page
 
     bool load( const QString &);                                 //Chargement de la skin
     bool saveSkin( const QString &/*, QStringList &*/ );         //Sauvegarde la skin. Retourne false si erreurs
@@ -113,7 +105,6 @@ private:
     QString m_lastError;                        //Dernire erreur survenue
     QStringList m_lastErrors;                   //Liste des dernires erreurs survenues
     Ui::SkinDesigner* m_p_ui;
-    t_misc m_misc;
     QMap<QString,QFileInfo> m_ressources;      //widget name ; file info
     CCssSheet m_styleSheet;
     unsigned int m_version;

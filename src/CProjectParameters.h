@@ -109,7 +109,6 @@ public:
     bool operator==(const t_thumbsConf& ); //<- METTRE A JOUR SI ON AJOUTE DES CHAMPS !!
     bool operator!=(const t_thumbsConf& );
 
-    int nbRows;
     int nbColumns;
     bool f_regeneration;
 }; //Configuration des vignettes

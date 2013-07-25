@@ -22,29 +22,19 @@
 
 #screenIndex{
 		display:block;
-		position:relative; /* Pour résoudre un bug de ie6 : comme indexwrapper est relatif il faut aussi que son parent soit relatif pour que overflow::hidden marche bien */
+		position:relative; /* Pour résoudre un bug de ie6 : comme indexwrapper est relatif il faut aussi que son parent soit relatif pour que overflow::hidden marche bien */        
+        background-attachment: fixed;
+        background-repeat: repeat;
 } 
 
 
 div#indexTitle{
 	font-variant: small-caps;
-    margin : 40px 40px 0 40px; /* margin need to correspond to mosaic's rounded border */
-    padding: 0.1em 0 0.1em 0;
-	/*border:solid;
-	border-top-width:	0px;
-	border-bottom-width:	0px;*/
+    margin : 0.4em 0.5em 0 0.5em;
+    padding: 0.1em 0 0.2em 0;
+	background: transparent;
 }
  
- 
-#indexSliderContainer{
-		position: relative; /* Pour centrage */
-		display:block;
-		top:0px;
-		padding: 10px;	/* Permet d'avoir l'onglet sélectionné qui dépasse (sinon il est en dehors du cadre) */
-		margin: auto;	/* Nécessaire pour le centrage horizontal */
-		/*height: auto;*/
-		text-align: center;
-	}
 	
 /* Onglets */
 ul.indexNavigation {
@@ -58,51 +48,6 @@ ul.indexNavigation li {
 	-moz-border-radius: 2px 2px 0px 0px; /* MODIFIABLE ??*/
 	margin: 0px 2px 0px 0px;
 	padding: 0.15em 6px 0px 6px;
-}
-
-/* Onglet de navigation */
-ul.indexNavigation a { 
-    text-decoration: none;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size:0.9em;
-	background-color: transparent;
-	cursor:pointer;
-	outline:none; /* Sinon pointillé ajouté par FF lorsqu'on clique : */
-}
-
-/* Onglet de navigation sélectionné */
-ul.indexNavigation li.navTabSelected{
-	padding: 0.35em 6px 0px 6px;
-	-moz-border-radius: 3px 3px 0px 0px; /* CALCULE =  ul.indexNavigation li::radius + 1*/
-	border: solid;
-	text-transform: capitalize;
-	font-weight: bold;
-}
-	
-	
-/******* PANNEAUX COULISSANT ********/
-/* Plein de div et containeurs en cascade */
-
-
-/* Contient les vignettes qui glissent. Cible de l'effet */
-/* Bug si border != 0. Le script ne les prend pas en compte lorsqu'il slide */
-.thumbsWrapper {
-		padding: 0px;
-		margin: 0px;
-		overflow: hidden;
-		position:relative; /*Nécessaire sinon bug IE !*/
-        border: solid;
-}
-	
-.scrollContainer {
-    position: relative;
-}
-	
-/* Panneau (ie 1 page) dans le container qui scrolle */
-.scrollContainer div.slidingPanel {
-		float:left;
-        background: transparent; /* MODIFIABLE */
-        
 }
 
 

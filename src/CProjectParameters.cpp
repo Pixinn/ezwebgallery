@@ -58,12 +58,7 @@ bool t_galleryConf::operator!=(const t_galleryConf &source)
 //--- BIEN METTRE A JOURS LES operator== EN CAS DE MODIFICATION DE CES CHAMPS ---//
 bool t_thumbsConf::operator==(const t_thumbsConf& source)
 {
-    if(  nbRows == source.nbRows
-        && nbColumns == source.nbColumns
-        //&& size == source.size 
-        //&& quality == source.quality
-        //&& f_regeneration == source.f_regeneration Ne pas le comparer, car modifi automatique lors de la gnration
-    )
+    if(  nbColumns == source.nbColumns  )
     { return true; }
     else{
         return false;
@@ -230,7 +225,6 @@ void CProjectParameters::fromUi( /*const Ui::MainWin* const ui */)
 
     //Remplissage structure Config Vignettes
     m_thumbsConfig.nbColumns = m_p_ui->spinBox_ThumbNbCol->value();
-    m_thumbsConfig.nbRows = m_p_ui->spinBox_ThumbNbRow->value();
 
     //Remplissage structure Config Photos
     m_photosConfig.maxSizeH = m_p_ui->spinBox_PhotoMaxVSize->value();
@@ -313,7 +307,6 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
 
     //--- CONFIG THUMBS
     m_thumbsConfig.nbColumns = thumbsConfElem.firstChildElement( "nbColumns" ).text().toInt();
-    m_thumbsConfig.nbRows = thumbsConfElem.firstChildElement( "nbRows" ).text().toInt();
 
     //--- CONFIG PHOTOS
     m_photosConfig.maxSizeH = photosConfElem.firstChildElement( "maxSizeH" ).text().toInt();
@@ -423,9 +416,6 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
     QDomElement nbColumns = document.createElement( "nbColumns" );
     thumbsConfig.appendChild( nbColumns );
     nbColumns.appendChild( document.createTextNode(  QString::number(m_thumbsConfig.nbColumns)) );
-    QDomElement nbRows = document.createElement( "nbRows" );
-    thumbsConfig.appendChild( nbRows );
-    nbRows.appendChild( document.createTextNode(  QString::number(m_thumbsConfig.nbRows)) );
 
 
     //--- CONFIG PHOTO
@@ -516,7 +506,6 @@ void CProjectParameters::toUi( )
 
     //Lecture structure Config Vignettes
     m_p_ui->spinBox_ThumbNbCol->setValue( m_thumbsConfig.nbColumns );
-    m_p_ui->spinBox_ThumbNbRow->setValue( m_thumbsConfig.nbRows );
 
     //Lecture structure Config Photos
     m_p_ui->spinBox_PhotoMaxVSize->setValue( m_photosConfig.maxSizeH );
