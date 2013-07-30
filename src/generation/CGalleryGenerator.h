@@ -87,12 +87,6 @@ protected:
     void run( );
 
 private:
-    //-- definition
-    typedef struct {
-        unsigned int width;
-        unsigned int height;
-    }t_thumbSize;
-
     //-- interfaçage UI
     void debugDisplay( QString );		//Affichage d'un message de debug
     void displayProgressBar( int completion, QString color, const PtrMessage &message ); //Affiche un % d'avancement sur la progressBar
@@ -118,9 +112,8 @@ private:
     JSON::Root m_jsonRoot;
     CSkinParameters m_skinParameters;
     //Generation photos
-    static const int s_nbMosaicSizes = 4;
-    static const int s_nbthumbRes = 2*s_nbMosaicSizes;
-    static const t_thumbSize s_thumbMosaicSizes[ s_nbMosaicSizes ];
+    static const int s_nbMosaicSizes = 8;
+    static const unsigned int s_thumbMosaicSizes[ s_nbMosaicSizes ];
     QMap<QString,QSize> m_thumbSizes;
     QList<CPhotoProperties> m_photoPropertiesList;
     QThreadPool* m_p_photoProcessorPool;    //Pool des threads effectuant les traitements. Un thread par photo

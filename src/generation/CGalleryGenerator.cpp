@@ -58,11 +58,8 @@ using namespace JSON;
 
 //Thubnail mosaic targeted sizes.
 //Only width are currently in use
-const CGalleryGenerator::t_thumbSize CGalleryGenerator::s_thumbMosaicSizes[ s_nbMosaicSizes ] = {
-    {900,568},
-    {1130,670},
-    {1270,780},
-    {1690,1140}
+const unsigned int CGalleryGenerator::s_thumbMosaicSizes[ s_nbMosaicSizes ] = {
+    580, 670, 750, 900, 1100, 1250, 1440, 1700
 };
 
 //-------------------- FONCTIONS -----------------------//
@@ -216,7 +213,7 @@ bool CGalleryGenerator::areImageAndThumbs(  )
         photoSubDirs << ( RESOLUTIONPATH + QString::number(i) );
     }
     QStringList thumbSubDirs;
-    for( int i = 1; i <= s_nbthumbRes; i++ ) {
+    for( int i = 1; i <= s_nbMosaicSizes; i++ ) {
         thumbSubDirs << ( RESOLUTIONPATH + QString::number(i) );
     }
     QDir photosDir( m_parameters.m_galleryConfig.outputDir );
@@ -242,8 +239,7 @@ QMap<QString,QSize> CGalleryGenerator::computeThumbSizes( void )
   QSize unavailableSpace = m_skinParameters.unavailableSpace( nbCols );
   //Iterating on the mosaic size constraints
   for( int i = 0; i < s_nbMosaicSizes; i++ ) {
-      sizeList << ( s_thumbMosaicSizes[i].width - unavailableSpace.width() ) / nbCols;
-      //sizeList << ( s_thumbMosaicSizes[i].height - unavailableSpace.height() ) / nbRows;
+      sizeList << ( s_thumbMosaicSizes[i] - unavailableSpace.width() ) / nbCols;
   }
   //Downward sorting sizes
   qSort( sizeList.begin(), sizeList.end(), qGreater<int>() );

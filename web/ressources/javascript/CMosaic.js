@@ -72,10 +72,10 @@ function CMosaic( p_properties, p_htmlStructure )
         var $thumbnails = $thumbBoxes.find( 'img' );
         var thumbBorderWidth = $thumbnails.first().css("border-top-width");
         thumbBorderWidth = thumbBorderWidth.replace("px","");
+        that.htmlStructure.index.mosaic.$handle.show(); //show necessary for the correct sizes
         $thumbBoxes.width( that.ThumbnailSize + 2*thumbBorderWidth )
                    .height( that.ThumbnailSize + 2*thumbBorderWidth);
         var mosaicWidth = that.properties.index.mosaic.nbCols * $thumbBoxes.outerWidth();
-        that.htmlStructure.index.mosaic.$handle.show(); //show necessary for that.htmlStructure.index.mosaic.$title.outerHeight()
         var mosaicHeight = Math.ceil(that.mosaicNbThumbnails / that.properties.index.mosaic.nbCols) * $thumbBoxes.outerHeight() +  that.htmlStructure.index.mosaic.$title.outerHeight(true);
         //updating structure
         that.htmlStructure.index.mosaic.$thumbnails = $thumbnails;
@@ -107,7 +107,7 @@ function CMosaic( p_properties, p_htmlStructure )
     {
         var $firstThumbBox = that.htmlStructure.index.mosaic.$thumbBoxes.eq(0);
         var $thumbBox =  that.htmlStructure.index.mosaic.$thumbBoxes.eq( evt.id - 1 );
-        $("body").scrollTop( $thumbBox.offset().top - $firstThumbBox.offset().top );
+        that.htmlStructure.index.$screen.scrollTop( $thumbBox.offset().top - $firstThumbBox.offset().top );
     }
    
     
