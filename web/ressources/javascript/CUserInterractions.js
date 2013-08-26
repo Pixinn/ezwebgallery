@@ -52,6 +52,11 @@ function CUserInterractions( p_properties, htmlstructure )
         
         that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
         that.disablePreviousNext();                
+        
+        //intercept rightclick
+        if( !that.properties.photos.technical.rightClickEnabled )		{
+			that.html.photo.$screen.bind( "contextmenu", function( e ) { return false; });
+		}
     };
     
     this.disablePreviousNext = function()

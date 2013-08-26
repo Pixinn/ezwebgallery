@@ -57,7 +57,9 @@ function CDisplay( p_properties, p_htmlStructure )
     {
         that.idCurrentPhoto = id;
         that.url.setHash( id );
-        that.html.photo.$screen.fadeIn(); //photoScreen is located above the index screen: no need to hide it
+        that.html.photo.$screen.fadeIn(400, function() {
+            that.html.index.$screen.hide();
+        });
         that.html.photo.buttons.$next.verticalCenter(0);
         that.html.photo.buttons.$previous.css("top",  that.html.photo.buttons.$next.css("top") ); //no v center on previous to correct an ie8 bug
         
@@ -70,6 +72,13 @@ function CDisplay( p_properties, p_htmlStructure )
     //back to index
     this.hidePhoto = function( ) {
         that.url.clearHash();
+        that.html.index.$screen.show();
+        
+        //center mosaic on current photo
+        var $firstThumbBox = that.html.index.mosaic.$thumbBoxes.eq(0);
+        var $thumbBox =  that.html.index.mosaic.$thumbBoxes.eq( that.idCurrentPhoto - 1 );
+        that.html.index.$screen.scrollTop( $thumbBox.offset().top - $firstThumbBox.offset().top );
+        
         that.html.photo.$screen.fadeOut('fast');        
         that.indexScreenEvent.fire();
     }

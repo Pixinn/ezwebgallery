@@ -101,15 +101,7 @@ function CMosaic( p_properties, p_htmlStructure )
     {
       // that.htmlStructure.index.mosaic.$container.verticalCenter( 0 );
     }
-    
-    //On previous
-    this.onPreviousNext = function( evt )
-    {
-        var $firstThumbBox = that.htmlStructure.index.mosaic.$thumbBoxes.eq(0);
-        var $thumbBox =  that.htmlStructure.index.mosaic.$thumbBoxes.eq( evt.id - 1 );
-        that.htmlStructure.index.$screen.scrollTop( $thumbBox.offset().top - $firstThumbBox.offset().top );
-    }
-   
+     
     
     //Returns the loading Event
     this.getLoadingEvent = function() {

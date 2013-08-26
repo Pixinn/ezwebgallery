@@ -43,7 +43,7 @@ a:active {color: black;}
 
 /* boite de chargement */
 #progressbarWrapper{
-    display: none;
+    display: block;
 	font-size:	1em;
     font-weight: bold;
     margin: auto;
@@ -61,13 +61,13 @@ a:active {color: black;}
     position:relative;
 		display:block;
 		border:solid;
-		/*font-family:	Georgia, "DejaVu Serif", Norasi, serif;	*/
 		font-size:	1em;
 }
 /* color bar */
 #progressbar div.progress{
         position:absolute;
         width:0;
+    left:0;
         height:100%;
         overflow:hidden;
 }

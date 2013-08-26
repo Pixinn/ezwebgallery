@@ -152,10 +152,8 @@ $(document).ready(function()
         UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );
         UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( parseInt(this.id) ); } ); //this, will be the object clicked
         UserHandler.getClosePhotoEvent().subscribe( Display.hidePhoto );
-        UserHandler.getPreviousPhotoEvent().subscribe( Display.onPrevious );
-        UserHandler.getPreviousPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
+        UserHandler.getPreviousPhotoEvent().subscribe( Display.onPrevious );        
         UserHandler.getNextPhotoEvent().subscribe( Display.onNext );
-        UserHandler.getNextPhotoEvent().subscribe( function() { Mosaic.onPreviousNext(this); } );
         
         //Display according to URL
         Display.displayCurrentUrl(); // --> STARTING POINT FOR THE USER <--

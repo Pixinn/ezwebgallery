@@ -191,6 +191,7 @@ void CSkinParameters::fromUi( )
     CCssSelection screenIndex( QString( "#screenIndex" ) );
         screenIndex.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Index_BckgTexture->fileName()).fileName() + QString(")") );
         screenIndex.setProperty( QString("background-color"), m_p_ui->cColorPicker_Index_BckgColor->value() );
+        if( m_p_ui->checkBox_Index_BckgCover->isChecked() ) { screenIndex.setProperty( QString("background-size"), QString("cover") ); }
     m_styleSheet.addSelection( screenIndex );
     //Title
     CCssSelection indexTitle( QString("div#indexTitle"));
@@ -203,8 +204,7 @@ void CSkinParameters::fromUi( )
     //Mosaic
     CCssSelection thumbsMosaic( QString("#mosaic"));
         thumbsMosaic.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
-        thumbsMosaic.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );
-        thumbsMosaic.setProperty( QString("background-size"), "cover" ); //CSS3
+        thumbsMosaic.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );        
         thumbsMosaic.setProperty( QString("border-width"), QString::number( m_p_ui->spinBox_Mosaic_BorderWidth->value() ) + QString("px") );
         thumbsMosaic.setProperty( QString("border-color"), m_p_ui->cColorPicker_Mosaic_BorderColor->value() );
      m_styleSheet.addSelection( thumbsMosaic );
@@ -212,7 +212,7 @@ void CSkinParameters::fromUi( )
         this->thumbBoxBorderSize = m_p_ui->spinBox_Mosaic_SpacingWidth->value();
         thumbSpacing.setProperty( QString("border-width"), QString::number( thumbBoxBorderSize ) + QString("px") );
         thumbSpacing.setProperty( QString("border-color"), m_p_ui->cColorPicker_Mosaic_SpacingColor->value() );
-    //.thumbBox img     Vignette
+    //.thumbBox img -> thumbnail
     CCssSelection thumbnail( QString("img"));
         this->thumbImgBorderSize = m_p_ui->spinBox_Thumbnail_BorderWidth->value();
         thumbnail.setProperty( QString("border-width"), QString::number( thumbImgBorderSize ) + QString("px") );
@@ -228,6 +228,7 @@ void CSkinParameters::fromUi( )
    CCssSelection screenPhoto( QString( "#screenPhoto" ) );
         screenPhoto.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Photo_BckgTexture->fileName()).fileName() + QString(")") );
         screenPhoto.setProperty( QString("background-color"), m_p_ui->cColorPicker_Photo_BckgColor->value() );
+        if( m_p_ui->checkBox_Photo_BckgCover->isChecked() ) { screenPhoto.setProperty( QString("background-size"), QString("cover") ); }
     m_styleSheet.addSelection( screenPhoto );
     //Framing - cadre
     CCssSelection photoFrame( QString( "div#cadrePhoto" ) );
@@ -410,6 +411,7 @@ void CSkinParameters::toUi(  )
     CCssSelection screenIndex = m_styleSheet.selection( path );
          m_p_ui->cImagePicker_Index_BckgTexture->setImage( getImagePath( m_ressources.value("IndexPage_BckgTexture").absoluteFilePath() ) );
          m_p_ui->cColorPicker_Index_BckgColor->setColor( screenIndex.property( "background-color" ));
+         if( screenIndex.property( "background-size" ) == "cover" ){ m_p_ui->checkBox_Index_BckgCover->setChecked(true); }
     path.clear();
     // title
     path << "div#indexTitle";
@@ -422,6 +424,7 @@ void CSkinParameters::toUi(  )
         idx = m_p_ui->comboBox_VTitleText_FontFamily->findText( indexTitle.property("font-family") );
         m_p_ui->comboBox_VTitleText_FontFamily->setCurrentIndex( idx );
         m_p_ui->doubleSpinBox_VTitle_FontSize->setValue(  indexTitle.property("font-size").remove(QString("em")).toDouble() );
+        m_p_ui->cColorPicker_VTitleText_TextColor->setColor( indexTitle.property("color") );
     path.clear();
     
     //.thumbsWrapper mosaic
@@ -454,6 +457,7 @@ void CSkinParameters::toUi(  )
     CCssSelection screenPhoto = m_styleSheet.selection( path );
         m_p_ui->cImagePicker_Photo_BckgTexture->setImage( getImagePath( m_ressources.value("PhotoPage_BckgTexture").absoluteFilePath() ) );
         m_p_ui->cColorPicker_Photo_BckgColor->setColor( screenPhoto.property("background-color") );
+        if( screenPhoto.property( "background-size" ) == "cover" ){ m_p_ui->checkBox_Photo_BckgCover->setChecked(true); }
     path.clear();
     //Framing - cadre
     path << "div#cadrePhoto";
@@ -556,7 +560,7 @@ QDomDocument CSkinParameters::toDomDocument( )
     //Ressources
     QDomElement ressourcesElement = document.createElement( RESSOURCES_TAG_NAME );
     root.appendChild( ressourcesElement );
-    foreach( QString widget, m_ressources.keys() ){
+    foreach( QString widget, m_ressources.keys() ) {
         QDomElement fileElement = document.createElement( RESSOURCEFILE_TAG_NAME ); // <File id="widget">FileName</File>
         fileElement.setAttribute( "id",widget );
         ressourcesElement.appendChild( fileElement );
