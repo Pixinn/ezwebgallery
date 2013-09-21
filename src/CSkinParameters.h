@@ -89,8 +89,6 @@ public:
     unsigned int thumbImgBorderSize;
     unsigned int thumbBoxBorderSize;
     unsigned int photoPaddingSize;
-    /*unsigned int mosaicBorderSize;
-    unsigned int titleOuterWidth;*/
     //Boutons
     enum Buttons{ //Sert  passer un paramtre  la fonction buttonImage( int )
         buttonNext = 0,

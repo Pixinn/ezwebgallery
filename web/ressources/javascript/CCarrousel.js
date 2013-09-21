@@ -121,7 +121,7 @@ function CCarrousel( p_properties, p_html )
     //updates the avalaible space
     this.setSpace = function( space )
     {
-        that.loader.space = space;
+        that.loader.setSpace( space );
     }
 
     //+++ PRIVATE

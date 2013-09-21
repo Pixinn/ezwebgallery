@@ -67,7 +67,7 @@ class MainWin : public QMainWindow, IUserInterface
     Q_OBJECT
 /************ METODES *************/
 public:
-    MainWin( CGalleryGenerator &/*, IPhotoFeeder &*/, CProjectParameters &, QWidget *parent = 0);
+    MainWin( CGalleryGenerator &, CProjectParameters &, QWidget *parent = 0);
     ~MainWin();
     void init( void );
 
@@ -77,12 +77,13 @@ protected:
 
 private:
     void openSession( const QString &);
-    void newSession( );
-    bool isUnsaved( );          //Renvoie true si le projet n'a pas été sauvédepuis les dernières modifications
-    void displayRecentFiles( ); //Affiche la liste des fichiers rcemments ouverts
+    void newSession( void );
+    void enableAllWidgets( const QLayout&, bool );  //recursively enable/disable all widgets in a layou
+    bool isUnsaved( void );          //Renvoie true si le projet n'a pas été sauvédepuis les dernières modifications
+    void displayRecentFiles( void ); //Affiche la liste des fichiers rcemments ouverts
     int displayUnsavedMsgBox( bool, bool ); //Affiche une message box indiquant que le projet et/ou la skin n'ont pas été savegardés. Retourne le bouton choisi
-    int displayMoreRecentMsgBox( ); //Affiche une alerte si on essaie d'ouvrir un projet gnr avec une version d'EZWG plus rcente
-    void swapButtons( ); //swap certains boutons pour cause de génération de galerie
+    int displayMoreRecentMsgBox( void ); //Affiche une alerte si on essaie d'ouvrir un projet gnr avec une version d'EZWG plus rcente
+    void swapButtons( void ); //swap certains boutons pour cause de génération de galerie
     bool checkForGeneration( QString & );//Vérifie les paramètres fournis pour la génération
     QStringList checkPhotosInDir( const QDir & ); //Vérifie la présence des photos de la base dans le répertoire fourni
     bool checkCreateDir( QString & ); //Vérifie l'existance d'un répertoire et propose sa création via msgBox le cas échant
@@ -96,6 +97,8 @@ public slots:
     void onOpenRecentSession( void );
     bool onSaveSession( void );
     bool onSaveSessionAs( void );
+    void onHiDPI( int );
+    void onManualPhotoConf( int );
     void showTagsWindow( void );
     void showLogWindow( void );
     void showConfigureWindow( void );
@@ -139,6 +142,7 @@ public slots:
     void warning( PtrMessage );         //A warning occured
     void information( PtrMessage );     //Display an iformative message
 
+
 /******** ATTRIBUTS *********/
 private:
     //ui
@@ -148,7 +152,6 @@ private:
     WinSkinDesigner* m_p_skinDesignerWindow;
     WinConfigure* m_p_configureWindow;
     enum { eGenerating, eNotGenerating } m_stateGeneration;
-    //QList< QSharedPointer<IMessage*> > m_logMessages;
     QStringList m_recentSessions;           //Liste contenant les NBMAXRECENTFILES derniers fichiers projets ouverts
     QAction *m_recentSessionsActions[NBMAXRECENTFILES];
     CLanguageManager m_languageManager;

@@ -19,7 +19,7 @@
 Defines = {
     URL_THUMBS_PATH: "thumbnails",
     IMAGES_PATH: "images",
-    FPS: 25
+    /*FPS: 25*/
 };
 
 TOOLS = {
@@ -84,7 +84,7 @@ $(document).ajaxError( function()
 $(document).ready(function()
 {
     g_properties.defines = Defines;
-    jQuery.fx.interval = 1000/Defines.FPS;
+    /*jQuery.fx.interval = 1000/Defines.FPS;*/
     
     HtmlStructure = 
     {

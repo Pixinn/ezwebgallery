@@ -35,6 +35,7 @@ function CDisplay( p_properties, p_htmlStructure )
     this.availableSpace = {h: 0, w:0};
 
     $(window).resize( function() {
+        TOOLS.trace( "Evt resize");
         that.setSpace( that.computeAvailableSpace() );
         if( that.html.photo.$screen.is(":visible") === true )
         {

@@ -89,7 +89,7 @@ CSkinParameters& CSkinParameters::operator=(const CSkinParameters &source)
 * L'hritage de QObject oblige de redfinir cet oprateur
 * voir: http://www.fredosaurus.com/notes-cpp/oop-overloading/overloadassign.html
 *****************************************************/
-bool CSkinParameters::operator ==( const CSkinParameters &source)
+bool CSkinParameters::operator==( const CSkinParameters &source)
 {
     //if( this->mosaicBorderSize != source.mosaicBorderSize ){ return false; }
     if( this->thumbImgBorderSize != source.thumbImgBorderSize ){    return false;   }

@@ -231,7 +231,7 @@ CCssSelection CCssSelection::subSelection( QStringList selectors )
 //Ajoute une "sous-slection" (ie: .selection #subselection)
 void CCssSelection::addSubSelection( CCssSelection &subSelection )
 {
-        subSelection.setParentFullSelector( m_parentFullSelector + m_selector );
+    subSelection.setParentFullSelector( m_parentFullSelector + m_selector );
 	m_subSelections.insert( subSelection.selector(), subSelection );        
 }
 
