@@ -75,7 +75,7 @@ public slots:
 
 
 
-class /*QDESIGNER_WIDGET_EXPORT*/ CColorPicker : public QWidget
+class CColorPicker : public QWidget
 {
     Q_OBJECT
 

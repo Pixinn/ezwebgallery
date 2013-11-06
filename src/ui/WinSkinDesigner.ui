@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>632</width>
-    <height>751</height>
+    <height>776</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -228,9 +228,6 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
-                <widget class="CColorPicker" name="cColorPicker_Mosaic_BckgColor"/>
-               </item>
                <item row="2" column="0">
                 <widget class="QLabel" name="label_Mosaic_BorderWidth">
                  <property name="text">
@@ -302,6 +299,49 @@
                </item>
                <item row="5" column="1">
                 <widget class="CColorPicker" name="cColorPicker_Mosaic_SpacingColor"/>
+               </item>
+               <item row="1" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <item>
+                  <widget class="CColorPicker" name="cColorPicker_Mosaic_BckgColor"/>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_Mosaic_BckgColor_Enabled">
+                   <property name="text">
+                    <string>Enabled</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
@@ -1359,24 +1399,8 @@
      <y>148</y>
     </hint>
     <hint type="destinationlabel">
-     <x>280</x>
-     <y>172</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cImagePicker_Mosaic_BckgTexture</sender>
-   <signal>averageColorComputed(QString)</signal>
-   <receiver>cColorPicker_Mosaic_BckgColor</receiver>
-   <slot>setColor(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>486</x>
-     <y>278</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>567</x>
-     <y>302</y>
+     <x>404</x>
+     <y>234</y>
     </hint>
    </hints>
   </connection>
@@ -1387,12 +1411,12 @@
    <slot>setColor(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>147</x>
-     <y>101</y>
+     <x>196</x>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
-     <x>148</x>
-     <y>158</y>
+     <x>272</x>
+     <y>240</y>
     </hint>
    </hints>
   </connection>
@@ -1403,12 +1427,12 @@
    <slot>setColor(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>335</y>
+     <x>94</x>
+     <y>371</y>
     </hint>
     <hint type="destinationlabel">
-     <x>112</x>
-     <y>374</y>
+     <x>125</x>
+     <y>337</y>
     </hint>
    </hints>
   </connection>
@@ -1419,12 +1443,28 @@
    <slot>setColor(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>138</x>
-     <y>302</y>
+     <x>175</x>
+     <y>421</y>
     </hint>
     <hint type="destinationlabel">
-     <x>120</x>
-     <y>349</y>
+     <x>214</x>
+     <y>445</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cImagePicker_Mosaic_BckgTexture</sender>
+   <signal>averageColorComputed(QString)</signal>
+   <receiver>cColorPicker_Mosaic_BckgColor</receiver>
+   <slot>setColor(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>167</x>
+     <y>466</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>171</x>
+     <y>514</y>
     </hint>
    </hints>
   </connection>

@@ -52,6 +52,7 @@ public:
     int displayMoreRecentMsgBox( );          //Affiche un avertissement si on essaie d'ouvrir une skin plus rcente que le programme
     void retranslate();                      //Traduit l'UI dans une nouvelle langue    
 public slots:
+    void onMosaicBckgEnable( bool );
     void onNewSkin( );
     void onOpenSkin( );
     void onOpenRecentSkin( );

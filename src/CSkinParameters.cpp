@@ -65,12 +65,11 @@ CSkinParameters::CSkinParameters() :
 
 CSkinParameters& CSkinParameters::operator=(const CSkinParameters &source)
 {
-    if( this != &source){
-        //this->mosaicBorderSize = source.mosaicBorderSize;
+    if( this != &source)
+    {
         this->thumbImgBorderSize = source.thumbImgBorderSize;
         this->thumbBoxBorderSize = source.thumbBoxBorderSize;
         this->photoPaddingSize = source.photoPaddingSize;
-        //this->titleOuterWidth = source.titleOuterWidth;
         this->m_name = source.m_name;
         this->m_ressourcesPath = source.m_ressourcesPath;
         this->m_p_ui = source.m_p_ui;
@@ -91,11 +90,9 @@ CSkinParameters& CSkinParameters::operator=(const CSkinParameters &source)
 *****************************************************/
 bool CSkinParameters::operator==( const CSkinParameters &source)
 {
-    //if( this->mosaicBorderSize != source.mosaicBorderSize ){ return false; }
     if( this->thumbImgBorderSize != source.thumbImgBorderSize ){    return false;   }
     if( this->thumbBoxBorderSize != source.thumbBoxBorderSize ){    return false;   }
     if( this->photoPaddingSize != source.photoPaddingSize ){    return false;   }
-    //if( this->titleOuterWidth != source.titleOuterWidth ) { return false; }
     if( this->m_name != source.m_name ){    return false;   }
     if( this->m_ressourcesPath != source.m_ressourcesPath ){    return false;   }
     if( this->m_ressources != source.m_ressources ){    return false;   }
@@ -204,7 +201,11 @@ void CSkinParameters::fromUi( )
     //Mosaic
     CCssSelection thumbsMosaic( QString("#mosaic"));
         thumbsMosaic.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
-        thumbsMosaic.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );        
+        if( m_p_ui->checkBox_Mosaic_BckgColor_Enabled->isChecked() ) { //optional background color
+            thumbsMosaic.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );            
+        } else {
+            thumbsMosaic.setProperty( QString("ezwg-background-color-disabled"), "true" );
+        }
         thumbsMosaic.setProperty( QString("border-width"), QString::number( m_p_ui->spinBox_Mosaic_BorderWidth->value() ) + QString("px") );
         thumbsMosaic.setProperty( QString("border-color"), m_p_ui->cColorPicker_Mosaic_BorderColor->value() );
      m_styleSheet.addSelection( thumbsMosaic );
@@ -411,7 +412,11 @@ void CSkinParameters::toUi(  )
     CCssSelection screenIndex = m_styleSheet.selection( path );
          m_p_ui->cImagePicker_Index_BckgTexture->setImage( getImagePath( m_ressources.value("IndexPage_BckgTexture").absoluteFilePath() ) );
          m_p_ui->cColorPicker_Index_BckgColor->setColor( screenIndex.property( "background-color" ));
-         if( screenIndex.property( "background-size" ) == "cover" ){ m_p_ui->checkBox_Index_BckgCover->setChecked(true); }
+         if( screenIndex.property( "background-size" ) == "cover" ){ 
+             m_p_ui->checkBox_Index_BckgCover->setChecked(true);
+         } else {
+             m_p_ui->checkBox_Index_BckgCover->setChecked(false);
+         }
     path.clear();
     // title
     path << "div#indexTitle";
@@ -429,11 +434,18 @@ void CSkinParameters::toUi(  )
     
     //.thumbsWrapper mosaic
     path << "#mosaic";
-    CCssSelection thumbsMosaic = m_styleSheet.selection( path );
-        m_p_ui->cImagePicker_Mosaic_BckgTexture->setImage( m_ressources.value("Mosaic_BckgTexture").absoluteFilePath() );
-        m_p_ui->cColorPicker_Mosaic_BckgColor->setColor( thumbsMosaic.property("background-color") );
-        m_p_ui->spinBox_Mosaic_BorderWidth->setValue( thumbsMosaic.property("border-width").remove("px").toInt() );
+    CCssSelection thumbsMosaic = m_styleSheet.selection( path );        
         m_p_ui->cColorPicker_Mosaic_BorderColor->setColor( thumbsMosaic.property("border-color") );
+        m_p_ui->spinBox_Mosaic_BorderWidth->setValue( thumbsMosaic.property("border-width").remove("px").toInt() );
+        m_p_ui->cImagePicker_Mosaic_BckgTexture->setImage( m_ressources.value("Mosaic_BckgTexture").absoluteFilePath() );
+        //background color is optional
+        bool fHasBckgColor = (thumbsMosaic.property("ezwg-background-color-disabled") != "true");
+        m_p_ui->cColorPicker_Mosaic_BckgColor->setEnabled( fHasBckgColor );
+        if( fHasBckgColor ) { 
+            m_p_ui->cColorPicker_Mosaic_BckgColor->setColor( thumbsMosaic.property("background-color") );            
+        }
+        m_p_ui->checkBox_Mosaic_BckgColor_Enabled->setChecked( fHasBckgColor );
+
     path.clear();
     path << ".thumbBox";
     CCssSelection thumbSpacing = m_styleSheet.selection( path );
@@ -457,7 +469,11 @@ void CSkinParameters::toUi(  )
     CCssSelection screenPhoto = m_styleSheet.selection( path );
         m_p_ui->cImagePicker_Photo_BckgTexture->setImage( getImagePath( m_ressources.value("PhotoPage_BckgTexture").absoluteFilePath() ) );
         m_p_ui->cColorPicker_Photo_BckgColor->setColor( screenPhoto.property("background-color") );
-        if( screenPhoto.property( "background-size" ) == "cover" ){ m_p_ui->checkBox_Photo_BckgCover->setChecked(true); }
+        if( screenPhoto.property( "background-size" ) == "cover" ){ 
+            m_p_ui->checkBox_Photo_BckgCover->setChecked(true);
+        } else {
+            m_p_ui->checkBox_Photo_BckgCover->setChecked(false);
+        }
     path.clear();
     //Framing - cadre
     path << "div#cadrePhoto";

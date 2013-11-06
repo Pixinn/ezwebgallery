@@ -1,6 +1,11 @@
-﻿<Skin release="20120609" name="White Paper">
-    <properties title-position="0"/>
+﻿<Skin release="20131102" name="White Paper">
     <StyleSheet name="noname">
+        <Selection selector="#mosaic">
+            <background-image>url(../images/Burn.png)</background-image>
+            <border-color>#000000</border-color>
+            <border-width>11px</border-width>
+            <ezwg-background-color-disabled>true</ezwg-background-color-disabled>
+        </Selection>
         <Selection selector="#progressbar">
             <background-color>#a79e9e</background-color>
             <border-color>#000000</border-color>
@@ -43,11 +48,6 @@
             <border-width>3px</border-width>
             <margin>-3px</margin>
         </Selection>
-        <Selection selector=".scrollContainer div.slidingPanel">
-            <background-color>#b6b2ae</background-color>
-            <background-image>url(../images/brushedMetal_1.jpg)</background-image>
-            <background-size>cover</background-size>
-        </Selection>
         <Selection selector=".thumbBox">
             <border-color>#ffffff</border-color>
             <border-width>1px</border-width>
@@ -59,28 +59,17 @@
                 <border-color>#ffffff</border-color>
             </Selection>
         </Selection>
-        <Selection selector=".thumbsWrapperContainer">
-            <background-color>#b6b2ae</background-color>
-            <border-color>#45463d</border-color>
-            <border-width>5px</border-width>
-        </Selection>
         <Selection selector="div#cadrePhoto">
             <background-color>#19191a</background-color>
             <background-image>url(../images/)</background-image>
             <padding>15px</padding>
         </Selection>
         <Selection selector="div#indexTitle">
-            <background-color>#2e2f2f</background-color>
-            <background-image>url(../images/LeftZone-DarkPaper.jpg)</background-image>
-            <border-color>#ffffff</border-color>
-            <border-left-width>0px</border-left-width>
-            <border-right-width>0px</border-right-width>
             <color>#ffffff</color>
-            <display>block</display>
             <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
             <font-size>2em</font-size>
-            <line-height>1em</line-height>
-            <width>50px</width>
+            <text-align>left</text-align>
+            <text-shadow>4px 2px 4px rgba(150, 150, 150, 0.8)</text-shadow>
         </Selection>
         <Selection selector="div#photoLefter">
             <background-color>transparent</background-color>
@@ -96,29 +85,12 @@
             <font-size>0.9em</font-size>
             <font-weight>normal</font-weight>
         </Selection>
-        <Selection selector="ul.indexNavigation">
-            <Selection selector="li">
-                <background-color>#adaba8</background-color>
-                <Selection selector="a">
-                    <color>#200000</color>
-                </Selection>
-            </Selection>
-            <Selection selector="li.navTabSelected">
-                <background-color>#c6c3c0</background-color>
-                <border-color>#000000</border-color>
-                <border-width>2px</border-width>
-                <Selection selector="a">
-                    <color>#000000</color>
-                </Selection>
-            </Selection>
-        </Selection>
     </StyleSheet>
     <Ressources>
         <File id="IndexPage_BckgTexture">WhitePaper.jpg</File>
-        <File id="Mosaic_BckgTexture">brushedMetal_1.jpg</File>
+        <File id="Mosaic_BckgTexture">Burn.png</File>
         <File id="PhotoButtonNext">arrows_right_dark.png</File>
         <File id="PhotoButtonPrevious">arrows_left_dark.png</File>
         <File id="PhotoPage_BckgTexture">WhitePaper.jpg</File>
-        <File id="VTitle_BackgroundTexture">LeftZone-DarkPaper.jpg</File>
     </Ressources>
 </Skin>

@@ -418,7 +418,6 @@ void MainWin::changeEvent(QEvent *e)
         }
         //Traduction des textes supplémentaires (html, etc)
         m_p_tagsWindow->setHtml( CPlatform::readTranslatedTextFile( "tagList.html" ) );
-        //CPlatform::setLanguage( langSuffix );
         break;
     default:
         break;

@@ -34,3 +34,8 @@ src/widgets/EzwWidgets.sln
 src/widgets/EzwWidgets.suo
 src/widgets/EzwWidgets.vcxproj.user
 src/widgets/vc100.pdb
+src/widgets/GeneratedFiles
+src/widgets/Release
+src/widgets/debug
+src/widgets/ipch
+src/widgets/tmp

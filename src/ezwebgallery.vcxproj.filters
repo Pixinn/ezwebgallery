@@ -259,6 +259,12 @@
     <ClCompile Include="global\CLogger.cpp">
       <Filter>Source Files\global</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CError.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CError.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="CPhoto.h">
@@ -544,13 +550,11 @@
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />

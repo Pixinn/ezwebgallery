@@ -28,6 +28,8 @@
 class CError : public IMessage
 {
 
+    Q_OBJECT
+
 public:
 
     enum e_errors
