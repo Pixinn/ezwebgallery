@@ -84,7 +84,7 @@ goto :end
 echo.
 echo ###############################################################################
 echo #
-echo # Usage create_realease BINARY
+echo # Usage prepare_realease BINARY
 echo #
 echo # In order to create a release you need to set the folowing env variables
 echo # + QDTIR: path to Qt
