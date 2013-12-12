@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>632</width>
-    <height>751</height>
+    <height>776</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,15 +39,15 @@
       </property>
       <widget class="QWidget" name="tab_Thumbnails">
        <attribute name="title">
-        <string>Browsing Thumbnails</string>
+        <string>Thumbnails</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
          <widget class="QGroupBox" name="groupBox_IndexBckg">
           <property name="title">
-           <string>Browsing Page Background</string>
+           <string>Background</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
             <layout class="QFormLayout" name="formLayout_6">
              <property name="fieldGrowthPolicy">
@@ -73,6 +73,126 @@
              <item row="1" column="1">
               <widget class="CColorPicker" name="cColorPicker_Index_BckgColor"/>
              </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_Index_BckgCover">
+               <property name="text">
+                <string>Cover</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QCheckBox" name="checkBox_Index_BckgCover">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_GalleryTitle">
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="title">
+           <string>Gallery Title</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <layout class="QFormLayout" name="formLayout_4">
+             <property name="fieldGrowthPolicy">
+              <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+             </property>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_VTitle_FontFamily">
+               <property name="text">
+                <string>Font Family</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="comboBox_VTitleText_FontFamily"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_VTitle_FontSize">
+               <property name="text">
+                <string>Font Size</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_VTitle_FontSize">
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="minimum">
+                <double>0.500000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>5.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>0.100000000000000</double>
+               </property>
+               <property name="value">
+                <double>2.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_VTitle_TextColor">
+               <property name="text">
+                <string>Text Color</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="CColorPicker" name="cColorPicker_VTitleText_TextColor"/>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_VTitle_Alignment">
+               <property name="text">
+                <string>Alignment</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QComboBox" name="comboBox_VTitleText_Alignment">
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <property name="maxVisibleItems">
+                <number>3</number>
+               </property>
+               <item>
+                <property name="text">
+                 <string>left</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>center</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>right</string>
+                </property>
+               </item>
+              </widget>
+             </item>
             </layout>
            </item>
           </layout>
@@ -80,128 +200,6 @@
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_8">
-          <item>
-           <widget class="QGroupBox" name="groupBox_BrowsingTabs">
-            <property name="font">
-             <font>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="title">
-             <string>Browsing Tabs</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_10">
-             <item>
-              <layout class="QFormLayout" name="formLayout_9">
-               <property name="fieldGrowthPolicy">
-                <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-               </property>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_BrowsingTabs_UnselectedTab">
-                 <property name="font">
-                  <font>
-                   <underline>true</underline>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Unselected Tab:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_BrowsingTabs_TextColor">
-                 <property name="text">
-                  <string>Text Color</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="CColorPicker" name="cColorPicker_BrowsingTabs_TextColor"/>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="label_BrowsingTabs_BckgColor">
-                 <property name="text">
-                  <string>Background Color</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1">
-                <widget class="CColorPicker" name="cColorPicker_BrowsingTabs_BckgColor"/>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_BrowsingTabs_SelectedTab">
-                 <property name="font">
-                  <font>
-                   <underline>true</underline>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Selected Tab:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="0">
-                <widget class="QLabel" name="label_BrowsingTabs_Selected_TextColor">
-                 <property name="text">
-                  <string>Text Color</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="0">
-                <widget class="QLabel" name="label_BrowsingTabs_Selected_BckgColor">
-                 <property name="text">
-                  <string>Background Color</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="1">
-                <widget class="CColorPicker" name="cColorPicker_BrowsingTabs_Selected_TextColor"/>
-               </item>
-               <item row="7" column="1">
-                <widget class="CColorPicker" name="cColorPicker_BrowsingTabs_Selected_BckgColor"/>
-               </item>
-               <item row="8" column="0">
-                <widget class="QLabel" name="label_BrowsingTabs_Selected_BorderWidth">
-                 <property name="text">
-                  <string>Border Width</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="9" column="0">
-                <widget class="QLabel" name="label_BrowsingTabs_Selected_BorderColor">
-                 <property name="text">
-                  <string>Border Color</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="9" column="1">
-                <widget class="CColorPicker" name="cColorPicker_BrowsingTabs_Selected_BorderColor"/>
-               </item>
-               <item row="8" column="1">
-                <widget class="QSpinBox" name="spinBox_BrowsingTabs_Selected_BorderWidth">
-                 <property name="maximumSize">
-                  <size>
-                   <width>50</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="minimum">
-                  <number>1</number>
-                 </property>
-                 <property name="maximum">
-                  <number>4</number>
-                 </property>
-                 <property name="value">
-                  <number>2</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-          </item>
           <item>
            <widget class="QGroupBox" name="groupBox_ThumbsMosaic">
             <property name="title">
@@ -229,9 +227,6 @@
                   <string>Background Color</string>
                  </property>
                 </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="CColorPicker" name="cColorPicker_Mosaic_BckgColor"/>
                </item>
                <item row="2" column="0">
                 <widget class="QLabel" name="label_Mosaic_BorderWidth">
@@ -305,15 +300,54 @@
                <item row="5" column="1">
                 <widget class="CColorPicker" name="cColorPicker_Mosaic_SpacingColor"/>
                </item>
+               <item row="1" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <item>
+                  <widget class="CColorPicker" name="cColorPicker_Mosaic_BckgColor"/>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_Mosaic_BckgColor_Enabled">
+                   <property name="text">
+                    <string>Enabled</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
               </layout>
              </item>
             </layout>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_11">
           <item>
            <widget class="QGroupBox" name="groupBox_Thumbnail">
             <property name="title">
@@ -419,15 +453,29 @@
              <item row="0" column="1">
               <widget class="CImagePicker" name="cImagePicker_Photo_BckgTexture"/>
              </item>
-             <item row="1" column="0">
+             <item row="2" column="0">
               <widget class="QLabel" name="label_Photo_BckgColor">
                <property name="text">
                 <string>Background Color</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
+             <item row="2" column="1">
               <widget class="CColorPicker" name="cColorPicker_Photo_BckgColor"/>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_Photo_BckgCover">
+               <property name="text">
+                <string>Cover</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QCheckBox" name="checkBox_Photo_BckgCover">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -993,522 +1041,209 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_Misc">
+      <widget class="QWidget" name="tab_Loader">
        <attribute name="title">
-        <string>Misc</string>
+        <string>Loader</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QGroupBox" name="groupBox_LoadingBar">
+         <widget class="QGroupBox" name="groupBox_Box">
           <property name="font">
            <font>
-            <weight>75</weight>
-            <bold>true</bold>
+            <weight>50</weight>
+            <bold>false</bold>
            </font>
           </property>
           <property name="title">
-           <string>Loading screen</string>
+           <string>Box</string>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
            <item>
-            <widget class="QGroupBox" name="groupBox_Box">
-             <property name="font">
-              <font>
-               <weight>50</weight>
-               <bold>false</bold>
-              </font>
+            <layout class="QFormLayout" name="formLayout_2">
+             <property name="fieldGrowthPolicy">
+              <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
              </property>
-             <property name="title">
-              <string>Box</string>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <layout class="QFormLayout" name="formLayout_2">
-                <property name="fieldGrowthPolicy">
-                 <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                </property>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_Box_FontFamily">
-                  <property name="text">
-                   <string>Font Family</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_Box_TextColor">
-                  <property name="text">
-                   <string>Text Color</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="CColorPicker" name="cColorPicker_Box_TextColor"/>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_Box_BorderWidth">
-                  <property name="text">
-                   <string>Border Width</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <widget class="QSpinBox" name="spinBox_Box_BorderWidth">
-                  <property name="maximumSize">
-                   <size>
-                    <width>50</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                  <property name="minimum">
-                   <number>1</number>
-                  </property>
-                  <property name="maximum">
-                   <number>9</number>
-                  </property>
-                  <property name="value">
-                   <number>1</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="0">
-                 <widget class="QLabel" name="label_Box_BorderColor">
-                  <property name="text">
-                   <string>Border Color</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="1">
-                 <widget class="CColorPicker" name="cColorPicker_Box_BorderColor"/>
-                </item>
-                <item row="5" column="0">
-                 <widget class="QLabel" name="label_Box_BackgroundColor">
-                  <property name="text">
-                   <string>Background Color</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="1">
-                 <widget class="CColorPicker" name="cColorPicker_Box_BackgroundColor"/>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QComboBox" name="comboBox_Box_FontFamily"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_ProgressBar">
-             <property name="font">
-              <font>
-               <weight>50</weight>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="title">
-              <string>Progress Bar</string>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <layout class="QFormLayout" name="formLayout_3">
-                <property name="fieldGrowthPolicy">
-                 <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                </property>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_ProgressBar_UnloadedTextColor">
-                  <property name="text">
-                   <string>&quot;Unloaded Text&quot; Color</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="CColorPicker" name="cColorPicker_ProgressBar_UnloadedTextColor"/>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_ProgressBar_UnloadedBackgroundColor">
-                  <property name="text">
-                   <string>&quot;Unloaded Background&quot; Color</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="CColorPicker" name="cColorPicker_ProgressBar_UnloadedBackgroundColor"/>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_ProgressBar_LoadedTextColor">
-                  <property name="text">
-                   <string>&quot;Loaded Text&quot; Color</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="CColorPicker" name="cColorPicker_ProgressBar_LoadedTextColor"/>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_ProgressBar_LoadedBackgroundColor">
-                  <property name="text">
-                   <string>&quot;Loaded Background&quot; Color</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <widget class="CColorPicker" name="cColorPicker_ProgressBar_LoadedBackgroundColor"/>
-                </item>
-                <item row="4" column="0">
-                 <widget class="QLabel" name="label_ProgressBar_BorderWidth">
-                  <property name="text">
-                   <string>Border Width</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="1">
-                 <widget class="QSpinBox" name="spinBox_ProgressBar_BorderWidth">
-                  <property name="maximumSize">
-                   <size>
-                    <width>50</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                  <property name="minimum">
-                   <number>1</number>
-                  </property>
-                  <property name="maximum">
-                   <number>9</number>
-                  </property>
-                  <property name="value">
-                   <number>1</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="0">
-                 <widget class="QLabel" name="label_ProgressBar_BorderColor">
-                  <property name="text">
-                   <string>Border Color</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="1">
-                 <widget class="CColorPicker" name="cColorPicker_ProgressBar_BorderColor"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_Box_FontFamily">
+               <property name="text">
+                <string>Font Family</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_Box_TextColor">
+               <property name="text">
+                <string>Text Color</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="CColorPicker" name="cColorPicker_Box_TextColor"/>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_Box_BorderWidth">
+               <property name="text">
+                <string>Border Width</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QSpinBox" name="spinBox_Box_BorderWidth">
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>9</number>
+               </property>
+               <property name="value">
+                <number>1</number>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_Box_BorderColor">
+               <property name="text">
+                <string>Border Color</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="CColorPicker" name="cColorPicker_Box_BorderColor"/>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_Box_BackgroundColor">
+               <property name="text">
+                <string>Background Color</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="CColorPicker" name="cColorPicker_Box_BackgroundColor"/>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="comboBox_Box_FontFamily"/>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox_VTitle">
+         <widget class="QGroupBox" name="groupBox_ProgressBar">
           <property name="font">
            <font>
-            <weight>75</weight>
-            <bold>true</bold>
+            <weight>50</weight>
+            <bold>false</bold>
            </font>
           </property>
           <property name="title">
-           <string>Display Vertical Title</string>
+           <string>Progress Bar</string>
           </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_9">
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <layout class="QFormLayout" name="formLayout_5">
+            <layout class="QFormLayout" name="formLayout_3">
              <property name="fieldGrowthPolicy">
               <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
              </property>
-             <property name="topMargin">
-              <number>5</number>
-             </property>
-             <property name="bottomMargin">
-              <number>15</number>
-             </property>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_VTitle_Position">
-               <property name="font">
-                <font>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                </font>
-               </property>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_ProgressBar_UnloadedTextColor">
                <property name="text">
-                <string>Position:</string>
+                <string>&quot;Unloaded Text&quot; Color</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="CColorPicker" name="cColorPicker_ProgressBar_UnloadedTextColor"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_ProgressBar_UnloadedBackgroundColor">
+               <property name="text">
+                <string>&quot;Unloaded Background&quot; Color</string>
                </property>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QComboBox" name="comboBox_VTitle_Position">
+              <widget class="CColorPicker" name="cColorPicker_ProgressBar_UnloadedBackgroundColor"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_ProgressBar_LoadedTextColor">
+               <property name="text">
+                <string>&quot;Loaded Text&quot; Color</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="CColorPicker" name="cColorPicker_ProgressBar_LoadedTextColor"/>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_ProgressBar_LoadedBackgroundColor">
+               <property name="text">
+                <string>&quot;Loaded Background&quot; Color</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="CColorPicker" name="cColorPicker_ProgressBar_LoadedBackgroundColor"/>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_ProgressBar_BorderWidth">
+               <property name="text">
+                <string>Border Width</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QSpinBox" name="spinBox_ProgressBar_BorderWidth">
                <property name="maximumSize">
                 <size>
-                 <width>100</width>
-                 <height>16777215</height>
+                 <width>50</width>
+                 <height>20</height>
                 </size>
                </property>
-               <property name="font">
-                <font>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                </font>
+               <property name="minimum">
+                <number>1</number>
                </property>
-               <item>
-                <property name="text">
-                 <string>Left</string>
-                </property>
-               </item>
+               <property name="maximum">
+                <number>9</number>
+               </property>
+               <property name="value">
+                <number>1</number>
+               </property>
               </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_ProgressBar_BorderColor">
+               <property name="text">
+                <string>Border Color</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="CColorPicker" name="cColorPicker_ProgressBar_BorderColor"/>
              </item>
             </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QGroupBox" name="groupBox_VTitleBloc_Appeareance">
-               <property name="font">
-                <font>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="title">
-                <string>Block Appearance</string>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_6">
-                <item>
-                 <layout class="QFormLayout" name="formLayout">
-                  <property name="fieldGrowthPolicy">
-                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                  </property>
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="label_VTitle_Width">
-                    <property name="text">
-                     <string>Width</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QSpinBox" name="spinBox_VTitleBlock_Width">
-                    <property name="maximumSize">
-                     <size>
-                      <width>50</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                    <property name="minimum">
-                     <number>20</number>
-                    </property>
-                    <property name="maximum">
-                     <number>499</number>
-                    </property>
-                    <property name="value">
-                     <number>50</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0">
-                   <widget class="QLabel" name="label_VTitle_BorderWidth">
-                    <property name="text">
-                     <string>Border Width</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="1">
-                   <widget class="QSpinBox" name="spinBox_VTitleBlock_BorderWidth">
-                    <property name="maximumSize">
-                     <size>
-                      <width>50</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                    <property name="minimum">
-                     <number>0</number>
-                    </property>
-                    <property name="maximum">
-                     <number>9</number>
-                    </property>
-                    <property name="value">
-                     <number>1</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="0">
-                   <widget class="QLabel" name="label_VTitle_BorderColor">
-                    <property name="text">
-                     <string>Border Color</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="1">
-                   <widget class="CColorPicker" name="cColorPicker_VTitleBlock_BorderColor"/>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <widget class="QGroupBox" name="groupBox_VTitleBlock_Background">
-                  <property name="title">
-                   <string>Background</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_7">
-                   <item>
-                    <layout class="QFormLayout" name="formLayout_8">
-                     <property name="fieldGrowthPolicy">
-                      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                     </property>
-                     <item row="0" column="0">
-                      <widget class="QLabel" name="label_VTitle_BackgroundTexture">
-                       <property name="text">
-                        <string>Texture</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="0" column="1">
-                      <widget class="CImagePicker" name="cImagePicker_VTitle_BackgroundTexture"/>
-                     </item>
-                     <item row="1" column="0">
-                      <widget class="QLabel" name="label_VTitle_BackgroundColor">
-                       <property name="text">
-                        <string>Color</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="1" column="1">
-                      <widget class="CColorPicker" name="cColorPicker_VTitle_BackgroundColor"/>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QGroupBox" name="groupBox_VTitle_TextAppearance">
-               <property name="font">
-                <font>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="title">
-                <string>Text Appearance</string>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_8">
-                <item>
-                 <layout class="QFormLayout" name="formLayout_4">
-                  <property name="fieldGrowthPolicy">
-                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                  </property>
-                  <item row="2" column="0">
-                   <widget class="QLabel" name="label_VTitle_TextColor">
-                    <property name="text">
-                     <string>Text Color</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="1">
-                   <widget class="CColorPicker" name="cColorPicker_VTitleText_TextColor"/>
-                  </item>
-                  <item row="5" column="0">
-                   <widget class="QLabel" name="label_VTitle_LineHeight">
-                    <property name="text">
-                     <string>Line Height</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="5" column="1">
-                   <widget class="QDoubleSpinBox" name="doubleSpinBox_VTitle_LineHeight">
-                    <property name="maximumSize">
-                     <size>
-                      <width>50</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="decimals">
-                     <number>1</number>
-                    </property>
-                    <property name="minimum">
-                     <double>0.500000000000000</double>
-                    </property>
-                    <property name="maximum">
-                     <double>3.000000000000000</double>
-                    </property>
-                    <property name="singleStep">
-                     <double>0.100000000000000</double>
-                    </property>
-                    <property name="value">
-                     <double>0.800000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="label_VTitle_FontFamily">
-                    <property name="text">
-                     <string>Font Family</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0">
-                   <widget class="QLabel" name="label_VTitle_FontSize">
-                    <property name="text">
-                     <string>Font Size</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QComboBox" name="comboBox_VTitleText_FontFamily"/>
-                  </item>
-                  <item row="1" column="1">
-                   <widget class="QDoubleSpinBox" name="doubleSpinBox_VTitle_FontSize">
-                    <property name="maximumSize">
-                     <size>
-                      <width>50</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="decimals">
-                     <number>1</number>
-                    </property>
-                    <property name="minimum">
-                     <double>0.500000000000000</double>
-                    </property>
-                    <property name="maximum">
-                     <double>5.000000000000000</double>
-                    </property>
-                    <property name="singleStep">
-                     <double>0.100000000000000</double>
-                    </property>
-                    <property name="value">
-                     <double>2.000000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -1630,7 +1365,6 @@
  </customwidgets>
  <tabstops>
   <tabstop>tab_TemplateDesigner</tabstop>
-  <tabstop>spinBox_BrowsingTabs_Selected_BorderWidth</tabstop>
   <tabstop>spinBox_Mosaic_BorderWidth</tabstop>
   <tabstop>spinBox_Mosaic_SpacingWidth</tabstop>
   <tabstop>spinBox_Thumbnail_BorderWidth</tabstop>
@@ -1647,35 +1381,13 @@
   <tabstop>comboBox_Box_FontFamily</tabstop>
   <tabstop>spinBox_Box_BorderWidth</tabstop>
   <tabstop>spinBox_ProgressBar_BorderWidth</tabstop>
-  <tabstop>groupBox_VTitle</tabstop>
-  <tabstop>comboBox_VTitle_Position</tabstop>
-  <tabstop>spinBox_VTitleBlock_Width</tabstop>
-  <tabstop>spinBox_VTitleBlock_BorderWidth</tabstop>
-  <tabstop>groupBox_VTitleBlock_Background</tabstop>
   <tabstop>comboBox_VTitleText_FontFamily</tabstop>
   <tabstop>doubleSpinBox_VTitle_FontSize</tabstop>
-  <tabstop>doubleSpinBox_VTitle_LineHeight</tabstop>
  </tabstops>
  <resources>
   <include location="../ressources/GalleryDesigner.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>cImagePicker_VTitle_BackgroundTexture</sender>
-   <signal>averageColorComputed(QString)</signal>
-   <receiver>cColorPicker_VTitle_BackgroundColor</receiver>
-   <slot>setColor(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>158</x>
-     <y>538</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>245</x>
-     <y>562</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>cImagePicker_Index_BckgTexture</sender>
    <signal>averageColorComputed(QString)</signal>
@@ -1687,24 +1399,8 @@
      <y>148</y>
     </hint>
     <hint type="destinationlabel">
-     <x>280</x>
-     <y>172</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cImagePicker_Mosaic_BckgTexture</sender>
-   <signal>averageColorComputed(QString)</signal>
-   <receiver>cColorPicker_Mosaic_BckgColor</receiver>
-   <slot>setColor(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>486</x>
-     <y>278</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>567</x>
-     <y>302</y>
+     <x>404</x>
+     <y>234</y>
     </hint>
    </hints>
   </connection>
@@ -1715,12 +1411,12 @@
    <slot>setColor(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>147</x>
-     <y>101</y>
+     <x>196</x>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
-     <x>148</x>
-     <y>158</y>
+     <x>272</x>
+     <y>240</y>
     </hint>
    </hints>
   </connection>
@@ -1731,12 +1427,12 @@
    <slot>setColor(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>335</y>
+     <x>94</x>
+     <y>371</y>
     </hint>
     <hint type="destinationlabel">
-     <x>112</x>
-     <y>374</y>
+     <x>125</x>
+     <y>337</y>
     </hint>
    </hints>
   </connection>
@@ -1747,12 +1443,28 @@
    <slot>setColor(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>138</x>
-     <y>302</y>
+     <x>175</x>
+     <y>421</y>
     </hint>
     <hint type="destinationlabel">
-     <x>120</x>
-     <y>349</y>
+     <x>214</x>
+     <y>445</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cImagePicker_Mosaic_BckgTexture</sender>
+   <signal>averageColorComputed(QString)</signal>
+   <receiver>cColorPicker_Mosaic_BckgColor</receiver>
+   <slot>setColor(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>167</x>
+     <y>466</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>171</x>
+     <y>514</y>
     </hint>
    </hints>
   </connection>

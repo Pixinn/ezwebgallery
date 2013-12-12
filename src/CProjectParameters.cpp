@@ -58,12 +58,7 @@ bool t_galleryConf::operator!=(const t_galleryConf &source)
 //--- BIEN METTRE A JOURS LES operator== EN CAS DE MODIFICATION DE CES CHAMPS ---//
 bool t_thumbsConf::operator==(const t_thumbsConf& source)
 {
-    if(  nbRows == source.nbRows
-        && nbColumns == source.nbColumns
-        //&& size == source.size 
-        //&& quality == source.quality
-        //&& f_regeneration == source.f_regeneration Ne pas le comparer, car modifi automatique lors de la gnration
-    )
+    if(  nbColumns == source.nbColumns  )
     { return true; }
     else{
         return false;
@@ -77,7 +72,10 @@ bool t_thumbsConf::operator!=(const t_thumbsConf& source)
 //--- BIEN METTRE A JOURS LES operator== EN CAS DE MODIFICATION DE CES CHAMPS ---//
 bool t_photosConf::operator==(const t_photosConf& source)
 {
-    if( minSizeH == source.minSizeH
+    if(
+        f_hiDpi == source.f_hiDpi
+        && f_manualConf == source.f_manualConf
+        && minSizeH == source.minSizeH
         && minSizeW == source.minSizeW
         && maxSizeH == source.maxSizeH
         && maxSizeW == source.maxSizeW
@@ -121,7 +119,6 @@ CProjectParameters::CProjectParameters(const CProjectParameters &source) :
     this->m_galleryConfig = source.m_galleryConfig;
     this->m_photosConfig = source.m_photosConfig;
     this->m_thumbsConfig = source.m_thumbsConfig;
-//    this->m_photosList = source.m_photosList;
     this->m_p_captionManager = source.m_p_captionManager;
     this->m_p_skin = source.m_p_skin;
     this->m_p_ui = source.m_p_ui;
@@ -230,9 +227,10 @@ void CProjectParameters::fromUi( /*const Ui::MainWin* const ui */)
 
     //Remplissage structure Config Vignettes
     m_thumbsConfig.nbColumns = m_p_ui->spinBox_ThumbNbCol->value();
-    m_thumbsConfig.nbRows = m_p_ui->spinBox_ThumbNbRow->value();
 
     //Remplissage structure Config Photos
+    m_photosConfig.f_hiDpi = m_p_ui->checkBox_HiDPI->isChecked();
+    m_photosConfig.f_manualConf = m_p_ui->checkBox_ManualConf->isChecked();
     m_photosConfig.maxSizeH = m_p_ui->spinBox_PhotoMaxVSize->value();
     m_photosConfig.maxSizeW = m_p_ui->spinbox_PhotoMaxHSize->value();
     m_photosConfig.minSizeH = m_p_ui->spinbox_PhotoMinVSize->value();
@@ -313,9 +311,10 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
 
     //--- CONFIG THUMBS
     m_thumbsConfig.nbColumns = thumbsConfElem.firstChildElement( "nbColumns" ).text().toInt();
-    m_thumbsConfig.nbRows = thumbsConfElem.firstChildElement( "nbRows" ).text().toInt();
 
     //--- CONFIG PHOTOS
+    m_photosConfig.f_hiDpi = (bool)photosConfElem.firstChildElement( "hiDpi" ).text().toInt();
+    m_photosConfig.f_manualConf = (bool)photosConfElem.firstChildElement( "manualConf" ).text().toInt();
     m_photosConfig.maxSizeH = photosConfElem.firstChildElement( "maxSizeH" ).text().toInt();
     m_photosConfig.maxSizeW = photosConfElem.firstChildElement( "maxSizeW" ).text().toInt();
     m_photosConfig.minSizeH = photosConfElem.firstChildElement( "minSizeH" ).text().toInt();
@@ -423,14 +422,17 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
     QDomElement nbColumns = document.createElement( "nbColumns" );
     thumbsConfig.appendChild( nbColumns );
     nbColumns.appendChild( document.createTextNode(  QString::number(m_thumbsConfig.nbColumns)) );
-    QDomElement nbRows = document.createElement( "nbRows" );
-    thumbsConfig.appendChild( nbRows );
-    nbRows.appendChild( document.createTextNode(  QString::number(m_thumbsConfig.nbRows)) );
 
 
     //--- CONFIG PHOTO
     QDomElement photosConfig = document.createElement( "PhotosConfig" );
     root.appendChild( photosConfig );
+    QDomElement hiDpi = document.createElement( "hiDpi" );
+    photosConfig.appendChild( hiDpi );
+    hiDpi.appendChild( document.createTextNode(  QString::number((int)m_photosConfig.f_hiDpi) ));
+    QDomElement manualConf = document.createElement( "manualConf" );
+    photosConfig.appendChild( manualConf );
+    manualConf.appendChild( document.createTextNode(  QString::number((int)m_photosConfig.f_manualConf) ));
     QDomElement maxSizeH = document.createElement( "maxSizeH" );
     photosConfig.appendChild( maxSizeH );
     maxSizeH.appendChild( document.createTextNode(  QString::number(m_photosConfig.maxSizeH)) );
@@ -516,9 +518,10 @@ void CProjectParameters::toUi( )
 
     //Lecture structure Config Vignettes
     m_p_ui->spinBox_ThumbNbCol->setValue( m_thumbsConfig.nbColumns );
-    m_p_ui->spinBox_ThumbNbRow->setValue( m_thumbsConfig.nbRows );
 
     //Lecture structure Config Photos
+    m_p_ui->checkBox_HiDPI->setChecked( m_photosConfig.f_hiDpi );
+    m_p_ui->checkBox_ManualConf->setChecked( m_photosConfig.f_manualConf );
     m_p_ui->spinBox_PhotoMaxVSize->setValue( m_photosConfig.maxSizeH );
     m_p_ui->spinbox_PhotoMaxHSize->setValue( m_photosConfig.maxSizeW );
     m_p_ui->spinbox_PhotoMinVSize->setValue( m_photosConfig.minSizeH );
@@ -539,15 +542,6 @@ void CProjectParameters::toUi( )
     m_p_ui->comboBox_WatermarkOrientation->setCurrentIndex( m_photosConfig.watermark.orientation );
     m_p_ui->comboBox_WatermarkPosition->setCurrentIndex( m_photosConfig.watermark.position );
     m_p_ui->groupBox_Watermark->setChecked( m_photosConfig.watermark.enabled ); //A mettre en dernire position des proprits watermark pour bien enable/disable les widgets
-
-    //Legendes
-    //REM: le body est affiche via un signal du caption manager, car il depend du num de la photo a l'ecran
-    /*QMap<QString,CCaption> captionMap = m_p_captionManager->captionMap();
-    if( !captionMap.isEmpty() ){
-        CCaption caption = captionMap.begin().value();
-        m_p_ui->lineEdit_captionHeader->setText( caption.header() );
-        m_p_ui->lineEdit_captionEnding->setText( caption.ending() );
-    }*/
 
     //REM: le body est affiche via un signal du caption manager, car il depend du num de la photo a l'ecran
     CPhotoDatabase& photoDb = CPhotoDatabase::getInstance();

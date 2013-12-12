@@ -104,17 +104,6 @@ void WinConfigure::retranslate( )
 
 /************** SLOTS ****************/
 
-/*************************
-* onChangeLanguage( )
-* ---------------
-* Slot si on modifie la langue via la combobox
-*************************/
-/*void WinConfigure::onChangeLanguage()
-{
-    emit languageChanged();
-}*/
-
-
 
 /*************************
 * onOK( )

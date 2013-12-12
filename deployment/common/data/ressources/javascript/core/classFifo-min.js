@@ -1,1 +1,0 @@
-function Fifo(){var b=new Array();var a=0;this.push=function(c){b[a]=c;a++};this.insert=function(e,c){if(a<c){c=a}for(var d=c;d<a;d++){b[d+1]=b[d]}b[c]=e;a++};this.pop=function(){var d;var c;if(a>0){d=b[0];for(c=0;c<a-1;c++){b[c]=b[c+1]}delete b[a-1];a--}else{d="undefined"}return d};this.read=function(){if(a>0){return b[0]}else{return"undefined"}};this.clear=function(){a=0}};

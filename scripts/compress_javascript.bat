@@ -19,26 +19,19 @@ if not [%2] == [] goto :error
 
 :process
 
-SET JS_PATH=..\web\ressources\javascript
+rem script dir: %~dp0 ; read: http://ss64.com/nt/syntax-args.html
+SET JS_PATH=%~dp0..\web\ressources\javascript
 
 md %1
-md %1\core
 
 echo on
+copy /b %JS_PATH%\CEvent.js+%JS_PATH%\CHashTable.js+%JS_PATH%\CPhoto.js+%JS_PATH%\CFifo.js+%JS_PATH%\CStorage.js+%JS_PATH%\CUserInterractions.js+%JS_PATH%\CFrameFactory.js+%JS_PATH%\CCarrousel.js+%JS_PATH%\CPhotoStrategy.js+%JS_PATH%\CPhotoLoader.js+%JS_PATH%\CUrl.js+%JS_PATH%\CDisplay.js+%JS_PATH%\CScroller.js+%JS_PATH%\CProgressBar.js+%JS_PATH%\CMosaic.js+%JS_PATH%\start.js ezwg.js
+java -jar  %YUI_COMPRESSOR% --charset UTF-8 -o %1\ezwg-min.js ezwg.js
 
-java -jar  %YUI_COMPRESSOR% --charset UTF-8 -o %1\common-min.js  %JS_PATH%\common.js
-java -jar  %YUI_COMPRESSOR% --charset UTF-8 -o %1\image-min.js  %JS_PATH%\image.js
-java -jar  %YUI_COMPRESSOR% --charset UTF-8 -o %1\index-min.js  %JS_PATH%\index.js
-                                            
-java -jar  %YUI_COMPRESSOR% --charset UTF-8 -o %1\core\classDisplayManager-min.js  %JS_PATH%\core\classDisplayManager.js
-java -jar  %YUI_COMPRESSOR% --charset UTF-8 -o %1\core\classFifo-min.js  %JS_PATH%\core\classFifo.js
-java -jar  %YUI_COMPRESSOR% --charset UTF-8 -o %1\core\classHashTable-min.js  %JS_PATH%\core\classHashTable.js
-java -jar  %YUI_COMPRESSOR% --charset UTF-8 -o %1\core\classObjetAjustable-min.js  %JS_PATH%\core\classObjetAjustable.js
-java -jar  %YUI_COMPRESSOR% --charset UTF-8 -o %1\core\classTablePhoto-min.js  %JS_PATH%\core\classTablePhoto.js
-
-
+echo off
+del ezwg.js
 goto :end
-
+ 
 :error
 echo.
 echo # Usage: compress_javascript DESTDIR

@@ -1,6 +1,11 @@
-﻿<Skin release="20120609" name="Moria">
-    <properties title-position="0"/>
+﻿<Skin release="20131107" name="Moria">
     <StyleSheet name="noname">
+        <Selection selector="#mosaic">
+            <background-color>#b1aaa3</background-color>
+            <background-image>url(../images/Moria_paper.jpg)</background-image>
+            <border-color>#f3f1f0</border-color>
+            <border-width>10px</border-width>
+        </Selection>
         <Selection selector="#progressbar">
             <background-color>#980000</background-color>
             <border-color>#000000</border-color>
@@ -43,11 +48,6 @@
             <border-width>2px</border-width>
             <margin>-2px</margin>
         </Selection>
-        <Selection selector=".scrollContainer div.slidingPanel">
-            <background-color>#b1aaa2</background-color>
-            <background-image>url(../images/Moria_paper.jpg)</background-image>
-            <background-size>cover</background-size>
-        </Selection>
         <Selection selector=".thumbBox">
             <border-color>#424242</border-color>
             <border-width>1px</border-width>
@@ -59,28 +59,17 @@
                 <border-color>#ffffff</border-color>
             </Selection>
         </Selection>
-        <Selection selector=".thumbsWrapperContainer">
-            <background-color>#b1aaa2</background-color>
-            <border-color>#afaead</border-color>
-            <border-width>5px</border-width>
-        </Selection>
         <Selection selector="div#cadrePhoto">
-            <background-color>#b1aaa2</background-color>
+            <background-color>#b1aaa3</background-color>
             <background-image>url(../images/Moria_paper.jpg)</background-image>
-            <padding>6px</padding>
+            <padding>10px</padding>
         </Selection>
         <Selection selector="div#indexTitle">
-            <background-color>#b2aaa3</background-color>
-            <background-image>url(../images/Moria_paper_small.jpg)</background-image>
-            <border-color>#f3f3f3</border-color>
-            <border-left-width>0px</border-left-width>
-            <border-right-width>3px</border-right-width>
             <color>#000000</color>
-            <display>block</display>
             <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
             <font-size>2.4em</font-size>
-            <line-height>0.9em</line-height>
-            <width>60px</width>
+            <text-align>left</text-align>
+            <text-shadow>4px 2px 4px rgba(150, 150, 150, 0.8)</text-shadow>
         </Selection>
         <Selection selector="div#photoLefter">
             <background-color>transparent</background-color>
@@ -96,22 +85,6 @@
             <font-size>1.1em</font-size>
             <font-weight>normal</font-weight>
         </Selection>
-        <Selection selector="ul.indexNavigation">
-            <Selection selector="li">
-                <background-color>#afaead</background-color>
-                <Selection selector="a">
-                    <color>#000000</color>
-                </Selection>
-            </Selection>
-            <Selection selector="li.navTabSelected">
-                <background-color>#f5f5f5</background-color>
-                <border-color>#afaead</border-color>
-                <border-width>3px</border-width>
-                <Selection selector="a">
-                    <color>#000000</color>
-                </Selection>
-            </Selection>
-        </Selection>
     </StyleSheet>
     <Ressources>
         <File id="IndexPage_BckgTexture">Moria_background.jpg</File>
@@ -120,6 +93,5 @@
         <File id="PhotoButtonPrevious">LeftArrow_craie.png</File>
         <File id="PhotoFraming_Texture">Moria_paper.jpg</File>
         <File id="PhotoPage_BckgTexture">Moria_background.jpg</File>
-        <File id="VTitle_BackgroundTexture">Moria_paper_small.jpg</File>
     </Ressources>
 </Skin>
