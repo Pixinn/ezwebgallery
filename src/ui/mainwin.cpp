@@ -332,12 +332,14 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& proje
     connect( &(this->m_captionManager), SIGNAL(displayHighlightIndex(QModelIndex)), this, SLOT(highlightPhoto(QModelIndex)) );
     connect( &(this->m_captionManager), SIGNAL(clearThumbnail(void)), this, SLOT(clearThumbnailTab(void)) );
     //Onglet Présentation
+    connect( this->m_ui->checkBox_HiDPI, SIGNAL(stateChanged (int)), this, SLOT(onHiDPI(int)) );
+    connect( this->m_ui->checkBox_ManualConf, SIGNAL(stateChanged (int)), this, SLOT(onManualPhotoConf(int)) );
     connect( this->m_ui->horizontalSlider_PhotoSharpeningRadius, SIGNAL(valueChanged(int)), this, SLOT(sharpeningRadiusChanged(int)) );
     connect( this->m_ui->doubleSpinBox_PhotoSharpeningRadius, SIGNAL(valueChanged(double)), this, SLOT(sharpeningRadiusChanged(double)) );
     connect( this->m_ui->comboBox_ImageQualityStrategy, SIGNAL(currentIndexChanged(int)), this, SLOT(imageOptimizationStrategyChanged(int)) );
     connect( this->m_ui->comboBox_WatermarkType, SIGNAL(activated(int)), this, SLOT(watermarkTypeChanged(int)) );
     connect( this->m_ui->groupBox_Watermark, SIGNAL(toggled(bool)), this, SLOT(watermarkGroupChecked(bool)) );
-    connect( this->m_ui->checkBox_WatermarkTextColorAuto, SIGNAL(stateChanged(int)), this, SLOT(watermarkAutoColorChecked(int)));
+    connect( this->m_ui->checkBox_WatermarkTextColorAuto, SIGNAL(stateChanged(int)), this, SLOT(watermarkAutoColorChecked(int)));    
 }
 
 MainWin::~MainWin()
@@ -413,7 +415,6 @@ void MainWin::changeEvent(QEvent *e)
         }
         //Traduction des textes supplémentaires (html, etc)
         m_p_tagsWindow->setHtml( CPlatform::readTranslatedTextFile( "tagList.html" ) );
-        //CPlatform::setLanguage( langSuffix );
         break;
     default:
         break;
@@ -661,6 +662,35 @@ bool MainWin::onSaveSessionAs( )
     return fileSaved;
 }
 
+
+void MainWin::onHiDPI( int status )
+{
+    if( status == Qt::Checked ) {
+        const unsigned int maxSz = 2560; //Nexus 10
+        m_ui->spinbox_PhotoMaxHSize->setValue( maxSz );
+        m_ui->spinBox_PhotoMaxVSize->setValue( maxSz );
+        m_ui->comboBox_ImageQualityStrategy->setCurrentIndex( t_photosConf::OPTIMIZE_SCREENUSAGE );
+    }
+}
+
+void MainWin::onManualPhotoConf( int status )
+{    
+    enableAllWidgets( *m_ui->Layout_PhotoConf, (status == Qt::Checked) ); //Enable /disable all configure widgets
+}
+
+void MainWin::enableAllWidgets( const QLayout& layout, bool enabled )
+{
+    for (int i = 0; i < layout.count(); ++i)
+    {
+        QWidget* widget = layout.itemAt(i)->widget();
+        QLayout* inLayout = layout.itemAt(i)->layout();
+        if( widget ) {
+            widget->setEnabled( enabled );
+        } else if( inLayout ) {
+                enableAllWidgets( *inLayout, enabled );
+        }
+    }
+}
 
 bool MainWin::isUnsaved()
 {
@@ -982,7 +1012,7 @@ void MainWin::thumnailChanged( int state )
 
 void MainWin::displayCaption( QString text )
 {
-    this->m_ui->lineEdit_Caption->setText( text );
+    m_ui->lineEdit_Caption->setText( text );
 }
 
 void MainWin::error( PtrMessage err )
@@ -990,7 +1020,6 @@ void MainWin::error( PtrMessage err )
     CLogger::getInstance().log( err );
     QMessageBox modalErrorBox( this );
     modalErrorBox.setText( err->summary() );
-//    modalErrorBox.setInformativeText( err->informativeText() );
     modalErrorBox.setDetailedText( err->details() );
     modalErrorBox.setIcon( QMessageBox::Critical );
     modalErrorBox.exec();
@@ -1002,7 +1031,6 @@ void MainWin::warning( PtrMessage warning )
     CLogger::getInstance().log( warning );
     QMessageBox modalErrorBox( this );
     modalErrorBox.setText( warning->summary() );
-   // modalErrorBox.setInformativeText( warning->informativeText() );
     modalErrorBox.setDetailedText( warning->details() );
     modalErrorBox.setIcon( QMessageBox::Warning );
     modalErrorBox.exec();
@@ -1014,7 +1042,6 @@ void MainWin::information( PtrMessage info )
     CLogger::getInstance().log( info );
     QMessageBox modalErrorBox( 0 );
     modalErrorBox.setText( info->summary() );
-//    modalErrorBox.setInformativeText( info->informativeText() );
     modalErrorBox.setDetailedText( info->details() );
     modalErrorBox.setIcon( QMessageBox::Information );
     modalErrorBox.exec();
@@ -1210,7 +1237,6 @@ void MainWin::refresh( void )
 {
     m_photoDatabase.refresh( m_photoFeeder.getPhotoList() );
     m_captionManager.reset();
-    //buildPhotoLists();  //DEPRECATED
 }
 
 /*************************

@@ -23,10 +23,11 @@
 	position:relative;		/* pour centrage vertical */
 	cursor:pointer;
 	margin: auto;
-	border: solid;
+	border: solid;    
 }
 .photoButtonDisabled{
 	position: relative;		/* pour centrage vertical */
+    cursor: not-allowed; /*css3*/
 	margin: auto;	
 	border:solid;
 	opacity: 0.5;
@@ -106,7 +107,33 @@ div#wrapperAffichagePhoto{
 /**********************************************************/
 
 
+ /*************** CAROUSSEL *************/
+#photoViewport {
+    background: transparent;
+    position:relative;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+  }
   
+  
+#slidesContainer {
+    background:transparent;
+    width:300%;
+    height:100%;
+    position: relative;
+    top: 0px;
+    left: 0px;
+ }
+ 
+div.slide {
+    background:transparent;
+    width:33.333%;
+    height:100%;
+    text-align:center;
+    float:left;
+  }
+ 
 
 
 
@@ -115,7 +142,8 @@ div#wrapperAffichagePhoto{
 /** Contient la photo **/
 
 div#cadrePhoto{
-	position:relative;		/* pour centrage vertical */
+	position:relative;		/* vertical centering */
+	margin:auto;                    /* horizontal centering on modern browsers */
 	cursor:default;
     -moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
@@ -126,6 +154,11 @@ div#divPhoto{
 	display:block;
 	background-color:black;
 }
+
+div#divPhoto img{
+    cursor:pointer;
+}
+
 
 .mainPhoto{	/* La photo proprement dite. Classe ajoutée au runtime */
 	margin: 0px;
@@ -153,7 +186,7 @@ div.photoCaption {
 	font-variant: normal;
 	border: solid;
 	border-width: 0px; /*OBLIGATOIRE SINON BUG SOUS IE6 */
-	padding : 5px 0px 0px 0px;
+	padding : 0.2em 0 0.2em 0;
     min-height: 10px;  /* Bouton - padding */
 }
 /**************************************/
@@ -164,6 +197,5 @@ div#photoTitle{
 	width: 100%;			 /*OBLIGATOIRE SINON BUG SOUS IE6 */
 	font-style:normal;		/* MODIFIABLE */ 
 	text-align:center;		 /*OBLIGATOIRE SINON BUG SOUS IE6 */
-	/*padding:0px 0px 5px 0px;*/
     min-height: 15px;
 }

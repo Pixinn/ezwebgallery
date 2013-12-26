@@ -65,16 +65,14 @@ CSkinParameters::CSkinParameters() :
 
 CSkinParameters& CSkinParameters::operator=(const CSkinParameters &source)
 {
-    if( this != &source){
-        //this->mosaicBorderSize = source.mosaicBorderSize;
+    if( this != &source)
+    {
         this->thumbImgBorderSize = source.thumbImgBorderSize;
         this->thumbBoxBorderSize = source.thumbBoxBorderSize;
         this->photoPaddingSize = source.photoPaddingSize;
-        //this->titleOuterWidth = source.titleOuterWidth;
         this->m_name = source.m_name;
         this->m_ressourcesPath = source.m_ressourcesPath;
         this->m_p_ui = source.m_p_ui;
-        this->m_misc = source.m_misc;
         this->m_ressources = source.m_ressources;
         this->m_styleSheet = source.m_styleSheet;
         this->m_filePath = source.m_filePath;
@@ -90,16 +88,13 @@ CSkinParameters& CSkinParameters::operator=(const CSkinParameters &source)
 * L'hritage de QObject oblige de redfinir cet oprateur
 * voir: http://www.fredosaurus.com/notes-cpp/oop-overloading/overloadassign.html
 *****************************************************/
-bool CSkinParameters::operator ==( const CSkinParameters &source)
+bool CSkinParameters::operator==( const CSkinParameters &source)
 {
-    //if( this->mosaicBorderSize != source.mosaicBorderSize ){ return false; }
     if( this->thumbImgBorderSize != source.thumbImgBorderSize ){    return false;   }
     if( this->thumbBoxBorderSize != source.thumbBoxBorderSize ){    return false;   }
     if( this->photoPaddingSize != source.photoPaddingSize ){    return false;   }
-    //if( this->titleOuterWidth != source.titleOuterWidth ) { return false; }
     if( this->m_name != source.m_name ){    return false;   }
     if( this->m_ressourcesPath != source.m_ressourcesPath ){    return false;   }
-    if( this->m_misc.titlePosition != source.m_misc.titlePosition ){    return false;   }
     if( this->m_ressources != source.m_ressources ){    return false;   }
     if( this->m_styleSheet != source.m_styleSheet ){    return false;   }
     if( this->m_filePath != source.m_filePath ){    return false;   }
@@ -169,12 +164,10 @@ void CSkinParameters::fromUi( )
     m_styleSheet.clear();
 
     /****** Proprits diverses ******/
-    m_misc.titlePosition = m_p_ui->comboBox_VTitle_Position->currentIndex();
     setName( m_p_ui->lineEdit_SkinName->text() );
     /****** Ressources ******/
     //Construction de la liste de ressources ncessaires
     m_ressources.clear();
-    m_ressources.insert( "VTitle_BackgroundTexture", m_p_ui->cImagePicker_VTitle_BackgroundTexture->fileName() );
     m_ressources.insert( "IndexPage_BckgTexture", m_p_ui->cImagePicker_Index_BckgTexture->fileName() );
     m_ressources.insert( "Mosaic_BckgTexture", m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName( ) );
     m_ressources.insert( "PhotoFraming_Texture", m_p_ui->CImagePicker_PhotoFraming_Texture->fileName() );
@@ -188,49 +181,39 @@ void CSkinParameters::fromUi( )
     //Filtrage des ressources:
     removeEmptyRessources( ); // On enlve de la liste les images "vides" (ie no image)
      
-    /****** Cration du CSS ******/
+    /****** Creation du CSS ******/
 
     //-------------- ///////////////// INDEX //////////////// ----------------//
     //ScreenIndex
     CCssSelection screenIndex( QString( "#screenIndex" ) );
         screenIndex.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Index_BckgTexture->fileName()).fileName() + QString(")") );
         screenIndex.setProperty( QString("background-color"), m_p_ui->cColorPicker_Index_BckgColor->value() );
+        if( m_p_ui->checkBox_Index_BckgCover->isChecked() ) { screenIndex.setProperty( QString("background-size"), QString("cover") ); }
     m_styleSheet.addSelection( screenIndex );
-    //ul.indexNavigation
-    CCssSelection indexNav( QString("ul.indexNavigation") );
-        CCssSelection indexNavTab( QString("li") );
-            indexNavTab.setProperty( QString("background-color"), m_p_ui->cColorPicker_BrowsingTabs_BckgColor->value() );
-                CCssSelection indexNavTabText( QString("a") );
-                    indexNavTabText.setProperty( QString("color"), m_p_ui->cColorPicker_BrowsingTabs_TextColor->value() );
-            indexNavTab.addSubSelection( indexNavTabText );
-        CCssSelection indexNavTabSelected( QString("li.navTabSelected") );
-            indexNavTabSelected.setProperty( QString("background-color"), m_p_ui->cColorPicker_BrowsingTabs_Selected_BckgColor->value() );
-            indexNavTabSelected.setProperty( QString("border-width"), QString::number(m_p_ui->spinBox_BrowsingTabs_Selected_BorderWidth->value()) + QString("px") );
-            indexNavTabSelected.setProperty( QString("border-color"), m_p_ui->cColorPicker_BrowsingTabs_Selected_BorderColor->value() );
-            CCssSelection indexNavTabSelectedText( QString("a") );
-                indexNavTabSelectedText.setProperty( QString("color"), m_p_ui->cColorPicker_BrowsingTabs_Selected_TextColor->value() );
-            indexNavTabSelected.addSubSelection( indexNavTabSelectedText );
-     indexNav.addSubSelection( indexNavTabSelected );
-     indexNav.addSubSelection( indexNavTab );
-     m_styleSheet.addSelection( indexNav );
-     //.thumbsWrapperContainer Mosaque
-     CCssSelection thumbsMosaic( QString(".thumbsWrapperContainer"));
-       // thumbsMosaic.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
-        thumbsMosaic.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );
-        //thumbsMosaic.setProperty( QString("background-size"), "cover" );
+    //Title
+    CCssSelection indexTitle( QString("div#indexTitle"));
+        indexTitle.setProperty( QString("text-shadow"), QString("4px 2px 4px rgba(150, 150, 150, 0.8)") );
+        indexTitle.setProperty( QString("text-align"), m_p_ui->comboBox_VTitleText_Alignment->currentText().toLower() );
+        indexTitle.setProperty( QString("color"), m_p_ui->cColorPicker_VTitleText_TextColor->value() );
+        indexTitle.setProperty( QString("font-size"), QString::number( m_p_ui->doubleSpinBox_VTitle_FontSize->value() ) + QString("em") );
+        indexTitle.setProperty( QString("font-family"), m_p_ui->comboBox_VTitleText_FontFamily->currentText() );
+    m_styleSheet.addSelection( indexTitle );
+    //Mosaic
+    CCssSelection thumbsMosaic( QString("#mosaic"));
+        thumbsMosaic.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
+        if( m_p_ui->checkBox_Mosaic_BckgColor_Enabled->isChecked() ) { //optional background color
+            thumbsMosaic.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );            
+        } else {
+            thumbsMosaic.setProperty( QString("ezwg-background-color-disabled"), "true" );
+        }
         thumbsMosaic.setProperty( QString("border-width"), QString::number( m_p_ui->spinBox_Mosaic_BorderWidth->value() ) + QString("px") );
         thumbsMosaic.setProperty( QString("border-color"), m_p_ui->cColorPicker_Mosaic_BorderColor->value() );
      m_styleSheet.addSelection( thumbsMosaic );
-    CCssSelection sliders( QString(".scrollContainer div.slidingPanel") );
-        sliders.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );
-        sliders.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
-        sliders.setProperty( QString("background-size"), "cover" ); //CSS3
-    m_styleSheet.addSelection( sliders );
     CCssSelection thumbSpacing( QString(".thumbBox") );  //Espace entre les vignettes
         this->thumbBoxBorderSize = m_p_ui->spinBox_Mosaic_SpacingWidth->value();
         thumbSpacing.setProperty( QString("border-width"), QString::number( thumbBoxBorderSize ) + QString("px") );
         thumbSpacing.setProperty( QString("border-color"), m_p_ui->cColorPicker_Mosaic_SpacingColor->value() );
-    //.thumbBox img     Vignette
+    //.thumbBox img -> thumbnail
     CCssSelection thumbnail( QString("img"));
         this->thumbImgBorderSize = m_p_ui->spinBox_Thumbnail_BorderWidth->value();
         thumbnail.setProperty( QString("border-width"), QString::number( thumbImgBorderSize ) + QString("px") );
@@ -246,6 +229,7 @@ void CSkinParameters::fromUi( )
    CCssSelection screenPhoto( QString( "#screenPhoto" ) );
         screenPhoto.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Photo_BckgTexture->fileName()).fileName() + QString(")") );
         screenPhoto.setProperty( QString("background-color"), m_p_ui->cColorPicker_Photo_BckgColor->value() );
+        if( m_p_ui->checkBox_Photo_BckgCover->isChecked() ) { screenPhoto.setProperty( QString("background-size"), QString("cover") ); }
     m_styleSheet.addSelection( screenPhoto );
     //Framing - cadre
     CCssSelection photoFrame( QString( "div#cadrePhoto" ) );
@@ -303,25 +287,6 @@ void CSkinParameters::fromUi( )
              photoRighter.setProperty( QString("background-color"), QString("transparent") );
         }
     m_styleSheet.addSelection( photoRighter );
-
-    //-------------- ///////////////// MISC //////////////// ----------------//
-    //--- Propritts conditionnelles
-    int titleWidth = m_p_ui->spinBox_VTitleBlock_Width->value();
-    int titleBorderRight = m_p_ui->spinBox_VTitleBlock_BorderWidth->value();
-    //QString titleBorderRight( QString::number(  ) );
-    int titleBorderLeft = 0;
-    if( m_misc.titlePosition != TITLE_POSITION_LEFT ){
-        titleBorderRight = titleBorderLeft;
-        titleBorderLeft = m_p_ui->spinBox_VTitleBlock_BorderWidth->value();
-    }
-    QString titleDisplay("none");
-    if( m_p_ui->groupBox_VTitle->isChecked() ){ 
-        titleDisplay = QString("block");
-       // this->titleOuterWidth = m_p_ui->spinBox_VTitleBlock_Width->value() + titleBorderRight + titleBorderLeft; //Left or Right = 0
-    } /*
-    else {
-        this->titleOuterWidth = 0;
-    }*/
     
     //--- Css
     //#progressbarWrapper
@@ -343,25 +308,6 @@ void CSkinParameters::fromUi( )
             progressBarLoaded.setProperty( QString("background-color"), m_p_ui->cColorPicker_ProgressBar_LoadedBackgroundColor->value() );
         progressBar.addSubSelection( progressBarLoaded );
     m_styleSheet.addSelection( progressBar );
-    //div#indexTitle
-     CCssSelection title( QString( "div#indexTitle" ) );
-        title.setProperty( QString("display"), titleDisplay );        
-        title.setProperty( QString("width"), QString::number( titleWidth ) + QString("px") );
-        title.setProperty( QString("border-right-width"), QString::number( titleBorderRight ) + QString("px") );
-        title.setProperty( QString("border-left-width"), QString::number( titleBorderLeft ) + QString("px") );
-        title.setProperty( QString("border-color"), m_p_ui->cColorPicker_VTitleBlock_BorderColor->value() );
-        title.setProperty( QString("color"), m_p_ui->cColorPicker_VTitleText_TextColor->value() );
-        title.setProperty( QString("font-size"), QString::number( m_p_ui->doubleSpinBox_VTitle_FontSize->value() ) + QString("em") );
-        title.setProperty( QString("line-height"), QString::number( m_p_ui->doubleSpinBox_VTitle_LineHeight->value() ) + QString("em") );
-        title.setProperty( QString("font-family"), m_p_ui->comboBox_VTitleText_FontFamily->currentText() );
-        if( m_p_ui->groupBox_VTitleBlock_Background->isChecked() ){ //Bckg Non-transparent
-            title.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_VTitle_BackgroundTexture->fileName()).fileName() + QString(")") );
-            title.setProperty( QString("background-color"), m_p_ui->cColorPicker_VTitle_BackgroundColor->value() );
-        }else{ //Bckg Transparent
-            title.setProperty( QString("background-color"), "transparent" );
-        }
-
-    m_styleSheet.addSelection( title );
      
 }
 
@@ -403,13 +349,11 @@ void CSkinParameters::fromDomDocument( QDomDocument &document )
     CCssSelection thumbnail = m_styleSheet.selection( selectors );
     this->thumbImgBorderSize = thumbnail.property("border-width").remove("px").toInt();
     selectors.clear();
-    selectors << ".thumbsWrapperContainer";
+    selectors << ".thumbsWrapper";
     CCssSelection thumbsMosaic = m_styleSheet.selection( selectors );
-//    this->mosaicBorderSize = thumbsMosaic.property("border-width").remove("px").toInt();
     //Properties
     setName( rootAttributes.namedItem( "name" ).nodeValue() );
     QDomElement miscProperties = root.firstChildElement( "properties" );
-    m_misc.titlePosition = miscProperties.attribute("title-position").toInt();
     //Ressources: construction de la liste de ressources
     m_ressources.clear();
     QDomElement ressourcesElement = root.firstChildElement( RESSOURCES_TAG_NAME );
@@ -447,11 +391,10 @@ void CSkinParameters::toUi(  )
 
     int index; //Pour afficher dans une comboBox. Ncessite que l'item soit bien prsent !        
     QStringList path;
-
+    
     // ->on commence par clearer tous les CImagePicker, sinon leur proprits risquent de rester
     // en cas d'ouverture de skin alors qu'on tait en train d'diter
     //--> NE PAS OUBLIER D'AJOUTER LES NOUVEAUX...
-//    m_p_ui->CImagePicker_BrowseButton_Icon->clearImage();
     m_p_ui->CImagePicker_NextButton_Icon->clearImage();
     m_p_ui->CImagePicker_PhotoFraming_Texture->clearImage();
     m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->clearImage();
@@ -459,7 +402,6 @@ void CSkinParameters::toUi(  )
     m_p_ui->cImagePicker_Index_BckgTexture->clearImage();
     m_p_ui->cImagePicker_Mosaic_BckgTexture->clearImage();
     m_p_ui->cImagePicker_Photo_BckgTexture->clearImage();
-    m_p_ui->cImagePicker_VTitle_BackgroundTexture->clearImage();
 
     m_p_ui->lineEdit_SkinName->setText( m_name );    
 
@@ -470,31 +412,40 @@ void CSkinParameters::toUi(  )
     CCssSelection screenIndex = m_styleSheet.selection( path );
          m_p_ui->cImagePicker_Index_BckgTexture->setImage( getImagePath( m_ressources.value("IndexPage_BckgTexture").absoluteFilePath() ) );
          m_p_ui->cColorPicker_Index_BckgColor->setColor( screenIndex.property( "background-color" ));
+         if( screenIndex.property( "background-size" ) == "cover" ){ 
+             m_p_ui->checkBox_Index_BckgCover->setChecked(true);
+         } else {
+             m_p_ui->checkBox_Index_BckgCover->setChecked(false);
+         }
     path.clear();
-    //ul.indexNavigation
-    path << "ul.indexNavigation" << "li";
-    CCssSelection indexNavTab = m_styleSheet.selection( path );
-        m_p_ui->cColorPicker_BrowsingTabs_BckgColor->setColor( indexNavTab.property("background-color") );
-        path << "a";
-        CCssSelection indexNavTabText = m_styleSheet.selection( path );
-            m_p_ui->cColorPicker_BrowsingTabs_TextColor->setColor( indexNavTabText.property("color") );
+    // title
+    path << "div#indexTitle";
+        CCssSelection indexTitle = m_styleSheet.selection( path );
+        QString alignment = indexTitle.property( "text-align" );
+        int idx =  m_p_ui->comboBox_VTitleText_Alignment->findText( alignment );
+        if( idx != -1 ) {
+            m_p_ui->comboBox_VTitleText_Alignment->setCurrentIndex( idx );
+        }
+        idx = m_p_ui->comboBox_VTitleText_FontFamily->findText( indexTitle.property("font-family") );
+        m_p_ui->comboBox_VTitleText_FontFamily->setCurrentIndex( idx );
+        m_p_ui->doubleSpinBox_VTitle_FontSize->setValue(  indexTitle.property("font-size").remove(QString("em")).toDouble() );
+        m_p_ui->cColorPicker_VTitleText_TextColor->setColor( indexTitle.property("color") );
     path.clear();
-    path << "ul.indexNavigation" << "li.navTabSelected";
-    CCssSelection indexNavTabSelected = m_styleSheet.selection( path );
-        m_p_ui->cColorPicker_BrowsingTabs_Selected_BckgColor->setColor( indexNavTabSelected.property("background-color") );
-        m_p_ui->spinBox_BrowsingTabs_Selected_BorderWidth->setValue( indexNavTabSelected.property("border-width").remove("px").toInt() );
-        m_p_ui->cColorPicker_BrowsingTabs_Selected_BorderColor->setColor( indexNavTabSelected.property("border-color"));
-        path << "a";
-        CCssSelection indexNavTabSelectedText = m_styleSheet.selection( path );
-            m_p_ui->cColorPicker_BrowsingTabs_Selected_TextColor->setColor( indexNavTabSelectedText.property("color") );
-    path.clear();
-    //.thumbsWrapperContainer mosaic
-    path << ".thumbsWrapperContainer";
-    CCssSelection thumbsMosaic = m_styleSheet.selection( path );
-        m_p_ui->cImagePicker_Mosaic_BckgTexture->setImage( m_ressources.value("Mosaic_BckgTexture").absoluteFilePath() );
-        m_p_ui->cColorPicker_Mosaic_BckgColor->setColor( thumbsMosaic.property("background-color") );
-        m_p_ui->spinBox_Mosaic_BorderWidth->setValue( thumbsMosaic.property("border-width").remove("px").toInt() );
+    
+    //.thumbsWrapper mosaic
+    path << "#mosaic";
+    CCssSelection thumbsMosaic = m_styleSheet.selection( path );        
         m_p_ui->cColorPicker_Mosaic_BorderColor->setColor( thumbsMosaic.property("border-color") );
+        m_p_ui->spinBox_Mosaic_BorderWidth->setValue( thumbsMosaic.property("border-width").remove("px").toInt() );
+        m_p_ui->cImagePicker_Mosaic_BckgTexture->setImage( m_ressources.value("Mosaic_BckgTexture").absoluteFilePath() );
+        //background color is optional
+        bool fHasBckgColor = (thumbsMosaic.property("ezwg-background-color-disabled") != "true");
+        m_p_ui->cColorPicker_Mosaic_BckgColor->setEnabled( fHasBckgColor );
+        if( fHasBckgColor ) { 
+            m_p_ui->cColorPicker_Mosaic_BckgColor->setColor( thumbsMosaic.property("background-color") );            
+        }
+        m_p_ui->checkBox_Mosaic_BckgColor_Enabled->setChecked( fHasBckgColor );
+
     path.clear();
     path << ".thumbBox";
     CCssSelection thumbSpacing = m_styleSheet.selection( path );
@@ -518,6 +469,11 @@ void CSkinParameters::toUi(  )
     CCssSelection screenPhoto = m_styleSheet.selection( path );
         m_p_ui->cImagePicker_Photo_BckgTexture->setImage( getImagePath( m_ressources.value("PhotoPage_BckgTexture").absoluteFilePath() ) );
         m_p_ui->cColorPicker_Photo_BckgColor->setColor( screenPhoto.property("background-color") );
+        if( screenPhoto.property( "background-size" ) == "cover" ){ 
+            m_p_ui->checkBox_Photo_BckgCover->setChecked(true);
+        } else {
+            m_p_ui->checkBox_Photo_BckgCover->setChecked(false);
+        }
     path.clear();
     //Framing - cadre
     path << "div#cadrePhoto";
@@ -564,7 +520,6 @@ void CSkinParameters::toUi(  )
     //Button Icons
     m_p_ui->CImagePicker_PreviousButton_Icon->setImage( getImagePath( m_ressources.value("PhotoButtonPrevious").absoluteFilePath() ));
     m_p_ui->CImagePicker_NextButton_Icon->setImage( getImagePath( m_ressources.value("PhotoButtonNext").absoluteFilePath() ));
-//  m_p_ui->CImagePicker_BrowseButton_Icon->setImage( getImagePath( m_ressources.value("PhotoButtonIndex").absoluteFilePath() ));
     //Navigation Divs
     path << "div#photoLefter";
     CCssSelection photoLeftAndRight = m_styleSheet.selection( path );
@@ -597,29 +552,7 @@ void CSkinParameters::toUi(  )
         path << "div.progress";
         progressBar = m_styleSheet.selection( path );
             m_p_ui->cColorPicker_ProgressBar_LoadedTextColor->setColor( progressBar.property("color") );
-            m_p_ui->cColorPicker_ProgressBar_LoadedBackgroundColor->setColor( progressBar.property("background-color") );
-    //--- Title ---//
-    path.clear();
-    path << "div#indexTitle";
-    CCssSelection title =  m_styleSheet.selection( path );
-        m_p_ui->groupBox_VTitle->setChecked( true );
-        if( title.property("display") != QString("block") ){ m_p_ui->groupBox_VTitle->setChecked( false ); }
-        m_p_ui->cImagePicker_VTitle_BackgroundTexture->setImage( getImagePath( m_ressources.value("VTitle_BackgroundTexture").absoluteFilePath() ));
-        m_p_ui->cColorPicker_VTitle_BackgroundColor->setColor( title.property( "background-color" ) );
-        m_p_ui->groupBox_VTitleBlock_Background->setChecked(true);
-        if(  title.property( "background-color" ) == QString("transparent") ){
-            m_p_ui->groupBox_VTitleBlock_Background->setChecked(false); }
-        m_p_ui->cColorPicker_VTitleText_TextColor->setColor( title.property("color") );
-        m_p_ui->cColorPicker_VTitleBlock_BorderColor->setColor( title.property( "border-color" ) );
-        m_p_ui->spinBox_VTitleBlock_BorderWidth->setValue( std::max( title.property( "border-left-width" ).remove("px").toInt(),
-                                                                     title.property( "border-right-width" ).remove("px").toInt() ) );
-        index = m_p_ui->comboBox_VTitleText_FontFamily->findText( title.property("font-family") );
-        m_p_ui->comboBox_VTitleText_FontFamily->setCurrentIndex( index );
-        m_p_ui->doubleSpinBox_VTitle_FontSize->setValue(  title.property("font-size").remove(QString("em")).toDouble() );
-        m_p_ui->doubleSpinBox_VTitle_LineHeight->setValue( title.property("line-height").remove(QString("em")).toDouble() );
-        m_p_ui->spinBox_VTitleBlock_Width->setValue( title.property("width").remove("px").toInt() );    
-        m_p_ui->comboBox_VTitle_Position->setCurrentIndex( m_misc.titlePosition ); //Position
-        
+            m_p_ui->cColorPicker_ProgressBar_LoadedBackgroundColor->setColor( progressBar.property("background-color") );        
 }
 
 
@@ -634,12 +567,7 @@ QDomDocument CSkinParameters::toDomDocument( )
     QDomElement root = document.createElement( SKIN_TAG_NAME );
     root.setAttribute( QString("release"), QString::number(CPlatform::revisionInt()) );
     root.setAttribute( QString("name"), m_name );
-    document.appendChild( root );
-   
-    //Proprits diverses
-    QDomElement properties = document.createElement( "properties" );
-        properties.setAttribute( "title-position", m_misc.titlePosition );
-    root.appendChild( properties );     
+    document.appendChild( root );  
     
     //Style
     QDomElement styleSheetElement = m_styleSheet.toDomElement( document );
@@ -648,7 +576,7 @@ QDomDocument CSkinParameters::toDomDocument( )
     //Ressources
     QDomElement ressourcesElement = document.createElement( RESSOURCES_TAG_NAME );
     root.appendChild( ressourcesElement );
-    foreach( QString widget, m_ressources.keys() ){
+    foreach( QString widget, m_ressources.keys() ) {
         QDomElement fileElement = document.createElement( RESSOURCEFILE_TAG_NAME ); // <File id="widget">FileName</File>
         fileElement.setAttribute( "id",widget );
         ressourcesElement.appendChild( fileElement );
@@ -665,9 +593,9 @@ QDomDocument CSkinParameters::toDomDocument( )
 *   ie: thumbBorders + thumbBoxBorders + MosaicBorders + VerticalTitle
 * Input: nb rows & cols of the mosaic
 ********************************************************************/
-QSize CSkinParameters::unavailableSpace( unsigned int nbCols, unsigned int nbRows )
+QSize CSkinParameters::unavailableSpace( unsigned int nbCols )
 {
-    QStringList selector;
+    /*QStringList selector;
     selector << "div#indexTitle";
     CCssSelection titleDiv = m_styleSheet.selection( selector );    
     QSize titleSize;
@@ -676,19 +604,19 @@ QSize CSkinParameters::unavailableSpace( unsigned int nbCols, unsigned int nbRow
         titleSize = QSize( titleDiv.property( "width" ).remove("px").toInt() + titleBorderWidth, 0 );
     } else {
         titleSize = QSize(0,0);
-    }
-    return mosaicDecoration( nbCols, nbRows ) + titleSize;
+    }*/
+    return mosaicDecoration( nbCols )/* + titleSize*/;
 }
 
 
 /*******************************************************************
-* QSize mosaicDecoration( unsigned int nbCols, unsigned int nbRows )
+* QSize mosaicDecoration( unsigned int nbCols )
 * ------------------------
 * Returns space used by the mosaic decoration on the index page
 *   ie: thumbBorders + thumbBoxBorders + MosaicBorders
 * Input: nb rows & cols of the mosaic
 ********************************************************************/
-QSize CSkinParameters::mosaicDecoration( unsigned int nbCols, unsigned int nbRows )
+QSize CSkinParameters::mosaicDecoration( unsigned int nbCols )
 {    
     QStringList selectors;
     selectors << ".thumbBox";
@@ -698,12 +626,12 @@ QSize CSkinParameters::mosaicDecoration( unsigned int nbCols, unsigned int nbRow
     CCssSelection thumbnail = m_styleSheet.selection( selectors );
     thumbImgBorderSize = thumbnail.property("border-width").remove("px").toInt();
     selectors.clear();
-    selectors << ".thumbsWrapperContainer";
+    selectors << ".thumbsWrapper";
     CCssSelection thumbsMosaic = m_styleSheet.selection( selectors );
     int mosaicBorderSize = thumbsMosaic.property("border-width").remove("px").toInt();
 
     return QSize( 2*nbCols*(thumbImgBorderSize + thumbBoxBorderSize) + 2*mosaicBorderSize,
-                  2*nbRows*(thumbImgBorderSize + thumbBoxBorderSize) + 2*mosaicBorderSize );
+                  0 );
 }
 
 

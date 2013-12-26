@@ -13,7 +13,6 @@ mkdir --parents $DATADIR/data/ressources/php
 mkdir --parents $DATADIR/data/ressources/images/smileys
 mkdir --parents $DATADIR/data/ressources/javascript/jquery/plugins
 mkdir --parents $DATADIR/data/ressources/javascript/tools
-mkdir --parents $DATADIR/data/ressources/javascript/core
 
 #copying static resources
 cp $SCRIPTDIR/../web/index.html $DATADIR/data

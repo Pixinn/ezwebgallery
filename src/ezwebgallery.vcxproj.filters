@@ -268,14 +268,14 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_CMessage.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_CMessage.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_CWarning.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CMessage.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_CWarning.cpp">
-      <Filter>Generated Files\Release</Filter>
+      <Filter>Generated Files\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -346,7 +346,7 @@
       <Filter>Header Files\global</Filter>
     </CustomBuild>
     <CustomBuild Include="global\CWarning.h">
-      <Filter>Header Files\global</Filter>
+      <Filter>Generated Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -570,13 +570,11 @@
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />

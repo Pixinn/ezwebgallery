@@ -56,12 +56,10 @@ using namespace JSON;
 #define CSSSKINFILENAME     "skin.css"
 #define SHARPENINGTHRESHOLD 0.04        /* équivalent à 10 */
 
-//Thubnail mosaic targeted sizes
-const CGalleryGenerator::t_thumbSize CGalleryGenerator::s_thumbMosaicSizes[ s_nbMosaicSizes ] = {
-    {900,568},
-    {1130,670},
-    {1270,780},
-    {1690,1140}
+//Thubnail mosaic targeted sizes.
+//Only width are currently in use
+const unsigned int CGalleryGenerator::s_thumbMosaicSizes[ s_nbMosaicSizes ] = {
+    580, 670, 750, 900, 1100, 1250, 1440, 1700
 };
 
 //-------------------- FONCTIONS -----------------------//
@@ -215,7 +213,7 @@ bool CGalleryGenerator::areImageAndThumbs(  )
         photoSubDirs << ( RESOLUTIONPATH + QString::number(i) );
     }
     QStringList thumbSubDirs;
-    for( int i = 1; i <= s_nbthumbRes; i++ ) {
+    for( int i = 1; i <= s_nbMosaicSizes; i++ ) {
         thumbSubDirs << ( RESOLUTIONPATH + QString::number(i) );
     }
     QDir photosDir( m_parameters.m_galleryConfig.outputDir );
@@ -238,12 +236,10 @@ QMap<QString,QSize> CGalleryGenerator::computeThumbSizes( void )
 {
   QList<int> sizeList; //in this "size" list width = height
   unsigned int nbCols =  m_parameters.m_thumbsConfig.nbColumns;
-  unsigned int nbRows = m_parameters.m_thumbsConfig.nbRows;
-  QSize unavailableSpace = m_skinParameters.unavailableSpace( nbCols, nbRows );
+  QSize unavailableSpace = m_skinParameters.unavailableSpace( nbCols );
   //Iterating on the mosaic size constraints
   for( int i = 0; i < s_nbMosaicSizes; i++ ) {
-      sizeList << ( s_thumbMosaicSizes[i].width - unavailableSpace.width() ) / nbCols;
-      sizeList << ( s_thumbMosaicSizes[i].height - unavailableSpace.height() ) / nbRows;
+      sizeList << ( s_thumbMosaicSizes[i] - unavailableSpace.width() ) / nbCols;
   }
   //Downward sorting sizes
   qSort( sizeList.begin(), sizeList.end(), qGreater<int>() );
@@ -568,9 +564,7 @@ bool CGalleryGenerator::generateJsFiles( )
     mosaic.addNumber( "first", 1 );
     //-- Display
     const unsigned int nbCols =  m_parameters.m_thumbsConfig.nbColumns;
-    const unsigned int nbRows = m_parameters.m_thumbsConfig.nbRows;
-    const QSize unavailableSpace = m_skinParameters.unavailableSpace( nbCols, nbRows );
-    mosaic.addNumber( "nbRows",  nbRows);
+    const QSize unavailableSpace = m_skinParameters.unavailableSpace( nbCols );
     mosaic.addNumber( "nbCols",  nbCols);
     mosaic.addString( "defaultSet", QString(RESOLUTIONPATH) + ("8") );
     Object& sizes = mosaic.addObject( "sizes" );
@@ -671,7 +665,6 @@ bool CGalleryGenerator::skinning( )
         htmlTextStream.setCodec( "UTF-8" );
         htmlTextStream.setGenerateByteOrderMark (false); //False sinon pb avec ie6 car les premiers caractres ne sont pas le doctype...
         QString htmlString;
-        QString verticalTitle(  "<br />" );
 
         htmlString = htmlTextStream.readAll() ; //Lecture du fichier
 
@@ -714,14 +707,7 @@ bool CGalleryGenerator::skinning( )
         //------ TITRES -----//
         //Titre de la page
         htmlString.replace( "[HTML_TITLE]", QString("<title>")+m_parameters.m_galleryConfig.title+QString("</title>") );
-        //Titre vertical
-        for( int i = 0; i < m_parameters.m_galleryConfig.title.size(); i++ ) {
-            verticalTitle.append( "<br />" );
-            verticalTitle.append( m_parameters.m_galleryConfig.title.at(i) );
-        }
-        htmlString.replace( "[CONTENT_VERTICALTITLE]", verticalTitle );
-        //Titre au dessus des photos
-        htmlString.replace( "[CONTENT_PHOTOTITLE]", m_parameters.m_galleryConfig.title );
+        htmlString.replace( "[CONTENT_TITLE]", m_parameters.m_galleryConfig.title );
 
         //------ BOUTONS (SCREEN PHOTO) -------//
         //Previous
@@ -732,10 +718,6 @@ bool CGalleryGenerator::skinning( )
         htmlString.replace( "[BUTTON_NEXTPHOTO]", QString("<img alt=\"") + tr("Next photo")
                                                             +QString("\" class=\"photoButtonEnabled\" id=\"boutonNext\" src=\"ressources/images/")
                                                             +m_skinParameters.buttonImage( CSkinParameters::buttonNext )+QString("\" />") );
-        //Index
-        htmlString.replace( "[BUTTON_INDEX]", QString("<img alt=\"") + tr("Browse the gallery")
-                                                        +QString("\" class=\"photoButtonEnabled\" id=\"boutonIndex\" src=\"ressources/images/")
-                                                        +m_skinParameters.buttonImage( CSkinParameters::buttonIndex )+QString("\" />") );
 
         //---------------------//
 

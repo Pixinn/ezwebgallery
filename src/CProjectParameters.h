@@ -109,7 +109,6 @@ public:
     bool operator==(const t_thumbsConf& ); //<- METTRE A JOUR SI ON AJOUTE DES CHAMPS !!
     bool operator!=(const t_thumbsConf& );
 
-    int nbRows;
     int nbColumns;
     bool f_regeneration;
 }; //Configuration des vignettes
@@ -129,6 +128,8 @@ public:
     int sharpeningAmount;
     t_watermark watermark;
     bool f_regeneration;
+    bool f_hiDpi;
+    bool f_manualConf;
 
     //Ces énumrations doivent correspondre à la position des items dans les comboboxs
     enum e_optimizationStrategy

@@ -9,7 +9,7 @@ CColorPickerPlugin::CColorPickerPlugin(QObject *parent)
     m_initialized = false;
 }
 
-void CColorPickerPlugin::initialize(QDesignerFormEditorInterface * /* core */)
+void CColorPickerPlugin::initialize(QDesignerFormEditorInterface * )
 {
     if (m_initialized)
         return;

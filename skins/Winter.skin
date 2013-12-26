@@ -1,6 +1,11 @@
-﻿<Skin release="20120609" name="Winter">
-    <properties title-position="0"/>
+﻿<Skin release="20131102" name="Winter">
     <StyleSheet name="noname">
+        <Selection selector="#mosaic">
+            <background-image>url(../images/Dodge.png)</background-image>
+            <border-color>#eeeeee</border-color>
+            <border-width>5px</border-width>
+            <ezwg-background-color-disabled>true</ezwg-background-color-disabled>
+        </Selection>
         <Selection selector="#progressbar">
             <background-color>#464646</background-color>
             <border-color>#000000</border-color>
@@ -43,11 +48,6 @@
             <border-width>4px</border-width>
             <margin>-3px</margin>
         </Selection>
-        <Selection selector=".scrollContainer div.slidingPanel">
-            <background-color>#717d80</background-color>
-            <background-image>url(../images/Frost.jpg)</background-image>
-            <background-size>cover</background-size>
-        </Selection>
         <Selection selector=".thumbBox">
             <border-color>#ffffff</border-color>
             <border-width>1px</border-width>
@@ -59,28 +59,17 @@
                 <border-color>#ffffff</border-color>
             </Selection>
         </Selection>
-        <Selection selector=".thumbsWrapperContainer">
-            <background-color>#717d80</background-color>
-            <border-color>#45463d</border-color>
-            <border-width>5px</border-width>
-        </Selection>
         <Selection selector="div#cadrePhoto">
             <background-color>#edeef0</background-color>
             <background-image>url(../images/WhitePaper.jpg)</background-image>
             <padding>15px</padding>
         </Selection>
         <Selection selector="div#indexTitle">
-            <background-color>#d3d7df</background-color>
-            <background-image>url(../images/WhitePaper-on-Snow.jpg)</background-image>
-            <border-color>#ffffff</border-color>
-            <border-left-width>0px</border-left-width>
-            <border-right-width>0px</border-right-width>
             <color>#130747</color>
-            <display>block</display>
             <font-family>"Comic Sans MS", "Comic Sans MS5", cursive</font-family>
             <font-size>2.5em</font-size>
-            <line-height>0.9em</line-height>
-            <width>50px</width>
+            <text-align>left</text-align>
+            <text-shadow>4px 2px 4px rgba(150, 150, 150, 0.8)</text-shadow>
         </Selection>
         <Selection selector="div#photoLefter">
             <background-color>transparent</background-color>
@@ -96,30 +85,13 @@
             <font-size>1em</font-size>
             <font-weight>normal</font-weight>
         </Selection>
-        <Selection selector="ul.indexNavigation">
-            <Selection selector="li">
-                <background-color>#45463d</background-color>
-                <Selection selector="a">
-                    <color>#e8e6dd</color>
-                </Selection>
-            </Selection>
-            <Selection selector="li.navTabSelected">
-                <background-color>#f9f6f3</background-color>
-                <border-color>#ffffff</border-color>
-                <border-width>2px</border-width>
-                <Selection selector="a">
-                    <color>#000000</color>
-                </Selection>
-            </Selection>
-        </Selection>
     </StyleSheet>
     <Ressources>
         <File id="IndexPage_BckgTexture">SnowBackground.jpg</File>
-        <File id="Mosaic_BckgTexture">Frost.jpg</File>
+        <File id="Mosaic_BckgTexture">Dodge.png</File>
         <File id="PhotoButtonNext">RightArrow_craie.png</File>
         <File id="PhotoButtonPrevious">LeftArrow_craie.png</File>
         <File id="PhotoFraming_Texture">WhitePaper.jpg</File>
         <File id="PhotoPage_BckgTexture">SnowBackground.jpg</File>
-        <File id="VTitle_BackgroundTexture">WhitePaper-on-Snow.jpg</File>
     </Ressources>
 </Skin>

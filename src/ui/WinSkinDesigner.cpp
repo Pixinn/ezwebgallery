@@ -79,16 +79,20 @@ WinSkinDesigner::WinSkinDesigner( CSkinParameters* skinParameters, QWidget *pare
     m_ui->action_Save->setDisabled( true );
 
     //--- Connections ---//
+    //Basic UI interractions
+    bool fConnected = connect( this->m_ui->checkBox_Mosaic_BckgColor_Enabled, SIGNAL(toggled(bool)), this, SLOT(onMosaicBckgEnable(bool)));
+
     //Nouveau/Ouvrir/Sauver Skin
-    connect( this->m_ui->action_New, SIGNAL(triggered()), this, SLOT(onNewSkin()));
-    connect( this->m_ui->action_Open, SIGNAL(triggered()), this, SLOT(onOpenSkin()));
-    connect( this->m_ui->action_Save, SIGNAL(triggered()), this, SLOT(onSaveSkin()));
-    connect( this->m_ui->action_SaveAs, SIGNAL(triggered()), this, SLOT(onSaveSkinAs()));
-    connect( this->m_ui->action_Check_Skin, SIGNAL(triggered()), this, SLOT(checkSkin()));    
-    connect( skinParameters, SIGNAL(skinOpened(QString)), this, SLOT(changeWindowTitle(QString)));
-    connect( skinParameters, SIGNAL(skinSaved(QString)), this, SLOT(changeWindowTitle(QString)));
-    connect (skinParameters, SIGNAL(skinSaved(QString)), this, SLOT(skinSaved(QString)));
-    connect (skinParameters, SIGNAL(skinOpened(QString)), this, SLOT(skinLoaded(QString)));
+    fConnected &= connect( this->m_ui->action_New, SIGNAL(triggered()), this, SLOT(onNewSkin()));
+    fConnected &= connect( this->m_ui->action_Open, SIGNAL(triggered()), this, SLOT(onOpenSkin()));
+    fConnected &= connect( this->m_ui->action_Save, SIGNAL(triggered()), this, SLOT(onSaveSkin()));
+    fConnected &= connect( this->m_ui->action_SaveAs, SIGNAL(triggered()), this, SLOT(onSaveSkinAs()));
+    fConnected &= connect( this->m_ui->action_Check_Skin, SIGNAL(triggered()), this, SLOT(checkSkin()));    
+    fConnected &= connect( skinParameters, SIGNAL(skinOpened(QString)), this, SLOT(changeWindowTitle(QString)));
+    fConnected &= connect( skinParameters, SIGNAL(skinSaved(QString)), this, SLOT(changeWindowTitle(QString)));
+    fConnected &= connect (skinParameters, SIGNAL(skinSaved(QString)), this, SLOT(skinSaved(QString)));
+    fConnected &= connect (skinParameters, SIGNAL(skinOpened(QString)), this, SLOT(skinLoaded(QString)));
+    
 }
 
 WinSkinDesigner::~WinSkinDesigner( )
@@ -227,6 +231,12 @@ bool WinSkinDesigner::saveSkinFile( QString skinFileName )
 
 
 /***************** SLOTS ***************/
+void WinSkinDesigner::onMosaicBckgEnable( bool checked )
+{
+    m_ui->cColorPicker_Mosaic_BckgColor->setEnabled( checked );
+}
+
+
 void WinSkinDesigner::onNewSkin( )
 {
     int ret = QMessageBox::Ok;

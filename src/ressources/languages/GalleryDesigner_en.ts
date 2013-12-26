@@ -12,7 +12,7 @@
 <context>
     <name>CGalleryGenerator</name>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="117"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="115"/>
         <source>No error.</source>
         <translation>No error.</translation>
     </message>
@@ -29,13 +29,13 @@
         <translation type="obsolete">Unknown error.</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="331"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="327"/>
         <source>Generating the file structure...</source>
         <translation>Generating the file structure...</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="472"/>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="796"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="468"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="778"/>
         <source>Generating the photos : </source>
         <translation>Generating the photos :</translation>
     </message>
@@ -44,42 +44,41 @@
         <translation type="obsolete">Skinning...</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="157"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="155"/>
         <source>Initialization...</source>
         <translation>Initialization...</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="489"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="485"/>
         <source>Cannot connect photoprocessor: </source>
         <translation>Cannot connect photoprocessor:</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="618"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="612"/>
         <source>Skinning...</source>
         <translation>Skinning...</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="702"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="695"/>
         <source>Photo gallery designed and generated using EZWebGallery.</source>
         <translation>Photo gallery designed and generated using EZWebGallery.</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="728"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="714"/>
         <source>Previous photo</source>
         <translation>Previous photo</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="732"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="718"/>
         <source>Next photo</source>
         <translation>Next photo</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="736"/>
         <source>Browse the gallery</source>
-        <translation>Browse the gallery</translation>
+        <translation type="obsolete">Browse the gallery</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="811"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="793"/>
         <source>Unspecified.</source>
         <translation>Unspecified.</translation>
     </message>
@@ -149,12 +148,12 @@
         <translation type="obsolete"> doesn&apos;t exists</translation>
     </message>
     <message>
-        <location filename="../../CProjectParameters.cpp" line="303"/>
+        <location filename="../../CProjectParameters.cpp" line="301"/>
         <source>Folder doesnt exist: </source>
         <translation>Folder does not exist: </translation>
     </message>
     <message>
-        <location filename="../../CProjectParameters.cpp" line="344"/>
+        <location filename="../../CProjectParameters.cpp" line="343"/>
         <source>Importing deprecated project: </source>
         <translation>Importing deprecated project: </translation>
     </message>
@@ -166,7 +165,7 @@
         <translation type="obsolete">No error.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="753"/>
+        <location filename="../../CSkinParameters.cpp" line="681"/>
         <source>Cannot overwrite default skin.</source>
         <translation>Cannot overwrite default skin.</translation>
     </message>
@@ -175,22 +174,22 @@
         <translation type="obsolete">Destination folder doesn&apos;t exists.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="870"/>
-        <source>An error occurred while loading the skin file:</source>
-        <translation>An error occurred while loading the skin file:</translation>
+        <location filename="../../CSkinParameters.cpp" line="798"/>
+        <source>An error occurred while loading the skin file </source>
+        <translation>An error occurred while loading the skin file </translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="892"/>
+        <location filename="../../CSkinParameters.cpp" line="820"/>
         <source>invalid character in filename.</source>
         <translation>invalid character in filename.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="897"/>
+        <location filename="../../CSkinParameters.cpp" line="825"/>
         <source>Button &quot;Previous&quot; - an image is required.</source>
         <translation>Button &quot;Previous&quot; - an image is required.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="900"/>
+        <location filename="../../CSkinParameters.cpp" line="828"/>
         <source>Button &quot;Next&quot; - an image is required.</source>
         <translation>Button &quot;Next&quot; - an image is required.</translation>
     </message>
@@ -199,7 +198,7 @@
         <translation type="obsolete">Button &quot;Browse&quot; - an image is required.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="908"/>
+        <location filename="../../CSkinParameters.cpp" line="836"/>
         <source>The zones containing the Previous/Next buttons are smaller than the buttons themselves.</source>
         <translation>The zones containing the Previous/Next buttons are smaller than the buttons themselves.</translation>
     </message>
@@ -220,43 +219,43 @@
         <translation>Generation cancelled.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="87"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="86"/>
         <source>Generation successfully completed.</source>
         <translation>Generation successfully completed.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="98"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="97"/>
         <source>INFO</source>
         <translation>INFO</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="104"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="103"/>
         <source>WARNING</source>
         <translation>WARNING</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="111"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="110"/>
         <source>ERROR</source>
         <translation>ERROR</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="119"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="118"/>
         <source>EZWebGallery started.</source>
         <translation>EZWebGallery started.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="126"/>
-        <location filename="../../ui/CTerminalUi.cpp" line="141"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="125"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="142"/>
         <source> loaded.</source>
         <translation> loaded.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="129"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="128"/>
         <source>Cannot load the project: </source>
         <translation>Cannot load the project: </translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="130"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="129"/>
         <source>Usage: GalleryDesigner [project file to load]</source>
         <translation>Usage: GalleryDesigner [project file to load]</translation>
     </message>
@@ -265,27 +264,27 @@
         <translation type="obsolete">Cannot load the skin: </translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="147"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="148"/>
         <source>Creating the output folder: </source>
         <translation>Creating the output folder: </translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="149"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="150"/>
         <source>Output folder successfully created.</source>
         <translation>Output folder successfully created.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="168"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="170"/>
         <source>Photos to be processed:</source>
         <translation>Photos to be processed:</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="176"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="178"/>
         <source>The gallery could not be properly generated.</source>
         <translation>The gallery could not be properly generated.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="187"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="189"/>
         <source>Canceling...</source>
         <translation>Canceling...</translation>
     </message>
@@ -332,7 +331,7 @@
         <translation type="obsolete">Your skin has been modified.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="497"/>
+        <location filename="../../ui/mainwin.cpp" line="498"/>
         <source>Open a project</source>
         <translation>Open a project</translation>
     </message>
@@ -357,7 +356,7 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete">Please select the directory containing the project&apos;s photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="636"/>
+        <location filename="../../ui/mainwin.cpp" line="637"/>
         <source>Save a project</source>
         <translation>Save a project</translation>
     </message>
@@ -390,8 +389,8 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete"> Some photos cannot be found in this folder.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="616"/>
-        <location filename="../../ui/mainwin.cpp" line="654"/>
+        <location filename="../../ui/mainwin.cpp" line="617"/>
+        <location filename="../../ui/mainwin.cpp" line="655"/>
         <source>The session could not be saved.</source>
         <translation>The session could not be saved.</translation>
     </message>
@@ -400,28 +399,28 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;This program is a &lt;b&gt;FREEWARE&lt;/b&gt;. You can copy it and use it for any purpose but you are not allowed to modify it. It is provided &quot;as-is&quot; and cannot be held liable for any damage caused to your computer or your softwares.&lt;br&gt;Please read the provided &quot;ReadMe.txt&quot; file for further details.&lt;br&gt;&lt;br&gt;Download the latest version &lt;a href=&quot;http://ezwebgallery.pixinn.net/&quot;&gt;here&lt;/a&gt;.&lt;br&gt;Follow the news on &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;You can reach us at this address: ezwebgallery@pixinn.net</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="775"/>
+        <location filename="../../ui/mainwin.cpp" line="805"/>
         <source>Please select an input directory containing your pictures.</source>
         <translation>Please select an input directory containing your pictures.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="819"/>
+        <location filename="../../ui/mainwin.cpp" line="849"/>
         <source>Please select the output directory.</source>
         <translation>Please select the output directory.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="856"/>
+        <location filename="../../ui/mainwin.cpp" line="886"/>
         <source>Some configuration fields were not properly set.</source>
         <translation>Some configuration fields were not properly set.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="880"/>
+        <location filename="../../ui/mainwin.cpp" line="910"/>
         <source>Your skin is not valid.                                                                                </source>
         <comment>Please leave 60 blank space !</comment>
         <translation>Your skin is not valid.                                                                                </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="888"/>
+        <location filename="../../ui/mainwin.cpp" line="918"/>
         <source>Building photo list.</source>
         <translation>Building photo list.</translation>
     </message>
@@ -515,80 +514,80 @@ Using default skin instead.</translation>
         <translation type="obsolete">Using default skin instead.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="574"/>
+        <location filename="../../ui/mainwin.cpp" line="575"/>
         <source>Skin loaded: </source>
         <translation>Skin loaded: </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="705"/>
+        <location filename="../../ui/mainwin.cpp" line="735"/>
         <source>About EZWebGallery - build date: </source>
         <translation>About EZWebGallery - build date: </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="912"/>
+        <location filename="../../ui/mainwin.cpp" line="942"/>
         <source>No photo to process!</source>
         <translation>No photo to process!</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="936"/>
+        <location filename="../../ui/mainwin.cpp" line="966"/>
         <source>Displaying thumbnail: </source>
         <translation>Displaying thumbnail: </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="964"/>
+        <location filename="../../ui/mainwin.cpp" line="994"/>
         <source>Clearing thumbnails</source>
         <translation>Clearing thumbnails</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1039"/>
+        <location filename="../../ui/mainwin.cpp" line="1066"/>
         <source>Skin Path: </source>
         <translation>Skin Path: </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1056"/>
+        <location filename="../../ui/mainwin.cpp" line="1083"/>
         <source>The input directory does not exist.</source>
         <comment>Check before gallery generation</comment>
         <translation>The input directory does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1060"/>
+        <location filename="../../ui/mainwin.cpp" line="1087"/>
         <source>You have to define a title for your gallery.</source>
         <comment>Check before gallery generation</comment>
         <translation>You have to define a title for your gallery.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1064"/>
+        <location filename="../../ui/mainwin.cpp" line="1091"/>
         <source>The output directory does not exist.</source>
         <comment>Check before gallery generation</comment>
         <translation>The output directory does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1125"/>
+        <location filename="../../ui/mainwin.cpp" line="1152"/>
         <source>Do you want to save your changes?</source>
         <translation>Do you want to save your changes?</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1131"/>
+        <location filename="../../ui/mainwin.cpp" line="1158"/>
         <source>Your project has been modified.</source>
         <translation>Your project has been modified.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1145"/>
+        <location filename="../../ui/mainwin.cpp" line="1172"/>
         <source>Your project and your skin have been modified.</source>
         <translation>Your project and your skin have been modified.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1171"/>
+        <location filename="../../ui/mainwin.cpp" line="1198"/>
         <source>You are opening a project made with a version of EZWebGallery more recent than this one. Some parameters may get lost.</source>
         <translation>You are opening a project made with a version of EZWebGallery more recent than this one. Some parameters may get lost.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1257"/>
+        <location filename="../../ui/mainwin.cpp" line="1283"/>
         <source>this directory does not exist.</source>
         <translation>this directory does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="807"/>
+        <location filename="../../ui/mainwin.cpp" line="837"/>
         <source>Invalid directory.</source>
         <translation>Invalid directory.</translation>
     </message>
@@ -612,15 +611,15 @@ Using default skin instead.</translation>
         <translation type="obsolete">The provided output directory does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1258"/>
+        <location filename="../../ui/mainwin.cpp" line="1284"/>
         <source>Do you want to create it ?</source>
         <translation>Do you want to create it ?</translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.cpp" line="191"/>
-        <location filename="../../ui/mainwin.cpp" line="583"/>
-        <location filename="../../ui/mainwin.cpp" line="879"/>
-        <location filename="../../ui/mainwin.cpp" line="1271"/>
+        <location filename="../../ui/mainwin.cpp" line="584"/>
+        <location filename="../../ui/mainwin.cpp" line="909"/>
+        <location filename="../../ui/mainwin.cpp" line="1297"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
@@ -633,23 +632,23 @@ Using default skin instead.</translation>
         <translation type="obsolete">The input directory is empty !</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="920"/>
+        <location filename="../../ui/mainwin.cpp" line="950"/>
         <source>Canceling...</source>
         <translation>Canceling...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="947"/>
+        <location filename="../../ui/mainwin.cpp" line="977"/>
         <source>No preview available.</source>
         <translation>No preview available.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2171"/>
-        <location filename="../../ui/mainwin.cpp" line="1075"/>
+        <location filename="../../ui/mainwin.ui" line="2217"/>
+        <location filename="../../ui/mainwin.cpp" line="1102"/>
         <source>&amp;Generate</source>
         <translation>&amp;Generate</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1081"/>
+        <location filename="../../ui/mainwin.cpp" line="1108"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancel</translation>
     </message>
@@ -682,12 +681,11 @@ Using default skin instead.</translation>
         <translation type="obsolete">Size of a thumbnail.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="573"/>
         <source>Number of rows of the table containing the thumbnails.</source>
-        <translation>Number of rows of the table containing the thumbnails.</translation>
+        <translation type="obsolete">Number of rows of the table containing the thumbnails.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="638"/>
+        <location filename="../../ui/mainwin.ui" line="569"/>
         <source>Number of columns of the table containing the thumbnails.</source>
         <translation>Number of columns of the table containing the thumbnails.</translation>
     </message>
@@ -700,17 +698,17 @@ Using default skin instead.</translation>
         <translation type="obsolete">Maximum size of the displayed photo.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1090"/>
+        <location filename="../../ui/mainwin.ui" line="1110"/>
         <source>Quality of the displayed photo. More quality means that your gallery will need more disk space and will be slower to display.</source>
         <translation>Quality of the displayed photo. More quality means that your gallery will need more disk space and will be slower to display.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1024"/>
+        <location filename="../../ui/mainwin.ui" line="1035"/>
         <source>Number of resolutions of  the generated photo. More resolutions means that the displayed pictures will be more adapted to the screen resolution of the viewer. But your gallery will need more disk space.</source>
         <translation>Number of resolutions of the generated photo. More resolutions means that the displayed pictures will be more adapted to the screen resolution of the viewer. But your gallery will need more disk space.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="713"/>
+        <location filename="../../ui/mainwin.ui" line="670"/>
         <source>Optimize image quality</source>
         <translation>Optimize image quality</translation>
     </message>
@@ -760,7 +758,7 @@ Using default skin instead.</translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.ui" line="455"/>
-        <location filename="../../ui/mainwin.ui" line="2287"/>
+        <location filename="../../ui/mainwin.ui" line="2333"/>
         <source>&amp;Open</source>
         <translation>&amp;Open</translation>
     </message>
@@ -770,12 +768,11 @@ Using default skin instead.</translation>
         <translation>Design a new skin to personalize your gallery.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="549"/>
         <source>Rows</source>
-        <translation>Rows</translation>
+        <translation type="obsolete">Rows</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="614"/>
+        <location filename="../../ui/mainwin.ui" line="545"/>
         <source>Columns</source>
         <translation>Columns</translation>
     </message>
@@ -788,77 +785,92 @@ Using default skin instead.</translation>
         <translation type="obsolete">Height</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="697"/>
+        <location filename="../../ui/mainwin.ui" line="691"/>
         <source>Optimization strategy</source>
         <translation>Optimization strategy</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="718"/>
+        <location filename="../../ui/mainwin.ui" line="675"/>
         <source>Optimize usage of screen estate</source>
         <translation>Optimize usage of screen estate</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="740"/>
+        <location filename="../../ui/mainwin.ui" line="611"/>
+        <source>Support HiDPI screens</source>
+        <translation>Support HiDPI screens</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwin.ui" line="614"/>
+        <source>HiDPI</source>
+        <translation>HiDPI</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwin.ui" line="629"/>
+        <source>Manual Configuration</source>
+        <translation>Manual Configuration</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwin.ui" line="715"/>
         <source>Max Width</source>
         <translation>Max Width</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="764"/>
+        <location filename="../../ui/mainwin.ui" line="742"/>
         <source>Maximum width of the generated photos.</source>
         <translation>Maximum width of the generated photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="805"/>
+        <location filename="../../ui/mainwin.ui" line="789"/>
         <source>Max Height</source>
         <translation>Max Height</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="829"/>
+        <location filename="../../ui/mainwin.ui" line="816"/>
         <source>Maximum height of the generated photos.</source>
         <translation>Maximum height of the generated photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="874"/>
+        <location filename="../../ui/mainwin.ui" line="867"/>
         <source>Min Width</source>
         <translation>Min Width</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="898"/>
+        <location filename="../../ui/mainwin.ui" line="894"/>
         <source>Minimum width of the generated photos.</source>
         <translation>Minimum width of the generated photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="942"/>
+        <location filename="../../ui/mainwin.ui" line="941"/>
         <source>Min Height</source>
         <translation>Min Height</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="966"/>
+        <location filename="../../ui/mainwin.ui" line="968"/>
         <source>Minimum height of the generated photos.</source>
         <translation>Minimum height of the generated photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="709"/>
+        <location filename="../../ui/mainwin.ui" line="663"/>
         <source>Optimization strategy.</source>
         <translation>Optimization strategy.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1115"/>
+        <location filename="../../ui/mainwin.ui" line="1138"/>
         <source>Sharpening radius</source>
         <translation>Sharpening radius</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1146"/>
+        <location filename="../../ui/mainwin.ui" line="1175"/>
         <source>Radius of the sharpening applied to the displayed photo (USM).</source>
         <translation>Radius of the sharpening applied to the displayed photo (USM).</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1177"/>
+        <location filename="../../ui/mainwin.ui" line="1209"/>
         <source>Sharpening amount</source>
         <translation>Sharpening amount</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1208"/>
+        <location filename="../../ui/mainwin.ui" line="1246"/>
         <source>% of sharpening applied to the displayed photo (USM).</source>
         <translation>% of sharpening applied to the displayed photo (USM).</translation>
     </message>
@@ -867,22 +879,22 @@ Using default skin instead.</translation>
         <translation type="obsolete">Apply a watermark to your photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1239"/>
+        <location filename="../../ui/mainwin.ui" line="1279"/>
         <source>Watermark</source>
         <translation>Watermark</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1258"/>
+        <location filename="../../ui/mainwin.ui" line="1298"/>
         <source>Position</source>
         <translation>Position</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1270"/>
+        <location filename="../../ui/mainwin.ui" line="1310"/>
         <source>Orientation</source>
         <translation>Orientation</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1282"/>
+        <location filename="../../ui/mainwin.ui" line="1322"/>
         <source>Opacity</source>
         <translation>Opacity</translation>
     </message>
@@ -899,187 +911,187 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the position of the watermark on the photos.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1294"/>
+        <location filename="../../ui/mainwin.ui" line="1334"/>
         <source>Position of the watermark on the photos.</source>
         <translation>Position of the watermark on the photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1298"/>
+        <location filename="../../ui/mainwin.ui" line="1338"/>
         <source>South East</source>
         <translation>South East</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1303"/>
+        <location filename="../../ui/mainwin.ui" line="1343"/>
         <source>South</source>
         <translation>South</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1308"/>
+        <location filename="../../ui/mainwin.ui" line="1348"/>
         <source>South West</source>
         <translation>South West</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1313"/>
+        <location filename="../../ui/mainwin.ui" line="1353"/>
         <source>West</source>
         <translation>West</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1318"/>
+        <location filename="../../ui/mainwin.ui" line="1358"/>
         <source>North West</source>
         <translation>North West</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1323"/>
+        <location filename="../../ui/mainwin.ui" line="1363"/>
         <source>North</source>
         <translation>North</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1328"/>
+        <location filename="../../ui/mainwin.ui" line="1368"/>
         <source>North East</source>
         <translation>North East</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1333"/>
+        <location filename="../../ui/mainwin.ui" line="1373"/>
         <source>East</source>
         <translation>East</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1338"/>
+        <location filename="../../ui/mainwin.ui" line="1378"/>
         <source>Center</source>
         <translation>Center</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1351"/>
+        <location filename="../../ui/mainwin.ui" line="1391"/>
         <source>Orientation of the watermark.</source>
         <translation>Orientation of the watermark.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1355"/>
+        <location filename="../../ui/mainwin.ui" line="1395"/>
         <source>No rotation</source>
         <translation>No rotation</translation>
     </message>
     <message utf8="true">
-        <location filename="../../ui/mainwin.ui" line="1360"/>
+        <location filename="../../ui/mainwin.ui" line="1400"/>
         <source>90° clockwise</source>
         <translation>90° clockwise</translation>
     </message>
     <message utf8="true">
-        <location filename="../../ui/mainwin.ui" line="1365"/>
+        <location filename="../../ui/mainwin.ui" line="1405"/>
         <source>90° counter clockwise</source>
         <translation>90° counter clockwise</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1380"/>
-        <location filename="../../ui/mainwin.ui" line="1404"/>
+        <location filename="../../ui/mainwin.ui" line="1420"/>
+        <location filename="../../ui/mainwin.ui" line="1444"/>
         <source>Opacity of the watermark.</source>
         <translation>Opacity of the watermark.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1441"/>
-        <location filename="../../ui/mainwin.ui" line="1465"/>
+        <location filename="../../ui/mainwin.ui" line="1481"/>
+        <location filename="../../ui/mainwin.ui" line="1505"/>
         <source>Size relative to the longuest dimension of the photo.</source>
         <translation>Size relative to the longuest dimension of the photo.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1488"/>
+        <location filename="../../ui/mainwin.ui" line="1528"/>
         <source>The watermark can be an image or some text.</source>
         <translation>The watermark can be an image or some text.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1599"/>
+        <location filename="../../ui/mainwin.ui" line="1639"/>
         <source>Text forming the watermark.</source>
         <translation>Text forming the watermark.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1626"/>
+        <location filename="../../ui/mainwin.ui" line="1666"/>
         <source>Font of the text.</source>
         <translation>Font of the text.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1655"/>
+        <location filename="../../ui/mainwin.ui" line="1695"/>
         <source>Automatic color to maximize the readability.</source>
         <translation>Automatic color to maximize the readability.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1676"/>
+        <location filename="../../ui/mainwin.ui" line="1716"/>
         <source>Color of the text.</source>
         <translation>Color of the text.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1725"/>
+        <location filename="../../ui/mainwin.ui" line="1765"/>
         <source>Choose an image to apply as the watermark.</source>
         <translation>Choose an image to apply as the watermark.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1772"/>
+        <location filename="../../ui/mainwin.ui" line="1812"/>
         <source>Photos and captions</source>
         <translation>Photos and captions</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1775"/>
+        <location filename="../../ui/mainwin.ui" line="1815"/>
         <source>Manage the photos and edit their caption.</source>
         <translation>Manage the photos and edit their caption.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1804"/>
+        <location filename="../../ui/mainwin.ui" line="1844"/>
         <source>Caption of the displayed photo.</source>
         <translation>Caption of the displayed photo.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1837"/>
+        <location filename="../../ui/mainwin.ui" line="1877"/>
         <source>Header</source>
         <translation>Header</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1844"/>
+        <location filename="../../ui/mainwin.ui" line="1884"/>
         <source>Heading text of the caption. Common to all the photos.</source>
         <translation>Heading text of the caption. Common to all the photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1855"/>
+        <location filename="../../ui/mainwin.ui" line="1895"/>
         <source>Ending</source>
         <translation>Ending</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1862"/>
+        <location filename="../../ui/mainwin.ui" line="1902"/>
         <source>Closing text of the caption. Common to all the photos.</source>
         <translation>Closing text of the caption. Common to all the photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2221"/>
+        <location filename="../../ui/mainwin.ui" line="2267"/>
         <source>Tools</source>
         <translation>Tools</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2228"/>
+        <location filename="../../ui/mainwin.ui" line="2274"/>
         <source>Preferences</source>
         <translation>Preferences</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2250"/>
+        <location filename="../../ui/mainwin.ui" line="2296"/>
         <source>toolBar</source>
         <translation>toolBar</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2305"/>
-        <location filename="../../ui/mainwin.ui" line="2308"/>
+        <location filename="../../ui/mainwin.ui" line="2351"/>
+        <location filename="../../ui/mainwin.ui" line="2354"/>
         <source>Display Log Window</source>
         <translation>Display Log Window</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2374"/>
+        <location filename="../../ui/mainwin.ui" line="2420"/>
         <source>Online manual</source>
         <translation>Online manual</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2383"/>
+        <location filename="../../ui/mainwin.ui" line="2429"/>
         <source>Display Shorcuts</source>
         <translation>Display Shorcuts</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1564"/>
-        <location filename="../../ui/mainwin.ui" line="1814"/>
-        <location filename="../../ui/mainwin.ui" line="2386"/>
+        <location filename="../../ui/mainwin.ui" line="1604"/>
+        <location filename="../../ui/mainwin.ui" line="1854"/>
+        <location filename="../../ui/mainwin.ui" line="2432"/>
         <source>Display shortcuts you can use to write captions and watermark.</source>
         <translation>Display shortcuts you can use to write captions and watermark.</translation>
     </message>
@@ -1092,12 +1104,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Display the tags you can use to write captions and watermark.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2395"/>
+        <location filename="../../ui/mainwin.ui" line="2441"/>
         <source>&amp;Configure</source>
         <translation>&amp;Configure</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2398"/>
+        <location filename="../../ui/mainwin.ui" line="2444"/>
         <source>Configure EZWebGallery</source>
         <translation>Configure EZWebGallery</translation>
     </message>
@@ -1114,7 +1126,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Opacity of the watermark. 0 = transparent.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1427"/>
+        <location filename="../../ui/mainwin.ui" line="1467"/>
         <source>Relative Size</source>
         <translation>Relative Size</translation>
     </message>
@@ -1143,28 +1155,28 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The watermark can be an image or some text.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1492"/>
+        <location filename="../../ui/mainwin.ui" line="1532"/>
         <source>Image</source>
         <translation>Image</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1497"/>
-        <location filename="../../ui/mainwin.ui" line="1587"/>
+        <location filename="../../ui/mainwin.ui" line="1537"/>
+        <location filename="../../ui/mainwin.ui" line="1627"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1510"/>
+        <location filename="../../ui/mainwin.ui" line="1550"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1544"/>
+        <location filename="../../ui/mainwin.ui" line="1584"/>
         <source>Text Watermark:</source>
         <translation>Text Watermark:</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1614"/>
+        <location filename="../../ui/mainwin.ui" line="1654"/>
         <source>Font</source>
         <translation>Font</translation>
     </message>
@@ -1181,7 +1193,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the watermark text font.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1641"/>
+        <location filename="../../ui/mainwin.ui" line="1681"/>
         <source>Color</source>
         <translation>Color</translation>
     </message>
@@ -1198,7 +1210,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Automatically set the watermark color to enhance readability.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1661"/>
+        <location filename="../../ui/mainwin.ui" line="1701"/>
         <source>automatic</source>
         <translation>automatic</translation>
     </message>
@@ -1215,7 +1227,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the watermark color.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1713"/>
+        <location filename="../../ui/mainwin.ui" line="1753"/>
         <source>Image Watermark:</source>
         <translation>Image Watermark:</translation>
     </message>
@@ -1236,7 +1248,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Captions</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1795"/>
+        <location filename="../../ui/mainwin.ui" line="1835"/>
         <source>Photo caption :</source>
         <translation>Photo caption:</translation>
     </message>
@@ -1245,19 +1257,19 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Caption of the displayed  photo.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2102"/>
+        <location filename="../../ui/mainwin.ui" line="2148"/>
         <source>Update the content of the input directory.
 Use it if photos were added or removed.</source>
         <translation>Update the content of the input directory.
 Click if photos were added or removed.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2106"/>
+        <location filename="../../ui/mainwin.ui" line="2152"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2127"/>
+        <location filename="../../ui/mainwin.ui" line="2173"/>
         <source>Make the displayed photo the thumbnail representing your gallery. For instance it will appear as an icon if you share it on Facebook.</source>
         <translation>Choose the displayed photo as the thumbnail representing your gallery. For instance it will appear as an icon if your gallery is shared on Facebook.</translation>
     </message>
@@ -1274,43 +1286,43 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Opacity of the watermark. 0 = transparent.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; {3C?} {4.0/?} {3.?} {40/?} {1&quot;?} {2&apos;?} {8p?} {400;?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {0 ?}</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2168"/>
+        <location filename="../../ui/mainwin.ui" line="2214"/>
         <source>Launch the gallery generation !</source>
         <translation>Launch the gallery generation !</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2296"/>
+        <location filename="../../ui/mainwin.ui" line="2342"/>
         <source>&amp;Save</source>
         <translation>&amp;Save</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2335"/>
+        <location filename="../../ui/mainwin.ui" line="2381"/>
         <source>Save As</source>
         <translation>Save As</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2344"/>
+        <location filename="../../ui/mainwin.ui" line="2390"/>
         <source>&amp;New</source>
         <translation>&amp;New</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2347"/>
+        <location filename="../../ui/mainwin.ui" line="2393"/>
         <source>New session</source>
         <translation>New session</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2356"/>
+        <location filename="../../ui/mainwin.ui" line="2402"/>
         <source>Quit</source>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2365"/>
-        <location filename="../../ui/mainwin.cpp" line="716"/>
+        <location filename="../../ui/mainwin.ui" line="2411"/>
+        <location filename="../../ui/mainwin.cpp" line="746"/>
         <source>About ImageMagick</source>
         <translation>About ImageMagick</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="684"/>
+        <location filename="../../ui/mainwin.ui" line="598"/>
         <source>Photos</source>
         <translation>Photos</translation>
     </message>
@@ -1458,7 +1470,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Layout :</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1062"/>
+        <location filename="../../ui/mainwin.ui" line="1076"/>
         <source>JPEG quality</source>
         <translation>JPEG quality</translation>
     </message>
@@ -1471,7 +1483,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Max size :</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1006"/>
+        <location filename="../../ui/mainwin.ui" line="1014"/>
         <source>NB resolutions</source>
         <translation>NB resolutions</translation>
     </message>
@@ -1492,12 +1504,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Photo legend :</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2130"/>
+        <location filename="../../ui/mainwin.ui" line="2176"/>
         <source>Gallery thumbnail</source>
         <translation>Gallery thumbnail</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2058"/>
+        <location filename="../../ui/mainwin.ui" line="2104"/>
         <source>Photos in the input directory :</source>
         <translation>Photos in the input directory :</translation>
     </message>
@@ -1506,12 +1518,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Position of the watermark on the photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2209"/>
+        <location filename="../../ui/mainwin.ui" line="2255"/>
         <source>&amp;Files</source>
         <translation>&amp;Files</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2234"/>
+        <location filename="../../ui/mainwin.ui" line="2280"/>
         <source>&amp;Help</source>
         <translation>&amp;Help</translation>
     </message>
@@ -1528,12 +1540,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">English</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2317"/>
+        <location filename="../../ui/mainwin.ui" line="2363"/>
         <source>About</source>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2326"/>
+        <location filename="../../ui/mainwin.ui" line="2372"/>
         <source>About Qt</source>
         <translation>About Qt</translation>
     </message>
@@ -1587,12 +1599,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Legend of the displayed  photo.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1893"/>
+        <location filename="../../ui/mainwin.ui" line="1933"/>
         <source>Previous</source>
         <translation>Previous</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="1976"/>
+        <location filename="../../ui/mainwin.ui" line="2016"/>
         <source>Next</source>
         <translation>Next</translation>
     </message>
@@ -1659,42 +1671,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../global/CError.cpp" line="39"/>
         <source>Internal Error. </source>
-        <translation>Internal Error.</translation>
+        <translation>Internal Error. </translation>
     </message>
     <message>
         <location filename="../../global/CError.cpp" line="42"/>
         <source>An error occured while saving the file. </source>
-        <translation>An error occured while saving the file.</translation>
+        <translation>An error occured while saving the file. </translation>
     </message>
     <message>
         <location filename="../../global/CError.cpp" line="45"/>
         <source>An error occured while opening the file. </source>
-        <translation>An error occured while opening the file.</translation>
+        <translation>An error occured while opening the file. </translation>
     </message>
     <message>
         <location filename="../../global/CError.cpp" line="48"/>
         <source>An error occured while creating the file. </source>
-        <translation>An error occured while creating the file.</translation>
+        <translation>An error occured while creating the file. </translation>
     </message>
     <message>
         <location filename="../../global/CError.cpp" line="51"/>
         <source>An error occured while creating the directory. </source>
-        <translation>An error occured while creating the directory.</translation>
+        <translation>An error occured while creating the directory. </translation>
     </message>
     <message>
         <location filename="../../global/CError.cpp" line="54"/>
         <source>Invalid directory. </source>
-        <translation>Invalid directory.</translation>
+        <translation>Invalid directory. </translation>
     </message>
     <message>
         <location filename="../../global/CError.cpp" line="57"/>
         <source>Resource files not found. </source>
-        <translation>Resource files not found.</translation>
+        <translation>Resource files not found. </translation>
     </message>
     <message>
         <location filename="../../global/CError.cpp" line="60"/>
         <source>Watermark not valid. </source>
-        <translation>Watermark not valid.</translation>
+        <translation>Watermark not valid. </translation>
     </message>
     <message>
         <location filename="../../global/CError.cpp" line="63"/>
@@ -1868,156 +1880,182 @@ p, li { white-space: pre-wrap; }
         <translation>Skin name</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="42"/>
         <source>Browsing Thumbnails</source>
-        <translation>Browsing Thumbnails</translation>
+        <translation type="obsolete">Browsing Thumbnails</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="48"/>
         <source>Browsing Page Background</source>
-        <translation>Browsing Page Background</translation>
+        <translation type="obsolete">Browsing Page Background</translation>
     </message>
     <message>
         <location filename="../../ui/WinSkinDesigner.ui" line="59"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="219"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="415"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="217"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="449"/>
         <source>Background Texture</source>
         <translation>Background Texture</translation>
     </message>
     <message>
         <location filename="../../ui/WinSkinDesigner.ui" line="69"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="125"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="154"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="229"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="425"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1086"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="227"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="459"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1122"/>
         <source>Background Color</source>
         <translation>Background Color</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="92"/>
         <source>Browsing Tabs</source>
-        <translation>Browsing Tabs</translation>
+        <translation type="obsolete">Browsing Tabs</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="108"/>
         <source>Unselected Tab:</source>
-        <translation>Unselected Tab:</translation>
+        <translation type="obsolete">Unselected Tab:</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="115"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="147"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="605"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1040"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1409"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="157"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="653"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1076"/>
         <source>Text Color</source>
         <translation>Text Color</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="140"/>
         <source>Selected Tab:</source>
-        <translation>Selected Tab:</translation>
+        <translation type="obsolete">Selected Tab:</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="167"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="239"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="331"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="844"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="902"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1050"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1161"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1312"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="234"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="365"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="892"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="950"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1086"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1197"/>
         <source>Border Width</source>
         <translation>Border Width</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="174"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="265"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="357"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="851"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="909"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="963"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1076"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1187"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1338"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="260"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="391"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="899"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="957"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1011"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1112"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1223"/>
         <source>Border Color</source>
         <translation>Border Color</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="208"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="206"/>
         <source>Thumbnails Mosaic</source>
         <translation>Thumbnails Mosaic</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="275"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="270"/>
         <source>Spacing Width</source>
         <translation>Spacing Width</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="301"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="296"/>
         <source>Spacing Color</source>
         <translation>Spacing Color</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="320"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="42"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="354"/>
         <source>Thumbnails</source>
         <translation>Thumbnails</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="367"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="79"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="469"/>
+        <source>Cover</source>
+        <translation>Cover</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinSkinDesigner.ui" line="104"/>
+        <source>Gallery Title</source>
+        <translation>Gallery Title</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinSkinDesigner.ui" line="167"/>
+        <source>Alignment</source>
+        <translation>Alignment</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinSkinDesigner.ui" line="181"/>
+        <source>left</source>
+        <translation>left</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinSkinDesigner.ui" line="186"/>
+        <source>center</source>
+        <translation>center</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinSkinDesigner.ui" line="191"/>
+        <source>right</source>
+        <translation>right</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinSkinDesigner.ui" line="311"/>
+        <source>Enabled</source>
+        <translation>Enabled</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinSkinDesigner.ui" line="401"/>
         <source>Border Color (hovered)</source>
         <translation>Border Color (hovered)</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="398"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="432"/>
         <source>Photo</source>
         <translation>Photo</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="404"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="438"/>
         <source>Photo Page Background</source>
         <translation>Photo Page Background</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="453"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="501"/>
         <source>Framing and Text</source>
         <translation>Framing and Text</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="462"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="510"/>
         <source>Framing</source>
         <translation>Framing</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="470"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="674"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1286"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="518"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="722"/>
         <source>Width</source>
         <translation>Width</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="477"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="719"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1364"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="525"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="767"/>
         <source>Texture</source>
         <translation>Texture</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="484"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="726"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1374"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="532"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="774"/>
         <source>Color</source>
         <translation>Color</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="491"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="539"/>
         <source>Padding</source>
         <translation>Padding</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="498"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="546"/>
         <source>Padding color</source>
         <translation>Padding color</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1046"/>
+        <source>Loader</source>
+        <translation>Loader</translation>
     </message>
     <message>
         <source>Texts</source>
@@ -2028,9 +2066,9 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Title</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="577"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1033"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1451"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="115"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="625"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1069"/>
         <source>Font Family</source>
         <translation>Font Family</translation>
     </message>
@@ -2045,8 +2083,8 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Georgia, &quot;DejaVu Serif&quot;, Norasi, serif</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="591"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1458"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="125"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="639"/>
         <source>Font Size</source>
         <translation>Font Size</translation>
     </message>
@@ -2055,7 +2093,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Font Variant</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="598"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="646"/>
         <source>Font Weight</source>
         <translation>Font Weight</translation>
     </message>
@@ -2087,28 +2125,28 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Legend</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="569"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="617"/>
         <source>Caption</source>
         <translation>Caption</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="655"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="703"/>
         <source>Navigation</source>
         <translation>Navigation</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="663"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="711"/>
         <source>Previous/Next Blocks Appearence</source>
         <translation>Previous/Next Blocks Appearence</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="708"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1350"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="48"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="756"/>
         <source>Background</source>
         <translation>Background</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="762"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="810"/>
         <source>Buttons Icons</source>
         <translation>Buttons Icons</translation>
     </message>
@@ -2117,152 +2155,144 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Browse</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="775"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="823"/>
         <source>Previous</source>
         <translation>Previous</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="789"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="837"/>
         <source>Next</source>
         <translation>Next</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="819"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="867"/>
         <source>Buttons Behavior</source>
         <translation>Buttons Behavior</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="837"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="885"/>
         <source>Enabled:</source>
         <translation>Enabled:</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="895"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="943"/>
         <source>Hovered:</source>
         <translation>Hovered:</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="956"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1004"/>
         <source>Disabled:</source>
         <translation>Disabled:</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="998"/>
         <source>Misc</source>
-        <translation>Misc</translation>
+        <translation type="obsolete">Misc</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1010"/>
         <source>Loading screen</source>
-        <translation>Loading screen</translation>
+        <translation type="obsolete">Loading screen</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1022"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1058"/>
         <source>Box</source>
         <translation>Box</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1110"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1146"/>
         <source>Progress Bar</source>
         <translation>Progress Bar</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1121"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1157"/>
         <source>&quot;Unloaded Text&quot; Color</source>
         <translation>&quot;Unloaded Text&quot; Color</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1131"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1167"/>
         <source>&quot;Unloaded Background&quot; Color</source>
         <translation>&quot;Unloaded Background&quot; Color</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1141"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1177"/>
         <source>&quot;Loaded Text&quot; Color</source>
         <translation>&quot;Loaded Text&quot; Color</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1151"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1187"/>
         <source>&quot;Loaded Background&quot; Color</source>
         <translation>&quot;Loaded Background&quot; Color</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1211"/>
         <source>Display Vertical Title</source>
-        <translation>Display vertical Title</translation>
+        <translation type="obsolete">Display vertical Title</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1237"/>
         <source>Position:</source>
-        <translation>Position:</translation>
+        <translation type="obsolete">Position:</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1257"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation type="obsolete">Left</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1275"/>
         <source>Block Appearance</source>
-        <translation>Block Appearance</translation>
+        <translation type="obsolete">Block Appearance</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1398"/>
         <source>Text Appearance</source>
-        <translation>Text Appearance</translation>
+        <translation type="obsolete">Text Appearance</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1419"/>
         <source>Line Height</source>
-        <translation>Line Height</translation>
+        <translation type="obsolete">Line Height</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1530"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1265"/>
         <source>&amp;File</source>
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1540"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1275"/>
         <source>&amp;Tools</source>
         <translation>&amp;Tools</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1550"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1285"/>
         <source>toolBar</source>
         <translation>toolBar</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1573"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1308"/>
         <source>&amp;Open</source>
         <translation>&amp;Open</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1582"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1317"/>
         <source>&amp;Save</source>
         <translation>&amp;Save</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1591"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1326"/>
         <source>&amp;Check the Skin</source>
         <translation>&amp;Check the Skin</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1594"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1329"/>
         <source>Check your skin</source>
         <translation>Check your skin</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1603"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1338"/>
         <source>New</source>
         <translation>New</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1606"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1341"/>
         <source>Create a new skin.</source>
         <translation>Create a new skin.</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1615"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1350"/>
         <source>Save As</source>
         <translation>Save As</translation>
     </message>
@@ -2278,81 +2308,81 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>WinSkinDesigner</name>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="142"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="146"/>
         <source>Your skin has been modified.</source>
         <translation>Your skin has been modified.</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="301"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="311"/>
         <source>Choose a skin to open.</source>
         <translation>Choose a skin to open.</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="343"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="353"/>
         <source>Choose a file to save your skin.</source>
         <translation>Choose a file to save your skin.</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="345"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="355"/>
         <source>Skin Files</source>
         <translation>Skin Files</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="211"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="215"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="143"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="147"/>
         <source>Do you want to save your changes?</source>
         <translation>Do you want to save your changes?</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="159"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="163"/>
         <source>You are opening a skin made with a version of EZWebGallery more recent than this one. Some parameters may get lost.</source>
         <translation>You are opening a skin made with a version of EZWebGallery more recent than this one. Some parameters may get lost.</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="376"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="386"/>
         <source>Error: </source>
         <translation>Error: </translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="382"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="392"/>
         <source>Warning: </source>
         <translation>Warning: </translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="391"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="401"/>
         <source>Failure</source>
         <translation>Failure</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="392"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="402"/>
         <source>Your skin is not valid.                                                                                </source>
         <comment>Please leave 60 blank space !</comment>
         <translation>Your skin is not valid.                                                                                </translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="399"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="409"/>
         <source>Warnings</source>
         <translation>Warnings</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="400"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="410"/>
         <source>Some warnings were found.                                                                                </source>
         <comment>Please leave 60 blank space !</comment>
         <translation>Some warnings were found.                                                                                </translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="408"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="418"/>
         <source>Success</source>
         <translation>Success</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.cpp" line="409"/>
+        <location filename="../../ui/WinSkinDesigner.cpp" line="419"/>
         <source>Your skin is valid !</source>
-        <translation>Your skin is valid!</translation>
+        <translation>Your skin is valid !</translation>
     </message>
 </context>
 </TS>
