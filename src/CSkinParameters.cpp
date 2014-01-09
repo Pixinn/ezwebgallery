@@ -45,12 +45,20 @@
 * Constructeur par dfaut
 *****************************************************/
 CSkinParameters::CSkinParameters() :
+    QObject(),
     f_initialized( false )
 {        
     //--- Inits
     m_styleSheet = CCssSheet("skin");
     setName( QString("noname") );
     m_p_ui = NULL;
+}
+
+
+CSkinParameters::CSkinParameters( const CSkinParameters & other ) :
+    QObject()
+{
+    *this = other;
 }
 
 
@@ -583,29 +591,6 @@ QDomDocument CSkinParameters::toDomDocument( )
         fileElement.appendChild( document.createTextNode( m_ressources.value(widget).fileName() ) );
     }
     return document;
-}
-
-
-/*******************************************************************
-* QSize unavailableSpace(  unsigned int nbCols, unsigned int nbRows )
-* ------------------------
-* Returns space unavailable for the thumbnails
-*   ie: thumbBorders + thumbBoxBorders + MosaicBorders + VerticalTitle
-* Input: nb rows & cols of the mosaic
-********************************************************************/
-QSize CSkinParameters::unavailableSpace( unsigned int nbCols )
-{
-    /*QStringList selector;
-    selector << "div#indexTitle";
-    CCssSelection titleDiv = m_styleSheet.selection( selector );    
-    QSize titleSize;
-    if( titleDiv.property("display") != "none" ) {
-        int titleBorderWidth = titleDiv.property( "border-right-width" ).remove("px").toInt();
-        titleSize = QSize( titleDiv.property( "width" ).remove("px").toInt() + titleBorderWidth, 0 );
-    } else {
-        titleSize = QSize(0,0);
-    }*/
-    return mosaicDecoration( nbCols )/* + titleSize*/;
 }
 
 

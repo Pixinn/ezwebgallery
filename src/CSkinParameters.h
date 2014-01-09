@@ -50,6 +50,7 @@ signals:
     void nameChanged( QString );
 public:
     CSkinParameters( );
+    CSkinParameters( const CSkinParameters & );
     CSkinParameters& operator=(const CSkinParameters & );        //Ncessit de surcharger l'oprateur d'assignement lorsqu'on hrite de QObject
     bool operator==(const CSkinParameters & );
     void setUi( Ui::SkinDesigner* );                             //Connecte les paramtres  l'UI
@@ -63,7 +64,6 @@ public:
     CCssSheet toCss( );                                          //Cr une feuille de style CSS
     QString buttonImage( int );                                  //Renvoie le nom du fichier de l'icone dsire
     QDomDocument toDomDocument( );                               //Gnre un QDomDocument rempli des paramtres
-    QSize unavailableSpace( unsigned int );        //Returns space unavailable for the thumbnails on the index page
     QSize mosaicDecoration( unsigned int );        //Returns space used by the mosaic decoration on the index page
 
     bool load( const QString &);                                 //Chargement de la skin

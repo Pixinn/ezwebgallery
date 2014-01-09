@@ -96,7 +96,8 @@ HEADERS += ./src/generation/CGalleryGenerator.h \
     ./src/CPhotoFeederDirectory.h \
     ./src/CPhotoDatabase.h \
     ./src/CThumbnailLoader.h \
-    ./src/Json.h
+    ./src/Json.h \
+    src/generation/CGalleryGeneratorFeeder.h
 
 SOURCES += ./src/main.cpp \
     ./src/generation/CGalleryGenerator.cpp \
@@ -125,7 +126,8 @@ SOURCES += ./src/main.cpp \
     ./src/CPhotoFeederDirectory.cpp \
     ./src/CPhotoDatabase.cpp \
     ./src/CThumbnailLoader.cpp \
-    ./src/Json.cpp
+    ./src/Json.cpp \
+    src/generation/CGalleryGeneratorFeeder.cpp
 
 FORMS += ./src/ui/mainwin.ui \
     ./src/ui/WinSkinDesigner.ui \
