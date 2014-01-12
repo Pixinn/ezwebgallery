@@ -54,9 +54,9 @@ public:
     inline QList<CPhotoProperties> getPhotoProperties( void ) { return m_PhotoProperties; }
     
     //Requested by CGalleryGenerator
-    inline QMap<QString,QSize> getPhotoSizes( void ) const { return m_PhotoSizes; }
-    inline QMap<QString,QSize> getThumbSizes( void ) const { return m_ThumbSizes; }
-    inline QQueue<int> getQualities( void ) const { return m_Qualities; }
+    inline const QMap<QString,QSize> & getPhotoSizes( void ) const { return m_PhotoSizes; }
+    inline const QMap<QString,QSize> & getThumbSizes( void ) const { return m_ThumbSizes; }
+    inline const QQueue<int> & getQualities( void ) const { return m_Qualities; }
 
 private:
    void computePhotoSizes( void );

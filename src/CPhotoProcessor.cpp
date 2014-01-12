@@ -40,12 +40,12 @@ using namespace std;
 QMutex CPhotoProcessor::m_mutexFileReading;  //Mutex partag pour viter les acces disques concurrents
 
 
+//Copy of the parameters as the process will occur in its own thread
 CPhotoProcessor::CPhotoProcessor(   CPhotoProperties photoProperties,
                                     QDir outPath,           //Path de la gallerie gnre
-                                    QMap<QString,QSize>& photoSizes,
-                                    QMap<QString,QSize>& thumbSizes,
-                                    //QQueue<QSize> &sizes,   //Fifo des tailles  gnrer. Au moins deux: thumb + 1 taille de sortie
-                                    QQueue<int> &quality,   //Qualit des Jpegs gnrs. Au moins deux: thumb + 1 jpeg de sortie                                    
+                                    const QMap<QString,QSize>& photoSizes,
+                                    const QMap<QString,QSize>& thumbSizes,
+                                    const QQueue<int> &quality,   //Qualit des Jpegs gnrs. Au moins deux: thumb + 1 jpeg de sortie                                    
                                     t_sharpening &sharpening, //paramtres d'accentuation
                                     const CWatermark &watermark,
                                     volatile bool* fStopRequested,    //Boolen demandant l'arrt des traitements
@@ -54,7 +54,6 @@ CPhotoProcessor::CPhotoProcessor(   CPhotoProperties photoProperties,
     m_photoProperties = photoProperties,
     m_outPath = outPath;
     m_qualityQueue = quality;
-    //m_sizesQueue = sizes;
     m_photoSizes = photoSizes;
     m_thumbSizes = thumbSizes;
     m_watermark = watermark;

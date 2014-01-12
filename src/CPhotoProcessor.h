@@ -100,10 +100,9 @@ class CPhotoProcessor : public QObject, public QRunnable
     public:
         CPhotoProcessor( CPhotoProperties photoProperties, //Proprits de la photo  traiter
                          QDir outPath,           //Path de la gallerie gnre
-                         //QQueue<QSize> &sizes,   //Fifo des tailles  gnrer. Au moins deux: thumb + 1 taille de sortie
-                         QMap<QString,QSize> &photoSizes,
-                         QMap<QString,QSize> &thumbSizes,
-                         QQueue<int> &quality,   //Qualit des Jpegs gnrs. Au moins deux: thumb + 1 jpeg de sortie
+                         const QMap<QString,QSize> & photoSizes,
+                         const QMap<QString,QSize> & thumbSizes,
+                         const QQueue<int> & quality,   //Qualit des Jpegs gnrs. Au moins deux: thumb + 1 jpeg de sortie
                          t_sharpening &sharpening,
                          const CWatermark &watermark,
                          volatile bool* fStopRequested,   //Boolen demandant l'arrt des traitements

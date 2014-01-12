@@ -125,8 +125,7 @@ CGalleryGenerator::~CGalleryGenerator( )
 * des photos  traiter, qui donnera l'ordre d'affichage
 * des photos de la galerie
 ************************************/
-bool CGalleryGenerator::generateGallery( CGalleryGeneratorFeeder & galleryFeeder
-                                         /*CProjectParameters &projectParameters, const CSkinParameters &skinParameters, QList<CPhotoProperties*> photoProperties*/ )
+bool CGalleryGenerator::generateGallery( CGalleryGeneratorFeeder & galleryFeeder  )
 {
 	QStringList photoList;
 	QString photoName;

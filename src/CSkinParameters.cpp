@@ -142,7 +142,7 @@ void CSkinParameters::setName( const QString &name )
 * ---------
 * Retourne le nom de la skin
 ********************************************************************/
-QString CSkinParameters::name( )
+QString CSkinParameters::name( ) const
 {
     return m_name;
 }
@@ -153,7 +153,7 @@ QString CSkinParameters::name( )
 * ---------
 * Retourne le path de la skin. Vide si non sauve
 ********************************************************************/
-QString CSkinParameters::filePath( )
+QString CSkinParameters::filePath( ) const
 {
     return m_filePath;
 }
@@ -626,7 +626,7 @@ QSize CSkinParameters::mosaicDecoration( unsigned int nbCols )
 * Cr une liste de feuilles CSS  partir des paramtres
 * ATTENTION: Trs dpendant de la syntaxe attendue pour les fichiers CSS des skins
 ********************************************************************/
-CCssSheet CSkinParameters::toCss( )
+CCssSheet CSkinParameters::toCss( ) const
 {
     return m_styleSheet;
 }
@@ -637,7 +637,7 @@ CCssSheet CSkinParameters::toCss( )
 * ------------------------
 * retourne la liste des ressources ncessaires  la cration de la skin
 ********************************************************************/
-QMap<QString,QFileInfo>  CSkinParameters::ressourceFiles( ){
+QMap<QString,QFileInfo>  CSkinParameters::ressourceFiles( ) const {
     return m_ressources;
 }
 
@@ -714,7 +714,7 @@ bool CSkinParameters::saveSkin( const QString &destFile )
 * In: (QDir) outputDir - rpertoire o copier les fichiers ressource
 * Return: true si succs, false si echec
 ********************************************************************/
-bool CSkinParameters::copyRessources( QDir outputDir/*, QStringList &errorMsg*/ )
+bool CSkinParameters::copyRessources( QDir outputDir )
 {
     int size = m_lastErrors.size();
 
@@ -812,9 +812,6 @@ void CSkinParameters::check( QStringList* errorList, QStringList* warningList)
     if( !m_ressources.contains("PhotoButtonNext") ){
         errorList->append( tr("Button \"Next\" - an image is required.") );
     }
-    /*if( !m_ressources.contains("PhotoButtonIndex") ){
-        errorList->append( tr("Button \"Browse\" - an image is required.") );
-    }*/
     //Taille des blocs OK ?
     if( m_p_ui->spinBox_PhotoNavBlocks_Width->value() <= m_p_ui->CImagePicker_NextButton_Icon->imageSize().width() ||
         m_p_ui->spinBox_PhotoNavBlocks_Width->value() <= m_p_ui->CImagePicker_PreviousButton_Icon->imageSize().width() ){
@@ -875,7 +872,7 @@ QDomDocument CSkinParameters::convertFromOldVersion(  const QDomDocument &docume
 * in img : Image
 * return : Le chemin absolu de l'image
 ********************************************************************/
-QString CSkinParameters::getImagePath( const QString &img )
+QString CSkinParameters::getImagePath( const QString &img ) const
 {
     QDir dir = QDir( m_ressourcesPath );
     dir.cd( SKINRESIMGDIR );
@@ -905,7 +902,7 @@ void CSkinParameters::removeEmptyRessources( )
 * in button : le nom de l'icone
 * return : le nom du fichier image correspondant
 ********************************************************************/
-QString CSkinParameters::buttonImage( int button )
+QString CSkinParameters::buttonImage( int button ) const
 {
     QString filename;
 

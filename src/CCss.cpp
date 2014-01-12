@@ -89,7 +89,7 @@ void CCssSheet::clear( )
 
 //Rcupration d'une slection. Les slecteurs pass en paramtre sont une liste *ordonne*
 //donnant le "chemin" jusqu' la slection
-CCssSelection CCssSheet::selection( QStringList selectors )
+CCssSelection CCssSheet::selection( QStringList selectors ) const
 {
     CCssSelection selection;
 
@@ -122,7 +122,7 @@ QString CCssSheet::name( )
 }
 
 //Convertir en QDomElement
-QDomElement CCssSheet::toDomElement( QDomDocument & doc )
+QDomElement CCssSheet::toDomElement( QDomDocument & doc ) const
 {
     QDomElement element = doc.createElement( QString( STYLESHEET_TAG_NAME ) );
     element.setAttribute( QString(STYLESHEET_NAME_ATTR_NAME), m_name );
