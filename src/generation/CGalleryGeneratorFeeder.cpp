@@ -52,10 +52,7 @@ CGalleryGeneratorFeeder::CGalleryGeneratorFeeder(  const CProjectParameters & p_
     //Computes
     computePhotoSizes();
     computeThumbSizes();
-    //Enqueing photo qualities
-    for(int i = 1; i <= m_ProjectParams.m_photosConfig.nbIntermediateResolutions; i++){
-        m_Qualities.enqueue( m_ProjectParams.m_photosConfig.quality );
-    }
+
 }
 
 
@@ -97,11 +94,20 @@ bool CGalleryGeneratorFeeder::isOutFolderUpToDate( void ) const
 void CGalleryGeneratorFeeder::computePhotoSizes( void )
 {
     int n = 1; //folder appendix
+   
+    //HiDPI ??
+    const int hiDpiSize = 2560; //Nexus 10
+    if( m_ProjectParams.m_photosConfig.f_hiDpi == true ) {
+        m_PhotoSizes.insert( QString(RESOLUTIONPATH) + QString::number(n++),
+                  QSize( hiDpiSize, hiDpiSize ) );
+    }
+
     //max size
     m_PhotoSizes.insert( QString(RESOLUTIONPATH) + QString::number(n++),
                   QSize( m_ProjectParams.m_photosConfig.maxSizeW, m_ProjectParams.m_photosConfig.maxSizeH ) );
     //intermediate sizes
-    if( m_ProjectParams.m_photosConfig.nbIntermediateResolutions > 2){
+    if( m_ProjectParams.m_photosConfig.nbIntermediateResolutions > 2)
+    {
         int spaceW;
         int spaceH;
         int nbRes = m_ProjectParams.m_photosConfig.nbIntermediateResolutions - 2;

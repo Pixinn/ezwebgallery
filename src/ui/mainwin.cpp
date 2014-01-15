@@ -670,9 +670,6 @@ bool MainWin::onSaveSessionAs( )
 void MainWin::onHiDPI( int status )
 {
     if( status == Qt::Checked ) {
-        //const unsigned int maxSz = 2560; //Nexus 10
-        //m_ui->spinbox_PhotoMaxHSize->setValue( maxSz );
-        //m_ui->spinBox_PhotoMaxVSize->setValue( maxSz );
         m_ui->comboBox_ImageQualityStrategy->setCurrentIndex( t_photosConf::OPTIMIZE_SCREENUSAGE );
     }
 }

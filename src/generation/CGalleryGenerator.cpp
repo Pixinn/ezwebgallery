@@ -226,7 +226,7 @@ bool CGalleryGenerator::generateFileStructure( )
         emit abordGenerationSignal( );
         return false;
     }
-    for(int i = 1; i <= m_feeder.getProjectParams().m_photosConfig.nbIntermediateResolutions; i++){
+    for(int i = 1; i <= m_feeder.getPhotoSizes().size(); i++){
         if( !outPath.mkpath( photosFilesPath + QString::number(i) ) ){
             m_msgErrorList.append( PtrMessage(new CError(CError::error(CError::DirectoryCreation), photosFilesPath + QString::number(i))) );
             emit abordGenerationSignal( );
@@ -351,7 +351,7 @@ int CGalleryGenerator::generatePhotos( )
                                               outPath,
                                               m_feeder.getPhotoSizes(),
                                               m_feeder.getThumbSizes(),
-                                              m_feeder.getQualities(),
+                                              m_feeder.getProjectParams().m_photosConfig.quality,
                                               sharpening,
                                               watermarkImage,
                                               &m_fStopRequested,
@@ -400,7 +400,7 @@ bool CGalleryGenerator::generateJsFiles( )
     jsonPhotosProperties.addBoolean( "rightClickEnabled", m_feeder.getProjectParams().m_galleryConfig.f_rightClickEnabled );
     jsonPhotosProperties.addNumber( "qualityStrategy", m_feeder.getProjectParams().m_photosConfig.imageOptimizationStrategy );
     jsonPhotosProperties.addNumber( "first", 1 );
-    jsonPhotosProperties.addString( "smallestSet", QString(RESOLUTIONPATH) + QString::number( m_feeder.getProjectParams().m_photosConfig.nbIntermediateResolutions ) );
+    jsonPhotosProperties.addString( "smallestSet", QString(RESOLUTIONPATH) + QString::number( m_feeder.getPhotoSizes().size() ) );
     jsonPhotosProperties.addString( "largetSet", QString(RESOLUTIONPATH) + QString::number( 1 ) );
     Object& maxSize = jsonPhotosProperties.addObject( "maxSize" );
     maxSize.addNumber("width", m_feeder.getProjectParams().m_photosConfig.maxSizeW );

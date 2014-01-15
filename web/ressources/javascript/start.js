@@ -19,11 +19,10 @@
 Defines = {
     URL_THUMBS_PATH: "thumbnails",
     IMAGES_PATH: "images",
-    /*FPS: 25*/
 };
 
 TOOLS = {
-    trace: function( log ){
+    trace: function( log ){ //trace a message in the console if available
         if (window.console) {
             var date = new Date();
             console.log( date.getTime() + ": " + log );
@@ -33,6 +32,10 @@ TOOLS = {
         var cloned  = {};
         jQuery.extend( cloned, obj );
         return cloned;
+    },
+    debug: function( msg ) { //displays a debug message on the top of the page
+        $("#DEBUG").append( msg )
+                   .show();
     }
 }
 

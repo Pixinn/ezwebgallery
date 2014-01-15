@@ -183,12 +183,13 @@ function CDisplay( p_properties, p_htmlStructure )
         var height = that.html.photo.$wrapper.innerHeight() - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - wastedPixelTop;
         var width =  that.html.$window.innerWidth( ) - widthWasted - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - ie6BugCorrection;
 
-        if( height > that.properties.photos.technical.maxSize.height ) {
+        //Made access to HiDPI picture impossible on non HiDpi bu hiRes screens
+        /*if( height > that.properties.photos.technical.maxSize.height ) {
             height = that.properties.photos.technical.maxSize.height;
         }
         if( width > that.properties.photos.technical.maxSize.width ) {
             width = that.properties.photos.technical.maxSize.width;
-        }
+        }*/
 
         return { h: height, w: width };
     }
