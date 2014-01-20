@@ -54,7 +54,7 @@ signals:
 	
 private:
     QString m_fileName;
-    static const QString NO_IMAGE;//Texte  afficher quand pas d'image
+    const QString NO_IMAGE;//Texte  afficher quand pas d'image
 
     static QString m_dirToBrowse;//Rpertoire  ouvrir lorsqu'on clique sur le widget
                                  //static car pratique de partager entre toutes les instances !

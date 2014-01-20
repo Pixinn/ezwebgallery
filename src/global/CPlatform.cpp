@@ -120,11 +120,11 @@ QStringList CPlatform::languageList( )
 QFont CPlatform::defaultFont()
 {
     // MacOS
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     return QFont("Tahoma",9); //Requires 10.5 Leopard
 #endif
-    //Linux (X11)
-#ifdef Q_WS_X11
+    //Linux
+#ifdef Q_OS_LINUX
     return QFont("Nimbus Sans L",8);
 #endif
     //Windows (par défaut)
@@ -139,7 +139,7 @@ QFont CPlatform::defaultFont()
 QString CPlatform::applicationDirPath()
 {
     //Cas particulier : macOS
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     return QDir::currentPath();
 #else
     return QCoreApplication::applicationDirPath();
@@ -154,7 +154,7 @@ QString CPlatform::applicationDirPath()
 ***************************/
 QString CPlatform::skinDirPath()
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN32
     return applicationDirPath() + QString("/skins");
 #else
     return QString("/usr/share/ezwebgallery/skins");
@@ -173,7 +173,7 @@ QString CPlatform::appDataDir()
     if( directory.isEmpty() ){ // embedded platforms currently don't define this location and you don't want to write to /foo
         directory = QDir::homePath();
     }
-#ifdef Q_WS_WIN    
+#ifdef Q_OS_WIN32    
 	return directory + QString( "/") + QCoreApplication::applicationName();
 #else
     return directory + QString( "/." ) + QCoreApplication::applicationName();
@@ -188,7 +188,7 @@ QString CPlatform::appDataDir()
 ***************************/
 QString CPlatform::resourceDirPath( void )
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN32
     return applicationDirPath() + QString("/data");
 #else
     return QString("/usr/share/ezwebgallery/data");
@@ -347,4 +347,19 @@ QString CPlatform::readTranslatedTextFile( const QString &baseName )
     QString returnedValue = textStream.readAll();
     delete fileToRead;
     return returnedValue;
+}
+
+/*************************
+* limitOpenMPThreads( )
+*----------------------
+* Disable OpenMP by limiting it to one thread
+**************************/
+void CPlatform::limitOpenMPThreads(void)
+{
+#ifdef Q_OS_WIN32
+    _putenv_s( "MAGICK_THREAD_LIMIT", "1" );
+#else
+    int openMPThreadLimit = 1;
+    int err = setenv("MAGICK_THREAD_LIMIT", &openMPThreadLimit, 1);
+#endif
 }
