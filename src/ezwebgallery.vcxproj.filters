@@ -353,136 +353,136 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ressources\languages\GalleryDesigner_en.ts">
+    <None Include="resources\languages\GalleryDesigner_en.ts">
       <Filter>Translation Files</Filter>
     </None>
-    <None Include="ressources\languages\GalleryDesigner_fr.ts">
+    <None Include="resources\languages\GalleryDesigner_fr.ts">
       <Filter>Translation Files</Filter>
     </None>
-    <None Include="ressources\languages\GalleryDesigner_fr.qm">
+    <None Include="resources\languages\GalleryDesigner_fr.qm">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\languages\GalleryDesigner_en.qm">
+    <None Include="resources\languages\GalleryDesigner_en.qm">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\text\translatable\tagList_en.html">
+    <None Include="resources\text\translatable\tagList_en.html">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\text\translatable\tagList_fr.html">
+    <None Include="resources\text\translatable\tagList_fr.html">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\text\translatable\about_en.html">
+    <None Include="resources\text\translatable\about_en.html">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\text\translatable\about_fr.html">
+    <None Include="resources\text\translatable\about_fr.html">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\text\aboutImageMagick.html">
+    <None Include="resources\text\aboutImageMagick.html">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\bad.gif">
+    <None Include="resources\images\smileys\bad.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\crying.gif">
+    <None Include="resources\images\smileys\crying.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\embarassed.gif">
+    <None Include="resources\images\smileys\embarassed.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\evil.gif">
+    <None Include="resources\images\smileys\evil.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\good.gif">
+    <None Include="resources\images\smileys\good.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\kiss.gif">
+    <None Include="resources\images\smileys\kiss.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\laugh.gif">
+    <None Include="resources\images\smileys\laugh.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\love.gif">
+    <None Include="resources\images\smileys\love.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\sad.gif">
+    <None Include="resources\images\smileys\sad.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\skeptical.gif">
+    <None Include="resources\images\smileys\skeptical.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\smile.gif">
+    <None Include="resources\images\smileys\smile.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\surprise.gif">
+    <None Include="resources\images\smileys\surprise.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\tongue.gif">
+    <None Include="resources\images\smileys\tongue.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\smileys\wink.gif">
+    <None Include="resources\images\smileys\wink.gif">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\configure.png">
+    <None Include="resources\images\configure.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\face-smile-gearhead-male.png">
+    <None Include="resources\images\face-smile-gearhead-male.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\arrow-left-2.png">
+    <None Include="resources\images\arrow-left-2.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\text-x-authors.png">
+    <None Include="resources\images\text-x-authors.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\arrow-right-2.png">
+    <None Include="resources\images\arrow-right-2.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\view-refresh-3.png">
+    <None Include="resources\images\view-refresh-3.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\help-contents-5.png">
+    <None Include="resources\images\help-contents-5.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\document-save-as-3.png">
+    <None Include="resources\images\document-save-as-3.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\document-close-2.png">
+    <None Include="resources\images\document-close-2.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\document-new.png">
+    <None Include="resources\images\document-new.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\document-edit.png">
+    <None Include="resources\images\document-edit.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\dialog-ok.png">
+    <None Include="resources\images\dialog-ok.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\document-save-3.png">
+    <None Include="resources\images\document-save-3.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\document-open-2.png">
+    <None Include="resources\images\document-open-2.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\icon_GalleryDesigner.png">
+    <None Include="resources\images\icon_GalleryDesigner.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\flag-fr.png">
+    <None Include="resources\images\flag-fr.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\flag-gb.png">
+    <None Include="resources\images\flag-gb.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\help-about-2.png">
+    <None Include="resources\images\help-about-2.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\utilities-terminal.png">
+    <None Include="resources\images\utilities-terminal.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\qt-logo.png">
+    <None Include="resources\images\qt-logo.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ressources\images\imagemagick-logo.png">
+    <None Include="resources\images\imagemagick-logo.png">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -817,12 +817,12 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="ressources\GalleryDesigner.qrc">
+    <CustomBuild Include="resources\GalleryDesigner.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="ressources\win32\GalleryDesigner.rc">
+    <ResourceCompile Include="resources\win32\GalleryDesigner.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

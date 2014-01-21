@@ -358,8 +358,7 @@ void CPlatform::limitOpenMPThreads(void)
 {
 #ifdef Q_OS_WIN32
     _putenv_s( "MAGICK_THREAD_LIMIT", "1" );
-#else
-    int openMPThreadLimit = 1;
-    int err = setenv("MAGICK_THREAD_LIMIT", &openMPThreadLimit, 1);
+#else    
+    setenv("MAGICK_THREAD_LIMIT", "1", 1);
 #endif
 }

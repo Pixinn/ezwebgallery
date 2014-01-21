@@ -103,7 +103,7 @@ CGalleryGenerator::CGalleryGenerator( ) :
     m_nbPhotoProcessFailed = 0;
     m_f_WorkInProgress = false;
     m_fStopRequested = false;
-    m_p_photoProcessorPool = new QThreadPool( this );
+    m_p_photoProcessorPool = new QThreadPool( this );    
     
     m_errorMsg = tr("No error.");
 
@@ -125,7 +125,7 @@ CGalleryGenerator::~CGalleryGenerator( )
 * des photos  traiter, qui donnera l'ordre d'affichage
 * des photos de la galerie
 ************************************/
-bool CGalleryGenerator::generateGallery( CGalleryGeneratorFeeder & galleryFeeder  )
+bool CGalleryGenerator::generateGallery( const CGalleryGeneratorFeeder & galleryFeeder  )
 {
 	QStringList photoList;
 	QString photoName;

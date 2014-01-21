@@ -79,7 +79,7 @@ public:
     CGalleryGenerator( void );
     ~CGalleryGenerator( void );
     //Interface avec UI
-    bool generateGallery( CGalleryGeneratorFeeder & );
+    bool generateGallery( const CGalleryGeneratorFeeder & );
     bool isGenerationInProgress( void );
     void abordGeneration( void );
 
