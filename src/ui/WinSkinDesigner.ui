@@ -1301,7 +1301,7 @@
   </widget>
   <action name="action_Open">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/document-open-2.png</normaloff>:/icons/images/document-open-2.png</iconset>
    </property>
    <property name="text">
@@ -1310,7 +1310,7 @@
   </action>
   <action name="action_Save">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/document-save-3.png</normaloff>:/icons/images/document-save-3.png</iconset>
    </property>
    <property name="text">
@@ -1319,7 +1319,7 @@
   </action>
   <action name="action_Check_Skin">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/dialog-ok.png</normaloff>:/icons/images/dialog-ok.png</iconset>
    </property>
    <property name="text">
@@ -1331,7 +1331,7 @@
   </action>
   <action name="action_New">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/document-new.png</normaloff>:/icons/images/document-new.png</iconset>
    </property>
    <property name="text">
@@ -1343,7 +1343,7 @@
   </action>
   <action name="action_SaveAs">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/document-save-as-3.png</normaloff>:/icons/images/document-save-as-3.png</iconset>
    </property>
    <property name="text">
@@ -1385,7 +1385,7 @@
   <tabstop>doubleSpinBox_VTitle_FontSize</tabstop>
  </tabstops>
  <resources>
-  <include location="../ressources/GalleryDesigner.qrc"/>
+  <include location="../resources/GalleryDesigner.qrc"/>
  </resources>
  <connections>
   <connection>

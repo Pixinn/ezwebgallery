@@ -455,7 +455,7 @@
                     <string>&amp;Open</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../ressources/GalleryDesigner.qrc">
+                    <iconset resource="../resources/GalleryDesigner.qrc">
                      <normaloff>:/icons/images/document-open-2.png</normaloff>:/icons/images/document-open-2.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -489,7 +489,7 @@
                     <string>&amp;Design</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../ressources/GalleryDesigner.qrc">
+                    <iconset resource="../resources/GalleryDesigner.qrc">
                      <normaloff>:/icons/images/document-edit.png</normaloff>:/icons/images/document-edit.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1607,7 +1607,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../ressources/GalleryDesigner.qrc">
+                    <iconset resource="../resources/GalleryDesigner.qrc">
                      <normaloff>:/icons/images/text-x-authors.png</normaloff>:/icons/images/text-x-authors.png</iconset>
                    </property>
                   </widget>
@@ -1857,7 +1857,7 @@
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../ressources/GalleryDesigner.qrc">
+                   <iconset resource="../resources/GalleryDesigner.qrc">
                     <normaloff>:/icons/images/text-x-authors.png</normaloff>:/icons/images/text-x-authors.png</iconset>
                   </property>
                  </widget>
@@ -1936,7 +1936,7 @@
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../ressources/GalleryDesigner.qrc">
+                   <iconset resource="../resources/GalleryDesigner.qrc">
                     <normaloff>:/icons/images/arrow-left-2.png</normaloff>:/icons/images/arrow-left-2.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -2019,7 +2019,7 @@
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../ressources/GalleryDesigner.qrc">
+                   <iconset resource="../resources/GalleryDesigner.qrc">
                     <normaloff>:/icons/images/arrow-right-2.png</normaloff>:/icons/images/arrow-right-2.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -2153,7 +2153,7 @@ Use it if photos were added or removed.</string>
                <string>Update</string>
               </property>
               <property name="icon">
-               <iconset resource="../ressources/GalleryDesigner.qrc">
+               <iconset resource="../resources/GalleryDesigner.qrc">
                 <normaloff>:/icons/images/view-refresh-3.png</normaloff>:/icons/images/view-refresh-3.png</iconset>
               </property>
               <property name="iconSize">
@@ -2218,7 +2218,7 @@ Use it if photos were added or removed.</string>
          <string>&amp;Generate</string>
         </property>
         <property name="icon">
-         <iconset resource="../ressources/GalleryDesigner.qrc">
+         <iconset resource="../resources/GalleryDesigner.qrc">
           <normaloff>:/icons/images/face-smile-gearhead-male.png</normaloff>:/icons/images/face-smile-gearhead-male.png</iconset>
         </property>
         <property name="iconSize">
@@ -2327,7 +2327,7 @@ Use it if photos were added or removed.</string>
   </widget>
   <action name="action_OpenSession">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/document-open-2.png</normaloff>:/icons/images/document-open-2.png</iconset>
    </property>
    <property name="text">
@@ -2336,7 +2336,7 @@ Use it if photos were added or removed.</string>
   </action>
   <action name="action_SaveSession">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/document-save-3.png</normaloff>:/icons/images/document-save-3.png</iconset>
    </property>
    <property name="text">
@@ -2345,7 +2345,7 @@ Use it if photos were added or removed.</string>
   </action>
   <action name="action_ShowLogWindow">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/utilities-terminal.png</normaloff>:/icons/images/utilities-terminal.png</iconset>
    </property>
    <property name="text">
@@ -2357,7 +2357,7 @@ Use it if photos were added or removed.</string>
   </action>
   <action name="action_About">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/help-about-2.png</normaloff>:/icons/images/help-about-2.png</iconset>
    </property>
    <property name="text">
@@ -2366,7 +2366,7 @@ Use it if photos were added or removed.</string>
   </action>
   <action name="action_AboutQt">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/qt-logo.png</normaloff>:/icons/images/qt-logo.png</iconset>
    </property>
    <property name="text">
@@ -2375,7 +2375,7 @@ Use it if photos were added or removed.</string>
   </action>
   <action name="action_SaveSessionAs">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/document-save-as-3.png</normaloff>:/icons/images/document-save-as-3.png</iconset>
    </property>
    <property name="text">
@@ -2384,7 +2384,7 @@ Use it if photos were added or removed.</string>
   </action>
   <action name="action_NewSession">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/document-new.png</normaloff>:/icons/images/document-new.png</iconset>
    </property>
    <property name="text">
@@ -2396,7 +2396,7 @@ Use it if photos were added or removed.</string>
   </action>
   <action name="action_Quit">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/document-close-2.png</normaloff>:/icons/images/document-close-2.png</iconset>
    </property>
    <property name="text">
@@ -2405,7 +2405,7 @@ Use it if photos were added or removed.</string>
   </action>
   <action name="action_AboutImageMagick">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/imagemagick-logo.png</normaloff>:/icons/images/imagemagick-logo.png</iconset>
    </property>
    <property name="text">
@@ -2414,7 +2414,7 @@ Use it if photos were added or removed.</string>
   </action>
   <action name="action_OnlineManual">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/help-contents-5.png</normaloff>:/icons/images/help-contents-5.png</iconset>
    </property>
    <property name="text">
@@ -2423,7 +2423,7 @@ Use it if photos were added or removed.</string>
   </action>
   <action name="action_DisplayTags">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/text-x-authors.png</normaloff>:/icons/images/text-x-authors.png</iconset>
    </property>
    <property name="text">
@@ -2435,7 +2435,7 @@ Use it if photos were added or removed.</string>
   </action>
   <action name="action_Configure">
    <property name="icon">
-    <iconset resource="../ressources/GalleryDesigner.qrc">
+    <iconset resource="../resources/GalleryDesigner.qrc">
      <normaloff>:/icons/images/configure.png</normaloff>:/icons/images/configure.png</iconset>
    </property>
    <property name="text">
@@ -2512,7 +2512,7 @@ Use it if photos were added or removed.</string>
   <tabstop>lineEdit_URL</tabstop>
  </tabstops>
  <resources>
-  <include location="../ressources/GalleryDesigner.qrc"/>
+  <include location="../resources/GalleryDesigner.qrc"/>
  </resources>
  <connections>
   <connection>

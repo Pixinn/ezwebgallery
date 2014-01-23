@@ -12,29 +12,29 @@ set TEMPDIR=..\..\distribution\windows
 
 REM --- CREATING DATA FOLDERS
 md %DATADIR%\data
-md %DATADIR%\data\ressources
-md %DATADIR%\data\ressources\php
-md %DATADIR%\data\ressources\images
-md %DATADIR%\data\ressources\images\smileys
-md %DATADIR%\data\ressources\css
-md %DATADIR%\data\ressources\javascript\jquery
-md %DATADIR%\data\ressources\javascript\jquery\plugins
-md %DATADIR%\data\ressources\javascript\tools
+md %DATADIR%\data\resources
+md %DATADIR%\data\resources\php
+md %DATADIR%\data\resources\images
+md %DATADIR%\data\resources\images\smileys
+md %DATADIR%\data\resources\css
+md %DATADIR%\data\resources\javascript\jquery
+md %DATADIR%\data\resources\javascript\jquery\plugins
+md %DATADIR%\data\resources\javascript\tools
 
 REM --- MINIMZING JS
-call compress_javascript.bat %DATADIR%\data\ressources\javascript
+call compress_javascript.bat %DATADIR%\data\resources\javascript
 
 echo off
 
 REM --- COPYING WEB FILES TO DATA
 copy "..\Web\index.html" %DATADIR%\data
-copy "..\Web\ressources\php\*.php" %DATADIR%\data\ressources\php
-copy "..\Web\ressources\images\*.*" %DATADIR%\data\ressources\images
-copy "..\Web\ressources\images\smileys\*.*" %DATADIR%\data\ressources\images\smileys
-copy "..\Web\ressources\css\*.css" %DATADIR%\data\ressources\css
-copy "..\Web\ressources\javascript\jquery\*.js" %DATADIR%\data\ressources\javascript\jquery
-copy "..\Web\ressources\javascript\jquery\plugins\*.js" %DATADIR%\data\ressources\javascript\jquery\plugins
-copy "..\Web\ressources\javascript\tools\*.js" %DATADIR%\data\ressources\javascript\tools
+copy "..\Web\resources\php\*.php" %DATADIR%\data\resources\php
+copy "..\Web\resources\images\*.*" %DATADIR%\data\resources\images
+copy "..\Web\resources\images\smileys\*.*" %DATADIR%\data\resources\images\smileys
+copy "..\Web\resources\css\*.css" %DATADIR%\data\resources\css
+copy "..\Web\resources\javascript\jquery\*.js" %DATADIR%\data\resources\javascript\jquery
+copy "..\Web\resources\javascript\jquery\plugins\*.js" %DATADIR%\data\resources\javascript\jquery\plugins
+copy "..\Web\resources\javascript\tools\*.js" %DATADIR%\data\resources\javascript\tools
 
 
 REM --- COPYING DATA AND SKINS TO TEMP DIR

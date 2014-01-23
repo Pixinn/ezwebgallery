@@ -28,8 +28,8 @@
 #include "CError.h"
 
 //----------- Définitions ---------//
-#define RESSOURCES_TAG_NAME     "Ressources"
-#define RESSOURCEFILE_TAG_NAME  "File"
+#define RESOURCES_TAG_NAME     "Ressources"
+#define RESOURCEFILE_TAG_NAME  "File"
 
 
 //-------------- Variables statiques ---------//
@@ -79,9 +79,9 @@ CSkinParameters& CSkinParameters::operator=(const CSkinParameters &source)
         this->thumbBoxBorderSize = source.thumbBoxBorderSize;
         this->photoPaddingSize = source.photoPaddingSize;
         this->m_name = source.m_name;
-        this->m_ressourcesPath = source.m_ressourcesPath;
+        this->m_resourcesPath = source.m_resourcesPath;
         this->m_p_ui = source.m_p_ui;
-        this->m_ressources = source.m_ressources;
+        this->m_resources = source.m_resources;
         this->m_styleSheet = source.m_styleSheet;
         this->m_filePath = source.m_filePath;
         this->m_version = source.m_version;
@@ -102,8 +102,8 @@ bool CSkinParameters::operator==( const CSkinParameters &source)
     if( this->thumbBoxBorderSize != source.thumbBoxBorderSize ){    return false;   }
     if( this->photoPaddingSize != source.photoPaddingSize ){    return false;   }
     if( this->m_name != source.m_name ){    return false;   }
-    if( this->m_ressourcesPath != source.m_ressourcesPath ){    return false;   }
-    if( this->m_ressources != source.m_ressources ){    return false;   }
+    if( this->m_resourcesPath != source.m_resourcesPath ){    return false;   }
+    if( this->m_resources != source.m_resources ){    return false;   }
     if( this->m_styleSheet != source.m_styleSheet ){    return false;   }
     if( this->m_filePath != source.m_filePath ){    return false;   }
     if( this->m_version != source.m_version ){ return false; }
@@ -175,19 +175,19 @@ void CSkinParameters::fromUi( )
     setName( m_p_ui->lineEdit_SkinName->text() );
     /****** Ressources ******/
     //Construction de la liste de ressources ncessaires
-    m_ressources.clear();
-    m_ressources.insert( "IndexPage_BckgTexture", m_p_ui->cImagePicker_Index_BckgTexture->fileName() );
-    m_ressources.insert( "Mosaic_BckgTexture", m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName( ) );
-    m_ressources.insert( "PhotoFraming_Texture", m_p_ui->CImagePicker_PhotoFraming_Texture->fileName() );
-    m_ressources.insert( "PhotoPage_BckgTexture",m_p_ui->cImagePicker_Photo_BckgTexture->fileName() );    
-    m_ressources.insert( "PhotoButtonPrevious", m_p_ui->CImagePicker_PreviousButton_Icon->fileName() );
-    m_ressources.insert( "PhotoButtonNext", m_p_ui->CImagePicker_NextButton_Icon->fileName() );
+    m_resources.clear();
+    m_resources.insert( "IndexPage_BckgTexture", m_p_ui->cImagePicker_Index_BckgTexture->fileName() );
+    m_resources.insert( "Mosaic_BckgTexture", m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName( ) );
+    m_resources.insert( "PhotoFraming_Texture", m_p_ui->CImagePicker_PhotoFraming_Texture->fileName() );
+    m_resources.insert( "PhotoPage_BckgTexture",m_p_ui->cImagePicker_Photo_BckgTexture->fileName() );    
+    m_resources.insert( "PhotoButtonPrevious", m_p_ui->CImagePicker_PreviousButton_Icon->fileName() );
+    m_resources.insert( "PhotoButtonNext", m_p_ui->CImagePicker_NextButton_Icon->fileName() );
     //Ressources ajoutes sous conditions
     if( m_p_ui->groupBox_PhotoNavBlocksBckg->isChecked() ){
-        m_ressources.insert( "PhotoNavBlocks_BckgTexture", m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->fileName() );
+        m_resources.insert( "PhotoNavBlocks_BckgTexture", m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->fileName() );
     }
     //Filtrage des ressources:
-    removeEmptyRessources( ); // On enlve de la liste les images "vides" (ie no image)
+    removeEmptyResources( ); // On enlve de la liste les images "vides" (ie no image)
      
     /****** Creation du CSS ******/
 
@@ -363,20 +363,20 @@ void CSkinParameters::fromDomDocument( QDomDocument &document )
     setName( rootAttributes.namedItem( "name" ).nodeValue() );
     QDomElement miscProperties = root.firstChildElement( "properties" );
     //Ressources: construction de la liste de ressources
-    m_ressources.clear();
-    QDomElement ressourcesElement = root.firstChildElement( RESSOURCES_TAG_NAME );
-    QDomNode node = ressourcesElement.firstChild();
+    m_resources.clear();
+    QDomElement resourcesElement = root.firstChildElement( RESOURCES_TAG_NAME );
+    QDomNode node = resourcesElement.firstChild();
     while( !node.isNull() ){ //On parcourt toutes les ressources
         if( node.isElement() ){ //Seuls les lments nous intressent
             QDomElement element = node.toElement();            
-            if( element.tagName() == RESSOURCEFILE_TAG_NAME ){ //On l'utilise si c'est bien un fichier de ressource
+            if( element.tagName() == RESOURCEFILE_TAG_NAME ){ //On l'utilise si c'est bien un fichier de ressource
                 QDomNode filename = element.firstChild();
                 if( filename.isText() ){ //Ca doit tre du texte
                     QFileInfo ressourceFile( filename.toText().data() );
                     if( !ressourceFile.exists() ){                                            //Si le fichier n'existe pas dans le rpertoire indiqu, il est peut-tre
                         ressourceFile = QFileInfo( getImagePath( ressourceFile.fileName()) ); //dans le rpertoire d'images de la skin (ie une skin cre sur un autre pc)
                     }
-                    m_ressources.insert( element.attribute("id"), ressourceFile.absoluteFilePath() );
+                    m_resources.insert( element.attribute("id"), ressourceFile.absoluteFilePath() );
                 }
 
             }
@@ -418,7 +418,7 @@ void CSkinParameters::toUi(  )
     //ScreenIndex
     path <<  "#screenIndex";
     CCssSelection screenIndex = m_styleSheet.selection( path );
-         m_p_ui->cImagePicker_Index_BckgTexture->setImage( getImagePath( m_ressources.value("IndexPage_BckgTexture").absoluteFilePath() ) );
+         m_p_ui->cImagePicker_Index_BckgTexture->setImage( getImagePath( m_resources.value("IndexPage_BckgTexture").absoluteFilePath() ) );
          m_p_ui->cColorPicker_Index_BckgColor->setColor( screenIndex.property( "background-color" ));
          if( screenIndex.property( "background-size" ) == "cover" ){ 
              m_p_ui->checkBox_Index_BckgCover->setChecked(true);
@@ -445,7 +445,7 @@ void CSkinParameters::toUi(  )
     CCssSelection thumbsMosaic = m_styleSheet.selection( path );        
         m_p_ui->cColorPicker_Mosaic_BorderColor->setColor( thumbsMosaic.property("border-color") );
         m_p_ui->spinBox_Mosaic_BorderWidth->setValue( thumbsMosaic.property("border-width").remove("px").toInt() );
-        m_p_ui->cImagePicker_Mosaic_BckgTexture->setImage( m_ressources.value("Mosaic_BckgTexture").absoluteFilePath() );
+        m_p_ui->cImagePicker_Mosaic_BckgTexture->setImage( m_resources.value("Mosaic_BckgTexture").absoluteFilePath() );
         //background color is optional
         bool fHasBckgColor = (thumbsMosaic.property("ezwg-background-color-disabled") != "true");
         m_p_ui->cColorPicker_Mosaic_BckgColor->setEnabled( fHasBckgColor );
@@ -475,7 +475,7 @@ void CSkinParameters::toUi(  )
     //ScreenPhoto
     path <<  "#screenPhoto";
     CCssSelection screenPhoto = m_styleSheet.selection( path );
-        m_p_ui->cImagePicker_Photo_BckgTexture->setImage( getImagePath( m_ressources.value("PhotoPage_BckgTexture").absoluteFilePath() ) );
+        m_p_ui->cImagePicker_Photo_BckgTexture->setImage( getImagePath( m_resources.value("PhotoPage_BckgTexture").absoluteFilePath() ) );
         m_p_ui->cColorPicker_Photo_BckgColor->setColor( screenPhoto.property("background-color") );
         if( screenPhoto.property( "background-size" ) == "cover" ){ 
             m_p_ui->checkBox_Photo_BckgCover->setChecked(true);
@@ -486,7 +486,7 @@ void CSkinParameters::toUi(  )
     //Framing - cadre
     path << "div#cadrePhoto";
     CCssSelection photoFrame = m_styleSheet.selection( path );
-        m_p_ui->CImagePicker_PhotoFraming_Texture->setImage( getImagePath( m_ressources.value("PhotoFraming_Texture").absoluteFilePath() ));
+        m_p_ui->CImagePicker_PhotoFraming_Texture->setImage( getImagePath( m_resources.value("PhotoFraming_Texture").absoluteFilePath() ));
         m_p_ui->cColorPicker_PhotoFraming_Color->setColor( photoFrame.property("background-color") );
         m_p_ui->spinBox_PhotoFraming_Width->setValue( photoFrame.property("padding").remove("px").toInt() );
     path.clear();
@@ -526,8 +526,8 @@ void CSkinParameters::toUi(  )
         m_p_ui->cColorPicker_PhotoButtonsDisabled_BorderColor->setColor( buttonDisabled.property("border-color") );
     path.clear();
     //Button Icons
-    m_p_ui->CImagePicker_PreviousButton_Icon->setImage( getImagePath( m_ressources.value("PhotoButtonPrevious").absoluteFilePath() ));
-    m_p_ui->CImagePicker_NextButton_Icon->setImage( getImagePath( m_ressources.value("PhotoButtonNext").absoluteFilePath() ));
+    m_p_ui->CImagePicker_PreviousButton_Icon->setImage( getImagePath( m_resources.value("PhotoButtonPrevious").absoluteFilePath() ));
+    m_p_ui->CImagePicker_NextButton_Icon->setImage( getImagePath( m_resources.value("PhotoButtonNext").absoluteFilePath() ));
     //Navigation Divs
     path << "div#photoLefter";
     CCssSelection photoLeftAndRight = m_styleSheet.selection( path );
@@ -536,7 +536,7 @@ void CSkinParameters::toUi(  )
         if(  photoLeftAndRight.property( "background-color" ) == QString("transparent") ){
             m_p_ui->groupBox_PhotoNavBlocksBckg->setChecked( false );
         }
-        m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->setImage( getImagePath( m_ressources.value("PhotoNavBlocks_BckgTexture").absoluteFilePath() ));
+        m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->setImage( getImagePath( m_resources.value("PhotoNavBlocks_BckgTexture").absoluteFilePath() ));
         m_p_ui->cColorPicker_PhotoNavBlocks_BckgColor->setColor( photoLeftAndRight.property("background-color") );
 
     //-------------- ///////////////// MISC //////////////// ----------------//
@@ -582,13 +582,13 @@ QDomDocument CSkinParameters::toDomDocument( )
     root.appendChild( styleSheetElement );
 
     //Ressources
-    QDomElement ressourcesElement = document.createElement( RESSOURCES_TAG_NAME );
-    root.appendChild( ressourcesElement );
-    foreach( QString widget, m_ressources.keys() ) {
-        QDomElement fileElement = document.createElement( RESSOURCEFILE_TAG_NAME ); // <File id="widget">FileName</File>
+    QDomElement resourcesElement = document.createElement( RESOURCES_TAG_NAME );
+    root.appendChild( resourcesElement );
+    foreach( QString widget, m_resources.keys() ) {
+        QDomElement fileElement = document.createElement( RESOURCEFILE_TAG_NAME ); // <File id="widget">FileName</File>
         fileElement.setAttribute( "id",widget );
-        ressourcesElement.appendChild( fileElement );
-        fileElement.appendChild( document.createTextNode( m_ressources.value(widget).fileName() ) );
+        resourcesElement.appendChild( fileElement );
+        fileElement.appendChild( document.createTextNode( m_resources.value(widget).fileName() ) );
     }
     return document;
 }
@@ -633,16 +633,6 @@ CCssSheet CSkinParameters::toCss( ) const
 
 
 /*******************************************************************
-* QMap<QString,QFileInfo>  ressourceFiles( )
-* ------------------------
-* retourne la liste des ressources ncessaires  la cration de la skin
-********************************************************************/
-QMap<QString,QFileInfo>  CSkinParameters::ressourceFiles( ) const {
-    return m_ressources;
-}
-
-
-/*******************************************************************
 * saveSkin( const QDir & destFile, QStringList &errorMsgs )
 * ------------------------
 * Sauvegarde la skin sur le disque. Copie les fichiers ressources dans
@@ -680,8 +670,8 @@ bool CSkinParameters::saveSkin( const QString &destFile )
     
     //--- Copie des fichiers ressources ncessaires
     QDir outSkinPath = QFileInfo( destFile ).absolutePath();
-    m_ressourcesPath = QFileInfo( destFile ).fileName().remove(SKINSESSIONEXTENSION) + QString("_files/");
-    const QString skinImgPath =  m_ressourcesPath + QString(SKINRESIMGDIR);
+    m_resourcesPath = QFileInfo( destFile ).fileName().remove(SKINSESSIONEXTENSION) + QString("_files/");
+    const QString skinImgPath =  m_resourcesPath + QString(SKINRESIMGDIR);
     if( !outSkinPath.mkpath( skinImgPath ) || !outSkinPath.cd( skinImgPath ) ){
         m_lastErrors.append( CError(CError::DirectoryCreation, skinImgPath) );
         return false; //Il faut absolument un point de sortie : sinon on risque d'effacer des fichiers n'importe ou !
@@ -690,14 +680,14 @@ bool CSkinParameters::saveSkin( const QString &destFile )
     outSkinPath.setFilter( QDir::Files );
     foreach(QFileInfo fileInfo, outSkinPath.entryInfoList()) {
         //Attention : si on a ouvert la skin: il y a des chances qu'on essaie de rcrire au les fichiers ressources sur eux-mme ! Il faut viter a...
-        if( !m_ressources.contains( m_ressources.key(fileInfo) ) ){
+        if( !m_resources.contains( m_resources.key(fileInfo) ) ){
             if(fileInfo.isFile() && fileInfo.isWritable() ){
                 outSkinPath.remove( fileInfo.fileName() );
             }
         }
     }
     //Copie des fichiers
-    bool f_copySuccessful = copyRessources( outSkinPath );
+    bool f_copySuccessful = copyResources( outSkinPath );
     if( f_copySuccessful ){
         m_filePath = destFile;
         emit skinSaved( destFile );
@@ -708,17 +698,17 @@ bool CSkinParameters::saveSkin( const QString &destFile )
 
 
 /*******************************************************************
-* copyRessources( QDir outputDir )
+* copyResources( QDir outputDir )
 * ------------------------
 * Copie tous les fichiers ressources vers le rpertoire spcifi
 * In: (QDir) outputDir - rpertoire o copier les fichiers ressource
 * Return: true si succs, false si echec
 ********************************************************************/
-bool CSkinParameters::copyRessources( QDir outputDir )
+bool CSkinParameters::copyResources( QDir outputDir )
 {
     int size = m_lastErrors.size();
 
-    foreach( QFileInfo resourceFile, m_ressources )
+    foreach( QFileInfo resourceFile, m_resources )
     {
         QFileInfo destFileInfo( outputDir.absoluteFilePath(resourceFile.fileName()) );
         //Si il existe un fichier destination exatement identique au fichier source, pas la peine de s'embter
@@ -771,7 +761,7 @@ bool CSkinParameters::load( const QString &skinFileName )
 
     if( skinDoc.setContent( &skinFile, false, errorMsg, &ln, &col ) )
     {
-        m_ressourcesPath = skinFileNameCopy.remove(SKINSESSIONEXTENSION) + QString("_files/");
+        m_resourcesPath = skinFileNameCopy.remove(SKINSESSIONEXTENSION) + QString("_files/");
         m_filePath = skinFileName;
         fromDomDocument( skinDoc );
         emit skinOpened( skinFileName );
@@ -799,17 +789,17 @@ void CSkinParameters::check( QStringList* errorList, QStringList* warningList)
     //Maj
     fromUi();
     //Caractre invalide dans les noms des ressources
-    foreach( QFileInfo ressource, m_ressources )
+    foreach( QFileInfo ressource, m_resources )
     {
         if( ressource.completeBaseName().contains( CPlatform::forbiddenCharacters() )){
             errorList->append( QString("\"") + ressource.fileName() + QString("\" - ") + tr("invalid character in filename.") );
         }
     }
     //Prsence des boutons ncessaires
-    if( !m_ressources.contains("PhotoButtonPrevious") ){
+    if( !m_resources.contains("PhotoButtonPrevious") ){
         errorList->append( tr("Button \"Previous\" - an image is required.") );
     }
-    if( !m_ressources.contains("PhotoButtonNext") ){
+    if( !m_resources.contains("PhotoButtonNext") ){
         errorList->append( tr("Button \"Next\" - an image is required.") );
     }
     //Taille des blocs OK ?
@@ -874,22 +864,22 @@ QDomDocument CSkinParameters::convertFromOldVersion(  const QDomDocument &docume
 ********************************************************************/
 QString CSkinParameters::getImagePath( const QString &img ) const
 {
-    QDir dir = QDir( m_ressourcesPath );
+    QDir dir = QDir( m_resourcesPath );
     dir.cd( SKINRESIMGDIR );
     return dir.absoluteFilePath( img );
 }
 
 /*******************************************************************
-* removeEmptyRessources( const QString &img)
+* removeEmptyResources( const QString &img)
 * ------------------------
 * Enlve les fichiers "vides" de la liste des ressources.
 * ex: une image qui n'a pas t choisie (widget affichant "no image")
 ********************************************************************/
-void CSkinParameters::removeEmptyRessources( )
+void CSkinParameters::removeEmptyResources( )
 {
-	foreach( QFileInfo fileinfo, m_ressources ){
+	foreach( QFileInfo fileinfo, m_resources ){
 		if( !fileinfo.isFile() ){
-			m_ressources.remove( m_ressources.key( fileinfo ) );
+			m_resources.remove( m_resources.key( fileinfo ) );
 		}
 	}
 }
@@ -909,10 +899,10 @@ QString CSkinParameters::buttonImage( int button ) const
     switch( button )
     {
     case CSkinParameters::buttonNext:
-        filename = m_ressources.value("PhotoButtonNext").fileName();
+        filename = m_resources.value("PhotoButtonNext").fileName();
         break;
     case CSkinParameters::buttonPrevious:
-        filename = m_ressources.value("PhotoButtonPrevious").fileName();
+        filename = m_resources.value("PhotoButtonPrevious").fileName();
         break;
     default:
         filename = QString("Error");

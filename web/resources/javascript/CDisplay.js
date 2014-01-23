@@ -20,7 +20,7 @@ function CDisplay( p_properties, p_htmlStructure )
 {
     var that = this;
     this.html = p_htmlStructure;
-    this.html.photo.spinnerSrc = "ressources/images/ajax-loader.gif";
+    this.html.photo.spinnerSrc = "resources/images/ajax-loader.gif";
 
     this.properties = p_properties;
     this.carrousel = new CCarrousel( p_properties, this.html.photo );

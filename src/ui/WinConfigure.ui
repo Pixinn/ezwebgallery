@@ -22,7 +22,7 @@
    <string>Configure</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../ressources/GalleryDesigner.qrc">
+   <iconset resource="../resources/GalleryDesigner.qrc">
     <normaloff>:/icons/images/configure.png</normaloff>:/icons/images/configure.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -106,7 +106,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../ressources/GalleryDesigner.qrc"/>
+  <include location="../resources/GalleryDesigner.qrc"/>
  </resources>
  <connections/>
 </ui>

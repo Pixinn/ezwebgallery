@@ -46,17 +46,17 @@
 #define THUMBSPATH      "thumbnails"
 #define PHOTOSPATH      "images"
 #define RESOLUTIONPATH  "res"
-#define RESPATH		"ressources"
-#define CSSPATH		"ressources/css"
-#define RESIMGPATH      "ressources/images"
-#define RESEMOTICONSPATH  "ressources/images/smileys/"
+#define RESPATH		"resources"
+#define CSSPATH		"resources/css"
+#define RESIMGPATH      "resources/images"
+#define RESEMOTICONSPATH  "resources/images/smileys/"
 #define CSSINDEXSKINFILENAME "index-skin.css"
-#define JSPATH          "ressources/javascript"
+#define JSPATH          "resources/javascript"
 #define IMAGEFILEEXTENSION ".jpg"
 
 /**** skins ****/
 #define DEFAULTSKINNAME    "default"
-#define SKINRESDIR         "ressources"
+#define SKINRESDIR         "resources"
 #define SKINRESIMGDIR      "images"
 #define SKINCSSFILENAME    "skin.css"                             /*Fichier css qu'index.html doit inclure*/
 

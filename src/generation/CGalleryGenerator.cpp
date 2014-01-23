@@ -496,7 +496,7 @@ bool CGalleryGenerator::skinning( )
         return false;
     }
     outSkinPath.cd( RESIMGPATH );
-    if( !m_skinParameters.copyRessources(outSkinPath) ){
+    if( !m_skinParameters.copyResources(outSkinPath) ){
         foreach( CError error,  m_skinParameters.errors() ) {
             m_msgErrorList.append( PtrMessage(new CError(error)) );
         }
@@ -568,7 +568,7 @@ bool CGalleryGenerator::skinning( )
         htmlString.replace( "[META_OPENGRAPH]",	openGraphString );
         //------ FOOTER -------//
         //EZWebGallery Logo
-        htmlString.replace( "[EZWEBGALLERY_LOGO]", QString("<img src=\"ressources/images/EZWebGallery.png\" id=\"logo\" title=\"")
+        htmlString.replace( "[EZWEBGALLERY_LOGO]", QString("<img src=\"resources/images/EZWebGallery.png\" id=\"logo\" title=\"")
                                                             + tr("Photo gallery designed and generated using EZWebGallery.")
                                                             + QString("\" alt=\"EZWebGallery\"/>") );
 		//Add-this
@@ -589,11 +589,11 @@ bool CGalleryGenerator::skinning( )
         //------ BOUTONS (SCREEN PHOTO) -------//
         //Previous
         htmlString.replace( "[BUTTON_PREVIOUSPHOTO]", QString("<img alt=\"") + tr("Previous photo")
-                                                                +QString("\" class=\"photoButtonEnabled\" id=\"boutonPrevious\" src=\"ressources/images/")
+                                                                +QString("\" class=\"photoButtonEnabled\" id=\"boutonPrevious\" src=\"resources/images/")
                                                                 +m_skinParameters.buttonImage( CSkinParameters::buttonPrevious )+QString("\" />") );
         //Next
         htmlString.replace( "[BUTTON_NEXTPHOTO]", QString("<img alt=\"") + tr("Next photo")
-                                                            +QString("\" class=\"photoButtonEnabled\" id=\"boutonNext\" src=\"ressources/images/")
+                                                            +QString("\" class=\"photoButtonEnabled\" id=\"boutonNext\" src=\"resources/images/")
                                                             +m_skinParameters.buttonImage( CSkinParameters::buttonNext )+QString("\" />") );
 
         //---------------------//

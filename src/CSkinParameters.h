@@ -60,7 +60,6 @@ public:
     void fromUi( );                                              //Rcupre les donnes provenant de l'UI
     void fromDomDocument( QDomDocument & );                      //Rcupre les donnes provenant d'un QDomDocument
     void toUi(  ) /*const*/;                                               //Rempli l'UI = affichage des paramtres
-    QMap<QString,QFileInfo> ressourceFiles( ) const;                   //Retourne des infos sur les fichiers ressources ncessaires
     CCssSheet toCss( ) const;                                          //Cr une feuille de style CSS
     QString buttonImage( int ) const;                                  //Renvoie le nom du fichier de l'icone dsire
     QDomDocument toDomDocument( ) /*const*/;                               //Gnre un QDomDocument rempli des paramtres
@@ -68,7 +67,7 @@ public:
 
     bool load( const QString &);                                 //Chargement de la skin
     bool saveSkin( const QString & );         //Sauvegarde la skin. Retourne false si erreurs
-    bool copyRessources( QDir ) /*const */;             //Copie les fichiers de ressources vers le rpertoire spcifi
+    bool copyResources( QDir ) /*const */;             //Copie les fichiers de ressources vers le rpertoire spcifi
     void check( QStringList* , QStringList* );                   //Vrifie la skin et retourne les erreur et avertissements
     static QString defaultSkin( void );                          //Renvoie le chemin absolu de la skin par dfaut
     inline QList<CError> errors( void ) { //Retourne la dernire srie d'erreurs survenues
@@ -82,8 +81,7 @@ public:
 private:
     QDomDocument convertFromOldVersion( const QDomDocument &document, const int version );    //Convertion d'une skin d'une version prcdante en la version actuelle
     QString getImagePath( const QString & ) const;                     //Retourne le chemin absolu vers l'image
-    void constructRessources( );                                 //Construit le tableau de ressources
-    void removeEmptyRessources( );				                 //Enlve les fichiers vides de la liste de ressources
+    void removeEmptyResources( );				                 //Enlve les fichiers vides de la liste de ressources
 
 public:
     //Pour calculs
@@ -100,11 +98,11 @@ public:
 
 private:
     QString m_name;                             //Le nom de la skin
-    QString m_ressourcesPath;                   //Chemin vers les ressources ncessaires
+    QString m_resourcesPath;                   //Chemin vers les ressources ncessaires
     QString m_filePath;                         //Chemin vers la skin
     QList<CError> m_lastErrors;                 //Liste des dernires erreurs survenues
     Ui::SkinDesigner* m_p_ui;
-    QMap<QString,QFileInfo> m_ressources;      //widget name ; file info
+    QMap<QString,QFileInfo> m_resources;      //widget name ; file info
     CCssSheet m_styleSheet;
     unsigned int m_version;
     bool f_initialized;

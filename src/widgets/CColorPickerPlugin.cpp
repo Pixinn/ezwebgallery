@@ -41,7 +41,7 @@ QString CColorPickerPlugin::group() const
 
 QIcon CColorPickerPlugin::icon() const
 {
-    return QIcon(QLatin1String(":/ressources/ColorPicker_256.png"));
+    return QIcon(QLatin1String(":/resources/ColorPicker_256.png"));
 }
 
 QString CColorPickerPlugin::toolTip() const
