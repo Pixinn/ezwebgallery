@@ -28,6 +28,7 @@
 
 #include "CTerminalUi.h"
 #include "GlobalDefinitions.h"
+#include "CGalleryGeneratorFeeder.h"
 #include "CPlatform.h"
 #include "CCaption.h"
 #include "CPhotoDatabase.h"
@@ -174,7 +175,7 @@ void CTerminalUi::run( )
     cout << endl;
 
     //Launching generation
-    if( !m_galleryGenerator.generateGallery( m_projectParameters, m_skinParameters, propertiesList ) )  {
+    if( !m_galleryGenerator.generateGallery( CGalleryGeneratorFeeder(m_projectParameters, m_skinParameters, propertiesList) ) )  {
         cout << tr("The gallery could not be properly generated.");
         exit(0);
     }    

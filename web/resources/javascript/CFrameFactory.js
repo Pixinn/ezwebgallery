@@ -31,7 +31,7 @@ function CFrameFactory( p_photoList )
     }
     
     this.frame = function( $parent, id )  {
-        $parent.append( "<div id=\""+that.strFrame+"\"><div id=\""+that.strTitle+"\"><img id=\""+that.strClose+"\" src=\"ressources/images/close.gif\"></div><div id=\""+that.strPhoto+"\"></div><div class=\""+that.strCaption+"\"></div></div>" );
+        $parent.append( "<div id=\""+that.strFrame+"\"><div id=\""+that.strTitle+"\"><img id=\""+that.strClose+"\" src=\"resources/images/close.gif\"></div><div id=\""+that.strPhoto+"\"></div><div class=\""+that.strCaption+"\"></div></div>" );
         that.caption( $parent.find(that.getStrCaption()), id );
     }
     

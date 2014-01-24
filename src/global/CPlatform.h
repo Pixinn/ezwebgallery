@@ -29,6 +29,8 @@
 #include <QRegExp>
 #include <QDate>
 
+#include <cstdlib>
+
 class CError;
 
 /*****************************
@@ -52,6 +54,7 @@ public:
     static void setLanguage( const QString &language );       //Indique la langue de l'ui
     static QString appDataDir();				//Retourne le rpertoire o sont sauves les donnes persistantes du programme
     static QRegExp forbiddenCharacters();       //Retourne les caractres interdits (pour un nom de fichier par exemple)
+    static void limitOpenMPThreads(void);
 
     //Outils. Quand ils y en aura plus -> crer une classe CTools
     static QStringList getImagesInDir( const QDir &, QStringList filter = QStringList() ); //Retourne la liste des images d'un rpertoire

@@ -214,8 +214,12 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
     foreach( CPhotoProperties photoProperties, propertiesList )
     {
         //Mise à jour des propriétés avec les Tags exifs lus lors de la génération
+
+        /* ??? USELESS NOW ??? 
         CPhotoProperties* localProperties = m_photoDatabase.properties( photoProperties.fileName() );
         localProperties->setExifTags( photoProperties.exifTags() );
+        */
+
         //Updatating files properties in order not to regenerate non-updated photos
         m_photoDatabase.refreshFileInfo( photoProperties.fileName() );
     }
@@ -666,9 +670,6 @@ bool MainWin::onSaveSessionAs( )
 void MainWin::onHiDPI( int status )
 {
     if( status == Qt::Checked ) {
-        const unsigned int maxSz = 2560; //Nexus 10
-        m_ui->spinbox_PhotoMaxHSize->setValue( maxSz );
-        m_ui->spinBox_PhotoMaxVSize->setValue( maxSz );
         m_ui->comboBox_ImageQualityStrategy->setCurrentIndex( t_photosConf::OPTIMIZE_SCREENUSAGE );
     }
 }
@@ -934,7 +935,7 @@ void MainWin::generateGallery( )
                 }
 
                 //Génération
-                m_galleryGenerator.generateGallery( m_projectParameters, m_skinParameters, propertyList );
+                m_galleryGenerator.generateGallery( CGalleryGeneratorFeeder( m_projectParameters, m_skinParameters, propertyList ) );
             }
             else
             {

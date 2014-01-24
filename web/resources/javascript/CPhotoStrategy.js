@@ -61,15 +61,17 @@ function CPhotoStrategy( p_properties )
         var sizes = that.properties.photos.list[ numPhoto - 1].sizes;
         var suitableSizes = new Object();
         //Extracting all suitable sizes
-        var maxDim = Math.max( that.spaceRealPx.w, that.spaceRealPx.h );
+        //var maxDim = Math.max( that.spaceRealPx.w, that.spaceRealPx.h );
         $.each( sizes, function( key, size )
         {
-            if( size.width >= maxDim && size.height >= maxDim ) //suitable size found
+            if(  Math.max(size.width,size.height) >= Math.max( that.spaceRealPx.w, that.spaceRealPx.h ) ) //suitable size found
+            /* if (size.width >= maxDim || size.height >= maxDim ) */ 
             {
                 suitableSizes[ key ] = size;
                 f_OK = true;
             }
         } );
+        
         //Finding the smallest photo in the suitable size set
         //same format so we can compare only one dimension
         var minWidth = Number.MAX_VALUE;
@@ -81,7 +83,7 @@ function CPhotoStrategy( p_properties )
                 minWidth = suitableSizes[ key ].width;
                 res = key;
             }
-        } );
+        } );              
 
         return {    url: that.properties.defines.IMAGES_PATH  + "/" + res + "/" + that.properties.photos.list[ numPhoto - 1].filename,
                     size: { w: sizes[ res ].width,

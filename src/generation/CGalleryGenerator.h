@@ -31,7 +31,7 @@
 #include <QStateMachine>
 #include <QState>
 
-//#include "IUserInterface.h"
+#include "CGalleryGeneratorFeeder.h"
 #include "CPhotoProcessor.h"
 #include "CProjectParameters.h"
 #include "CPhotoProperties.h"
@@ -79,7 +79,7 @@ public:
     CGalleryGenerator( void );
     ~CGalleryGenerator( void );
     //Interface avec UI
-    bool generateGallery( CProjectParameters &, const CSkinParameters &, const QList<CPhotoProperties*> );
+    bool generateGallery( const CGalleryGeneratorFeeder & );
     bool isGenerationInProgress( void );
     void abordGeneration( void );
 
@@ -90,10 +90,6 @@ private:
     //-- interfaçage UI
     void debugDisplay( QString );		//Affichage d'un message de debug
     void displayProgressBar( int completion, QString color, const PtrMessage &message ); //Affiche un % d'avancement sur la progressBar
-    //-- tools
-    bool areImageAndThumbs( void ); //Returns true if the photos and the thumbnails tobe generated are present in the proper dirs
-    QMap<QString,QSize> computeThumbSizes( void ); //Computes the size of the thumbs to be generated
-    QMap<QString,QSize> computePhotoSizes( void ); //Computes the size of the photos to be generated
 
     ///// Attributs //////
     //Machine Etat
@@ -107,15 +103,11 @@ private:
     QState* m_p_skinning;
     QState* m_p_abording;
     //Paramètres de la galerie
-    CProjectParameters m_parameters;
+    CGalleryGeneratorFeeder m_feeder;
     QStringList m_captionsList;
     JSON::Root m_jsonRoot;
     CSkinParameters m_skinParameters;
     //Generation photos
-    static const int s_nbMosaicSizes = 8;
-    static const unsigned int s_thumbMosaicSizes[ s_nbMosaicSizes ];
-    QMap<QString,QSize> m_thumbSizes;
-    QList<CPhotoProperties> m_photoPropertiesList;
     QThreadPool* m_p_photoProcessorPool;    //Pool des threads effectuant les traitements. Un thread par photo
     PtrMessageList m_msgErrorList;
     QMap<int, QMap<QString,QSize> > m_photoSizes;      //Contient les files des tailles des photos gnres <id,file>

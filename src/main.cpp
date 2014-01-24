@@ -42,6 +42,7 @@
 #include "CGalleryGenerator.h"
 #include "CProjectParameters.h"
 #include "CMessage.h"
+#include "CPlatform.h"
 
 using namespace Magick;
 
@@ -50,9 +51,13 @@ using namespace Magick;
 int main(int argc, char *argv[])
 {
     int exitValue;
+    bool f_gui = ( argc == 1 ); //no args -> launch gui
 
     //Init Magick++
+    CPlatform::limitOpenMPThreads();
     InitializeMagick(*argv);
+
+    //Instantiate QApplication
     QApplication appli(argc, argv); //A INSTANCIER LE PLUS TOT POSSIBLE !
     QCoreApplication::setOrganizationName("EZWebGallery"); //Utile pour le stockage des QSettings
     QCoreApplication::setOrganizationDomain("ezwebgallery.org");
@@ -69,7 +74,7 @@ int main(int argc, char *argv[])
     
     //Deux possibilités : ouverture de la fenêtre ou éxecution à partir d'un terminal
     // ----------------- MODE FENETRE
-    if( argc == 1 )
+    if( f_gui )
     {
         //Instanciation fenetre
         MainWin* appWindow = new MainWin( galleryGenerator, projectParameters  );

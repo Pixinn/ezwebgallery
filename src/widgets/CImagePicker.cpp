@@ -1,6 +1,6 @@
 ﻿/* 
  *  EZWebGallery:
- *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
+ *  Copyright (C) 2011-2013 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,10 +28,10 @@
 
 // --- Dfinition des membres statiques
 QString CImagePicker::m_dirToBrowse = QDir::homePath (); //A mettre dans le cpp et non dans le .h : http://ubuntuforums.org/showthread.php?t=836043
-const QString CImagePicker::NO_IMAGE = QString( tr("no image") );
 
 
-CImagePicker::CImagePicker( QWidget* parent) : QLabel( parent )
+CImagePicker::CImagePicker( QWidget* parent) : QLabel( parent ),
+    NO_IMAGE( tr("no image") )
 {
     //UI
     setText( NO_IMAGE );

@@ -1,8 +1,6 @@
-ezwebgallery (0.19.4-0ubuntu1) precise; urgency=low
+ezwebgallery (0.51-0ubuntu1) saucy; urgency=low
 
-  * Bug correction: CR in caption could lead to a buggy gallery.
-  * New online manual.
-  * More internal usage of IMessage and CError.
-  * Modified highlight skin. Moria skin missing file corrected.  
+  * Better HiDPI support
+  * Better threading
 
- -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Wed, 22 May 2013 01:14:11 +0100
+ -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Wed, 31 Dec 2013 01:14:11 +0100

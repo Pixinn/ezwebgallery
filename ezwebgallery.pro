@@ -96,7 +96,8 @@ HEADERS += ./src/generation/CGalleryGenerator.h \
     ./src/CPhotoFeederDirectory.h \
     ./src/CPhotoDatabase.h \
     ./src/CThumbnailLoader.h \
-    ./src/Json.h
+    ./src/Json.h \
+    src/generation/CGalleryGeneratorFeeder.h
 
 SOURCES += ./src/main.cpp \
     ./src/generation/CGalleryGenerator.cpp \
@@ -125,17 +126,18 @@ SOURCES += ./src/main.cpp \
     ./src/CPhotoFeederDirectory.cpp \
     ./src/CPhotoDatabase.cpp \
     ./src/CThumbnailLoader.cpp \
-    ./src/Json.cpp
+    ./src/Json.cpp \
+    src/generation/CGalleryGeneratorFeeder.cpp
 
 FORMS += ./src/ui/mainwin.ui \
     ./src/ui/WinSkinDesigner.ui \
     ./src/ui/WinConfigure.ui
 
-TRANSLATIONS += ./src/ressources/languages/GalleryDesigner_en.ts \
-    ./src/ressources/languages/GalleryDesigner_fr.ts
+TRANSLATIONS += ./src/resources/languages/GalleryDesigner_en.ts \
+    ./src/resources/languages/GalleryDesigner_fr.ts
 
-RESOURCES = ./src/ressources/GalleryDesigner.qrc
-win32:RC_FILE = ./src/ressources/win32/GalleryDesigner.rc
+RESOURCES = ./src/resources/GalleryDesigner.qrc
+win32:RC_FILE = ./src/resources/win32/GalleryDesigner.rc
 
 ### POST BUILD STEPS : calling the deployment script
 #unix {
@@ -177,7 +179,7 @@ QMAKE_CLEAN += $$MINJS_DIR/common-min.js \
                $$MINJS_DIR/core/ \
                $$PWD/src/builddate.h \
                -r $$BUILDDIR \
-         #     -r $$PWD/deployment/common/data/ressources
+         #     -r $$PWD/deployment/common/data/resources
 
 QMAKE_DISTCLEAN += -r   $$BUILDDIR/ \
                    -r   $$PWD/src/GeneratedFiles/ \

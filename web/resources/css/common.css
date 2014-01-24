@@ -139,9 +139,13 @@ a:active {color: black;}
 		height:100%;
 }
 
-.debug{
-    color:red;
-    background:black;
-    text-align:left;
-    font-size:2.5em;
+#DEBUG{
+    position: relative;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: black;
+    color: red;
+    width: 100%;
+    display: none;
 }

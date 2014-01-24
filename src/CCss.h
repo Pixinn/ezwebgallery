@@ -75,12 +75,12 @@ public:
     bool operator==( const CCssSheet& );
     bool operator!=( const CCssSheet& );
     void clear( );                              //Efface le contenu de la feuille
-    CCssSelection selection( QStringList selectors ); //Rcupre une slection de la feuille de style
+    CCssSelection selection( QStringList selectors ) const; //Rcupre une slection de la feuille de style
     void addSelection( CCssSelection &selection );
     QMap<QString,CCssSelection> selections( );
     QString name( );
     void toStream( QTextStream & stream );
-    QDomElement toDomElement( QDomDocument & );         //Converti la feuille de style en QDomElement
+    QDomElement toDomElement( QDomDocument & ) const;         //Converti la feuille de style en QDomElement
     
 private:
     QString m_name;

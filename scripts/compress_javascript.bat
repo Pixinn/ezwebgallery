@@ -20,7 +20,7 @@ if not [%2] == [] goto :error
 :process
 
 rem script dir: %~dp0 ; read: http://ss64.com/nt/syntax-args.html
-SET JS_PATH=%~dp0..\web\ressources\javascript
+SET JS_PATH=%~dp0..\web\resources\javascript
 
 md %1
 

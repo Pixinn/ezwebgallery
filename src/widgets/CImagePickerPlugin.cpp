@@ -41,7 +41,7 @@ QString CImagePickerPlugin::group() const
 
 QIcon CImagePickerPlugin::icon() const
 {
-    return QIcon(QLatin1String(":/ressources/ImagePicker_256.png"));
+    return QIcon(QLatin1String(":/resources/ImagePicker_256.png"));
 }
 
 QString CImagePickerPlugin::toolTip() const

@@ -40,12 +40,12 @@ using namespace std;
 QMutex CPhotoProcessor::m_mutexFileReading;  //Mutex partag pour viter les acces disques concurrents
 
 
+//Copy of the parameters as the process will occur in its own thread
 CPhotoProcessor::CPhotoProcessor(   CPhotoProperties photoProperties,
                                     QDir outPath,           //Path de la gallerie gnre
-                                    QMap<QString,QSize>& photoSizes,
-                                    QMap<QString,QSize>& thumbSizes,
-                                    //QQueue<QSize> &sizes,   //Fifo des tailles  gnrer. Au moins deux: thumb + 1 taille de sortie
-                                    QQueue<int> &quality,   //Qualit des Jpegs gnrs. Au moins deux: thumb + 1 jpeg de sortie                                    
+                                    const QMap<QString,QSize>& photoSizes,
+                                    const QMap<QString,QSize>& thumbSizes,
+                                    unsigned int quality,   //Qualit des Jpegs gnrs. Au moins deux: thumb + 1 jpeg de sortie                                    
                                     t_sharpening &sharpening, //paramtres d'accentuation
                                     const CWatermark &watermark,
                                     volatile bool* fStopRequested,    //Boolen demandant l'arrt des traitements
@@ -53,8 +53,7 @@ CPhotoProcessor::CPhotoProcessor(   CPhotoProperties photoProperties,
 {
     m_photoProperties = photoProperties,
     m_outPath = outPath;
-    m_qualityQueue = quality;
-    //m_sizesQueue = sizes;
+    m_photoQuality = quality;
     m_photoSizes = photoSizes;
     m_thumbSizes = thumbSizes;
     m_watermark = watermark;
@@ -84,7 +83,7 @@ void CPhotoProcessor::run()
     bool  f_fileReadingSuccess;
     const QString thumbPrefix( THUMBPREFIXE );
     const QString thumbsPath( QString(THUMBSPATH) + "/" );
-    const QString photosPath( QString(PHOTOSPATH) + "/"/* + RESOLUTIONPATH*/ );
+    const QString photosPath( QString(PHOTOSPATH) + "/" );
     
     CPhoto photoOriginal;    //Image originale. Trop grande pour tre utilisee  chaque fois (trop lent), on en drive 2 "masters".
     CPhoto photoMaster;      //Master pour gnrer les photos = la photo de plus grande taille watermarke
@@ -94,7 +93,6 @@ void CPhotoProcessor::run()
     QString filename;
     QString fileToWrite;
     QSize size;
-    int saveQuality;
 
     //Annulation de la tache si demande
     m_p_mutexRemoteControl->lock();
@@ -181,13 +179,12 @@ void CPhotoProcessor::run()
         photoResized.unsharpmask( m_sharpening.radius, m_sharpening.sigma, m_sharpening.amount, m_sharpening.threshold );
         
         // 1e - Saving
-        saveQuality = m_qualityQueue.dequeue();
         QString filedir = photosPath + key;
         fileOutPath.mkdir( filedir );
         fileOutPath.cd( filedir );
         fileToWrite =  fileOutPath.absoluteFilePath( filename );
-        if( photoResized.save( fileToWrite, saveQuality ) ){
-            m_generatedParameters.addSize( key, QSize( photoResized.size().width(), photoResized.size().height() ) );
+        if( photoResized.save( fileToWrite, m_photoQuality ) ){
+            m_generatedParameters.addSize( key, photoResized.size() );
         }
         else{ //Failure !
             m_generatedParameters.setMessage( PtrMessage(new CError(CError::FileSaving, fileToWrite + " " + photoResized.error())) );
@@ -213,7 +210,7 @@ void CPhotoProcessor::run()
             // cancel if requested
             if( fCancel ) {
                 m_generatedParameters.setExitStatus( stopped );
-                m_generatedParameters.setPhotoProperties( m_photoProperties);
+                m_generatedParameters.setPhotoProperties( m_photoProperties );
                 emit processCompleted( m_generatedParameters );
                 return;
             }
@@ -233,13 +230,12 @@ void CPhotoProcessor::run()
             photoResized.unsharpmask( m_sharpening.radius, m_sharpening.sigma, m_sharpening.amount, m_sharpening.threshold );
 
             //2d - Saving
-            saveQuality = m_qualityQueue.dequeue();
             fileOutPath = m_outPath;
             QString filedir = photosPath + key;
             fileOutPath.mkdir( filedir );
             fileOutPath.cd( filedir );
             fileToWrite =  fileOutPath.absoluteFilePath( filename );
-            if( photoResized.save( fileToWrite, saveQuality ) ){
+            if( photoResized.save( fileToWrite, m_photoQuality ) ){
                 m_generatedParameters.addSize( key, QSize( photoResized.size().width(), photoResized.size().height() ) );
             }
             else{ //Failure !
@@ -284,8 +280,7 @@ void CPhotoProcessor::run()
             fileOutPath.mkdir( filedir );
             fileOutPath.cd( filedir );
             fileToWrite =  fileOutPath.absoluteFilePath( filename );
-            saveQuality = s_thumbQuality;
-            if( !photoResized.save( fileToWrite, saveQuality ) )
+            if( !photoResized.save( fileToWrite, s_thumbQuality ) )
             { //Echec de la sauvegarde !
                 m_generatedParameters.setMessage( PtrMessage(new CError(CError::FileSaving, fileToWrite + " " + photoResized.error())) );
                 m_generatedParameters.setExitStatus( failure );
@@ -327,7 +322,6 @@ CGeneratedPhotoSetParameters::CGeneratedPhotoSetParameters( ) :
 CGeneratedPhotoSetParameters::CGeneratedPhotoSetParameters( const CGeneratedPhotoSetParameters &other ) :
     QObject( )
 {
-//    this->m_generatedSizesQueue = other.m_generatedSizesQueue;
     this->m_generatedSizes = other.m_generatedSizes;
     this->m_photoProperties = other.m_photoProperties;
     this->m_exitStatus = other.m_exitStatus;

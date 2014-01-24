@@ -29,7 +29,7 @@ function CPhoto( id, targetedSize )
     
     this.f_loaded = false;
     this.spinner = new Image();
-    this.spinner.src = "ressources/images/ajax-loader.gif";
+    this.spinner.src = "resources/images/ajax-loader.gif";
     this.image = new Image();
         
     CPhoto.prototype.load = function( url, callback )
