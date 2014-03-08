@@ -2,8 +2,8 @@ cls
 
 echo off
 
-if [%1] == [] goto :error
-if not [%2] == [] goto :error
+if [%2] == [] goto :error
+if not [%3] == [] goto :error
 
 :process
 
@@ -72,10 +72,16 @@ copy %MAGICK_HOME%\VisualMagick\bin\IM_MOD_RL_png_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\IM_MOD_RL_tiff_.dll %TEMPDIR%
 
 REM --- COPYING THE BINARY FILE
-echo on
-copy %1 %TEMPDIR%
+copy %2 %TEMPDIR%
 
-cd %TEMPDIR%
+REM --- EXPORTING VERSION NUMBERS TO INSTALLER GENERATOR
+SET /P FULLTXT=<..\src\builddate.h
+SET BUILD_DATE=%FULLTXT:~20,10%
+echo BUILD_DATE: %BUILD_DATE%
+echo !define BUILD_DATE "%BUILD_DATE%" > ..\deployment\windows\version.nsh
+echo !define VERSION "%1" >> ..\deployment\windows\version.nsh
+
+
 echo DONE!
 goto :end
 
@@ -84,7 +90,7 @@ goto :end
 echo.
 echo ###############################################################################
 echo #
-echo # Usage prepare_realease BINARY
+echo # Usage prepare_realease VERSION_NUMBER(x.x) PATH_TO_BINARY
 echo #
 echo # In order to create a release you need to set the folowing env variables
 echo # + QDTIR: path to Qt
