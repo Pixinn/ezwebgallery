@@ -72,6 +72,7 @@ function CUserInterractions( p_properties, htmlstructure )
             that.enablePrevious();
             that.enableNext();
             that.fEnablePreviousNextRequired = false;
+            $("#currentSlide").data("hammer").options[ "prevent_default" ] = true;
         }
         else {
             that.fEnablePreviousNextRequired = true;
@@ -80,11 +81,15 @@ function CUserInterractions( p_properties, htmlstructure )
     
     this.enablePrevious = function()
     {
-        if( that.previousPhotoId >= 1 ) {
+        if( that.previousPhotoId >= 1 ) 
+        {
             TOOLS.trace("enable previous " + that.previousPhotoId);
+            //Button
             that.html.photo.buttons.$previous.removeClass()
                                               .addClass( that.buttonEnabledClass )
                                               .one( "click", that.onPreviousPhoto );
+            //Touch
+            that.html.photo.$current.hammer().bind( "swiperight", function(event) {  that.onPreviousPhoto();/*preventDefault();*/  } );            
         }
     }
     
@@ -94,15 +99,20 @@ function CUserInterractions( p_properties, htmlstructure )
         that.html.photo.buttons.$previous.removeClass()
                                          .addClass( that.buttonDisabledClass )
                                          .unbind( "click" );        
+        $("#currentSlide").hammer().unbind( "swiperight" );                                           
     }
     
     this.enableNext = function()
     {        
-        if( that.nextPhotoId <= that.properties.photos.list.length ) {
+        if( that.nextPhotoId <= that.properties.photos.list.length )
+        {
             TOOLS.trace("enable next " + that.nextPhotoId);
+            //Button
             that.html.photo.buttons.$next.removeClass()
                                           .addClass( that.buttonEnabledClass )
                                           .one( "click", that.onNextPhoto );
+            //Touch
+            that.html.photo.$current.hammer().bind( "swipeleft", function(event) {  that.onNextPhoto();/*preventDefault();*/  } );
         }
     }
     
@@ -112,6 +122,7 @@ function CUserInterractions( p_properties, htmlstructure )
             that.html.photo.buttons.$next.removeClass()
                                          .addClass( that.buttonDisabledClass )
                                          .unbind( "click" );      
+            $("#currentSlide").hammer().unbind( "swipeleft" );
        }
        
     this.enableThumbnailClick = function()
@@ -175,7 +186,7 @@ function CUserInterractions( p_properties, htmlstructure )
     this.onScrolled = function() {
         that.fCurrentlyScrolling = false;        
         that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
-        that.html.photo.$div.click( function() { that.onClosePhoto(); } );
+        //that.html.photo.$div.click( function() { that.onClosePhoto(); } );
         if( that.fEnablePreviousNextRequired ) {
             that.fEnablePreviousNextRequired = false;
             that.enablePreviousNext();
@@ -193,7 +204,7 @@ function CUserInterractions( p_properties, htmlstructure )
     {
         $(window).unbind("keydown")
                       .keydown( function( evt) { that.onKeyboardPhotoScr(evt); } );
-        that.html.photo.$div.click( function() { that.onClosePhoto(); } );
+        //that.html.photo.$div.click( function() { that.onClosePhoto(); } );
         that.html.index.mosaic.$thumbnails.unbind("click");
     }
     

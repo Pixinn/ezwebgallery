@@ -106,6 +106,7 @@ $(document).ready(function()
        },
     photo : {
         $screen : $("#screenPhoto"),
+        $current : $("#currentSlide"),
         $frame : $("#cadrePhoto"),
         $wrapper : $("#wrapperAffichagePhoto"),
         $div : $("#divPhoto"),
@@ -164,7 +165,6 @@ $(document).ready(function()
 
     //Building the mosaic / Loading the thumbnails
     progressBar.show();
-    //HtmlStructure.index.$screen.hide();
     HtmlStructure = Mosaic.buildHtml(); //loads the thumbnails and build the html
 
 } );

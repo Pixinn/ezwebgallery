@@ -26,7 +26,6 @@ function CCarrousel( p_properties, p_html )
     this.html.$slides = $(".slide");
     this.html.$deprecated = "NULL";
     this.html.$previous  = $("#previousSlide");
-    this.html.$current  = $("#currentSlide");
     this.html.$next  = $("#nextSlide");
     this.photoDisplayedLoadedEvent = new CEvent();
     this.scrollingEvent = new CEvent();
