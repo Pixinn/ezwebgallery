@@ -17,7 +17,7 @@
 */
 
 #screenProgress {
-        z-index:100;
+        z-index:10; /* In the foreground when starting */
 }
 
 #screenIndex{

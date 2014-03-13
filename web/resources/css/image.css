@@ -72,7 +72,7 @@
 /*  div en position *absolute* recouvrant tout l'écran.
 		Permet d'avoir un *z-index* et d'afficher les div contenus en tenant compte de ce z-index */
 #screenPhoto{
-		z-index:60;
+		z-index:1;     /* In the background when starting */
 		display:none;
 		background-color:black;
 }

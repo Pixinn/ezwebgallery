@@ -68,11 +68,15 @@ function CUserInterractions( p_properties, htmlstructure )
     
     this.enablePreviousNext = function()
     {
-        if(  !that.fCurrentlyScrolling ) { //Enabling buttons while scrolling is error prone
+        if(  !that.fCurrentlyScrolling )  //Enabling buttons while scrolling is error prone
+        {
             that.enablePrevious();
             that.enableNext();
             that.fEnablePreviousNextRequired = false;
-            $("#currentSlide").data("hammer").options[ "prevent_default" ] = true;
+            //These options may have to be call after every slides
+            //This is the case as prev/next are disabled during scrolling
+            that.html.photo.$current.data("hammer").options[ "prevent_default" ] = true;
+            that.html.photo.$current.data("hammer").options[ "swipe_velocity" ] = 0.7;
         }
         else {
             that.fEnablePreviousNextRequired = true;
@@ -99,7 +103,7 @@ function CUserInterractions( p_properties, htmlstructure )
         that.html.photo.buttons.$previous.removeClass()
                                          .addClass( that.buttonDisabledClass )
                                          .unbind( "click" );        
-        $("#currentSlide").hammer().unbind( "swiperight" );                                           
+        that.html.photo.$current.hammer().unbind( "swiperight" );                                           
     }
     
     this.enableNext = function()
@@ -122,7 +126,7 @@ function CUserInterractions( p_properties, htmlstructure )
             that.html.photo.buttons.$next.removeClass()
                                          .addClass( that.buttonDisabledClass )
                                          .unbind( "click" );      
-            $("#currentSlide").hammer().unbind( "swipeleft" );
+            that.html.photo.$current.hammer().unbind( "swipeleft" );
        }
        
     this.enableThumbnailClick = function()
@@ -186,7 +190,6 @@ function CUserInterractions( p_properties, htmlstructure )
     this.onScrolled = function() {
         that.fCurrentlyScrolling = false;        
         that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
-        //that.html.photo.$div.click( function() { that.onClosePhoto(); } );
         if( that.fEnablePreviousNextRequired ) {
             that.fEnablePreviousNextRequired = false;
             that.enablePreviousNext();
@@ -197,6 +200,8 @@ function CUserInterractions( p_properties, htmlstructure )
     {
         $(window).unbind("keydown");
         that.html.photo.$div.unbind("click");
+        that.html.photo.$screen.css("z-index", 1);
+        that.html.index.$screen.css("z-index", 10 );
         that.enableThumbnailClick();
     }
     
@@ -204,8 +209,9 @@ function CUserInterractions( p_properties, htmlstructure )
     {
         $(window).unbind("keydown")
                       .keydown( function( evt) { that.onKeyboardPhotoScr(evt); } );
-        //that.html.photo.$div.click( function() { that.onClosePhoto(); } );
         that.html.index.mosaic.$thumbnails.unbind("click");
+        that.html.index.$screen.css("z-index", 1);
+        that.html.photo.$screen.css("z-index", 10 );
     }
     
     this.onKeyboardPhotoScr = function( evt )
