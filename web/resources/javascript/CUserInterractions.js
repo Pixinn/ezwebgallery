@@ -102,7 +102,7 @@ function CUserInterractions( p_properties, htmlstructure )
         TOOLS.trace("disable previous");
         that.html.photo.buttons.$previous.removeClass()
                                          .addClass( that.buttonDisabledClass )
-                                         .unbind( "click" );        
+                                         .unbind( "click" );
         that.html.photo.$current.hammer().unbind( "swiperight" );                                           
     }
     
@@ -202,13 +202,13 @@ function CUserInterractions( p_properties, htmlstructure )
         that.html.photo.$div.unbind("click");
         that.html.photo.$screen.css("z-index", 1);
         that.html.index.$screen.css("z-index", 10 );
-        that.enableThumbnailClick();
+        that.enableThumbnailClick();        
     }
     
     this.onPhotoScreen  = function()
     {
         $(window).unbind("keydown")
-                      .keydown( function( evt) { that.onKeyboardPhotoScr(evt); } );
+                 .keydown( function( evt) { that.onKeyboardPhotoScr(evt); } );
         that.html.index.mosaic.$thumbnails.unbind("click");
         that.html.index.$screen.css("z-index", 1);
         that.html.photo.$screen.css("z-index", 10 );

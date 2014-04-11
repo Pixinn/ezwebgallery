@@ -87,7 +87,6 @@ $(document).ajaxError( function()
 $(document).ready(function()
 {
     g_properties.defines = Defines;
-    /*jQuery.fx.interval = 1000/Defines.FPS;*/
     
     HtmlStructure = 
     {
@@ -119,6 +118,9 @@ $(document).ready(function()
         }
        }
     };
+    
+    HtmlStructure.index.z_index = HtmlStructure.index.$screen.css("z-index");
+    HtmlStructure.photo.z_index = HtmlStructure.photo.$screen.css("z-index");
 
     //Creating instances
     Mosaic = new CMosaic( g_properties, HtmlStructure );
@@ -164,7 +166,7 @@ $(document).ready(function()
     });
 
     //Building the mosaic / Loading the thumbnails
-    progressBar.show();
+    progressBar.show();    
     HtmlStructure = Mosaic.buildHtml(); //loads the thumbnails and build the html
 
 } );

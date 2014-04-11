@@ -20,12 +20,6 @@
         z-index:10; /* In the foreground when starting */
 }
 
-#screenIndex{
-		display:block;
-		position:relative; /* Pour résoudre un bug de ie6 : comme indexwrapper est relatif il faut aussi que son parent soit relatif pour que overflow::hidden marche bien */        
-        background-attachment: fixed;
-        background-repeat: repeat;
-} 
 
 
 div#indexTitle{
@@ -53,8 +47,6 @@ ul.indexNavigation li {
 
 #screenIndex {
     display:block;
-    height:100%;
-    min-width:100%;
     overflow:auto;
 }
 
