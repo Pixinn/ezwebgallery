@@ -51,7 +51,7 @@ jQuery.fn.verticalCenter = function( offset ) {
      var parent = obj.parent( );
      if( obj.is(':visible') && parent.is(':visible') ) { //Doesn't properly work if object or its parent are not visible
             var top;
-            top =( parent.height( ) - obj.outerHeight( )  )/ 2 - offset;
+            top =( parent.innerHeight( ) - obj.outerHeight( )  )/ 2 - offset;
             top = Math.max( top, 0 ); // No offset < 0! They lead to positionning bugs.
             obj.css("top",top);
         }

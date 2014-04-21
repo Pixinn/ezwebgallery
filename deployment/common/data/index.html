@@ -11,9 +11,13 @@
         [META_CONTENT]
         <!-- FB OpenGraph !-->
         [META_OPENGRAPH]
+        <!-- Safari full screen : https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html !-->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
         <!-- L'ordre des inclusions est important ! !-->
-            <!--[if lt IE 9]>
+        <!--[if lt IE 9]>
+            <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
             <script src="resources/javascript/jquery/jquery-1.x-min.js"></script>
         <![endif]-->
         <!--[if gte IE 9]><!-->
@@ -89,6 +93,11 @@
         <!-- Permet à l'élement d'afficher/cacher tous ces blocs d'un seul coup !-->
 
         <div id="screenPhoto" class="fullScreen">
+            <div id="toolbar">
+                <li><img src="resources/images/toolbar_icon_white_browse.png" id="boutonIndex"></li>
+                <!--<li><img src="resources/images/toolbar_icon_caption.png"></li>
+                <li><img src="resources/images/toolbar_icon_share.png"></li> !-->
+            </div>
             <!-- photoLefter et photoRighter doivent se trouver AVANT wrapperAffichagePhoto pour avoir trois colonnes.
                  cf. http://www.alsacreations.com/tuto/lire/588-design-trois-colonnes-positionnement-flottant.html !-->
             <div  class="leftZone" id="photoLefter"> <!-- A gauche de la photo !-->
@@ -107,7 +116,7 @@
                         <div class="slide" id="currentSlide">
                             <div id="cadrePhoto">
                                 <div id="photoTitle">
-                                    <img id="boutonIndex" src="resources/images/close.gif">
+                                    
                                 </div>
                                 <div id="divPhoto">
                                     <!-- runtime generated content !-->                        

@@ -47,10 +47,13 @@ function CCarrousel( p_properties, p_html )
         var image = photo.getImage();
         $image = $( image );
         
-        if( photo.isLoaded() == true ) { //If not the spinner, add the border
+        //If not the spinner, add the border
+        if( photo.isLoaded() == true ) { 
             $image.removeClass()
                        .addClass( that.html.photoClass );
         }
+
+        
         $div.append( image );                
         
         $div.width( $image.outerWidth() )
@@ -134,7 +137,7 @@ function CCarrousel( p_properties, p_html )
         that.html.$div = that.html.$frame.find( that.frameFactory.getStrPhoto() );
         that.html.$title = that.html.$frame.find( that.frameFactory.getStrTitle() );
         that.html.$caption = that.html.$frame.find( that.frameFactory.getStrCaption() );
-        that.html.buttons.$close = that.html.$title.find( that.frameFactory.getStrClose() );    
+        //that.html.buttons.$close = that.html.$title.find( that.frameFactory.getStrClose() );    
         that.html.$slides = $(".slide");
     }
     
@@ -144,6 +147,7 @@ function CCarrousel( p_properties, p_html )
         that.prevPhoto = id - 1;
         that.nextPhoto = id + 1;
     }
+    
     
     this.scroll = function( $target )
     {
