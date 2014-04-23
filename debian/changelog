@@ -1,6 +1,5 @@
-ezwebgallery (0.51-0ubuntu1) saucy; urgency=low
+ezwebgallery (0.52-0ubuntu1) saucy; urgency=low
 
-  * Better HiDPI support
-  * Better threading
+    * Touch driven slides
 
- -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Wed, 31 Dec 2013 01:14:11 +0100
+ -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Wed, 23 Apr 2014 23:05:11 +0100

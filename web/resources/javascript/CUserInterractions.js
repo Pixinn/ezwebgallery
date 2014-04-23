@@ -199,7 +199,6 @@ function CUserInterractions( p_properties, htmlstructure )
     this.onIndexScreen  = function()
     {
         $(window).unbind("keydown");
-        that.html.photo.$div.unbind("click");
         that.html.photo.$screen.css("z-index", 1);
         that.html.index.$screen.css("z-index", 10 );
         that.enableThumbnailClick();        

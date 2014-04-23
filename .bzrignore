@@ -262,3 +262,4 @@ build/.obj/qrc_GalleryDesigner.sbr
 build/.obj/WinConfigure.sbr
 build/.obj/WinSkinDesigner.sbr
 deployment/windows/version.nsh
+*.exe

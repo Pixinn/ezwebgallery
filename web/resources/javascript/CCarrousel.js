@@ -135,9 +135,7 @@ function CCarrousel( p_properties, p_html )
         that.html.$next  = $("#nextSlide");
         that.html.$frame = that.html.$current.find( that.frameFactory.getStrFrame() );
         that.html.$div = that.html.$frame.find( that.frameFactory.getStrPhoto() );
-        that.html.$title = that.html.$frame.find( that.frameFactory.getStrTitle() );
         that.html.$caption = that.html.$frame.find( that.frameFactory.getStrCaption() );
-        //that.html.buttons.$close = that.html.$title.find( that.frameFactory.getStrClose() );    
         that.html.$slides = $(".slide");
     }
     

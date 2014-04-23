@@ -109,7 +109,6 @@ $(document).ready(function()
         $frame : $("#cadrePhoto"),
         $wrapper : $("#wrapperAffichagePhoto"),
         $div : $("#divPhoto"),
-        $title : $("#photoTitle"),
         $caption :$(".photoCaption"),
         buttons : {
                 $previous : $("#boutonPrevious"),
