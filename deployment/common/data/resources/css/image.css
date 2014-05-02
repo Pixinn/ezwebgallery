@@ -54,7 +54,6 @@
     min-width:50px;
     height:100%;
     text-align:left;
-    background-color:#111111;
     border-color:black;
     border: 0px 3px 0px 0px;
 }
@@ -169,7 +168,7 @@ div#photoRighter{
 	
 /* NO PREV / NEXT BUTTONS FOR TOUCH ENABLED SMARTPHONES */
 @media only screen 
-and (max-device-width : 960px) {
+and (max-device-width : 801px) {
 
     .touch div#photoLefter {
         display:none;

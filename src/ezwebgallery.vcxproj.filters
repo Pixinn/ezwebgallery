@@ -280,6 +280,9 @@
     <ClCompile Include="generation\CGalleryGeneratorFeeder.cpp">
       <Filter>Source Files\generation</Filter>
     </ClCompile>
+    <ClCompile Include="generation\CToolbar.cpp">
+      <Filter>Source Files\generation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="CPhoto.h">
@@ -350,6 +353,9 @@
     </CustomBuild>
     <CustomBuild Include="global\CWarning.h">
       <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="generation\CToolbar.h">
+      <Filter>Header Files\generation</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -588,7 +594,6 @@
     <CustomBuild Include="CProjectParameters.h" />
     <CustomBuild Include="CSkinParameters.h" />
     <CustomBuild Include="CCaptionManager.h" />
-    <CustomBuild Include="CGalleryGenerator.h" />
     <CustomBuild Include="CPhotoProcessor.h" />
     <CustomBuild Include="CPhotoProperties.h" />
     <CustomBuild Include="CProjectParameters.h" />

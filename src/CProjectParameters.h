@@ -131,7 +131,7 @@ public:
     bool f_hiDpi;
     bool f_manualConf;
 
-    //Ces Ã©numrations doivent correspondre Ã  la position des items dans les comboboxs
+    //Ces énumérations doivent correspondre Ã  la position des items dans les comboboxs
     enum e_optimizationStrategy
     {
         OPTIMIZE_QUALITY = 0,

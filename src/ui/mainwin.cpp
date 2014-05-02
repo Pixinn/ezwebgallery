@@ -211,15 +211,7 @@ void MainWin::onForceStoppedFinished( PtrMessageList errorMessages )
 void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesList )
 {
     
-    foreach( CPhotoProperties photoProperties, propertiesList )
-    {
-        //Mise à jour des propriétés avec les Tags exifs lus lors de la génération
-
-        /* ??? USELESS NOW ??? 
-        CPhotoProperties* localProperties = m_photoDatabase.properties( photoProperties.fileName() );
-        localProperties->setExifTags( photoProperties.exifTags() );
-        */
-
+    foreach( CPhotoProperties photoProperties, propertiesList )    {
         //Updatating files properties in order not to regenerate non-updated photos
         m_photoDatabase.refreshFileInfo( photoProperties.fileName() );
     }

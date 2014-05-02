@@ -55,7 +55,7 @@ function CDisplay( p_properties, p_htmlStructure )
     this.displayPhoto = function( id )
     {
         that.idCurrentPhoto = id;
-        that.url.setHash( id );
+        //that.url.setHash( id );
         that.html.photo.$screen.fadeIn(400, function() {
             that.html.index.$screen.hide();
         });
@@ -70,7 +70,7 @@ function CDisplay( p_properties, p_htmlStructure )
 
     //back to index
     this.hidePhoto = function( ) {
-        that.url.clearHash();
+        //that.url.clearHash();
         that.html.index.$screen.show();
         
         //center mosaic on current photo
@@ -123,13 +123,15 @@ function CDisplay( p_properties, p_htmlStructure )
 
     this.onPrevious = function()
     {
-        that.url.setHash( --that.idCurrentPhoto );
+        //that.url.setHash( --that.idCurrentPhoto );
+        that.idCurrentPhoto--;
         that.load( that.idCurrentPhoto, that.carrousel.previous );
     }
 
     this.onNext = function()
     {
-        that.url.setHash( ++that.idCurrentPhoto );
+        //that.url.setHash( ++that.idCurrentPhoto );
+        that.idCurrentPhoto++;
         that.load( that.idCurrentPhoto, that.carrousel.next );
     }
 

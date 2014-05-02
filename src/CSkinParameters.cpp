@@ -46,7 +46,7 @@
 *****************************************************/
 CSkinParameters::CSkinParameters() :
     QObject(),
-    f_initialized( false )
+    f_initialized( false ), m_toolbar( QColor("white") )
 {        
     //--- Inits
     m_styleSheet = CCssSheet("skin");
@@ -56,7 +56,8 @@ CSkinParameters::CSkinParameters() :
 
 
 CSkinParameters::CSkinParameters( const CSkinParameters & other ) :
-    QObject()
+    QObject(),
+    m_toolbar( other.m_toolbar )
 {
     *this = other;
 }
@@ -86,6 +87,7 @@ CSkinParameters& CSkinParameters::operator=(const CSkinParameters &source)
         this->m_filePath = source.m_filePath;
         this->m_version = source.m_version;
         this->f_initialized = source.f_initialized;
+        this->m_toolbar = source.m_toolbar;
     }
     return *this;
 }
@@ -108,6 +110,7 @@ bool CSkinParameters::operator==( const CSkinParameters &source)
     if( this->m_filePath != source.m_filePath ){    return false;   }
     if( this->m_version != source.m_version ){ return false; }
     if( this->f_initialized != source.f_initialized ){ return false; }
+    if( this->m_toolbar != source.m_toolbar ){ return false; }
     return true;
 }
 
@@ -259,6 +262,12 @@ void CSkinParameters::fromUi( )
         photoCaptions.setProperty( QString("font-size"), QString::number(m_p_ui->doubleSpinBox_PhotoCaption_FontSize->value()) + QString("em")  );
         photoCaptions.setProperty( QString("color"), m_p_ui->cColorPicker_PhotoCaption_TextColor->value() );
     m_styleSheet.addSelection( photoCaptions );
+    
+    //Toolbar
+    m_toolbar = CToolbar(  m_p_ui->cColorPicker_PhotoFraming_Color->value() );
+    CCssSelection toolbarCss = m_toolbar.getCss();
+    m_styleSheet.addSelection( toolbarCss );
+
     //Buttons
     int buttonBorderW = m_p_ui->spinBox_PhotoButtonsEnabled_BorderWidth->value(); //Idem pour enabled / disabled
     int buttonHoveredBorderW = m_p_ui->spinBox_PhotoButtonsHovered_BorderWidth->value();
@@ -359,6 +368,11 @@ void CSkinParameters::fromDomDocument( QDomDocument &document )
     selectors.clear();
     selectors << ".thumbsWrapper";
     CCssSelection thumbsMosaic = m_styleSheet.selection( selectors );
+    //Update toolbar's style
+    selectors.clear();
+    selectors << "div#cadrePhoto";
+    CCssSelection photoFrame = m_styleSheet.selection( selectors );
+    m_toolbar = CToolbar(  QColor(photoFrame.property("background-color")) );
     //Properties
     setName( rootAttributes.namedItem( "name" ).nodeValue() );
     QDomElement miscProperties = root.firstChildElement( "properties" );
@@ -903,6 +917,9 @@ QString CSkinParameters::buttonImage( int button ) const
         break;
     case CSkinParameters::buttonPrevious:
         filename = m_resources.value("PhotoButtonPrevious").fileName();
+        break;
+    case CSkinParameters::toolbar:
+        filename = m_toolbar.getHtml();
         break;
     default:
         filename = QString("Error");
