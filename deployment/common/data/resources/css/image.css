@@ -38,18 +38,83 @@
 #boutonIndex{
     display:block;
     cursor:pointer;
-    background-color:black;
-    float:right;
-    border: 1px;
-    border-color: black;
 }
 
 #boutonIndex:hover{
-    background-color:#CC0000;
+    background-color:#777777;
 }
 
 /* ---- */
 
+/*********** TOOLBAR ****************/
+/* lanscape (default) & common */
+#toolbar {
+    float:left;
+    width:4%;
+    min-width:50px;
+    height:100%;
+    text-align:left;
+    border-color:black;
+    border: 0px 3px 0px 0px;
+}
+
+#toolbar li {
+  display: inline-block;
+  margin : 1em 0 2em 0;
+  width: 100%;
+  height: auto;
+}
+
+#toolbar li img {
+  min-width:50px;
+  width: 100%;
+  height: auto;
+}
+
+/* All Smartphones landscape */
+/* http://code-tricks.com/css-media-queries-for-common-devices/ */
+@media only screen 
+and (max-device-width : 960px) 
+and (orientation: landscape){
+    #toolbar {
+        width:7%;
+    }
+}
+
+/* portrait */
+@media only screen
+and (orientation: portrait) {
+    #toolbar {
+        float:none;
+        width:100%;
+        height:4%;
+        min-height:50px;
+        border: 0px 0px 3px 0px;
+    }
+
+    #toolbar li {
+      display: inline-block;
+      margin : 0 1em 0 1em;
+      width: auto;
+      height: 100%;
+    }
+
+    #toolbar li img {
+      min-height:50px;
+      height: 100%;
+      width: auto;
+    }
+}
+
+/* All Smartphones portrait */
+@media only screen 
+and (max-device-width : 960px) 
+and (orientation: portrait){
+    #toolbar {
+        height:7%;
+    }
+}
+/********************************************/
 
 
 
@@ -72,7 +137,7 @@
 /*  div en position *absolute* recouvrant tout l'écran.
 		Permet d'avoir un *z-index* et d'afficher les div contenus en tenant compte de ce z-index */
 #screenPhoto{
-		z-index:60;
+		z-index:1;     /* In the background when starting */
 		display:none;
 		background-color:black;
 }
@@ -101,8 +166,24 @@ div#photoRighter{
 	background-color: transparent;
 }
 	
+/* NO PREV / NEXT BUTTONS FOR TOUCH ENABLED SMARTPHONES */
+@media only screen 
+and (max-device-width : 801px) {
+
+    .touch div#photoLefter {
+        display:none;
+    }
+    
+    .touch div#photoRighter{	
+        display:none;
+    }
+}
+
+	
 div#wrapperAffichagePhoto{
 	background-color: transparent;
+    width:auto;
+    height:100%;
 }
 /**********************************************************/
 
@@ -155,10 +236,6 @@ div#divPhoto{
 	background-color:black;
 }
 
-div#divPhoto img{
-    cursor:pointer;
-}
-
 
 .mainPhoto{	/* La photo proprement dite. Classe ajoutée au runtime */
 	margin: 0px;
@@ -191,11 +268,4 @@ div.photoCaption {
 }
 /**************************************/
 	
-/********************* Titre ******************/
-div#photoTitle{
-	display:block;           /*OBLIGATOIRE SINON BUG SOUS IE6 */
-	width: 100%;			 /*OBLIGATOIRE SINON BUG SOUS IE6 */
-	font-style:normal;		/* MODIFIABLE */ 
-	text-align:center;		 /*OBLIGATOIRE SINON BUG SOUS IE6 */
-    min-height: 15px;
-}
+

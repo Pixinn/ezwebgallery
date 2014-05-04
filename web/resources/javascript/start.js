@@ -51,7 +51,7 @@ jQuery.fn.verticalCenter = function( offset ) {
      var parent = obj.parent( );
      if( obj.is(':visible') && parent.is(':visible') ) { //Doesn't properly work if object or its parent are not visible
             var top;
-            top =( parent.height( ) - obj.outerHeight( )  )/ 2 - offset;
+            top =( parent.innerHeight( ) - obj.outerHeight( )  )/ 2 - offset;
             top = Math.max( top, 0 ); // No offset < 0! They lead to positionning bugs.
             obj.css("top",top);
         }
@@ -87,7 +87,6 @@ $(document).ajaxError( function()
 $(document).ready(function()
 {
     g_properties.defines = Defines;
-    /*jQuery.fx.interval = 1000/Defines.FPS;*/
     
     HtmlStructure = 
     {
@@ -106,10 +105,10 @@ $(document).ready(function()
        },
     photo : {
         $screen : $("#screenPhoto"),
+        $current : $("#currentSlide"),
         $frame : $("#cadrePhoto"),
         $wrapper : $("#wrapperAffichagePhoto"),
         $div : $("#divPhoto"),
-        $title : $("#photoTitle"),
         $caption :$(".photoCaption"),
         buttons : {
                 $previous : $("#boutonPrevious"),
@@ -118,6 +117,9 @@ $(document).ready(function()
         }
        }
     };
+    
+    HtmlStructure.index.z_index = HtmlStructure.index.$screen.css("z-index");
+    HtmlStructure.photo.z_index = HtmlStructure.photo.$screen.css("z-index");
 
     //Creating instances
     Mosaic = new CMosaic( g_properties, HtmlStructure );
@@ -163,8 +165,7 @@ $(document).ready(function()
     });
 
     //Building the mosaic / Loading the thumbnails
-    progressBar.show();
-    //HtmlStructure.index.$screen.hide();
+    progressBar.show();    
     HtmlStructure = Mosaic.buildHtml(); //loads the thumbnails and build the html
 
 } );

@@ -40,8 +40,6 @@ function CDisplay( p_properties, p_htmlStructure )
         if( that.html.photo.$screen.is(":visible") === true )
         {
             that.fitPhoto( that.carrousel.getCurrentPhoto() );
-            that.html.photo.buttons.$previous.verticalCenter(0);
-            that.html.photo.buttons.$next.verticalCenter(0);
             that.carrousel.centerViewport(); //We need to reposition the viewport to adapt to the new slides' size
         }
     } );
@@ -57,11 +55,11 @@ function CDisplay( p_properties, p_htmlStructure )
     this.displayPhoto = function( id )
     {
         that.idCurrentPhoto = id;
-        that.url.setHash( id );
+        //that.url.setHash( id );
         that.html.photo.$screen.fadeIn(400, function() {
             that.html.index.$screen.hide();
         });
-        that.html.photo.buttons.$next.verticalCenter(0);
+        that.html.photo.buttons.$next.verticalCenter( that.computeToolbarTopHeigth()/2 );
         that.html.photo.buttons.$previous.css("top",  that.html.photo.buttons.$next.css("top") ); //no v center on previous to correct an ie8 bug
         
         that.setSpace( that.computeAvailableSpace() );
@@ -72,7 +70,7 @@ function CDisplay( p_properties, p_htmlStructure )
 
     //back to index
     this.hidePhoto = function( ) {
-        that.url.clearHash();
+        //that.url.clearHash();
         that.html.index.$screen.show();
         
         //center mosaic on current photo
@@ -125,13 +123,15 @@ function CDisplay( p_properties, p_htmlStructure )
 
     this.onPrevious = function()
     {
-        that.url.setHash( --that.idCurrentPhoto );
+        //that.url.setHash( --that.idCurrentPhoto );
+        that.idCurrentPhoto--;
         that.load( that.idCurrentPhoto, that.carrousel.previous );
     }
 
     this.onNext = function()
     {
-        that.url.setHash( ++that.idCurrentPhoto );
+        //that.url.setHash( ++that.idCurrentPhoto );
+        that.idCurrentPhoto++;
         that.load( that.idCurrentPhoto, that.carrousel.next );
     }
 
@@ -146,8 +146,11 @@ function CDisplay( p_properties, p_htmlStructure )
     
     this.setSpace = function( space )
     {
-        that.availableSpace = space;
-        that.carrousel.setSpace( space );
+        var mySpace = {};
+        mySpace.h = space.h - that.computeToolbarTopHeigth();
+        mySpace.w = space.w;
+        that.availableSpace = mySpace;
+        that.carrousel.setSpace( mySpace );
     }
     
     this.load = function( id, loadFct ) //loadFct( id ) : function used to fetch the photo
@@ -173,7 +176,7 @@ function CDisplay( p_properties, p_htmlStructure )
         //NOTE : only sibling divs are considerd
         //This allows to correct an IE6 bug.
         for(var i = 0; i < that.html.photo.$wrapper.siblings().length; i++){
-            widthWasted += that.html.photo.$wrapper.siblings().eq(i).outerWidth( );
+      //      widthWasted += that.html.photo.$wrapper.siblings().eq(i).outerWidth( );
     }
         //non available space
         var frameBorderSize = parseInt( that.html.photo.$frame.css("padding-top").replace("px","") );
@@ -181,15 +184,7 @@ function CDisplay( p_properties, p_htmlStructure )
         //Du coup il faut que:	+ g_$divDisplayZoneName.siblings()::margin = 0px
         //+ g_$divDisplayZoneName::border=0 et ::margin=0
         var height = that.html.photo.$wrapper.innerHeight() - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - wastedPixelTop;
-        var width =  that.html.$window.innerWidth( ) - widthWasted - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - ie6BugCorrection;
-
-        //Made access to HiDPI picture impossible on non HiDpi bu hiRes screens
-        /*if( height > that.properties.photos.technical.maxSize.height ) {
-            height = that.properties.photos.technical.maxSize.height;
-        }
-        if( width > that.properties.photos.technical.maxSize.width ) {
-            width = that.properties.photos.technical.maxSize.width;
-        }*/
+        var width =  that.html.photo.$wrapper.innerWidth( ) - widthWasted - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - ie6BugCorrection;
 
         return { h: height, w: width };
     }
@@ -217,17 +212,33 @@ function CDisplay( p_properties, p_htmlStructure )
             }        
         }
         
-        //resizing (capped)
+        var toolbarHeight_2 = that.computeToolbarTopHeigth() / 2; //<<-- IT SHOULDN'T BE NECESSARY TO OFFSET THE VERTICAL CENTERING!!!
+        //resizing (capped) and vertical centering the photo
         photo.resize( newPhotoSz );
-    
         that.html.photo.$div.width( photo.size.w + 2*that.properties.photos.technical.decoration.padding )
                             .height( photo.size.h + 2*that.properties.photos.technical.decoration.padding );
         that.html.photo.$frame.width( that.html.photo.$div.outerWidth() )
-                                        .height( that.html.photo.$div.outerHeight() + that.html.photo.$title.outerHeight() +that.html.photo.$caption.outerHeight() )
+                                        .height( that.html.photo.$div.outerHeight() + that.html.photo.$caption.outerHeight() )
                                         .css("position","relative")
-                                        .verticalCenter( 0 );   
+                                        .verticalCenter( toolbarHeight_2 );   
 
-        photo.verticalCenter( 0 );       
+        photo.verticalCenter( 0 );  //inside its frame
+        
+        that.html.photo.buttons.$previous.verticalCenter( toolbarHeight_2 );
+        that.html.photo.buttons.$next.verticalCenter( toolbarHeight_2 );        
+    }
+    
+    //Computes the height of the toolbar on the top.
+    //0 if vertical toolbar
+    this.computeToolbarTopHeigth = function() 
+    {
+        //Toolbar height
+        var toolbarHeight = $("#toolbar").outerHeight();
+        if( toolbarHeight > $(document).height() / 2 ) { //if vertical
+            toolbarHeight = 0;
+        }
+        TOOLS.trace("Toolbar up space: " + toolbarHeight +"px");
+        return toolbarHeight;
     }
 
 }

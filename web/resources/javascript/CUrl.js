@@ -26,7 +26,6 @@ function CUrl( p_photoList )
 {
     var that = this;
     this.photoStr = "Photo";
-    //this.mosaicStr = "Mosaic";
     this.photoList = p_photoList;
     
     this.setHash = function( id )
@@ -47,7 +46,7 @@ function CUrl( p_photoList )
             fctDisplayPhoto( photoId );
         }
         else { //invladid, clear hash
-            that.clearHash();
+            //that.clearHash();
         }
     }
     

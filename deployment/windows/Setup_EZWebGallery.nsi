@@ -3,6 +3,7 @@
 ; INCLUDES
 ;/////////
 !include LogicLib.nsh       ; Use more familiar flow control
+!include  .\version.nsh
 
 ;//////////////////
 ; GLOBALS VARS
@@ -13,16 +14,24 @@ Var VCREDISTRETURNED
 ;--------------------------------
 
 ; The name of the installer
-Name "EZWebGallery"
+Name "EZWebGallery ${BUILD_DATE}"
 
 ; The file to write
-OutFile "Setup_EZWebGallery.exe"
+OutFile "Setup_EZWebGallery_${BUILD_DATE}.exe"
 
 ; The default installation directory
-InstallDir $PROGRAMFILES\EZWebGallery
+InstallDir $PROGRAMFILES\EZWebGallery\${BUILD_DATE}
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel admin
+
+;Some infos
+VIProductVersion "${VERSION}.0.0"
+VIAddVersionKey "ProductName" "EZWebGallery"
+VIAddVersionKey "Comments" "The Free and easy web gallery generator."
+VIAddVersionKey "CompanyName" "http://www.ezwebgallery.com"
+VIAddVersionKey "LegalCopyright" "GPL v3"
+VIAddVersionKey "FileVersion" "${BUILD_DATE}"
 
 ;--------------------------------
 
@@ -38,15 +47,17 @@ UninstPage instfiles
 
 
 LicenseData "..\common\GPL_v3.txt"
+
+SetCompressor /SOLID /FINAL lzma
 ;--------------------------------
 
- Function .onInit
-  ;Ask to uninstall any prior version (TEMPORARY)
-  MessageBox MB_YESNO|MB_ICONQUESTION "Please uninstall any prior version of EZWebGallery.$\r$\n$\r$\nShall we continue?" IDYES NoAbort
-  abort:
-    Abort "Aborting installation to manually uninstall prior version."
-  NoAbort:
- FunctionEnd
+; Function .onInit
+;  ;Ask to uninstall any prior version (TEMPORARY)
+;  MessageBox MB_YESNO|MB_ICONQUESTION "Please uninstall any prior version of EZWebGallery.$\r$\n$\r$\nShall we continue?" IDYES NoAbort
+;  abort:
+;    Abort "Aborting installation to manually uninstall prior version."
+;  NoAbort:
+; FunctionEnd
 
 
 
@@ -73,14 +84,14 @@ Section "EZWebGallery"
   File /r ..\..\..\distribution\windows\*
   
   ;Write the installation path into the registry
-  WriteRegStr HKLM SOFTWARE\EZWebGallery "Install_Dir" "$INSTDIR"
-  WriteRegDWORD HKLM SOFTWARE\EZWebGallery "Installed" 0x1
+  WriteRegStr HKLM SOFTWARE\EZWebGallery_${BUILD_DATE} "Install_Dir" "$INSTDIR"
+  WriteRegDWORD HKLM SOFTWARE\EZWebGallery_${BUILD_DATE} "Installed" 0x1
   
   ; Write the uninstall keys for Windows
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EZWebGallery" "DisplayName" "EZWebGallery"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EZWebGallery" "UninstallString" '"$INSTDIR\uninstall.exe"'
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EZWebGallery" "NoModify" 1
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EZWebGallery" "NoRepair" 1
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EZWebGallery_${BUILD_DATE}" "DisplayName" "EZWebGallery_${BUILD_DATE}"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EZWebGallery_${BUILD_DATE}" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EZWebGallery_${BUILD_DATE}" "NoModify" 1
+  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EZWebGallery_${BUILD_DATE}" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
 
 SectionEnd ; end the section
@@ -88,9 +99,9 @@ SectionEnd ; end the section
 ; Optional section (can be disabled by the user)
 Section "Start Menu Shortcuts"
   SetShellVarContext all
-  CreateDirectory "$SMPROGRAMS\EZWebGallery"   ;The context of this constant (All Users or Current user) depends on the SetShellVarContext setting. The default is the current user.
-  CreateShortCut "$SMPROGRAMS\EZWebGallery\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\EZWebGallery\EZWebGallery.lnk" "$INSTDIR\EZWebGallery.exe" "" "$INSTDIR\EZWebGallery.exe" 0
+  CreateDirectory "$SMPROGRAMS\EZWebGallery\${BUILD_DATE}"   ;The context of this constant (All Users or Current user) depends on the SetShellVarContext setting. The default is the current user.
+  CreateShortCut "$SMPROGRAMS\EZWebGallery\${BUILD_DATE}\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+  CreateShortCut "$SMPROGRAMS\EZWebGallery\${BUILD_DATE}\EZWebGallery.lnk" "$INSTDIR\EZWebGallery.exe" "" "$INSTDIR\EZWebGallery.exe" 0
 SectionEnd
 
 Section "Desktop Shortcut"
@@ -136,15 +147,15 @@ FunctionEnd
 Section "Uninstall"
   
   ; Remove registry keys
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EZWebGallery"
-  DeleteRegKey HKLM "SOFTWARE\EZWebGallery"
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EZWebGallery_${BUILD_DATE}"
+  DeleteRegKey HKLM "SOFTWARE\EZWebGallery_${BUILD_DATE}"
 
   SetShellVarContext all
   
   ; Delete Files
   Delete "$INSTDIR\*.*"
   RMDir /r "$INSTDIR\imageformats"; /recursive
-  RMDir /r "$INSTDIR\res"
+  RMDir /r "$INSTDIR\data"
   ;non recursive because user could have personnal skins here
   Delete "$INSTDIR\skins\Autumn.skin"
   RMDir /r "$INSTDIR\skins\Autumn_files"
@@ -165,12 +176,14 @@ Section "Uninstall"
   RMDir "$INSTDIR\skins"
   
   ; Remove shortcuts, if any
-  Delete "$SMPROGRAMS\EZWebGallery\*.*"
+  Delete "$SMPROGRAMS\EZWebGallery\${BUILD_DATE}\*.*"
   Delete "$DESKTOP\EZWebGallery.lnk"
 
   ; Remove directories used
-  RMDir /r "$SMPROGRAMS\EZWebGallery"
-  RMDir "$INSTDIR"
+  RMDir /r "$SMPROGRAMS\EZWebGallery\${BUILD_DATE}"
+  RMDir    "$SMPROGRAMS\EZWebGallery\" ;will only delete the folder if it is empty
+  RMDir "$INSTDIR" ;will only delete the folder if it is empty (user can have personnal skin inside)
+  RMDir  "$INSTDIR\.." ;will only delete the folder if it is empty : MAY BE ON FILESYSTEM --> NEVER PUT /r !!!!!!
 
 SectionEnd
 

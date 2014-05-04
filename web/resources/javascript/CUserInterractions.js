@@ -68,10 +68,15 @@ function CUserInterractions( p_properties, htmlstructure )
     
     this.enablePreviousNext = function()
     {
-        if(  !that.fCurrentlyScrolling ) { //Enabling buttons while scrolling is error prone
+        if(  !that.fCurrentlyScrolling )  //Enabling buttons while scrolling is error prone
+        {
             that.enablePrevious();
             that.enableNext();
             that.fEnablePreviousNextRequired = false;
+            //These options may have to be call after every slides
+            //This is the case as prev/next are disabled during scrolling
+            that.html.photo.$current.data("hammer").options[ "prevent_default" ] = true;
+            that.html.photo.$current.data("hammer").options[ "swipe_velocity" ] = 0.7;
         }
         else {
             that.fEnablePreviousNextRequired = true;
@@ -80,11 +85,15 @@ function CUserInterractions( p_properties, htmlstructure )
     
     this.enablePrevious = function()
     {
-        if( that.previousPhotoId >= 1 ) {
+        if( that.previousPhotoId >= 1 ) 
+        {
             TOOLS.trace("enable previous " + that.previousPhotoId);
+            //Button
             that.html.photo.buttons.$previous.removeClass()
                                               .addClass( that.buttonEnabledClass )
                                               .one( "click", that.onPreviousPhoto );
+            //Touch
+            that.html.photo.$current.hammer().bind( "swiperight", function(event) {  that.onPreviousPhoto();/*preventDefault();*/  } );            
         }
     }
     
@@ -93,16 +102,21 @@ function CUserInterractions( p_properties, htmlstructure )
         TOOLS.trace("disable previous");
         that.html.photo.buttons.$previous.removeClass()
                                          .addClass( that.buttonDisabledClass )
-                                         .unbind( "click" );        
+                                         .unbind( "click" );
+        that.html.photo.$current.hammer().unbind( "swiperight" );                                           
     }
     
     this.enableNext = function()
     {        
-        if( that.nextPhotoId <= that.properties.photos.list.length ) {
+        if( that.nextPhotoId <= that.properties.photos.list.length )
+        {
             TOOLS.trace("enable next " + that.nextPhotoId);
+            //Button
             that.html.photo.buttons.$next.removeClass()
                                           .addClass( that.buttonEnabledClass )
                                           .one( "click", that.onNextPhoto );
+            //Touch
+            that.html.photo.$current.hammer().bind( "swipeleft", function(event) {  that.onNextPhoto();/*preventDefault();*/  } );
         }
     }
     
@@ -112,6 +126,7 @@ function CUserInterractions( p_properties, htmlstructure )
             that.html.photo.buttons.$next.removeClass()
                                          .addClass( that.buttonDisabledClass )
                                          .unbind( "click" );      
+            that.html.photo.$current.hammer().unbind( "swipeleft" );
        }
        
     this.enableThumbnailClick = function()
@@ -175,7 +190,6 @@ function CUserInterractions( p_properties, htmlstructure )
     this.onScrolled = function() {
         that.fCurrentlyScrolling = false;        
         that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
-        that.html.photo.$div.click( function() { that.onClosePhoto(); } );
         if( that.fEnablePreviousNextRequired ) {
             that.fEnablePreviousNextRequired = false;
             that.enablePreviousNext();
@@ -185,16 +199,18 @@ function CUserInterractions( p_properties, htmlstructure )
     this.onIndexScreen  = function()
     {
         $(window).unbind("keydown");
-        that.html.photo.$div.unbind("click");
-        that.enableThumbnailClick();
+        that.html.photo.$screen.css("z-index", 1);
+        that.html.index.$screen.css("z-index", 10 );
+        that.enableThumbnailClick();        
     }
     
     this.onPhotoScreen  = function()
     {
         $(window).unbind("keydown")
-                      .keydown( function( evt) { that.onKeyboardPhotoScr(evt); } );
-        that.html.photo.$div.click( function() { that.onClosePhoto(); } );
+                 .keydown( function( evt) { that.onKeyboardPhotoScr(evt); } );
         that.html.index.mosaic.$thumbnails.unbind("click");
+        that.html.index.$screen.css("z-index", 1);
+        that.html.photo.$screen.css("z-index", 10 );
     }
     
     this.onKeyboardPhotoScr = function( evt )

@@ -2,25 +2,31 @@
 Read the following for a better understanding on how to generate a release of
 EZWebGallery.
 
+
+
 UBUNTU or DEBIAN:
 
-    run "sudo qmake-qt4 && make install".
+    install the required packages:
+        sudo apt-get install libqt4-dev libmagick++-dev yui-compressor
+    build the sources then install ezwebgallery:
+        sudo qmake-qt4 && make install
     
-    You can build a function debug ezwebgallery after the first proper installation.
+    AFTERWARDS, you can build a functional DEBUG ezwebgallery.
 
-WINDOWS
 
-    1 - "compress_javascript" will compress the javascript files using
-        YUI_COMPRESSOR. The "web files" are nows ready to be included in a
-        release using the 2nd script. If you are using Ubuntu, YUI_COMPRESSOR
-        can be downloaded in the package "yui-compressor".
-    2 - "create_release" builds the proper file structure into the target
-        directory and copies the required files, Including the compressed
-        js files generated using the 1st script.
+
+WINDOWS:
+
+    1 - Build a release target using the Visual Studio project located in src.
+    2 - Run scripts/prepare_release.bat.
+        A proper build of EZWebGallery will be generated in ../distribution/windows
+    3 - Optionnaly you can build a full installer, based on NSIS,
+        with deployment/windows/Setup_EZWebGallery.nsi 
+
 
     IMPORTANT NOTE (Windows only):
     ---------------
-    In order to run EZWebGallery, the directories "res" and "skins"
+    In order to run EZWebGallery, the directories "data" and "skins"
     have to be placed alongside the binary. Thus, if you want to debug a binary,
     YOU HAVE TO manually copy them into the debug directory.
 

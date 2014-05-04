@@ -67,6 +67,7 @@ DEPENDPATH += ./src/widgets
 
 HEADERS += ./src/generation/CGalleryGenerator.h \
     ./src/generation/CDirChecker.h \
+    ./src/generation/CToolbar.h \
     ./src/ui/mainwin.h \
     ./src/ui/IUserInterface.h \
     ./src/ui/WinSkinDesigner.h \
@@ -102,6 +103,7 @@ HEADERS += ./src/generation/CGalleryGenerator.h \
 SOURCES += ./src/main.cpp \
     ./src/generation/CGalleryGenerator.cpp \
     ./src/generation/CDirChecker.cpp \
+    ./src/generation/CToolbar.cpp \
     ./src/ui/mainwin.cpp \
     ./src/ui/WinSkinDesigner.cpp \
     ./src/ui/CTerminalUi.cpp \

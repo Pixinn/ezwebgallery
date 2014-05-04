@@ -50,7 +50,6 @@
 #define CSSPATH		"resources/css"
 #define RESIMGPATH      "resources/images"
 #define RESEMOTICONSPATH  "resources/images/smileys/"
-#define CSSINDEXSKINFILENAME "index-skin.css"
 #define JSPATH          "resources/javascript"
 #define IMAGEFILEEXTENSION ".jpg"
 

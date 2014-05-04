@@ -30,8 +30,12 @@
 #include "IParameters.h"
 #include "CCss.h"
 #include "CError.h"
+#include "CToolbar.h"
 
 #include "ui_WinSkinDesigner.h" //Gnr par qmake. Ncessaire pour accs  la classe gnre par le formulaire .ui
+
+
+
 
 namespace Ui { //Voir le bas du fichier ui_skinDesigner.h
     class SkinDesigner;
@@ -93,7 +97,7 @@ public:
     enum Buttons{ //Sert  passer un paramtre  la fonction buttonImage( int )
         buttonNext = 0,
         buttonPrevious,
-        buttonIndex
+        toolbar
     };
 
 private:
@@ -103,6 +107,7 @@ private:
     QList<CError> m_lastErrors;                 //Liste des dernires erreurs survenues
     Ui::SkinDesigner* m_p_ui;
     QMap<QString,QFileInfo> m_resources;      //widget name ; file info
+    CToolbar m_toolbar;         //css and resource path generation for the toolbar
     CCssSheet m_styleSheet;
     unsigned int m_version;
     bool f_initialized;

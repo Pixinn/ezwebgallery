@@ -21,8 +21,6 @@ function CFrameFactory( p_photoList )
     var that = this;
     this.strPhoto = "divPhoto";
     this.strFrame = "cadrePhoto";
-    this.strTitle = "photoTitle";
-    this.strClose = "boutonIndex";
     this.strCaption ="photoCaption";
     this.captions = [];
     
@@ -31,15 +29,15 @@ function CFrameFactory( p_photoList )
     }
     
     this.frame = function( $parent, id )  {
-        $parent.append( "<div id=\""+that.strFrame+"\"><div id=\""+that.strTitle+"\"><img id=\""+that.strClose+"\" src=\"resources/images/close.gif\"></div><div id=\""+that.strPhoto+"\"></div><div class=\""+that.strCaption+"\"></div></div>" );
+        $parent.append( "<div id=\""+that.strFrame+"\"><div id=\""+that.strTitle+"\"></div><div id=\""+that.strPhoto+"\"></div><div class=\""+that.strCaption+"\"></div></div>" );
         that.caption( $parent.find(that.getStrCaption()), id );
     }
     
     this.caption = function( $parent, id )
     {
         $parent.empty()
-                   .append( that.captions[ id ] )
-                   .height( Math.min( $parent.height(), $parent.parent().find( that.getStrTitle() ).height() ) );
+                   .append( that.captions[ id ] );
+                   //.height( Math.min( $parent.height(), $parent.parent().find( that.getStrTitle() ).height() ) );
     }
     
     this.getStrPhoto = function( ) {
@@ -48,14 +46,6 @@ function CFrameFactory( p_photoList )
     
     this.getStrFrame = function( )  {
         return "#"+ that.strFrame;
-    }
-    
-    this.getStrTitle = function( )  {
-        return "#"+ that.strTitle;
-    }
-    
-    this.getStrClose = function( )  {
-        return "#"+ that.strClose;
     }
     
     this.getStrCaption = function( )  {

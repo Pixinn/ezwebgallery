@@ -587,6 +587,8 @@ bool CGalleryGenerator::skinning( )
         htmlString.replace( "[CONTENT_TITLE]", m_feeder.getProjectParams().m_galleryConfig.title );
 
         //------ BOUTONS (SCREEN PHOTO) -------//
+        //Toolbar
+        htmlString.replace( "[TOOLBAR]", m_skinParameters.buttonImage( CSkinParameters::toolbar ) );
         //Previous
         htmlString.replace( "[BUTTON_PREVIOUSPHOTO]", QString("<img alt=\"") + tr("Previous photo")
                                                                 +QString("\" class=\"photoButtonEnabled\" id=\"boutonPrevious\" src=\"resources/images/")
