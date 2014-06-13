@@ -163,25 +163,6 @@ QString CPlatform::skinDirPath()
 
 
 /**************************
-* appDataDir()
-* ----------
-* Retourne le répertore où sont sauvées les données persistantes du programme
-***************************/
-QString CPlatform::appDataDir()
-{
-    QString directory = QDesktopServices::storageLocation( QDesktopServices::DataLocation );
-    if( directory.isEmpty() ){ // embedded platforms currently don't define this location and you don't want to write to /foo
-        directory = QDir::homePath();
-    }
-#ifdef Q_OS_WIN32    
-	return directory + QString( "/") + QCoreApplication::applicationName();
-#else
-    return directory + QString( "/." ) + QCoreApplication::applicationName();
-#endif    
-}
-
-
-/**************************
 * resourceDirPath()
 * ----------
 * Retourne le répertoire contenant les resources

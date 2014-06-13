@@ -33,7 +33,7 @@
 #include <QMouseEvent>
 #include <QPaintEvent>
 //Pour exporter le widget ver QDesigner
-#include <QtDesigner/QDesignerExportWidget>
+//#include <QDesignerExportWidget>
 
 
 class CColorButton : public QFrame

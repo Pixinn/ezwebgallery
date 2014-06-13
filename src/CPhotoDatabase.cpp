@@ -131,7 +131,7 @@ QStringList CPhotoDatabase::build( const QDomElement & xmlElem )
     QStringList invalidFiles;
     clear();
     QDomNodeList photosNode = xmlElem.elementsByTagName( XMLTAG_PHOTOS );
-    for( unsigned int iteratorDomList = 0; iteratorDomList < photosNode.length() ; iteratorDomList++ )
+    for( int iteratorDomList = 0; iteratorDomList < photosNode.length() ; iteratorDomList++ )
     {        
         QDomNode node = photosNode.item( iteratorDomList );
         CPhotoProperties properties( node ); //this constructor sets the caption!
@@ -164,7 +164,7 @@ QStringList CPhotoDatabase::importDeprecated( const QDomElement & xmlElem, const
     QStringList invalidFiles;
     QDomNodeList photosNode = xmlElem.elementsByTagName( XMLTAG_PHOTOS );
     QDir inputDir( inDir );
-    for( unsigned int iteratorDomList = 0; iteratorDomList < photosNode.length() ; iteratorDomList++ )
+    for( int iteratorDomList = 0; iteratorDomList < photosNode.length() ; iteratorDomList++ )
     {        
         QDomNode node = photosNode.item( iteratorDomList );
         CPhotoProperties properties( node ); //this constructor sets the caption

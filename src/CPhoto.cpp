@@ -789,26 +789,26 @@ void CPhoto::readExifTags( )
     int flash;
 
     //Lectures simples
-    m_exifTags.insert( CTaggedString::TAGcameraMaker,     QString(attribute( EXIFcameraMaker.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGcameraModel,     QString( attribute( EXIFcameraModel.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGfocalLength,     rationalToDoubleStr( attribute( EXIFfocalLength.toAscii().constData() ).c_str()) + QString("mm") );
-    m_exifTags.insert( CTaggedString::TAGexposureTime,    rationalToDoubleStr( attribute( EXIFexposureTime.toAscii().constData() ).c_str()) + QString("s") );
-    m_exifTags.insert( CTaggedString::TAGfNumber,         QString("f/") + rationalToDoubleStr( attribute( EXIFfNumber.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGisoSpeedRatings, QString( attribute( EXIFisoSpeedRatings.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGcaption,        QString::fromUtf8( attribute( TAGcaption.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGcountry,        QString::fromUtf8(attribute( TAGcountry.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGcity,           QString::fromUtf8(attribute( TAGcity.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGsublocation,    QString::fromUtf8(attribute( TAGsublocation.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGkeywords,       QString::fromUtf8(attribute( TAGkeywords.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGauthor,         QString::fromUtf8(attribute( TAGauthor.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGcredit,         QString::fromUtf8(attribute( TAGcredit.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGsource,         QString::fromUtf8(attribute( TAGsource.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGcopyright,      QString::fromUtf8(attribute( TAGcopyright.toAscii().constData() ).c_str()) );
-    m_exifTags.insert( CTaggedString::TAGcontact,        QString::fromUtf8(attribute( TAGcontact.toAscii().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcameraMaker,     QString(attribute( EXIFcameraMaker.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcameraModel,     QString( attribute( EXIFcameraModel.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGfocalLength,     rationalToDoubleStr( attribute( EXIFfocalLength.toLatin1().constData() ).c_str()) + QString("mm") );
+    m_exifTags.insert( CTaggedString::TAGexposureTime,    rationalToDoubleStr( attribute( EXIFexposureTime.toLatin1().constData() ).c_str()) + QString("s") );
+    m_exifTags.insert( CTaggedString::TAGfNumber,         QString("f/") + rationalToDoubleStr( attribute( EXIFfNumber.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGisoSpeedRatings, QString( attribute( EXIFisoSpeedRatings.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcaption,        QString::fromUtf8( attribute( TAGcaption.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcountry,        QString::fromUtf8(attribute( TAGcountry.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcity,           QString::fromUtf8(attribute( TAGcity.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGsublocation,    QString::fromUtf8(attribute( TAGsublocation.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGkeywords,       QString::fromUtf8(attribute( TAGkeywords.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGauthor,         QString::fromUtf8(attribute( TAGauthor.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcredit,         QString::fromUtf8(attribute( TAGcredit.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGsource,         QString::fromUtf8(attribute( TAGsource.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcopyright,      QString::fromUtf8(attribute( TAGcopyright.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGcontact,        QString::fromUtf8(attribute( TAGcontact.toLatin1().constData() ).c_str()) );
 
     //--- Interprtation
     //- Programme
-    exposureProgInt = atoi( attribute( EXIFexposureProgram.toAscii().constData() ).c_str() );
+    exposureProgInt = atoi( attribute( EXIFexposureProgram.toLatin1().constData() ).c_str() );
     switch( exposureProgInt )
     {
     case 0:
@@ -848,7 +848,7 @@ void CPhoto::readExifTags( )
     m_exifTags.insert( CTaggedString::TAGexposureProgram, expProgStr);
 
     //- Flash
-    flash = atoi( attribute( EXIFflash.toAscii().constData() ).c_str() );
+    flash = atoi( attribute( EXIFflash.toLatin1().constData() ).c_str() );
     if( flash & 0x1 ) { //Test LSB
         m_exifTags.insert( CTaggedString::TAGflash, QObject::tr("Fired") );
     }
@@ -857,7 +857,7 @@ void CPhoto::readExifTags( )
     }
 
     //- Date
-    QString dateTime( attribute( EXIFdateTimeOriginal.toAscii().constData() ).c_str() );
+    QString dateTime( attribute( EXIFdateTimeOriginal.toLatin1().constData() ).c_str() );
     int split = dateTime.indexOf( QChar(' ') );
     QString date = dateTime.left( split );
     date.replace( QChar(':'), QChar('/') );
