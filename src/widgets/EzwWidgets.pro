@@ -1,7 +1,7 @@
-CONFIG += designer \
-    plugin
-TARGET = $$qtLibraryTarget($$TARGET)
+CONFIG += plugin
 TEMPLATE = lib
+QT += widgets designer
+TARGET = $$qtLibraryTarget($$TARGET)
 HEADERS = CColorPickerPlugin.h \
     CImagePickerPlugin.h \
     EZWWidgets.h

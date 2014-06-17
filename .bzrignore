@@ -438,3 +438,6 @@ build/.obj/CL.9168.write.1.tlog
 build/.obj/CL.9204.read.1.tlog
 build/.obj/CL.9204.write.1.tlog
 build/.obj/CToolbar.sbr
+moc_*.cpp
+qrc_*.cpp
+src/widgets/Makefile
