@@ -269,41 +269,41 @@ void CSkinParameters::fromUi( )
     m_styleSheet.addSelection( toolbarCss );
 
     //Buttons
-    int buttonBorderW = m_p_ui->spinBox_PhotoButtonsEnabled_BorderWidth->value(); //Idem pour enabled / disabled
-    int buttonHoveredBorderW = m_p_ui->spinBox_PhotoButtonsHovered_BorderWidth->value();
-    CCssSelection buttonEnabled( QString(".photoButtonEnabled") );
-        buttonEnabled.setProperty( QString("border-width"), QString::number(buttonBorderW) + QString("px") );
-        buttonEnabled.setProperty( QString("border-color"), m_p_ui->cColorPicker_PhotoButtonsEnabled_BorderColor->value() );
-    m_styleSheet.addSelection( buttonEnabled );
-    CCssSelection buttonHovered( QString(".photoButtonEnabled:hover") );
-        buttonHovered.setProperty( QString("border-width"), QString::number(buttonHoveredBorderW) + QString("px") );
-        buttonHovered.setProperty( QString("border-color"), m_p_ui->cColorPicker_PhotoButtonsHovered_BorderColor->value() );
-        buttonHovered.setProperty( QString("margin"), QString::number(buttonBorderW - buttonHoveredBorderW) + QString("px") );
-    m_styleSheet.addSelection( buttonHovered );
-    CCssSelection buttonDisabled( QString(".photoButtonDisabled") );
-        buttonDisabled.setProperty( QString("border-width"), QString::number(buttonBorderW) + QString("px") ); //=.photoButtonEnabled::border-width
-        buttonDisabled.setProperty( QString("border-color"), m_p_ui->cColorPicker_PhotoButtonsDisabled_BorderColor->value() );
-    m_styleSheet.addSelection( buttonDisabled );
+    //int buttonBorderW = m_p_ui->spinBox_PhotoButtonsEnabled_BorderWidth->value(); //Idem pour enabled / disabled
+    //int buttonHoveredBorderW = m_p_ui->spinBox_PhotoButtonsHovered_BorderWidth->value();
+    //CCssSelection buttonEnabled( QString(".photoButtonEnabled") );
+    //    buttonEnabled.setProperty( QString("border-width"), QString::number(buttonBorderW) + QString("px") );
+    //    buttonEnabled.setProperty( QString("border-color"), m_p_ui->cColorPicker_PhotoButtonsEnabled_BorderColor->value() );
+    //m_styleSheet.addSelection( buttonEnabled );
+    //CCssSelection buttonHovered( QString(".photoButtonEnabled:hover") );
+    //    buttonHovered.setProperty( QString("border-width"), QString::number(buttonHoveredBorderW) + QString("px") );
+    //    buttonHovered.setProperty( QString("border-color"), m_p_ui->cColorPicker_PhotoButtonsHovered_BorderColor->value() );
+    //    buttonHovered.setProperty( QString("margin"), QString::number(buttonBorderW - buttonHoveredBorderW) + QString("px") );
+    //m_styleSheet.addSelection( buttonHovered );
+    //CCssSelection buttonDisabled( QString(".photoButtonDisabled") );
+    //    buttonDisabled.setProperty( QString("border-width"), QString::number(buttonBorderW) + QString("px") ); //=.photoButtonEnabled::border-width
+    //    buttonDisabled.setProperty( QString("border-color"), m_p_ui->cColorPicker_PhotoButtonsDisabled_BorderColor->value() );
+    //m_styleSheet.addSelection( buttonDisabled );
     //Navigation Divs
-
-    CCssSelection photoLefter( QString("div#photoLefter") );
-        photoLefter.setProperty( QString("width"), QString::number(m_p_ui->spinBox_PhotoNavBlocks_Width->value()) + QString("px"));
-        if( m_p_ui->groupBox_PhotoNavBlocksBckg->isChecked() ){ //Fond non-transparent
-            photoLefter.setProperty( QString("background-color"), m_p_ui->cColorPicker_PhotoNavBlocks_BckgColor->value() );
-            photoLefter.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->fileName()).fileName() + QString(")") );
-        }else{ //Fond transparent
-            photoLefter.setProperty( QString("background-color"), QString("transparent") );
-        }
-     m_styleSheet.addSelection( photoLefter );
-     CCssSelection photoRighter( QString("div#photoRighter") );
-        photoRighter.setProperty( QString("width"), QString::number(m_p_ui->spinBox_PhotoNavBlocks_Width->value()) + QString("px"));
-         if( m_p_ui->groupBox_PhotoNavBlocksBckg->isChecked() ){ //Fond non-transparent
-            photoRighter.setProperty( QString("background-color"), m_p_ui->cColorPicker_PhotoNavBlocks_BckgColor->value() );
-             photoRighter.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->fileName()).fileName() + QString(")") );
-        }else{ //Fond transparent
-             photoRighter.setProperty( QString("background-color"), QString("transparent") );
-        }
-    m_styleSheet.addSelection( photoRighter );
+    
+    //CCssSelection photoLefter( QString("div#photoLefter") );
+    //    photoLefter.setProperty( QString("width"), QString::number(m_p_ui->spinBox_PhotoNavBlocks_Width->value()) + QString("px"));
+    //    if( m_p_ui->groupBox_PhotoNavBlocksBckg->isChecked() ){ //Fond non-transparent
+    //        photoLefter.setProperty( QString("background-color"), m_p_ui->cColorPicker_PhotoNavBlocks_BckgColor->value() );
+    //        photoLefter.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->fileName()).fileName() + QString(")") );
+    //    }else{ //Fond transparent
+    //        photoLefter.setProperty( QString("background-color"), QString("transparent") );
+    //    }
+    // m_styleSheet.addSelection( photoLefter );
+    // CCssSelection photoRighter( QString("div#photoRighter") );
+    //    photoRighter.setProperty( QString("width"), QString::number(m_p_ui->spinBox_PhotoNavBlocks_Width->value()) + QString("px"));
+    //     if( m_p_ui->groupBox_PhotoNavBlocksBckg->isChecked() ){ //Fond non-transparent
+    //        photoRighter.setProperty( QString("background-color"), m_p_ui->cColorPicker_PhotoNavBlocks_BckgColor->value() );
+    //         photoRighter.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->fileName()).fileName() + QString(")") );
+    //    }else{ //Fond transparent
+    //         photoRighter.setProperty( QString("background-color"), QString("transparent") );
+    //    }
+    //m_styleSheet.addSelection( photoRighter );
     
     //--- Css
     //#progressbarWrapper

@@ -168,4 +168,44 @@ $(document).ready(function()
     progressBar.show();    
     HtmlStructure = Mosaic.buildHtml(); //loads the thumbnails and build the html
 
+    
+    $("#photoViewport").mousemove(function() {
+        clearTimeout(hide);
+        showNav();
+        hide = setTimeout(function() {
+            hideNav();
+        }, 250);        
+    });
+    
+    $.merge( $('.photoButtonEnabled'), $('.photoButtonDisabled') ).mouseenter( function() {
+        clearTimeout(hide);
+    } );
+    
+
 } );
+
+
+function hideNav() {
+    var lightbox = $.merge( $('#photoLefter'), $('#photoRighter') );
+    if (lightbox.length) {
+        lightbox.stop().fadeOut(1000);
+    }
+};
+
+function showNav() {
+    var lightbox = $.merge( $('#photoLefter'), $('#photoRighter') );
+        if (lightbox.length) {
+            lightbox.fadeIn(10);
+             $.merge( $('.photoButtonEnabled'), $('.photoButtonDisabled') ).verticalCenter(0);
+             $('#photoLefter').css("left",  computeToolbarWidth()+"px" );
+    }
+};
+
+var hide = setTimeout(function() {
+    hideNav();
+}, 250);
+
+function computeToolbarWidth()
+{
+    return $("#toolbar").width() > $("#toolbar").height() ? 0 : $("#toolbar").width();
+}
