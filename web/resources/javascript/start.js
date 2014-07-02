@@ -109,7 +109,8 @@ $(document).ready(function()
         $frame : $("#cadrePhoto"),
         $wrapper : $("#wrapperAffichagePhoto"),
         $div : $("#divPhoto"),
-        $caption :$(".photoCaption"),
+        $caption : $(".photoCaption"),
+        $navBars : $.merge( $('#photoLefter'), $('#photoRighter') ),
         buttons : {
                 $previous : $("#boutonPrevious"),
                 $next : $("#boutonNext"),
@@ -136,6 +137,7 @@ $(document).ready(function()
     } );
     
     var Display = new CDisplay( g_properties, HtmlStructure );    
+    var NavBars = new CNavBars( HtmlStructure );
     var UserHandler; //Managing user events
     
     // --- ENTERING THIS FUNCTION WHEN THE THUMBNAILS ARE LOADED
@@ -168,44 +170,4 @@ $(document).ready(function()
     progressBar.show();    
     HtmlStructure = Mosaic.buildHtml(); //loads the thumbnails and build the html
 
-    
-    $("#photoViewport").mousemove(function() {
-        clearTimeout(hide);
-        showNav();
-        hide = setTimeout(function() {
-            hideNav();
-        }, 250);        
-    });
-    
-    $.merge( $('.photoButtonEnabled'), $('.photoButtonDisabled') ).mouseenter( function() {
-        clearTimeout(hide);
-    } );
-    
-
 } );
-
-
-function hideNav() {
-    var navBars = $.merge( $('#photoLefter'), $('#photoRighter') );
-    navBars.stop()
-           .fadeOut(1000, function(){
-                $(this).css("z-index","-10"); } /*back to back*/
-            );
-};
-
-function showNav() {
-    $.each( $.merge( $('#photoLefter'), $('#photoRighter') ), function( ) {
-            $(this).fadeIn(10)
-                   .css("z-index","50") /*goes foreground*/
-                   .find( $.merge( $('.photoButtonEnabled'), $('.photoButtonDisabled') ) ).verticalCenter(0);
-    } );
-};
-
-var hide = setTimeout(function() {
-    hideNav();
-}, 250);
-
-function computeToolbarWidth()
-{
-    return $("#toolbar").width() > $("#toolbar").height() ? 0 : $("#toolbar").width();
-}

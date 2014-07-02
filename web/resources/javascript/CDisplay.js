@@ -69,7 +69,8 @@ function CDisplay( p_properties, p_htmlStructure )
     }
 
     //back to index
-    this.hidePhoto = function( ) {
+    this.hidePhoto = function( ) 
+    {
         //that.url.clearHash();
         that.html.index.$screen.show();
         
