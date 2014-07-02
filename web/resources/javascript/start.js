@@ -186,19 +186,19 @@ $(document).ready(function()
 
 
 function hideNav() {
-    var lightbox = $.merge( $('#photoLefter'), $('#photoRighter') );
-    if (lightbox.length) {
-        lightbox.stop().fadeOut(1000);
-    }
+    var navBars = $.merge( $('#photoLefter'), $('#photoRighter') );
+    navBars.stop()
+           .fadeOut(1000, function(){
+                $(this).css("z-index","-10"); } /*back to back*/
+            );
 };
 
 function showNav() {
-    var lightbox = $.merge( $('#photoLefter'), $('#photoRighter') );
-        if (lightbox.length) {
-            lightbox.fadeIn(10);
-             $.merge( $('.photoButtonEnabled'), $('.photoButtonDisabled') ).verticalCenter(0);
-             $('#photoLefter').css("left",  computeToolbarWidth()+"px" );
-    }
+    $.each( $.merge( $('#photoLefter'), $('#photoRighter') ), function( ) {
+            $(this).fadeIn(10)
+                   .css("z-index","50") /*goes foreground*/
+                   .find( $.merge( $('.photoButtonEnabled'), $('.photoButtonDisabled') ) ).verticalCenter(0);
+    } );
 };
 
 var hide = setTimeout(function() {

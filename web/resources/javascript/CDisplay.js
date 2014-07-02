@@ -224,8 +224,6 @@ function CDisplay( p_properties, p_htmlStructure )
 
         photo.verticalCenter( 0 );  //inside its frame
         
-        that.html.photo.buttons.$previous.verticalCenter( toolbarHeight_2 );
-        that.html.photo.buttons.$next.verticalCenter( toolbarHeight_2 );        
     }
     
     //Computes the height of the toolbar on the top.
