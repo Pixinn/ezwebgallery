@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>632</width>
-    <height>776</height>
+    <width>627</width>
+    <height>692</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -435,7 +435,7 @@
         <item>
          <widget class="QGroupBox" name="groupBox_PhotoBckg">
           <property name="title">
-           <string>Photo Page Background</string>
+           <string>Screen</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
@@ -483,561 +483,260 @@
          </widget>
         </item>
         <item>
-         <widget class="QTabWidget" name="tabWidget">
-          <property name="tabShape">
-           <enum>QTabWidget::Rounded</enum>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>Navigation</string>
           </property>
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <widget class="QWidget" name="tab_FramingAndText">
-           <property name="font">
-            <font>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
-           <attribute name="title">
-            <string>Framing and Text</string>
-           </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_18">
-            <item>
-             <widget class="QGroupBox" name="groupBox_PhotoFraming">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="title">
-               <string>Framing</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_3">
-               <item>
-                <layout class="QFormLayout" name="formLayout_11">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="labe_PhotoFraming_Width">
-                   <property name="text">
-                    <string>Width</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_PhotoFraming_Texture">
-                   <property name="text">
-                    <string>Texture</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="label_PhotoFraming_Color">
-                   <property name="text">
-                    <string>Color</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="label_PhotoFraming_PaddingWidth">
-                   <property name="text">
-                    <string>Padding</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="0">
-                  <widget class="QLabel" name="label_PhotoFraming_PaddingColor">
-                   <property name="text">
-                    <string>Padding color</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QSpinBox" name="spinBox_PhotoFraming_Width">
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="minimum">
-                    <number>1</number>
-                   </property>
-                   <property name="maximum">
-                    <number>20</number>
-                   </property>
-                   <property name="value">
-                    <number>5</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="CImagePicker" name="CImagePicker_PhotoFraming_Texture"/>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="CColorPicker" name="cColorPicker_PhotoFraming_Color"/>
-                 </item>
-                 <item row="3" column="1">
-                  <widget class="QSpinBox" name="spinBox_PhotoFraming_PaddingWidth">
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="minimum">
-                    <number>0</number>
-                   </property>
-                   <property name="maximum">
-                    <number>20</number>
-                   </property>
-                   <property name="value">
-                    <number>5</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="1">
-                  <widget class="CColorPicker" name="cColorPicker_PhotoFraming_PaddingColor"/>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="groupBox_PhotoCaption">
-              <property name="title">
-               <string>Caption</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_14">
-               <item>
-                <layout class="QFormLayout" name="formLayout_14">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_PhotoCaption_FontFamily">
-                   <property name="text">
-                    <string>Font Family</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QComboBox" name="comboBox_PhotoCaption_FontFamily">
-                   <property name="currentIndex">
-                    <number>-1</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_PhotoCaption_FontSize">
-                   <property name="text">
-                    <string>Font Size</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="label_PhotoCaption_FontWeight">
-                   <property name="text">
-                    <string>Font Weight</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="label_PhotoCaption_TextColor">
-                   <property name="text">
-                    <string>Text Color</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QComboBox" name="comboBox_PhotoCaption_FontWeight"/>
-                 </item>
-                 <item row="3" column="1">
-                  <widget class="CColorPicker" name="cColorPicker_PhotoCaption_TextColor"/>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QDoubleSpinBox" name="doubleSpinBox_PhotoCaption_FontSize">
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="decimals">
-                    <number>1</number>
-                   </property>
-                   <property name="minimum">
-                    <double>0.500000000000000</double>
-                   </property>
-                   <property name="maximum">
-                    <double>2.000000000000000</double>
-                   </property>
-                   <property name="singleStep">
-                    <double>0.100000000000000</double>
-                   </property>
-                   <property name="value">
-                    <double>0.800000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="tab_Navigation">
-           <attribute name="title">
-            <string>Navigation</string>
-           </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_16">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_12">
-              <item>
-               <widget class="QGroupBox" name="groupBox_PhotoNavBlocks">
-                <property name="title">
-                 <string>Previous/Next Blocks Appearence</string>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout_15">
-                 <item>
-                  <layout class="QFormLayout" name="formLayout_15">
-                   <property name="fieldGrowthPolicy">
-                    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                   </property>
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_PhotoNavBlocks_Width">
-                     <property name="text">
-                      <string>Width</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="QSpinBox" name="spinBox_PhotoNavBlocks_Width">
-                     <property name="minimumSize">
-                      <size>
-                       <width>50</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>50</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                     <property name="minimum">
-                      <number>20</number>
-                     </property>
-                     <property name="maximum">
-                      <number>250</number>
-                     </property>
-                     <property name="value">
-                      <number>50</number>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <widget class="QGroupBox" name="groupBox_PhotoNavBlocksBckg">
-                   <property name="title">
-                    <string>Background</string>
-                   </property>
-                   <property name="checkable">
-                    <bool>true</bool>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_19">
-                    <item>
-                     <layout class="QFormLayout" name="formLayout_23">
-                      <item row="0" column="0">
-                       <widget class="QLabel" name="label_PhotoNavBlocks_BckgTexture">
-                        <property name="text">
-                         <string>Texture</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="1" column="0">
-                       <widget class="QLabel" name="label_PhotoNavBlocks_BckgColor">
-                        <property name="text">
-                         <string>Color</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="0" column="1">
-                       <widget class="CImagePicker" name="CImagePicker_PhotoNavBlocks_BckgTexture"/>
-                      </item>
-                      <item row="1" column="1">
-                       <widget class="CColorPicker" name="cColorPicker_PhotoNavBlocks_BckgColor"/>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_3">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="groupBox">
-              <property name="title">
-               <string>Buttons Icons</string>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_15">
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_14">
-                 <item>
-                  <layout class="QFormLayout" name="formLayout_21">
-                   <property name="fieldGrowthPolicy">
-                    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                   </property>
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_PreviousButton">
-                     <property name="text">
-                      <string>Previous</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="CImagePicker" name="CImagePicker_PreviousButton_Icon"/>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QFormLayout" name="formLayout_20">
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_NextButton">
-                     <property name="text">
-                      <string>Next</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="CImagePicker" name="CImagePicker_NextButton_Icon"/>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+          <layout class="QHBoxLayout" name="horizontalLayout_15">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_14">
+             <item>
+              <layout class="QFormLayout" name="formLayout_21">
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+               </property>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_PreviousButton">
+                 <property name="text">
+                  <string>Previous</string>
                  </property>
-                 <property name="sizeHint" stdset="0">
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="CImagePicker" name="CImagePicker_PreviousButton_Icon"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QFormLayout" name="formLayout_20">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_NextButton">
+                 <property name="text">
+                  <string>Next</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="CImagePicker" name="CImagePicker_NextButton_Icon"/>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QGroupBox" name="groupBox_PhotoFraming">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="title">
+             <string>Framing</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <layout class="QFormLayout" name="formLayout_11">
+               <item row="0" column="0">
+                <widget class="QLabel" name="labe_PhotoFraming_Width">
+                 <property name="text">
+                  <string>Width</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_PhotoFraming_Texture">
+                 <property name="text">
+                  <string>Texture</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_PhotoFraming_Color">
+                 <property name="text">
+                  <string>Color</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_PhotoFraming_PaddingWidth">
+                 <property name="text">
+                  <string>Padding</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_PhotoFraming_PaddingColor">
+                 <property name="text">
+                  <string>Padding color</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QSpinBox" name="spinBox_PhotoFraming_Width">
+                 <property name="minimumSize">
                   <size>
-                   <width>40</width>
+                   <width>50</width>
                    <height>20</height>
                   </size>
                  </property>
-                </spacer>
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>20</number>
+                 </property>
+                 <property name="value">
+                  <number>5</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="CImagePicker" name="CImagePicker_PhotoFraming_Texture"/>
+               </item>
+               <item row="2" column="1">
+                <widget class="CColorPicker" name="cColorPicker_PhotoFraming_Color"/>
+               </item>
+               <item row="3" column="1">
+                <widget class="QSpinBox" name="spinBox_PhotoFraming_PaddingWidth">
+                 <property name="minimumSize">
+                  <size>
+                   <width>50</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="minimum">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <number>20</number>
+                 </property>
+                 <property name="value">
+                  <number>5</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="CColorPicker" name="cColorPicker_PhotoFraming_PaddingColor"/>
                </item>
               </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="groupBox_PhotoButtons">
-              <property name="title">
-               <string>Buttons Behavior</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_20">
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_6">
-                 <item>
-                  <layout class="QFormLayout" name="formLayout_16">
-                   <property name="fieldGrowthPolicy">
-                    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                   </property>
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_PhotoButtonsEnabled">
-                     <property name="font">
-                      <font>
-                       <underline>true</underline>
-                      </font>
-                     </property>
-                     <property name="text">
-                      <string>Enabled:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="label_PhotoButtonsEnabled_BorderColor">
-                     <property name="text">
-                      <string>Border Width</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="0">
-                    <widget class="QLabel" name="label_PhotoButtonsEnabled_BorderWidth">
-                     <property name="text">
-                      <string>Border Color</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="1">
-                    <widget class="QSpinBox" name="spinBox_PhotoButtonsEnabled_BorderWidth">
-                     <property name="minimumSize">
-                      <size>
-                       <width>50</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>50</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                     <property name="minimum">
-                      <number>0</number>
-                     </property>
-                     <property name="maximum">
-                      <number>20</number>
-                     </property>
-                     <property name="value">
-                      <number>5</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="1">
-                    <widget class="CColorPicker" name="cColorPicker_PhotoButtonsEnabled_BorderColor"/>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QFormLayout" name="formLayout_17">
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_PhotoButtonsHovered">
-                     <property name="font">
-                      <font>
-                       <underline>true</underline>
-                      </font>
-                     </property>
-                     <property name="text">
-                      <string>Hovered:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="label_PhotoButtonsHovered_BorderWidth">
-                     <property name="text">
-                      <string>Border Width</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="0">
-                    <widget class="QLabel" name="label_PhotoButtonsHovered_BorderColor">
-                     <property name="text">
-                      <string>Border Color</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="1">
-                    <widget class="QSpinBox" name="spinBox_PhotoButtonsHovered_BorderWidth">
-                     <property name="minimumSize">
-                      <size>
-                       <width>50</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>50</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                     <property name="minimum">
-                      <number>0</number>
-                     </property>
-                     <property name="maximum">
-                      <number>20</number>
-                     </property>
-                     <property name="value">
-                      <number>5</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="1">
-                    <widget class="CColorPicker" name="cColorPicker_PhotoButtonsHovered_BorderColor"/>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QFormLayout" name="formLayout_18">
-                   <property name="fieldGrowthPolicy">
-                    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                   </property>
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_PhotoButtonsDisabled">
-                     <property name="font">
-                      <font>
-                       <underline>true</underline>
-                      </font>
-                     </property>
-                     <property name="text">
-                      <string>Disabled:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="label_PhotoButtonsDisabled_BorderColor">
-                     <property name="text">
-                      <string>Border Color</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="1">
-                    <widget class="CColorPicker" name="cColorPicker_PhotoButtonsDisabled_BorderColor"/>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_PhotoCaption">
+            <property name="title">
+             <string>Caption</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_14">
+             <item>
+              <layout class="QFormLayout" name="formLayout_14">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_PhotoCaption_FontFamily">
+                 <property name="text">
+                  <string>Font Family</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="comboBox_PhotoCaption_FontFamily">
+                 <property name="currentIndex">
+                  <number>-1</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_PhotoCaption_FontSize">
+                 <property name="text">
+                  <string>Font Size</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_PhotoCaption_FontWeight">
+                 <property name="text">
+                  <string>Font Weight</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_PhotoCaption_TextColor">
+                 <property name="text">
+                  <string>Text Color</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QComboBox" name="comboBox_PhotoCaption_FontWeight"/>
+               </item>
+               <item row="3" column="1">
+                <widget class="CColorPicker" name="cColorPicker_PhotoCaption_TextColor"/>
+               </item>
+               <item row="1" column="1">
+                <widget class="QDoubleSpinBox" name="doubleSpinBox_PhotoCaption_FontSize">
+                 <property name="minimumSize">
+                  <size>
+                   <width>50</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="decimals">
+                  <number>1</number>
+                 </property>
+                 <property name="minimum">
+                  <double>0.500000000000000</double>
+                 </property>
+                 <property name="maximum">
+                  <double>2.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>0.800000000000000</double>
+                 </property>
+                </widget>
                </item>
               </layout>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
-         </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -1249,6 +948,19 @@
       </widget>
      </widget>
     </item>
+    <item>
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -1256,7 +968,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>632</width>
+     <width>627</width>
      <height>21</height>
     </rect>
    </property>
@@ -1368,16 +1080,11 @@
   <tabstop>spinBox_Mosaic_BorderWidth</tabstop>
   <tabstop>spinBox_Mosaic_SpacingWidth</tabstop>
   <tabstop>spinBox_Thumbnail_BorderWidth</tabstop>
-  <tabstop>tabWidget</tabstop>
   <tabstop>spinBox_PhotoFraming_Width</tabstop>
   <tabstop>spinBox_PhotoFraming_PaddingWidth</tabstop>
   <tabstop>comboBox_PhotoCaption_FontFamily</tabstop>
   <tabstop>doubleSpinBox_PhotoCaption_FontSize</tabstop>
   <tabstop>comboBox_PhotoCaption_FontWeight</tabstop>
-  <tabstop>spinBox_PhotoNavBlocks_Width</tabstop>
-  <tabstop>groupBox_PhotoNavBlocksBckg</tabstop>
-  <tabstop>spinBox_PhotoButtonsEnabled_BorderWidth</tabstop>
-  <tabstop>spinBox_PhotoButtonsHovered_BorderWidth</tabstop>
   <tabstop>comboBox_Box_FontFamily</tabstop>
   <tabstop>spinBox_Box_BorderWidth</tabstop>
   <tabstop>spinBox_ProgressBar_BorderWidth</tabstop>
@@ -1417,22 +1124,6 @@
     <hint type="destinationlabel">
      <x>272</x>
      <y>240</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>CImagePicker_PhotoNavBlocks_BckgTexture</sender>
-   <signal>averageColorComputed(QString)</signal>
-   <receiver>cColorPicker_PhotoNavBlocks_BckgColor</receiver>
-   <slot>setColor(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>94</x>
-     <y>371</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>125</x>
-     <y>337</y>
     </hint>
    </hints>
   </connection>
