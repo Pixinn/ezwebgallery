@@ -24,6 +24,7 @@ function CDisplay( p_properties, p_htmlStructure )
 
     this.properties = p_properties;
     this.carrousel = new CCarrousel( p_properties, this.html.photo );
+    this.navBars = new CNavBars( p_htmlStructure );
     this.url = new CUrl( p_properties.photos.list );
     this.idCurrentPhoto = -1;
     this.photoScreenEvent = new CEvent();

@@ -137,7 +137,6 @@ $(document).ready(function()
     } );
     
     var Display = new CDisplay( g_properties, HtmlStructure );    
-    var NavBars = new CNavBars( HtmlStructure );
     var UserHandler; //Managing user events
     
     // --- ENTERING THIS FUNCTION WHEN THE THUMBNAILS ARE LOADED
