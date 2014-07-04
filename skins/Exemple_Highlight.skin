@@ -1,6 +1,11 @@
-﻿<Skin release="20130520" name="Exemple: Highlight">
-    <properties title-position="0"/>
+﻿<Skin release="20140703" name="Exemple: Highlight">
     <StyleSheet name="noname">
+        <Selection selector="#mosaic">
+            <background-color>#000000</background-color>
+            <background-image>url(../images/)</background-image>
+            <border-color>#000000</border-color>
+            <border-width>1px</border-width>
+        </Selection>
         <Selection selector="#progressbar">
             <background-color>#ffaa00</background-color>
             <border-color>#00aaff</border-color>
@@ -26,27 +31,12 @@
             <background-color>#00aa7f</background-color>
             <background-image>url(../images/)</background-image>
         </Selection>
+        <Selection selector="#toolbar">
+            <background-color>#EEEEEE</background-color>
+        </Selection>
         <Selection selector=".mainPhoto">
             <border-color>#ff007f</border-color>
             <border-width>5px</border-width>
-        </Selection>
-        <Selection selector=".photoButtonDisabled">
-            <border-color>#000000</border-color>
-            <border-width>3px</border-width>
-        </Selection>
-        <Selection selector=".photoButtonEnabled">
-            <border-color>#ffff00</border-color>
-            <border-width>3px</border-width>
-        </Selection>
-        <Selection selector=".photoButtonEnabled:hover">
-            <border-color>#ff0000</border-color>
-            <border-width>10px</border-width>
-            <margin>-7px</margin>
-        </Selection>
-        <Selection selector=".scrollContainer div.slidingPanel">
-            <background-color>#5555ff</background-color>
-            <background-image>url(../images/)</background-image>
-            <background-size>cover</background-size>
         </Selection>
         <Selection selector=".thumbBox">
             <border-color>#ff0000</border-color>
@@ -59,38 +49,17 @@
                 <border-color>#ffff00</border-color>
             </Selection>
         </Selection>
-        <Selection selector=".thumbsWrapperContainer">
-            <background-color>#5555ff</background-color>
-            <border-color>#ffffff</border-color>
-            <border-width>5px</border-width>
-        </Selection>
         <Selection selector="div#cadrePhoto">
             <background-color>#0000ff</background-color>
             <background-image>url(../images/)</background-image>
             <padding>15px</padding>
         </Selection>
         <Selection selector="div#indexTitle">
-            <background-color>#00ff7f</background-color>
-            <background-image>url(../images/)</background-image>
-            <border-color>#ff0000</border-color>
-            <border-left-width>0px</border-left-width>
-            <border-right-width>4px</border-right-width>
             <color>#000000</color>
-            <display>block</display>
             <font-family>Georgia, "DejaVu Serif", Norasi, serif</font-family>
             <font-size>2em</font-size>
-            <line-height>1em</line-height>
-            <width>50px</width>
-        </Selection>
-        <Selection selector="div#photoLefter">
-            <background-color>#000000</background-color>
-            <background-image>url(../images/)</background-image>
-            <width>100px</width>
-        </Selection>
-        <Selection selector="div#photoRighter">
-            <background-color>#000000</background-color>
-            <background-image>url(../images/)</background-image>
-            <width>100px</width>
+            <text-align>left</text-align>
+            <text-shadow>4px 2px 4px rgba(150, 150, 150, 0.8)</text-shadow>
         </Selection>
         <Selection selector="div.photoCaption">
             <color>#cbffe0</color>
@@ -98,25 +67,9 @@
             <font-size>0.9em</font-size>
             <font-weight>normal</font-weight>
         </Selection>
-        <Selection selector="ul.indexNavigation">
-            <Selection selector="li">
-                <background-color>#e1e1e1</background-color>
-                <Selection selector="a">
-                    <color>#000000</color>
-                </Selection>
-            </Selection>
-            <Selection selector="li.navTabSelected">
-                <background-color>#ff55ff</background-color>
-                <border-color>#ffaa00</border-color>
-                <border-width>3px</border-width>
-                <Selection selector="a">
-                    <color>#00aa00</color>
-                </Selection>
-            </Selection>
-        </Selection>
     </StyleSheet>
     <Ressources>
-        <File id="PhotoButtonNext">arrows_right_dark.png</File>
-        <File id="PhotoButtonPrevious">arrows_left_dark.png</File>
+        <File id="PhotoButtonNext">Arrow_Circular_Right.png</File>
+        <File id="PhotoButtonPrevious">Arrow_Circular_Left.png</File>
     </Ressources>
 </Skin>

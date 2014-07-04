@@ -1,4 +1,4 @@
-﻿<Skin release="20131102" name="Autumn">
+﻿<Skin release="20140703" name="Autumn">
     <StyleSheet name="noname">
         <Selection selector="#mosaic">
             <background-image>url(../images/Brown-Transparency.png)</background-image>
@@ -31,22 +31,12 @@
             <background-color>#cfad76</background-color>
             <background-image>url(../images/Leaves-Paper-Background.jpg)</background-image>
         </Selection>
+        <Selection selector="#toolbar">
+            <background-color>#111111</background-color>
+        </Selection>
         <Selection selector=".mainPhoto">
             <border-color>#000000</border-color>
             <border-width>3px</border-width>
-        </Selection>
-        <Selection selector=".photoButtonDisabled">
-            <border-color>#000000</border-color>
-            <border-width>1px</border-width>
-        </Selection>
-        <Selection selector=".photoButtonEnabled">
-            <border-color>#3d2b18</border-color>
-            <border-width>1px</border-width>
-        </Selection>
-        <Selection selector=".photoButtonEnabled:hover">
-            <border-color>#3d2b18</border-color>
-            <border-width>4px</border-width>
-            <margin>-3px</margin>
         </Selection>
         <Selection selector=".thumbBox">
             <border-color>#211a14</border-color>
@@ -60,9 +50,9 @@
             </Selection>
         </Selection>
         <Selection selector="div#cadrePhoto">
-            <background-color>#442a13</background-color>
+            <background-color>#b4ada5</background-color>
             <background-image>url(../images/)</background-image>
-            <padding>20px</padding>
+            <padding>7px</padding>
         </Selection>
         <Selection selector="div#indexTitle">
             <color>#000000</color>
@@ -70,14 +60,6 @@
             <font-size>2.2em</font-size>
             <text-align>left</text-align>
             <text-shadow>4px 2px 4px rgba(150, 150, 150, 0.8)</text-shadow>
-        </Selection>
-        <Selection selector="div#photoLefter">
-            <background-color>transparent</background-color>
-            <width>100px</width>
-        </Selection>
-        <Selection selector="div#photoRighter">
-            <background-color>transparent</background-color>
-            <width>100px</width>
         </Selection>
         <Selection selector="div.photoCaption">
             <color>#e3e3e3</color>
@@ -89,8 +71,8 @@
     <Ressources>
         <File id="IndexPage_BckgTexture">Leaves-Paper-Background.jpg</File>
         <File id="Mosaic_BckgTexture">Brown-Transparency.png</File>
-        <File id="PhotoButtonNext">Drawn-arrow-right.png</File>
-        <File id="PhotoButtonPrevious">Drawn-arrow-left.png</File>
+        <File id="PhotoButtonNext">Arrow_Right.png</File>
+        <File id="PhotoButtonPrevious">Arrow_Left.png</File>
         <File id="PhotoPage_BckgTexture">Leaves-Paper-Background.jpg</File>
     </Ressources>
 </Skin>
