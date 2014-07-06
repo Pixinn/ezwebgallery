@@ -316,9 +316,9 @@ void CWatermark::setOpacity( const unsigned int opacity )
                     //NB: pixel->opacity reprsente en ralit la TRANSPARENCE. ie: 0 = opaque...
                     Quantum pixelOpacity;
                     Quantum newPixelOpacity;
-                    pixelOpacity = MaxRGB - pixel->opacity;
+                    pixelOpacity = QuantumRange - pixel->opacity;
                     newPixelOpacity = ( pixelOpacity * opacity ) / 100; //Un peu lourd comme calcul...
-                    pixel->opacity = MaxRGB - newPixelOpacity;
+                    pixel->opacity = QuantumRange - newPixelOpacity;
                     pixel++;
                 }
             }

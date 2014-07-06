@@ -102,13 +102,25 @@ a:active {color: black;}
 }
 /* Zone à gauche */
 .leftZone{
-	float:left;
+    position:absolute;
+    background-image:url("../../resources/images/Shadow.png");
+    text-align:center;
+    left:0;
+    top:0;
+    z-index:100;
 	height:100%;
+    width:12%;
 }
 /* Zone à droite */
 .rightZone{
-	float:right;
+	position:absolute;
+    background-image:url("../../resources/images/Shadow.png");
+    text-align:center;
+    right:0;
+    top:0;
+    z-index:100;
 	height:100%;
+    width:12%;
 }
 /* Pied de page */
 .footer{

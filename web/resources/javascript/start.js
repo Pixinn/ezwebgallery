@@ -109,7 +109,8 @@ $(document).ready(function()
         $frame : $("#cadrePhoto"),
         $wrapper : $("#wrapperAffichagePhoto"),
         $div : $("#divPhoto"),
-        $caption :$(".photoCaption"),
+        $caption : $(".photoCaption"),
+        $navBars : $.merge( $('#photoLefter'), $('#photoRighter') ),
         buttons : {
                 $previous : $("#boutonPrevious"),
                 $next : $("#boutonNext"),

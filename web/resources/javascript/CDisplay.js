@@ -24,6 +24,7 @@ function CDisplay( p_properties, p_htmlStructure )
 
     this.properties = p_properties;
     this.carrousel = new CCarrousel( p_properties, this.html.photo );
+    this.navBars = new CNavBars( p_htmlStructure );
     this.url = new CUrl( p_properties.photos.list );
     this.idCurrentPhoto = -1;
     this.photoScreenEvent = new CEvent();
@@ -69,7 +70,8 @@ function CDisplay( p_properties, p_htmlStructure )
     }
 
     //back to index
-    this.hidePhoto = function( ) {
+    this.hidePhoto = function( ) 
+    {
         //that.url.clearHash();
         that.html.index.$screen.show();
         
@@ -224,8 +226,6 @@ function CDisplay( p_properties, p_htmlStructure )
 
         photo.verticalCenter( 0 );  //inside its frame
         
-        that.html.photo.buttons.$previous.verticalCenter( toolbarHeight_2 );
-        that.html.photo.buttons.$next.verticalCenter( toolbarHeight_2 );        
     }
     
     //Computes the height of the toolbar on the top.
