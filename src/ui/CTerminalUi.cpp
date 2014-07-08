@@ -120,14 +120,15 @@ void CTerminalUi::run( )
 
     //Chargement de la dernire session
     QDomDocument projectDoc;
-    QFile file_xmlprojectDoc( m_projectFile );
-    if( projectDoc.setContent( &file_xmlprojectDoc ) ){
+    QString filePath =  QDir::current().filePath( m_projectFile ); //can manage absolute and relative paths
+    QFile file_xmlprojectDoc( filePath );
+    if( QFile( filePath ).exists() && projectDoc.setContent( &file_xmlprojectDoc ) ){
         m_projectParameters.fromDomDocument( projectDoc );
         cout << m_projectFile << tr(" loaded.") << endl;
     }
     else{
         cerr << tr("Cannot load the project: ") << m_projectFile << endl;
-        cerr << tr("Usage: GalleryDesigner [project file to load]") << endl;
+        cerr << tr("Usage: ezwebgallery [project file to load]") << endl;
         emit done();
         return;
     }

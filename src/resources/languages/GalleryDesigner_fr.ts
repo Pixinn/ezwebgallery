@@ -35,7 +35,7 @@
     </message>
     <message>
         <location filename="../../generation/CGalleryGenerator.cpp" line="345"/>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="655"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="657"/>
         <source>Generating the photos : </source>
         <translation>Génération de photos :</translation>
     </message>
@@ -64,12 +64,12 @@
         <translation>Album photo conçu et généré avec EZWebGallery.</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="591"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="593"/>
         <source>Previous photo</source>
         <translation>Photo précédante</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="595"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="597"/>
         <source>Next photo</source>
         <translation>Photo suivante</translation>
     </message>
@@ -78,7 +78,7 @@
         <translation type="obsolete">Parcourir la galerie</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="671"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="673"/>
         <source>Unspecified.</source>
         <translation>Indéfinie.</translation>
     </message>
@@ -170,7 +170,7 @@
         <translation type="obsolete">Pas d&apos;erreur.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="656"/>
+        <location filename="../../CSkinParameters.cpp" line="599"/>
         <source>Cannot overwrite default skin.</source>
         <translation>Imposible d&apos;écraser le thème par défaut.</translation>
     </message>
@@ -179,22 +179,22 @@
         <translation type="obsolete">Le répertoire de destination n&apos;existe pas.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="773"/>
+        <location filename="../../CSkinParameters.cpp" line="716"/>
         <source>An error occurred while loading the skin file </source>
         <translation>Une erreur est survenue lors du chargement du thème </translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="795"/>
+        <location filename="../../CSkinParameters.cpp" line="738"/>
         <source>invalid character in filename.</source>
         <translation>caractère non valide dans le nom du fichier.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="800"/>
+        <location filename="../../CSkinParameters.cpp" line="743"/>
         <source>Button &quot;Previous&quot; - an image is required.</source>
         <translation>Bouton &quot;Photo Précédante&quot; - une image est nécessaire.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="803"/>
+        <location filename="../../CSkinParameters.cpp" line="746"/>
         <source>Button &quot;Next&quot; - an image is required.</source>
         <translation>Bouton &quot;Photo Suivante&quot; - une image est nécessaire.</translation>
     </message>
@@ -203,9 +203,8 @@
         <translation type="obsolete">Bouton &quot;Retour à l&apos;index&quot; - une image est nécessaire.</translation>
     </message>
     <message>
-        <location filename="../../CSkinParameters.cpp" line="808"/>
         <source>The zones containing the Previous/Next buttons are smaller than the buttons themselves.</source>
-        <translation>Les zones contenant les boutons &quot;Précédant/Suivant&quot; sont plus petites que les boutons eux-même.</translation>
+        <translation type="obsolete">Les zones contenant les boutons &quot;Précédant/Suivant&quot; sont plus petites que les boutons eux-même.</translation>
     </message>
     <message>
         <source>Cannot load the skin.</source>
@@ -249,47 +248,51 @@
         <translation>EZWebGallery démarré.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="126"/>
-        <location filename="../../ui/CTerminalUi.cpp" line="143"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="127"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="144"/>
         <source> loaded.</source>
         <translation> chargé.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="129"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="130"/>
         <source>Cannot load the project: </source>
         <translation>Impossible de charger le projet: </translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="130"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="131"/>
+        <source>Usage: ezwebgallery [project file to load]</source>
+        <translation>Usage: ezwebgallery [ficher projet]</translation>
+    </message>
+    <message>
         <source>Usage: GalleryDesigner [project file to load]</source>
-        <translation>Utilisation: GalleryDesigner [projet à charger]</translation>
+        <translation type="obsolete">Utilisation: GalleryDesigner [projet à charger]</translation>
     </message>
     <message>
         <source>Cannot load the skin: </source>
         <translation type="obsolete">Impossible de charger le thème: </translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="149"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="150"/>
         <source>Creating the output folder: </source>
         <translation>Création du répertoire de sortie: </translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="151"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="152"/>
         <source>Output folder successfully created.</source>
         <translation>Répertoire de sortie créé avec succes.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="171"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="172"/>
         <source>Photos to be processed:</source>
         <translation>Photos à traiter :</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="179"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="180"/>
         <source>The gallery could not be properly generated.</source>
         <translation>La galerie n&apos;a pas pu être générée correctement.</translation>
     </message>
     <message>
-        <location filename="../../ui/CTerminalUi.cpp" line="190"/>
+        <location filename="../../ui/CTerminalUi.cpp" line="191"/>
         <source>Canceling...</source>
         <translation>Annulation en cours...</translation>
     </message>
@@ -345,7 +348,7 @@
         <translation type="obsolete">Votre thème a été modifié.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="502"/>
+        <location filename="../../ui/mainwin.cpp" line="494"/>
         <source>Open a project</source>
         <translation>Ouvrir un projet</translation>
     </message>
@@ -370,7 +373,7 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete">Veuillez indiquer l&apos;emplacement des photos du projet.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="641"/>
+        <location filename="../../ui/mainwin.cpp" line="633"/>
         <source>Save a project</source>
         <translation>Enregistrer un projet</translation>
     </message>
@@ -403,8 +406,8 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete"> Certaines photos sont introuvables dans ce répertoire.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="621"/>
-        <location filename="../../ui/mainwin.cpp" line="659"/>
+        <location filename="../../ui/mainwin.cpp" line="613"/>
+        <location filename="../../ui/mainwin.cpp" line="651"/>
         <source>The session could not be saved.</source>
         <translation>La session n&apos;a pas pu être sauvée.</translation>
     </message>
@@ -413,28 +416,28 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;Ce logiciel est un &lt;b&gt;FREEWARE&lt;/b&gt;. Vous pouvez le copier et l&apos;utiliser sans condition, mais vous n&apos;êtes pas autorisé à le modifier. Il est fourni en l&apos;état et nous déclinons toute responsabilité en cas de dommage causé à votre ordinateur ou à vos logiciels.&lt;br&gt;Veuillez lire le fichier &quot;ReadMe.txt&quot; pour de plus amples détails.&lt;br&gt;&lt;br&gt;Téléchargez la dernière version &lt;a href=&quot;http://ezwebgallery.pixinn.net/&quot;&gt;ici&lt;/a&gt;.&lt;br&gt;Suivez les nouveautés sur &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;Vous pouvez nous joindre à cette adresse: ezwebgallery@pixinn.net</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="806"/>
+        <location filename="../../ui/mainwin.cpp" line="798"/>
         <source>Please select an input directory containing your pictures.</source>
         <translation>Choisissez le répertoire d&apos;entrée contenant vos photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="850"/>
+        <location filename="../../ui/mainwin.cpp" line="842"/>
         <source>Please select the output directory.</source>
         <translation>Choisissez le répertoire de sortie où sera générée la gallerie.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="887"/>
+        <location filename="../../ui/mainwin.cpp" line="879"/>
         <source>Some configuration fields were not properly set.</source>
         <translation>Certains champs de configuration n&apos;ont pas été remplis correctement.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="911"/>
+        <location filename="../../ui/mainwin.cpp" line="903"/>
         <source>Your skin is not valid.                                                                                </source>
         <comment>Please leave 60 blank space !</comment>
         <translation>Votre thème n&apos;est pas valide.                                                                                </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="919"/>
+        <location filename="../../ui/mainwin.cpp" line="911"/>
         <source>Building photo list.</source>
         <translation>Construction de la liste de photos.</translation>
     </message>
@@ -469,7 +472,7 @@ Les légendes ont automatiquement été réassociées à une photo, mais cela a 
         <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;Ce logiciel est un&lt;b&gt;FREEWARE&lt;/b&gt;.Vous pouvez le copier et l&apos;utiliser sans restriction, mais vous n&apos;êtes pas autorisé à le modifier. Il est fourni en l&apos;état et nous déclinons toute responsabilité en cas de dommage causé à votre ordinateur ou à vos logiciels.&lt;br&gt;Veuillez lire le fichier &quot;ReadMe.txt&quot; pour de plus amples informations.&lt;br&gt;&lt;br&gt;Téléchargez la dernière version &lt;a href=&quot;http://ezwebgallery.org/&quot;&gt;ici&lt;/a&gt;.&lt;br&gt;Suivez les nouveautés sur &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;Vous pouvez nous joindre à cette adresse : dev@ezwebgallery.org</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="274"/>
+        <location filename="../../ui/mainwin.cpp" line="266"/>
         <source>TAG list</source>
         <translation>Liste des TAGs</translation>
     </message>
@@ -478,7 +481,7 @@ Les légendes ont automatiquement été réassociées à une photo, mais cela a 
         <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;Ce logiciel est un&lt;b&gt;FREEWARE&lt;/b&gt;.Vous pouvez le copier et l&apos;utiliser sans restriction, mais vous n&apos;êtes pas autorisé à le modifier. Il est fourni en l&apos;état et nous déclinons toute responsabilité en cas de dommage causé à votre ordinateur ou à vos logiciels.&lt;br&gt;Veuillez lire le fichier &quot;ReadMe.txt&quot; pour de plus amples informations.&lt;br&gt;&lt;br&gt;Téléchargez la dernière version &lt;a href=&quot;http://www.ezwebgallery.org/&quot;&gt;ici&lt;/a&gt;.&lt;br&gt;Suivez les nouveautés sur &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;Vous pouvez nous joindre à cette adresse : dev@ezwebgallery.org</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="269"/>
+        <location filename="../../ui/mainwin.cpp" line="261"/>
         <source>Logs</source>
         <translation>Logs</translation>
     </message>
@@ -520,91 +523,91 @@ Some photos cannot be found. They will be removed from the project.
         <translation type="obsolete">Chargement du thème par défault.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="579"/>
+        <location filename="../../ui/mainwin.cpp" line="571"/>
         <source>Skin loaded: </source>
         <translation>Thème chargé : </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="736"/>
+        <location filename="../../ui/mainwin.cpp" line="728"/>
         <source>About EZWebGallery - build date: </source>
         <translation>A propos d&apos;EZWebGallery - date de compilation : </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="943"/>
+        <location filename="../../ui/mainwin.cpp" line="935"/>
         <source>No photo to process!</source>
         <translation>Pas de photo à traiter !</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="967"/>
+        <location filename="../../ui/mainwin.cpp" line="959"/>
         <source>Displaying thumbnail: </source>
         <translation>Affichage de la vignette : </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="995"/>
+        <location filename="../../ui/mainwin.cpp" line="987"/>
         <source>Clearing thumbnails</source>
         <translation>Effacement des vignettes</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1067"/>
+        <location filename="../../ui/mainwin.cpp" line="1059"/>
         <source>Skin Path: </source>
         <translation>Fichier thème : </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1084"/>
+        <location filename="../../ui/mainwin.cpp" line="1076"/>
         <source>The input directory does not exist.</source>
         <comment>Check before gallery generation</comment>
         <translation>Le répertoire d&apos;entrée n&apos;éxiste pas.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1088"/>
+        <location filename="../../ui/mainwin.cpp" line="1080"/>
         <source>You have to define a title for your gallery.</source>
         <comment>Check before gallery generation</comment>
         <translation>Vous devez donner un titre à votre galerie.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1092"/>
+        <location filename="../../ui/mainwin.cpp" line="1084"/>
         <source>The output directory does not exist.</source>
         <comment>Check before gallery generation</comment>
         <translation>Le répertoire de destination n&apos;existe pas.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1153"/>
+        <location filename="../../ui/mainwin.cpp" line="1145"/>
         <source>Do you want to save your changes?</source>
         <translation>Voulez vous enregistrer les changements?</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1159"/>
+        <location filename="../../ui/mainwin.cpp" line="1151"/>
         <source>Your project has been modified.</source>
         <translation>Votre projet a été modifié.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1173"/>
+        <location filename="../../ui/mainwin.cpp" line="1165"/>
         <source>Your project and your skin have been modified.</source>
         <translation>Votre projet et votre thème ont été modifiés.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1199"/>
+        <location filename="../../ui/mainwin.cpp" line="1191"/>
         <source>You are opening a project made with a version of EZWebGallery more recent than this one. Some parameters may get lost.</source>
         <translation>Vous essayer d&apos;ouvrir un projet réalisé avec une version d&apos;EZWebGallery plus récente. Certains paramètres pourraient être perdus.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1284"/>
+        <location filename="../../ui/mainwin.cpp" line="1276"/>
         <source>this directory does not exist.</source>
         <translation>ce répertoire n&apos;éxiste pas.</translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.ui" line="2218"/>
-        <location filename="../../ui/mainwin.cpp" line="1103"/>
+        <location filename="../../ui/mainwin.cpp" line="1095"/>
         <source>&amp;Generate</source>
         <translation>&amp;Générer</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1109"/>
+        <location filename="../../ui/mainwin.cpp" line="1101"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Annuler</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="838"/>
+        <location filename="../../ui/mainwin.cpp" line="830"/>
         <source>Invalid directory.</source>
         <translation>Répertoire non-valide.</translation>
     </message>
@@ -614,7 +617,7 @@ Some photos cannot be found. They will be removed from the project.
         <translation>Arrêt forcé</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="233"/>
+        <location filename="../../ui/mainwin.cpp" line="225"/>
         <source>Generation successfully completed.</source>
         <translation>Génération terminée avec succès.</translation>
     </message>
@@ -623,15 +626,15 @@ Some photos cannot be found. They will be removed from the project.
         <translation type="obsolete">Le répertoire de sortie n&apos;existe pas.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1285"/>
+        <location filename="../../ui/mainwin.cpp" line="1277"/>
         <source>Do you want to create it ?</source>
         <translation>Voulez-vous le créer ?</translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.cpp" line="191"/>
-        <location filename="../../ui/mainwin.cpp" line="588"/>
-        <location filename="../../ui/mainwin.cpp" line="910"/>
-        <location filename="../../ui/mainwin.cpp" line="1298"/>
+        <location filename="../../ui/mainwin.cpp" line="580"/>
+        <location filename="../../ui/mainwin.cpp" line="902"/>
+        <location filename="../../ui/mainwin.cpp" line="1290"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
@@ -644,12 +647,12 @@ Some photos cannot be found. They will be removed from the project.
         <translation type="obsolete">Le répertoire d&apos;entrée ne contient pas de photo !</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="951"/>
+        <location filename="../../ui/mainwin.cpp" line="943"/>
         <source>Canceling...</source>
         <translation>Annulation en cours...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="978"/>
+        <location filename="../../ui/mainwin.cpp" line="970"/>
         <source>No preview available.</source>
         <translation>Pas de vignette disponible.</translation>
     </message>
@@ -1593,7 +1596,7 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
     </message>
     <message>
         <location filename="../../ui/mainwin.ui" line="2412"/>
-        <location filename="../../ui/mainwin.cpp" line="747"/>
+        <location filename="../../ui/mainwin.cpp" line="739"/>
         <source>About ImageMagick</source>
         <translation>A propos d&apos;ImageMagick</translation>
     </message>
@@ -1887,7 +1890,7 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
         <location filename="../../ui/WinSkinDesigner.ui" line="69"/>
         <location filename="../../ui/WinSkinDesigner.ui" line="227"/>
         <location filename="../../ui/WinSkinDesigner.ui" line="459"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1122"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="821"/>
         <source>Background Color</source>
         <translation>Couleur du fond</translation>
     </message>
@@ -1901,8 +1904,8 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
     </message>
     <message>
         <location filename="../../ui/WinSkinDesigner.ui" line="157"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="653"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1076"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="693"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="775"/>
         <source>Text Color</source>
         <translation>Couleur du texte</translation>
     </message>
@@ -1913,21 +1916,16 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
     <message>
         <location filename="../../ui/WinSkinDesigner.ui" line="234"/>
         <location filename="../../ui/WinSkinDesigner.ui" line="365"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="892"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="950"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1086"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1197"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="785"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="896"/>
         <source>Border Width</source>
         <translation>Largeur de la bordure</translation>
     </message>
     <message>
         <location filename="../../ui/WinSkinDesigner.ui" line="260"/>
         <location filename="../../ui/WinSkinDesigner.ui" line="391"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="899"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="957"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1011"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1112"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1223"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="811"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="922"/>
         <source>Border Color</source>
         <translation>Couleur de la bordure</translation>
     </message>
@@ -2003,49 +2001,49 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
     </message>
     <message>
         <location filename="../../ui/WinSkinDesigner.ui" line="438"/>
+        <source>Screen</source>
+        <translation>Ecran</translation>
+    </message>
+    <message>
         <source>Photo Page Background</source>
-        <translation>Fond de la page Photo</translation>
+        <translation type="obsolete">Fond de la page Photo</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="501"/>
         <source>Framing and Text</source>
-        <translation>Encadrement et Texte</translation>
+        <translation type="obsolete">Encadrement et Texte</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="510"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="550"/>
         <source>Framing</source>
         <translation>Encadrement</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="518"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="722"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="558"/>
         <source>Width</source>
         <translation>Largeur</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="525"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="767"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="565"/>
         <source>Texture</source>
         <translation>Texture</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="532"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="774"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="572"/>
         <source>Color</source>
         <translation>Couleur</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="539"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="579"/>
         <source>Padding</source>
         <translation>Marge interne</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="546"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="586"/>
         <source>Padding color</source>
         <translation>Couleur de la marge interne</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1046"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="745"/>
         <source>Loader</source>
         <translation>Chargement</translation>
     </message>
@@ -2059,8 +2057,8 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
     </message>
     <message>
         <location filename="../../ui/WinSkinDesigner.ui" line="115"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="625"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1069"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="665"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="768"/>
         <source>Font Family</source>
         <translation>Polices</translation>
     </message>
@@ -2076,7 +2074,7 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
     </message>
     <message>
         <location filename="../../ui/WinSkinDesigner.ui" line="125"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="639"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="679"/>
         <source>Font Size</source>
         <translation>Taille de police</translation>
     </message>
@@ -2085,7 +2083,7 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
         <translation type="obsolete">Variation de la police</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="646"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="686"/>
         <source>Font Weight</source>
         <translation>Poid de la police</translation>
     </message>
@@ -2119,64 +2117,57 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
         <translation type="obsolete">Légende</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="617"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="657"/>
         <source>Caption</source>
         <translation>Légende</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="703"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="488"/>
         <source>Navigation</source>
         <translation>Navigation</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="711"/>
         <source>Previous/Next Blocks Appearence</source>
-        <translation>Apparence des blocs de navigation</translation>
+        <translation type="obsolete">Apparence des blocs de navigation</translation>
     </message>
     <message>
         <location filename="../../ui/WinSkinDesigner.ui" line="48"/>
-        <location filename="../../ui/WinSkinDesigner.ui" line="756"/>
         <source>Background</source>
         <translation>Fond</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="810"/>
         <source>Buttons Icons</source>
-        <translation>Icones des boutons</translation>
+        <translation type="obsolete">Icones des boutons</translation>
     </message>
     <message>
         <source>Browse</source>
         <translation type="obsolete">Retour à l&apos;index</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="823"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="501"/>
         <source>Previous</source>
         <translation>Photo précédante</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="837"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="515"/>
         <source>Next</source>
         <translation>Photo suivante</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="867"/>
         <source>Buttons Behavior</source>
-        <translation>Comportement des boutons</translation>
+        <translation type="obsolete">Comportement des boutons</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="885"/>
         <source>Enabled:</source>
-        <translation>Activé:</translation>
+        <translation type="obsolete">Activé:</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="943"/>
         <source>Hovered:</source>
-        <translation>Survolé:</translation>
+        <translation type="obsolete">Survolé:</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1004"/>
         <source>Disabled:</source>
-        <translation>Désactivé:</translation>
+        <translation type="obsolete">Désactivé:</translation>
     </message>
     <message>
         <source>Misc</source>
@@ -2187,32 +2178,32 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
         <translation type="obsolete">Ecran de chargement</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1058"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="757"/>
         <source>Box</source>
         <translation>Boite</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1146"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="845"/>
         <source>Progress Bar</source>
         <translation>Barre de chargement</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1157"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="856"/>
         <source>&quot;Unloaded Text&quot; Color</source>
         <translation>Couleur du texte pour &quot;Non-Chargé&quot;</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1167"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="866"/>
         <source>&quot;Unloaded Background&quot; Color</source>
         <translation>Couleur du fond pour &quot;Non-Chargé&quot;</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1177"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="876"/>
         <source>&quot;Loaded Text&quot; Color</source>
         <translation>Couleur du texte pour &quot;Chargé&quot;</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1187"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="886"/>
         <source>&quot;Loaded Background&quot; Color</source>
         <translation>Couleur du fond pour &quot;Chargé&quot;</translation>
     </message>
@@ -2241,52 +2232,52 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
         <translation type="obsolete">Taille de l&apos;interligne</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1265"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="977"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1275"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="987"/>
         <source>&amp;Tools</source>
         <translation>&amp;Outils</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1285"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="997"/>
         <source>toolBar</source>
         <translation>Barre d&apos;outils</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1308"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1020"/>
         <source>&amp;Open</source>
         <translation>&amp;Ouvrir</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1317"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1029"/>
         <source>&amp;Save</source>
         <translation>&amp;Enregistrer</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1326"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1038"/>
         <source>&amp;Check the Skin</source>
         <translation>&amp;Vérifier le thème</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1329"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1041"/>
         <source>Check your skin</source>
         <translation>Vérifier votre thème</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1338"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1050"/>
         <source>New</source>
         <translation>Nouveau</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1341"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1053"/>
         <source>Create a new skin.</source>
         <translation>Créer un nouveau thème.</translation>
     </message>
     <message>
-        <location filename="../../ui/WinSkinDesigner.ui" line="1350"/>
+        <location filename="../../ui/WinSkinDesigner.ui" line="1062"/>
         <source>Save As</source>
         <translation>Enregistrer sous</translation>
     </message>

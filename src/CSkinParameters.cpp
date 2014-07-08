@@ -46,7 +46,7 @@
 *****************************************************/
 CSkinParameters::CSkinParameters() :
     QObject(),
-    f_initialized( false ), m_toolbar( QColor("white") )
+    m_toolbar( QColor("white") ), f_initialized( false )
 {        
     //--- Inits
     m_styleSheet = CCssSheet("skin");
