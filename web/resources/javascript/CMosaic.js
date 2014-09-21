@@ -73,20 +73,21 @@ function CMosaic( p_properties, p_htmlStructure )
         var thumbBorderWidth = $thumbnails.first().css("border-top-width");
         thumbBorderWidth = thumbBorderWidth.replace("px","");
         that.htmlStructure.index.mosaic.$handle.show(); //show necessary for the correct sizes
-        $thumbBoxes.css( "width", that.properties.index.mosaic.thumbBoxWidth );
-        //var mosaicWidth = that.properties.index.mosaic.nbCols * $thumbBoxes.outerWidth();
-        //var mosaicHeight = Math.ceil(that.mosaicNbThumbnails / that.properties.index.mosaic.nbCols) * $thumbBoxes.outerHeight() +  that.htmlStructure.index.mosaic.$title.outerHeight(true);
+        $thumbBoxes.width( that.ThumbnailSize + 2*thumbBorderWidth )
+                   .height( that.ThumbnailSize + 2*thumbBorderWidth);
+        var mosaicWidth = that.properties.index.mosaic.nbCols * $thumbBoxes.outerWidth();
+        var mosaicHeight = Math.ceil(that.mosaicNbThumbnails / that.properties.index.mosaic.nbCols) * $thumbBoxes.outerHeight() +  that.htmlStructure.index.mosaic.$title.outerHeight(true);
         //updating structure
         that.htmlStructure.index.mosaic.$thumbnails = $thumbnails;
         //displaying mosaic
-        that.show();
+        that.htmlStructure.index.mosaic.$handle.width( mosaicWidth )
+                                                  .height( mosaicHeight );        
     };
     
     //showing the mosaic
     this.show = function( $thumbDisplayed )
     {
         that.htmlStructure.index.mosaic.$thumbnails.verticalCenter(0);
-        that.onResize();
         //centering on $thumbDisplayed
         if(typeof $thumbDisplayed != "undefined") {
             that.center( $thumbDisplayed );
@@ -107,17 +108,6 @@ function CMosaic( p_properties, p_htmlStructure )
         TOOLS.trace( "scrollAmount: " + scrollAmount );
     }
     
-    //On window resize
-    this.onResize = function()
-    {
-        var $thumbBoxes = that.htmlStructure.index.mosaic.$thumbBoxes;
-        $thumbBoxes.height( $thumbBoxes.width() );
-        var mosaicHeight = Math.ceil(that.mosaicNbThumbnails / that.properties.index.mosaic.nbCols) * $thumbBoxes.outerHeight() +  that.htmlStructure.index.mosaic.$title.outerHeight(true);
-        that.htmlStructure.index.mosaic.$handle.height( mosaicHeight );
-        
-        that.htmlStructure.index.mosaic.$thumbnails.fitElem( 100 );        
-    }
-     
     
     //Returns the loading Event
     this.getLoadingEvent = function() {
@@ -137,14 +127,11 @@ function CMosaic( p_properties, p_htmlStructure )
     {
         var fSetFound = false;
         var thumbSet = that.properties.index.mosaic.defaultSet;    //if no suitable set is found
-        var availableWidth = that.htmlStructure.$window.innerWidth() - that.properties.index.mosaic.unavailable.horizontal - that.mosaicSizeMargin/2; //$window.innerWidth(): "visual viewport" width: http://www.quirksmode.org/mobile/viewports2.html
-        var availableHeight = that.htmlStructure.$window.innerHeight() - that.properties.index.mosaic.unavailable.vertical - that.mosaicSizeMargin;
+        var availableWidth = that.htmlStructure.index.mosaic.$wrapper.innerWidth() * 0.9;
         
         $.each( that.properties.index.mosaic.sizes, function( key, size ) //iterating on the object using jQuery
         {
-            if (   !fSetFound
-                && (availableWidth > size * that.properties.index.mosaic.nbCols)
-                /*&& (availableHeight > size * that.properties.index.mosaic.nbRows)*/ )
+            if (   !fSetFound && (availableWidth > size * that.properties.index.mosaic.nbCols)  )
             {
                 thumbSet = key;
                 fSetFound = true;

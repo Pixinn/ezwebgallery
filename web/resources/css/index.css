@@ -53,13 +53,11 @@ ul.indexNavigation li {
 /* Mosaic */
 #mosaic {
     display: block;
-    margin: 5em auto;
-    width:90%;
+    margin: 5em auto 9em auto;
     border-radius: 40px 40px 5px 5px; 
     -moz-border-radius: 40px 40px 5px 5px; 
     -webkit-border-radius: 40px 40px 5px 5px; 
     border: 0px solid #800000;
-    
 }
 		
 	
