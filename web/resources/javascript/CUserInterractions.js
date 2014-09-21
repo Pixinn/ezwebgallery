@@ -162,6 +162,7 @@ function CUserInterractions( p_properties, htmlstructure )
     }
     
     this.onClosePhoto = function() {
+        TOOLS.trace("onClosePhoto");
         that.closePhotoEvent.fire();
     }
     
@@ -189,7 +190,6 @@ function CUserInterractions( p_properties, htmlstructure )
     
     this.onScrolled = function() {
         that.fCurrentlyScrolling = false;        
-        that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
         if( that.fEnablePreviousNextRequired ) {
             that.fEnablePreviousNextRequired = false;
             that.enablePreviousNext();

@@ -66,22 +66,19 @@ function CDisplay( p_properties, p_htmlStructure )
         that.setSpace( that.computeAvailableSpace() );
         that.load( id, that.carrousel.load );
         
-        that.photoScreenEvent.fire(  {id: id} );
+        that.photoScreenEvent.fire();
     }
 
     //back to index
     this.hidePhoto = function( ) 
     {
+        TOOLS.trace("hidePhoto");
         //that.url.clearHash();
         that.html.index.$screen.show();
         
-        //center mosaic on current photo
-        var $firstThumbBox = that.html.index.mosaic.$thumbBoxes.eq(0);
-        var $thumbBox =  that.html.index.mosaic.$thumbBoxes.eq( that.idCurrentPhoto - 1 );
-        that.html.index.$screen.scrollTop( $thumbBox.offset().top - $firstThumbBox.offset().top );
-        
         that.html.photo.$screen.fadeOut('fast');        
-        that.indexScreenEvent.fire();
+        var $thumbBox =  that.html.index.mosaic.$thumbBoxes.eq( that.idCurrentPhoto - 1 );
+        that.indexScreenEvent.fire( $thumbBox );
     }
     
 
@@ -233,7 +230,7 @@ function CDisplay( p_properties, p_htmlStructure )
     this.computeToolbarTopHeigth = function() 
     {
         //Toolbar height
-        var toolbarHeight = $("#toolbar").outerHeight();
+        var toolbarHeight = $(".toolbar").filter(":visible").outerHeight();
         if( toolbarHeight > $(document).height() / 2 ) { //if vertical
             toolbarHeight = 0;
         }

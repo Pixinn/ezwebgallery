@@ -122,21 +122,6 @@ a:active {color: black;}
 	height:100%;
     width:12%;
 }
-/* Pied de page */
-.footer{
-	position:relative;
-	padding: 0px 30px 0px 30px;
-	margin-top:-3em;
-	text-align:left;
-}
-.footer #socialNetworks{
-	margin-left:30px;
-}
-.footer #logo{
-	float:right;
-	border:0px;
-	cursor:pointer;
-}
 
 
 /************************************************/

@@ -61,6 +61,23 @@ jQuery.fn.verticalCenter = function( offset ) {
   });
 };
 
+//Fits an element inside its parent
+jQuery.fn.fitElem = function( percent ) {
+    return this.each(function(  ){
+     var obj = jQuery(this);
+     var parent = obj.parent( );
+     var aspectRatio = obj.width() / obj.height();
+     var borderSz = obj.css("border-top-width").replace("px","");
+     if( aspectRatio >= 1 ) {
+        obj.width( parent.innerWidth()*percent/100 - 2*borderSz + "px" )
+           .height( obj.width() / aspectRatio );
+     }
+     else {
+        obj.height( parent.innerHeight()*percent/100 -2*borderSz + "px" )
+           .width( obj.height() * aspectRatio );
+     }     
+  });
+};  
 
 
 /*
@@ -99,6 +116,7 @@ $(document).ready(function()
     index : {
         $screen : $("#screenIndex"),
         mosaic : {
+            $wrapper :  $("#wrapper_mosaic"),
             $handle : $("#mosaic"),
             $title : $("#indexTitle")
             }
@@ -114,13 +132,16 @@ $(document).ready(function()
         buttons : {
                 $previous : $("#boutonPrevious"),
                 $next : $("#boutonNext"),
-                $close : $("#boutonIndex")
+                $close :  $("#screenPhoto").find(".boutonIndex")
         }
        }
     };
     
     HtmlStructure.index.z_index = HtmlStructure.index.$screen.css("z-index");
     HtmlStructure.photo.z_index = HtmlStructure.photo.$screen.css("z-index");
+
+    HtmlStructure.index.$screen.find(".boutonIndex").css("opacity","0.4")
+                                                    .css("filter","alpha(opacity=40)");
 
     //Creating instances
     Mosaic = new CMosaic( g_properties, HtmlStructure );
@@ -148,6 +169,7 @@ $(document).ready(function()
         UserHandler.start();
         Display.getPhotoDisplayedLoadedEvent().subscribe( function() { UserHandler.onPhotoDisplayedLoaded( this.id ); } );
         Display.getPhotoScreenEvent().subscribe( UserHandler.onPhotoScreen );
+        Display.getIndexScreenEvent().subscribe( function() { Mosaic.show( this ); } );
         Display.getIndexScreenEvent().subscribe( UserHandler.onIndexScreen );
         Display.getDisableUISignal().subscribe( UserHandler.disablePreviousNext );
         Display.getEnableUISignal().subscribe( UserHandler.enablePreviousNext );

@@ -34,7 +34,6 @@ function CCarrousel( p_properties, p_html )
     this.loader = new CPhotoLoader( p_properties, this.html );
     this.frameFactory = new CFrameFactory( p_properties.photos.list );
     
-    this.scrolledAmount = 0;
     this.prevPhoto = -1;
     this.currPhoto = -1;
     this.nextPhoto = -1; 
@@ -150,7 +149,6 @@ function CCarrousel( p_properties, p_html )
     this.scroll = function( $target )
     {
         that.scrollingEvent.fire();
-        that.scrolledAmount = $target.position().left;        
         
         //updating slides attributes and handles.
         //"deprecated" will be erased from the hmt structure after the scrolling

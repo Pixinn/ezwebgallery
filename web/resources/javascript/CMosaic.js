@@ -20,7 +20,7 @@
 
 function CMosaic( p_properties, p_htmlStructure ) 
 {    
-   
+    this.html = p_htmlStructure;
     // ++++ Methods ++++ //
       
     //Building the thumbnail mosaic
@@ -73,21 +73,24 @@ function CMosaic( p_properties, p_htmlStructure )
         var thumbBorderWidth = $thumbnails.first().css("border-top-width");
         thumbBorderWidth = thumbBorderWidth.replace("px","");
         that.htmlStructure.index.mosaic.$handle.show(); //show necessary for the correct sizes
-        $thumbBoxes.width( that.ThumbnailSize + 2*thumbBorderWidth )
-                   .height( that.ThumbnailSize + 2*thumbBorderWidth);
-        var mosaicWidth = that.properties.index.mosaic.nbCols * $thumbBoxes.outerWidth();
-        var mosaicHeight = Math.ceil(that.mosaicNbThumbnails / that.properties.index.mosaic.nbCols) * $thumbBoxes.outerHeight() +  that.htmlStructure.index.mosaic.$title.outerHeight(true);
+        $thumbBoxes.css( "width", that.properties.index.mosaic.thumbBoxWidth );
+        //var mosaicWidth = that.properties.index.mosaic.nbCols * $thumbBoxes.outerWidth();
+        //var mosaicHeight = Math.ceil(that.mosaicNbThumbnails / that.properties.index.mosaic.nbCols) * $thumbBoxes.outerHeight() +  that.htmlStructure.index.mosaic.$title.outerHeight(true);
         //updating structure
         that.htmlStructure.index.mosaic.$thumbnails = $thumbnails;
         //displaying mosaic
-        that.htmlStructure.index.mosaic.$handle.width( mosaicWidth )
-                                                  .height( mosaicHeight );        
+        that.show();
     };
     
     //showing the mosaic
-    this.show = function()
+    this.show = function( $thumbDisplayed )
     {
         that.htmlStructure.index.mosaic.$thumbnails.verticalCenter(0);
+        that.onResize();
+        //centering on $thumbDisplayed
+        if(typeof $thumbDisplayed != "undefined") {
+            that.center( $thumbDisplayed );
+        }
     }
     
     this.hide = function()
@@ -96,10 +99,23 @@ function CMosaic( p_properties, p_htmlStructure )
     }
     
     
+    this.center = function( $thumbDisplayed )
+    {
+        var $firstThumbBox = that.html.index.mosaic.$thumbBoxes.eq(0);
+        var scrollAmount = $thumbDisplayed.offset().top - $firstThumbBox.offset().top;
+        that.html.index.mosaic.$wrapper.scrollTop( scrollAmount );
+        TOOLS.trace( "scrollAmount: " + scrollAmount );
+    }
+    
     //On window resize
     this.onResize = function()
     {
-      // that.htmlStructure.index.mosaic.$container.verticalCenter( 0 );
+        var $thumbBoxes = that.htmlStructure.index.mosaic.$thumbBoxes;
+        $thumbBoxes.height( $thumbBoxes.width() );
+        var mosaicHeight = Math.ceil(that.mosaicNbThumbnails / that.properties.index.mosaic.nbCols) * $thumbBoxes.outerHeight() +  that.htmlStructure.index.mosaic.$title.outerHeight(true);
+        that.htmlStructure.index.mosaic.$handle.height( mosaicHeight );
+        
+        that.htmlStructure.index.mosaic.$thumbnails.fitElem( 100 );        
     }
      
     

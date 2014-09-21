@@ -33,12 +33,14 @@ QString CToolbar::getHtml( void ) const
     QString html;
 
     if( m_style == DARK ) {
-        html += "<li><img src=\"resources/images/toolbar_icon_white_browse.png\" id=\"boutonIndex\"></li>\n";
+        html += "<li><img src=\"resources/images/toolbar_icon_white_browse.png\" class=\"boutonIndex\"></li>\n";
+        html += "<li><img src=\"resources/images/toolbar_icon_white_map.png\" class=\"boutonIndex\"></li>\n";
         html += "<!--<li><img src=\"resources/images/toolbar_icon_white_caption.png\"></li>\n";
         html += "<li><img src=\"resources/images/toolbar_icon_white_share.png\"></li> !-->\n";
     }
     else {
-        html += "<li><img src=\"resources/images/toolbar_icon_black_browse.png\" id=\"boutonIndex\"></li>";
+        html += "<li><img src=\"resources/images/toolbar_icon_black_browse.png\" class=\"boutonIndex\"></li>";
+        html += "<li><img src=\"resources/images/toolbar_icon_black_map.png\" class=\"boutonIndex\"></li>\n";
         html += "<!--<li><img src=\"resources/images/toolbar_icon_black_caption.png\"></li>\n";
         html += "<li><img src=\"resources/images/toolbar_icon_black_share.png\"></li> !-->\n";
     }
@@ -48,7 +50,7 @@ QString CToolbar::getHtml( void ) const
 
 CCssSelection CToolbar::getCss( void ) const
 {
-    CCssSelection toolbar("#toolbar" );
+    CCssSelection toolbar(".toolbar" );
     
     if( m_style == DARK ) {
         toolbar.setProperty( "background-color", "#111111" );

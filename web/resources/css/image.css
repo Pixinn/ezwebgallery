@@ -41,12 +41,12 @@
 }
 
 
-#boutonIndex{
+.boutonIndex{
     display:block;
     cursor:pointer;
 }
 
-#boutonIndex:hover{
+.boutonIndex:hover{
     background-color:#777777;
 }
 
@@ -54,7 +54,7 @@
 
 /*********** TOOLBAR ****************/
 /* lanscape (default) & common */
-#toolbar {
+.toolbar {
     position:relative; /* Required for the z-index to work */
     z-index:150; /* Has to be above the navigation arrows */
     float:left;
@@ -66,14 +66,14 @@
     border: 0px 3px 0px 0px;
 }
 
-#toolbar li {
+.toolbar li {
   display: inline-block;
   margin : 1em 0 2em 0;
   width: 100%;
   height: auto;
 }
 
-#toolbar li img {
+.toolbar li img {
   min-width:50px;
   width: 100%;
   height: auto;
@@ -84,7 +84,7 @@
 @media only screen 
 and (max-device-width : 960px) 
 and (orientation: landscape){
-    #toolbar {
+    .toolbar {
         width:7%;
     }
 }
@@ -92,7 +92,7 @@ and (orientation: landscape){
 /* portrait */
 @media only screen
 and (orientation: portrait) {
-    #toolbar {
+    .toolbar {
         float:none;
         width:100%;
         height:4%;
@@ -100,14 +100,14 @@ and (orientation: portrait) {
         border: 0px 0px 3px 0px;
     }
 
-    #toolbar li {
+    .toolbar li {
       display: inline-block;
       margin : 0 1em 0 1em;
       width: auto;
       height: 100%;
     }
 
-    #toolbar li img {
+    .toolbar li img {
       min-height:50px;
       height: 100%;
       width: auto;
@@ -118,7 +118,7 @@ and (orientation: portrait) {
 @media only screen 
 and (max-device-width : 960px) 
 and (orientation: portrait){
-    #toolbar {
+    .toolbar {
         height:7%;
     }
 }
@@ -127,7 +127,7 @@ and (orientation: portrait){
 /************** NAVIGATION *****************/
 /* Previous arrow left position must be positionned:
 /* LANDSCAPE: just right to the toolbar
-/* -> div#photoRighter::left = #toolbar::width
+/* -> div#photoRighter::left = .toolbar::width
 /* PORTRAIT: just right of the browser window
 /* -> div#photoRighter::left = 0
 *********************************************/

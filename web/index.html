@@ -36,8 +36,7 @@
         <script type="text/javascript" src="resources/javascript/jquery/plugins/jquery.hammer.js"></script>
 
         <script type="text/javascript" src="resources/parameters.json"></script> 
-        <script type="text/javascript" src="resources/javascript/ezwg-min.js"></script> 
-        <!-- DEBUG
+
         <script type="text/javascript" src="resources/javascript/CEvent.js"></script>
         <script type="text/javascript" src="resources/javascript/CHashTable.js"></script>
         <script type="text/javascript" src="resources/javascript/CPhoto.js"></script>
@@ -55,8 +54,6 @@
         <script type="text/javascript" src="resources/javascript/CMosaic.js"></script>
         <script type="text/javascript" src="resources/javascript/CNavBars.js"></script>
         <script type="text/javascript" src="resources/javascript/start.js"></script>
-        !-->
-
 
         
     </head>
@@ -77,15 +74,15 @@
         <!-- Permet à l'élement d'afficher/cacher tous ces blocs d'un seul coup !-->
 
         
-        <div id="screenIndex"  class="fullScreen" >      
-            <div id="mosaic" >           
-                <div id="indexTitle">[CONTENT_TITLE]</div>  <!-- TITRE !-->
-                <!-- VIGNETTES !--> 
-                            </div>
-
-            <div class="footer">            
-                <a href="http://www.ezwebgallery.org/">[EZWEBGALLERY_LOGO]</a>
-                [BUTTON_ADDTHIS]
+        <div id="screenIndex"  class="fullScreen" >
+            <div class="toolbar">        
+            [TOOLBAR]
+            </div>
+            <div id="wrapper_mosaic" class="centralZone">
+                <div id="mosaic" >           
+                    <div id="indexTitle">[CONTENT_TITLE]</div>  <!-- TITRE !-->
+                    <!-- VIGNETTES !--> 
+                </div>
             </div>
         </div><!-- ScreenIndex !-->
             
@@ -98,7 +95,7 @@
         <!-- Permet à l'élement d'afficher/cacher tous ces blocs d'un seul coup !-->
 
         <div id="screenPhoto" class="fullScreen">
-            <div id="toolbar">
+            <div class="toolbar">
             [TOOLBAR]
             </div>
             <!-- photoLefter et photoRighter doivent se trouver AVANT wrapperAffichagePhoto pour avoir trois colonnes.
