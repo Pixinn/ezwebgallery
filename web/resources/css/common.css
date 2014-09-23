@@ -164,6 +164,8 @@ a:active {color: black;}
   min-width:50px;
   width: 100%;
   height: auto;
+  display:block;
+  cursor:pointer;
 }
 
 .button_ezwebgallery{
@@ -221,6 +223,10 @@ and (orientation: portrait){
 }
 /********************************************/
 
+
+#screenMap {
+    display: none;
+}
 
 
 #DEBUG{

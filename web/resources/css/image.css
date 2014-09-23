@@ -40,16 +40,6 @@
 	filter:alpha(opacity=40); /*ie ...*/
 }
 
-
-.boutonIndex{
-    display:block;
-    cursor:pointer;
-}
-
-.boutonIndex:hover{
-    background-color:#777777;
-}
-
 /* ---- */
 
 

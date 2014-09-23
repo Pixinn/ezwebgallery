@@ -50,6 +50,8 @@ function CUserInterractions( p_properties, htmlstructure )
     
         that.enableThumbnailClick();
         
+        that.html.toolbar.$buttonMap.click( that.onOpenMap );
+        
         that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
         that.disablePreviousNext();                
         
@@ -161,6 +163,24 @@ function CUserInterractions( p_properties, htmlstructure )
         that.windowResizedEvent.fire();
     }
     
+    this.onOpenMap = function() {
+        that.html.map.$screen.css("z-index","100")
+                             .fadeIn("fast");
+        if( that.html.map.$screen.find( "#map_costarica" ).length === 0 ) {
+            $("#wrapper_map_costarica").append( "<iframe id=\"map_costarica\" src=\"http://mapsengine.google.com/map/embed?mid=zj9OQ9nvSx8E.k-nEVsG6Ujo4\" style=\"display:block\" width=\"100%\" height=\"100%\" margin=\"0\" padding=\"0\"></iframe>" );         
+        }
+        that.html.toolbar.$buttonMap.unbind()
+                                    .click( that.onCloseMap );
+    }
+    
+    this.onCloseMap = function() {
+        that.html.map.$screen.fadeOut("fast", function() {
+            that.html.map.$screen.css("z-index","-1")
+          });
+        that.html.toolbar.$buttonMap.unbind()
+                                    .click( that.onOpenMap );
+    }
+    
     this.onClosePhoto = function() {
         TOOLS.trace("onClosePhoto");
         that.closePhotoEvent.fire();
@@ -211,6 +231,11 @@ function CUserInterractions( p_properties, htmlstructure )
         that.html.index.mosaic.$thumbnails.unbind("click");
         that.html.index.$screen.css("z-index", 1);
         that.html.photo.$screen.css("z-index", 10 );
+    }
+    
+    this.onMapScreen = function()
+    {
+    
     }
     
     this.onKeyboardPhotoScr = function( evt )

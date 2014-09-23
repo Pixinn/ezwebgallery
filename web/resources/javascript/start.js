@@ -95,6 +95,12 @@ $(document).ready(function()
         $box : $("#progressbarWrapper"),
         $bar : $("#progressbar")        
     },
+    toolbar : {
+        $buttonMap : $(".button_map")
+    },
+    map : {
+        $screen : $("#screenMap"),        
+    },
     index : {
         $screen : $("#screenIndex"),
         mosaic : {
