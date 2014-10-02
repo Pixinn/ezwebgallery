@@ -36,7 +36,18 @@ TOOLS = {
     debug: function( msg ) { //displays a debug message on the top of the page
         $("#DEBUG").append( msg )
                    .show();
+    },
+    
+    
+}
+
+GOOGLEAPI = {
+    evtLoaded: new CEvent(),
+    initGoogleAPI: function() {
+        //Read http://stackoverflow.com/questions/14184956/async-google-maps-api-v3-undefined-is-not-a-function
+        this.evtLoaded.fire();
     }
+    
 }
 
 
@@ -96,7 +107,8 @@ $(document).ready(function()
         $bar : $("#progressbar")        
     },
     toolbar : {
-        $buttonMap : $(".button_map")
+        $buttonMap: $(".button_map"),
+        $buttonIndex:  $(".boutonIndex")
     },
     map : {
         $screen : $("#screenMap"),        
@@ -125,9 +137,6 @@ $(document).ready(function()
        }
     };
     
-    HtmlStructure.index.z_index = HtmlStructure.index.$screen.css("z-index");
-    HtmlStructure.photo.z_index = HtmlStructure.photo.$screen.css("z-index");
-
     HtmlStructure.index.$screen.find(".boutonIndex").css("opacity","0.4")
                                                     .css("filter","alpha(opacity=40)");
 
@@ -167,7 +176,7 @@ $(document).ready(function()
         //Subscribing to user events
         UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );
         UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( parseInt(this.id) ); } ); //this, will be the object clicked
-        UserHandler.getClosePhotoEvent().subscribe( Display.hidePhoto );
+        //UserHandler.getClosePhotoEvent().subscribe( Display.hidePhoto );
         UserHandler.getPreviousPhotoEvent().subscribe( Display.onPrevious );        
         UserHandler.getNextPhotoEvent().subscribe( Display.onNext );
         
@@ -175,8 +184,17 @@ $(document).ready(function()
         Display.displayCurrentUrl(); // --> STARTING POINT FOR THE USER <--
     });
 
+    //loading google maps api
+    GOOGLEAPI.evtLoaded.subscribe( Display.buttonMap.enable );
+    var mapAPI = document.createElement("script");
+    mapAPI.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=GOOGLEAPI.initGoogleAPI";
+    document.head.appendChild( mapAPI );
+
     //Building the mosaic / Loading the thumbnails
     progressBar.show();    
     HtmlStructure = Mosaic.buildHtml(); //loads the thumbnails and build the html
+
+    
+    
 
 } );

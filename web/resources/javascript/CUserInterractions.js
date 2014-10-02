@@ -52,7 +52,7 @@ function CUserInterractions( p_properties, htmlstructure )
         
         that.html.toolbar.$buttonMap.click( that.onOpenMap );
         
-        that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
+        //that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
         that.disablePreviousNext();                
         
         //intercept rightclick
@@ -147,9 +147,9 @@ function CUserInterractions( p_properties, htmlstructure )
         return that.thumbnailClickedEvent;
     }
     
-    this.getClosePhotoEvent = function() {
+    /*this.getClosePhotoEvent = function() {
         return that.closePhotoEvent;
-    }
+    }*/
     
     this.getPreviousPhotoEvent = function() {
         return that.previousPhotoEvent;
@@ -164,13 +164,13 @@ function CUserInterractions( p_properties, htmlstructure )
     }
     
     this.onOpenMap = function() {
-        that.html.map.$screen.css("z-index","100")
+       /* that.html.map.$screen.css("z-index","100")
                              .fadeIn("fast");
         if( that.html.map.$screen.find( "#map_costarica" ).length === 0 ) {
             $("#wrapper_map_costarica").append( "<iframe id=\"map_costarica\" src=\"http://mapsengine.google.com/map/embed?mid=zj9OQ9nvSx8E.k-nEVsG6Ujo4\" style=\"display:block\" width=\"100%\" height=\"100%\" margin=\"0\" padding=\"0\"></iframe>" );         
         }
         that.html.toolbar.$buttonMap.unbind()
-                                    .click( that.onCloseMap );
+                                    .click( that.onCloseMap );*/
     }
     
     this.onCloseMap = function() {
@@ -181,10 +181,10 @@ function CUserInterractions( p_properties, htmlstructure )
                                     .click( that.onOpenMap );
     }
     
-    this.onClosePhoto = function() {
+    /*this.onClosePhoto = function() {
         TOOLS.trace("onClosePhoto");
         that.closePhotoEvent.fire();
-    }
+    }*/
     
     this.onPhotoDisplayedLoaded = function( photoId )
     {
@@ -258,7 +258,7 @@ function CUserInterractions( p_properties, htmlstructure )
                     break;
                 case KEY_ESC:
                     that.watchedKeyDown = true;
-                    that.onClosePhoto();
+                    that.html.toolbar.$buttonIndex.click();  //using click event to be subject to enable / disable
                     that.watchedKeyDown = false;
                     break;				
             }
