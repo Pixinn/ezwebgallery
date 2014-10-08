@@ -1,6 +1,6 @@
 ﻿/*
  *  EZWebGallery:
- *  Copyright (C) 2013 Christophe Meneboeuf <xtof@ezwebgallery.org>
+ *  Copyright (C) 2013-2014 Christophe Meneboeuf <xtof@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,8 +32,46 @@ function CDisplay( p_properties, p_htmlStructure )
     this.disableUISignal = new CEvent();
     this.enableUISignal = new CEvent();
     this.displayedPhotoLoadedEvent = new CEvent();
-
     this.availableSpace = {h: 0, w:0};
+
+    this.deck = new CDeck();
+
+    this.buttonMap = new CButtonToolbar( {  $handle: p_htmlStructure.toolbar.$buttonMap,
+                                            onClick: function() { that.screenMap.display(); }
+                                         }
+                                        );
+    this.buttonIndex = new CButtonToolbar( {  $handle: p_htmlStructure.toolbar.$buttonIndex,
+                                              onClick: function() { that.screenIndex.display(); }
+                                           }
+                                         );                                         
+    this.map = new CMap();                                         
+    this.screenMap = new CScreen( { $handle: that.html.map.$screen,
+                                    deck: that.deck,
+                                    listButtonsOther: [ that.buttonIndex ],
+                                    buttonScreen: that.buttonMap
+                                    } );
+    that.deck.add( that.screenMap );
+    this.screenIndex = new CScreen( { $handle: that.html.index.$screen,
+                                      deck: that.deck,
+                                      listButtonsOther: [ that.buttonMap ],
+                                      buttonScreen: that.buttonIndex
+                                    }
+                                  );    
+    that.deck.add( that.screenIndex );
+    
+    this.screenPhoto = new CScreen( { $handle: that.html.photo.$screen,
+                                      deck: that.deck,
+                                      listButtonsOther: [ that.buttonIndex, that.buttonMap ],
+                                      buttonScreen: "undefined"
+                                    }
+                                  );
+    that.deck.add( that.screenPhoto );          
+    
+    that.deck.moveOnTop( that.screenIndex );
+    this.buttonIndex.disable();
+    this.buttonMap.disable();
+    this.screenMap.eventOnDisplaying.subscribe( function() { that.map.display(); } );
+    this.screenPhoto.eventOnHiding.subscribe( function() { that.hidePhoto(); } );
 
     $(window).resize( function() {
         TOOLS.trace( "Evt resize");
@@ -57,31 +95,29 @@ function CDisplay( p_properties, p_htmlStructure )
     {
         that.idCurrentPhoto = id;
         //that.url.setHash( id );
-        that.html.photo.$screen.fadeIn(400, function() {
+        /*that.html.photo.$screen.fadeIn(400, function() {
             that.html.index.$screen.hide();
-        });
+        });*/
+        that.screenPhoto.display();
         that.html.photo.buttons.$next.verticalCenter( that.computeToolbarTopHeigth()/2 );
         that.html.photo.buttons.$previous.css("top",  that.html.photo.buttons.$next.css("top") ); //no v center on previous to correct an ie8 bug
         
         that.setSpace( that.computeAvailableSpace() );
         that.load( id, that.carrousel.load );
         
-        that.photoScreenEvent.fire(  {id: id} );
+        that.photoScreenEvent.fire();
     }
 
     //back to index
     this.hidePhoto = function( ) 
     {
-        //that.url.clearHash();
+        TOOLS.trace("hidePhoto");
+      /*  //that.url.clearHash();
         that.html.index.$screen.show();
         
-        //center mosaic on current photo
-        var $firstThumbBox = that.html.index.mosaic.$thumbBoxes.eq(0);
+        that.html.photo.$screen.fadeOut('fast');        */
         var $thumbBox =  that.html.index.mosaic.$thumbBoxes.eq( that.idCurrentPhoto - 1 );
-        that.html.index.$screen.scrollTop( $thumbBox.offset().top - $firstThumbBox.offset().top );
-        
-        that.html.photo.$screen.fadeOut('fast');        
-        that.indexScreenEvent.fire();
+        that.indexScreenEvent.fire( $thumbBox );
     }
     
 
@@ -121,7 +157,6 @@ function CDisplay( p_properties, p_htmlStructure )
     {
         return that.carrousel.getScrolledEvent();
     }
-
 
     this.onPrevious = function()
     {
@@ -182,9 +217,6 @@ function CDisplay( p_properties, p_htmlStructure )
     }
         //non available space
         var frameBorderSize = parseInt( that.html.photo.$frame.css("padding-top").replace("px","") );
-        //NB: On ne peut pas utiliser g_$divDisplayZoneName.innerWidth( ), car bug sous IE6 :(
-        //Du coup il faut que:	+ g_$divDisplayZoneName.siblings()::margin = 0px
-        //+ g_$divDisplayZoneName::border=0 et ::margin=0
         var height = that.html.photo.$wrapper.innerHeight() - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - wastedPixelTop;
         var width =  that.html.photo.$wrapper.innerWidth( ) - widthWasted - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - ie6BugCorrection;
 
@@ -233,7 +265,7 @@ function CDisplay( p_properties, p_htmlStructure )
     this.computeToolbarTopHeigth = function() 
     {
         //Toolbar height
-        var toolbarHeight = $("#toolbar").outerHeight();
+        var toolbarHeight = $(".toolbar").filter(":visible").outerHeight();
         if( toolbarHeight > $(document).height() / 2 ) { //if vertical
             toolbarHeight = 0;
         }

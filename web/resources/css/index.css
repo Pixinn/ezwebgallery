@@ -47,13 +47,13 @@ ul.indexNavigation li {
 
 #screenIndex {
     display:block;
-    overflow:auto;
+    /*overflow:auto;*/
 }
 
 /* Mosaic */
 #mosaic {
     display: block;
-    margin: 5em auto;
+    margin: 5em auto 9em auto;
     border-radius: 40px 40px 5px 5px; 
     -moz-border-radius: 40px 40px 5px 5px; 
     -webkit-border-radius: 40px 40px 5px 5px; 
@@ -66,6 +66,7 @@ ul.indexNavigation li {
 		float:left; /* Nécessaire pour que les div se placent les uns à coté des autres */
 		border:solid;
 		background:transparent;
+         box-sizing: border-box
 }
 	
 /* Une vignette */
@@ -73,4 +74,5 @@ ul.indexNavigation li {
     border:solid;
 		position:relative;
 		cursor:pointer;	
+         box-sizing: border-box
 }
