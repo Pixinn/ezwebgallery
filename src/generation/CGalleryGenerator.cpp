@@ -392,6 +392,10 @@ bool CGalleryGenerator::generateJsFiles( )
     //////////// Configuration ///////////////
 
     // --- JSON
+    // -- toolbar
+    Object& jsonToolbar = m_jsonRoot.addObject( "toolbar" );
+    Array& jsonToolbarButtons = jsonToolbar.addArray( "optButtons" );
+    jsonToolbarButtons.appendString( "share" );
     // -- technical properties
     Object& jsonPhotos = m_jsonRoot.addObject( "photos" );
     Object& jsonPhotosProperties = jsonPhotos.addObject( "technical" );

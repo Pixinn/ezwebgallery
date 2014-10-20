@@ -76,8 +76,11 @@ function CScreen( p_options )
         that.$handle.css("z-index","100")
                     .fadeIn( "fast", function() 
                     {           
-                        for ( var i = 0; i < that.listButtonsOther.length; i++) {  
+                        for ( var i = 0; i < that.listButtonsOther.length; i++)
+                        {  
+                            if( typeof that.listButtonsOther[ i ] !== "undefined" ) {
                             that.listButtonsOther[ i ].enable();
+                        }
                         }
                         scr = that.deck.getTop();
                         scr.hide();
@@ -103,13 +106,23 @@ function CButtonToolbar( p_options )
     var that = this;
     that.$handle = p_options.$handle;
     that.onClick = p_options.onClick;
+    if( typeof p_options.script !== "undefined" && p_options.script.indexOf("//") != -1 ) {    
+        that.script = p_options.script;
+        that.isLocked = true; //locked until the script is loaded
+     }
+    else   {
+        that.script = "undefined";
+        that.isLocked = false;
+    }
     
     this.enable = function()
     {
+        if( !that.isLocked ) {
         that.$handle.css( "opacity", "1")
                     .css( "cursor", "pointer" )
                     .unbind()
                     .click( that.onClick );
+    }
     }
     
     this.disable = function()
@@ -119,5 +132,13 @@ function CButtonToolbar( p_options )
                     .unbind();
     }
     
+    
+    if( that.script != "undefined" ) {
+        $.getScript( that.script,
+                function() {
+                                that.isLocked = false;
+                                that.enable();
+                            } )
+    }
     this.enable();
 };

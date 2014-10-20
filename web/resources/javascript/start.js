@@ -41,16 +41,6 @@ TOOLS = {
     
 }
 
-GOOGLEAPI = {
-    evtLoaded: new CEvent(),
-    initGoogleAPI: function() {
-        //Read http://stackoverflow.com/questions/14184956/async-google-maps-api-v3-undefined-is-not-a-function
-        this.evtLoaded.fire();
-    }
-    
-}
-
-
 /*
  * Pseudo plugin JQuery pour centrer un objet verticalement dans son parent
  * On peut passer un décalage en paramètre pour ajuster le calcul si l'objet n'est pas seul dans son parent
@@ -107,11 +97,13 @@ $(document).ready(function()
         $bar : $("#progressbar")        
     },
     toolbar : {
-        $buttonMap: $(".button_map"),
-        $buttonIndex:  $(".boutonIndex")
+        $buttonShare: $(".button_share"),
+        $buttonIndex:  $(".button_browse")
     },
-    map : {
-        $screen : $("#screenMap"),        
+    share : {
+        $screen : $("#screenShare"), 
+        $wrapper : $("#wrapper_share"),
+        $buttons : $(".addtoany_button")
     },
     index : {
         $screen : $("#screenIndex"),
@@ -132,12 +124,12 @@ $(document).ready(function()
         buttons : {
                 $previous : $("#boutonPrevious"),
                 $next : $("#boutonNext"),
-                $close :  $("#screenPhoto").find(".boutonIndex")
+                $close :  $("#screenPhoto").find(".button_browse")
         }
        }
     };
     
-    HtmlStructure.index.$screen.find(".boutonIndex").css("opacity","0.4")
+    HtmlStructure.index.$screen.find(".button_browse").css("opacity","0.4")
                                                     .css("filter","alpha(opacity=40)");
 
     //Creating instances
@@ -184,17 +176,11 @@ $(document).ready(function()
         Display.displayCurrentUrl(); // --> STARTING POINT FOR THE USER <--
     });
 
-    //loading google maps api
-    GOOGLEAPI.evtLoaded.subscribe( Display.buttonMap.enable );
-    var mapAPI = document.createElement("script");
-    mapAPI.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=GOOGLEAPI.initGoogleAPI";
-    document.head.appendChild( mapAPI );
+    //Loading share api
+    //$.getScript( "//static.addtoany.com/menu/page.js",  Display.buttonShare.enable );
 
     //Building the mosaic / Loading the thumbnails
     progressBar.show();    
     HtmlStructure = Mosaic.buildHtml(); //loads the thumbnails and build the html
-
-    
-    
 
 } );
