@@ -107,6 +107,7 @@ private:
     QStringList m_captionsList;
     JSON::Root m_jsonRoot;
     CSkinParameters m_skinParameters;
+    CToolbarBehavior::t_Buttons m_toolbarButtons;
     //Generation photos
     QThreadPool* m_p_photoProcessorPool;    //Pool des threads effectuant les traitements. Un thread par photo
     PtrMessageList m_msgErrorList;

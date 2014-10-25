@@ -26,27 +26,56 @@ class QString;
 
 class CCssSelection;
 
-// ======= GENERATE CUSTOM CODE FOR THE TOOLBAR ====== //
-class CToolbar
+// ======= GENERATES CUSTOM HTML/CSS CODE FOR THE TOOLBAR ====== //
+class CToolbarStyle
 {
 public:
-    explicit CToolbar( const QColor & );
-    ~CToolbar( void ) { }
-    bool operator!=( const CToolbar& src ) { return this->m_style != src.m_style; }
-
-    QString getHtml( void ) const;
-    CCssSelection getCss( void ) const;
-
-
-private:
-    void setStyle( const QColor & color ); 
-
     typedef enum {
         LIGHT,
         DARK
     } eStyle;
 
+    CToolbarStyle( const QColor & color ) :
+        m_style( computeStyle( color ) )
+    {       }
+    bool operator!=( const CToolbarStyle& src ) { return (this->m_style != src.m_style); }
+    
+    inline bool isDark( void ) const { return (m_style == DARK); }
+    inline bool isLight( void ) const { return (m_style == LIGHT); }
+    
+    const QString getHtml( void ) const;    
+    const CCssSelection getCss( void ) const;
+    
+private:
+    const eStyle computeStyle( const QColor & color ) const; 
+
     eStyle m_style;
+};
+
+
+// ======= GENERATES CUSTOM JS CODE FOR THE TOOLBAR ====== //
+class CToolbarBehavior
+{
+public:
+    //optional buttons
+    typedef struct {
+        bool share;
+    } t_Buttons;
+
+    explicit CToolbarBehavior( const t_Buttons& );
+    ~CToolbarBehavior( void ) { }
+
+    const QString getJavascript( void ) const;
+    const QStringList getOptButtons( void ) const;
+
+private:
+    const static QString SHARE_BUTTON;
+    const static QString SHARE_SCREEN;
+
+    QString m_toolbarJs;
+    QString m_shareButtonJs;
+    QString m_shareScreenJs;
+    t_Buttons m_buttons;
 };
 
 #endif // CToolbar_H

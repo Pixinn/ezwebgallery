@@ -107,7 +107,7 @@ private:
     QList<CError> m_lastErrors;                 //Liste des dernires erreurs survenues
     Ui::SkinDesigner* m_p_ui;
     QMap<QString,QFileInfo> m_resources;      //widget name ; file info
-    CToolbar m_toolbar;         //css and resource path generation for the toolbar
+    CToolbarStyle m_toolbarStyle;         //css and resource path generation for the toolbar
     CCssSheet m_styleSheet;
     unsigned int m_version;
     bool f_initialized;

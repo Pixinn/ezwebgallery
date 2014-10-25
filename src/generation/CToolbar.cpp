@@ -19,20 +19,34 @@
 
 #include <QString>
 #include <QColor>
+#include <QFile>
+#include <QTextStream>
+#include <QString>
 
 #include "CCss.h"
 #include "CToolbar.h"
 
-CToolbar::CToolbar( const QColor & color )
+
+const CToolbarStyle::eStyle CToolbarStyle::computeStyle( const QColor & color ) const
 {
-    setStyle( color );
+    qreal red = color.redF();
+    qreal green = color.greenF();
+    qreal blue = color.blueF();
+
+    qreal luma = ( 0.299*red + 0.587*green + 0.114*blue ); //http://en.wikipedia.org/wiki/Luminosity
+     
+    if( luma > 0.5 ) { return DARK; }
+    else { return LIGHT; }
 }
 
-QString CToolbar::getHtml( void ) const
+
+
+
+const QString CToolbarStyle::getHtml( void ) const
 {
     QString html;
 
-    if( m_style == DARK ) {
+    if( isDark() ) {
         html += "<li><img src=\"resources/images/toolbar_icon_white_browse.png\" class=\"button_browse\"></li>\n";
         html += "<li><img src=\"resources/images/toolbar_icon_white_share.png\" class=\"button_share\"></li>\n";
         html += "<li><a href=\"http://www.ezwebgallery.org/\"><img src=\"resources/images/toolbar_icon_browse_ezwebgallery.png\" class=\"button_ezwebgallery\"></a></li>";
@@ -50,11 +64,11 @@ QString CToolbar::getHtml( void ) const
     return html;
 }
 
-CCssSelection CToolbar::getCss( void ) const
+const CCssSelection CToolbarStyle::getCss( void ) const
 {
     CCssSelection toolbar(".toolbar" );
     
-    if( m_style == DARK ) {
+    if( isDark() ) {
         toolbar.setProperty( "background-color", "#111111" );
     }
     else {
@@ -64,14 +78,64 @@ CCssSelection CToolbar::getCss( void ) const
     return toolbar;
 }
 
-void CToolbar::setStyle( const QColor & color )
-{
-    qreal red = color.redF();
-    qreal green = color.greenF();
-    qreal blue = color.blueF();
 
-    qreal luma = ( 0.299*red + 0.587*green + 0.114*blue ); //http://en.wikipedia.org/wiki/Luminosity
-     
-    if( luma > 0.5 ) { m_style = DARK; }
-    else { m_style = LIGHT; }
+
+//////////////////////////////////////////////////
+
+
+const QString CToolbarBehavior::SHARE_BUTTON( "[SHARE_BUTTON]" );
+const QString CToolbarBehavior::SHARE_SCREEN( "[SHARE_SCREEN]" );
+
+
+CToolbarBehavior::CToolbarBehavior(  const t_Buttons& buttons ) :
+    m_buttons( buttons )
+{
+    QFile jsFile( ":/web/Toolbar.js" ); 
+    jsFile.open( QIODevice::Text|QIODevice::ReadOnly );
+    QTextStream jsTextStream( &jsFile );
+    jsTextStream.setCodec( "UTF-8" );
+    m_toolbarJs = jsTextStream.readAll();
+
+    QFile shareButtonJsFile( ":/web/ShareButton.js" ); 
+    shareButtonJsFile.open( QIODevice::Text|QIODevice::ReadOnly );
+    QTextStream shareButtonJsTextStream( &shareButtonJsFile );
+    shareButtonJsTextStream.setCodec( "UTF-8" );
+    m_shareButtonJs = shareButtonJsTextStream.readAll();
+
+    QFile shareScreenJsFile( ":/web/ShareScreen.js" );
+    shareScreenJsFile.open( QIODevice::Text|QIODevice::ReadOnly );
+    QTextStream shareScreenJsTextStream( &shareScreenJsFile );
+    shareScreenJsTextStream.setCodec( "UTF-8" );
+    m_shareScreenJs = shareScreenJsTextStream.readAll();
 }
+
+
+    
+const QString CToolbarBehavior::getJavascript( void ) const
+{
+    QString javascript( m_toolbarJs );
+
+    if( m_buttons.share ) {
+        javascript.replace( SHARE_BUTTON, m_shareButtonJs );
+        javascript.replace( SHARE_SCREEN, m_shareScreenJs );
+    }
+    else {
+        javascript.remove( SHARE_BUTTON );
+        javascript.remove( SHARE_SCREEN );
+    }
+
+    return javascript;
+}
+
+
+ const QStringList CToolbarBehavior::getOptButtons( void ) const
+ {
+     QStringList optButtons;
+
+     //Add every optional buttons
+     if( m_buttons.share ) {
+         optButtons << "share";
+     }
+
+     return optButtons;
+ }
