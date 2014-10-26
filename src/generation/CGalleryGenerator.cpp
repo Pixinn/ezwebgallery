@@ -442,7 +442,7 @@ bool CGalleryGenerator::generateJsFiles( )
 
 
     //////////// Presentation ///////////////
-   // Attention : certaines proprits doivent tre en phase avec les css
+   // Attention : certaines proprites doivent etre en phase avec les css
 
     //---- JSON index
     Object& index = m_jsonRoot.addObject( "index" );

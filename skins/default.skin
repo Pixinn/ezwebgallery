@@ -33,7 +33,7 @@
             <background-image>url(../images/Photo.jpg)</background-image>
             <background-size>cover</background-size>
         </Selection>
-        <Selection selector="#toolbar">
+        <Selection selector=".toolbar">
             <background-color>#111111</background-color>
         </Selection>
         <Selection selector=".mainPhoto">

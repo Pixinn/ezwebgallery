@@ -36,6 +36,7 @@
 #include "CProjectParameters.h"
 #include "CPhotoProperties.h"
 #include "CSkinParameters.h"
+#include "CToolbar.h"
 #include "CCaptionManager.h"
 #include "CCaption.h"
 #include "CMessage.h"

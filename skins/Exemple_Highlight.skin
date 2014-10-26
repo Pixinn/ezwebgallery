@@ -31,7 +31,7 @@
             <background-color>#00aa7f</background-color>
             <background-image>url(../images/)</background-image>
         </Selection>
-        <Selection selector="#toolbar">
+        <Selection selector=".toolbar">
             <background-color>#EEEEEE</background-color>
         </Selection>
         <Selection selector=".mainPhoto">

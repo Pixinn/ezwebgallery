@@ -23,6 +23,7 @@
 #include <QTextStream>
 
 #include "CSkinParameters.h"
+#include "CToolbar.h"
 #include "CPlatform.h"
 #include "GlobalDefinitions.h"
 #include "CError.h"
@@ -46,7 +47,7 @@
 *****************************************************/
 CSkinParameters::CSkinParameters() :
     QObject(),
-    m_toolbarStyle( QColor("white") ), f_initialized( false )
+    f_initialized( false )
 {        
     //--- Inits
     m_styleSheet = CCssSheet("skin");
@@ -56,8 +57,7 @@ CSkinParameters::CSkinParameters() :
 
 
 CSkinParameters::CSkinParameters( const CSkinParameters & other ) :
-    QObject(),
-    m_toolbarStyle( other.m_toolbarStyle )
+    QObject()
 {
     *this = other;
 }
@@ -87,7 +87,6 @@ CSkinParameters& CSkinParameters::operator=(const CSkinParameters &source)
         this->m_filePath = source.m_filePath;
         this->m_version = source.m_version;
         this->f_initialized = source.f_initialized;
-        this->m_toolbarStyle = source.m_toolbarStyle;
     }
     return *this;
 }
@@ -110,7 +109,6 @@ bool CSkinParameters::operator==( const CSkinParameters &source)
     if( this->m_filePath != source.m_filePath ){    return false;   }
     if( this->m_version != source.m_version ){ return false; }
     if( this->f_initialized != source.f_initialized ){ return false; }
-    if( this->m_toolbarStyle != source.m_toolbarStyle ){ return false; }
     return true;
 }
 
@@ -260,8 +258,7 @@ void CSkinParameters::fromUi( )
     m_styleSheet.addSelection( photoCaptions );
     
     //Toolbar
-    m_toolbarStyle = CToolbarStyle(  m_p_ui->cColorPicker_PhotoFraming_Color->value() );
-    CCssSelection toolbarCss = m_toolbarStyle.getCss();
+    CCssSelection toolbarCss = CToolbarStyleFactory::GetInstance().getStyle( m_p_ui->cColorPicker_PhotoFraming_Color->value() ).getCss();
     m_styleSheet.addSelection( toolbarCss );
     
     //--- Css
@@ -331,7 +328,6 @@ void CSkinParameters::fromDomDocument( QDomDocument &document )
     selectors.clear();
     selectors << "div#cadrePhoto";
     CCssSelection photoFrame = m_styleSheet.selection( selectors );
-    m_toolbarStyle = CToolbarStyle(  QColor(photoFrame.property("background-color")) );
     //Properties
     setName( rootAttributes.namedItem( "name" ).nodeValue() );
     QDomElement miscProperties = root.firstChildElement( "properties" );
@@ -832,6 +828,8 @@ void CSkinParameters::removeEmptyResources( )
 QString CSkinParameters::buttonImage( int button ) const
 {
     QString resource;
+    QStringList cssPath;
+    CCssSelection photoFrame;
 
     switch( button )
     {
@@ -841,8 +839,10 @@ QString CSkinParameters::buttonImage( int button ) const
     case CSkinParameters::buttonPrevious:
         resource = m_resources.value("PhotoButtonPrevious").fileName();
         break;
-    case CSkinParameters::toolbar:
-        resource = m_toolbarStyle.getHtml();
+    case CSkinParameters::toolbar:        
+        cssPath << "div#cadrePhoto";
+        photoFrame = m_styleSheet.selection( cssPath );
+        resource = CToolbarStyleFactory::GetInstance().getStyle( photoFrame.property("background-color") ).getHtml();
         break;
     default:
         resource = QString("Error");

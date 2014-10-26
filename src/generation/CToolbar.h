@@ -27,29 +27,61 @@ class QString;
 class CCssSelection;
 
 // ======= GENERATES CUSTOM HTML/CSS CODE FOR THE TOOLBAR ====== //
-class CToolbarStyle
+
+class IToolbarStyle
 {
-public:
+public:    
     typedef enum {
         LIGHT,
         DARK
     } eStyle;
 
-    CToolbarStyle( const QColor & color ) :
-        m_style( computeStyle( color ) )
-    {       }
-    bool operator!=( const CToolbarStyle& src ) { return (this->m_style != src.m_style); }
-    
-    inline bool isDark( void ) const { return (m_style == DARK); }
-    inline bool isLight( void ) const { return (m_style == LIGHT); }
+    virtual const QString getHtml( void ) const = 0;
+    virtual const CCssSelection getCss( void ) const = 0;
+
+protected:
+    IToolbarStyle( void ) { }
+    virtual ~IToolbarStyle( void ) {    }
+};
+
+class CToolbarStyleDark : public IToolbarStyle
+{
+public:
+    CToolbarStyleDark( void ){  }
+    ~CToolbarStyleDark( void ) {    }
     
     const QString getHtml( void ) const;    
-    const CCssSelection getCss( void ) const;
-    
-private:
-    const eStyle computeStyle( const QColor & color ) const; 
+    const CCssSelection getCss( void ) const;    
+};
 
-    eStyle m_style;
+
+class CToolbarStyleLight : public IToolbarStyle
+{
+public:
+    CToolbarStyleLight( void ){  }
+    ~CToolbarStyleLight( void ) {    }
+    
+    const QString getHtml( void ) const;    
+    const CCssSelection getCss( void ) const;    
+};
+
+
+class CToolbarStyleFactory
+{
+public:
+    ~CToolbarStyleFactory( void ) { }
+
+    static CToolbarStyleFactory& GetInstance( void ) { return s_Instance; }
+    const IToolbarStyle& getStyle( const QColor & color );
+
+private:
+    CToolbarStyleFactory( void ) {  }
+
+    const IToolbarStyle::eStyle computeStyle( const QColor & color ) const; 
+
+    static CToolbarStyleFactory s_Instance;
+    CToolbarStyleDark m_dark;
+    CToolbarStyleLight m_light;
 };
 
 
