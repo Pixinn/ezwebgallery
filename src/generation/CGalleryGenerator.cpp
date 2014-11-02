@@ -394,16 +394,7 @@ bool CGalleryGenerator::generateJsFiles( )
 
     //////////// Configuration ///////////////
 
-    // --- JSON
-    // -- toolbar    
-    Object& jsonToolbar = m_jsonRoot.addObject( "toolbar" );
-    Array& jsonToolbarButtons = jsonToolbar.addArray( "optButtons" );
-    const CToolbarBehavior toolbar( m_toolbarButtons );
-    const QStringList optButtons = toolbar.getOptButtons();
-    foreach( QString button, optButtons ) {
-        jsonToolbarButtons.appendString( button );
-    }
-    
+    // --- JSON    
     // -- technical properties
     Object& jsonPhotos = m_jsonRoot.addObject( "photos" );
     Object& jsonPhotosProperties = jsonPhotos.addObject( "technical" );

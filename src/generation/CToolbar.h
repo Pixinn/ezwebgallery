@@ -98,7 +98,6 @@ public:
     ~CToolbarBehavior( void ) { }
 
     const QString getJavascript( void ) const;
-    const QStringList getOptButtons( void ) const;
 
 private:
     const static QString SHARE_BUTTON;

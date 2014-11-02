@@ -34,8 +34,8 @@
        
     
     return {
-        index: this.screenIndex,
-        photo: this.screenPhoto
+        screenIndex: this.screenIndex,
+        screenPhoto: this.screenPhoto
     }
     
 }

@@ -56,7 +56,7 @@ const QString CToolbarStyleDark::getHtml( void ) const
     QString html;
 
     html += "<li><img src=\"resources/images/toolbar_icon_white_browse.png\" class=\"button_browse\"></li>\n";
-    html += "<li><img src=\"resources/images/toolbar_icon_white_share.png\" class=\"button_share\"></li>\n";
+    html += "<li><img src=\"resources/images/toolbar_icon_white_share.png\" class=\"button_share display_optional\"></li>\n";
     html += "<li><a href=\"http://www.ezwebgallery.org/\"><img src=\"resources/images/toolbar_icon_browse_ezwebgallery.png\" class=\"button_ezwebgallery\"></a></li>";
     html += "<!--<li><img src=\"resources/images/toolbar_icon_white_caption.png\"></li>\n";
     html += "<li><img src=\"resources/images/toolbar_icon_white_share.png\"></li> !-->\n";
@@ -142,16 +142,3 @@ const QString CToolbarBehavior::getJavascript( void ) const
 
     return javascript;
 }
-
-
- const QStringList CToolbarBehavior::getOptButtons( void ) const
- {
-     QStringList optButtons;
-
-     //Add every optional buttons
-     if( m_buttons.share ) {
-         optButtons << "share";
-     }
-
-     return optButtons;
- }

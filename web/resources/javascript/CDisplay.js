@@ -33,69 +33,14 @@ function CDisplay( p_properties, p_htmlStructure )
     this.enableUISignal = new CEvent();
     this.displayedPhotoLoadedEvent = new CEvent();
     this.availableSpace = {h: 0, w:0};
+    
+    $(".display_optional").hide(); //Hiding all optional items
 
     this.deck = new CDeck();
-
-    //Mandatory buttons
-    this.buttonIndex = new CButtonToolbar( {  $handle: p_htmlStructure.toolbar.$buttonIndex,
-                                              onClick: function() { that.screenIndex.display(); }
-                                           }
-                                         );                                         
-    //Optional buttons
-    //SHARE
-    if( p_properties.toolbar.optButtons.indexOf( "share" ) > -1 )
-    {        
-        this.buttonShare = new CButtonToolbar( {  $handle: p_htmlStructure.toolbar.$buttonShare,
-                                                  script: "//static.addtoany.com/menu/page.js",
-                                                  onClick: function() { that.screenShare.display();
-                                                                        var nbButtonsByRow = 4;
-                                                                        var $buttons = that.html.share.$buttons;
-                                                                        var buttonSz = $buttons.eq(0).outerWidth() + 2*parseFloat(that.html.share.$buttons.eq(0).css("margin-left"));
-                                                                        that.html.share.$wrapper.width( nbButtonsByRow * buttonSz )
-                                                                                                .height( Math.ceil( $buttons.length / nbButtonsByRow) * buttonSz )
-                                                                                                .verticalCenter(0);                                                                                 
-                                                                    }
-                                             }
-                                            );                                                                                        
-        this.buttonShare.disable();        
-    }
-    else {
-        p_htmlStructure.toolbar.$buttonShare.hide();
-    }
-    //Mandatory screens
-    this.screenIndex = new CScreen( { $handle: that.html.index.$screen,
-                                      deck: that.deck,
-                                      listButtonsOther: [ that.buttonShare ],
-                                      buttonScreen: that.buttonIndex
-                                    }
-                                  );    
-    that.deck.add( that.screenIndex );
-    
-    this.screenPhoto = new CScreen( { $handle: that.html.photo.$screen,
-                                      deck: that.deck,
-                                      listButtonsOther: [ that.buttonIndex, that.buttonShare ],
-                                      buttonScreen: "undefined"
-                                    }
-                                  );
-    that.deck.add( that.screenPhoto );          
-    //Optional Screens
-    //SHARE
-    if( p_properties.toolbar.optButtons.indexOf( "share" ) > -1 )
-    {      
-        this.screenShare = new CScreen( {   $handle: that.html.share.$screen,
-                                            deck: that.deck,
-                                            listButtonsOther: [ that.buttonIndex ],
-                                            buttonScreen: that.buttonShare
-                                        } );
+    this.toolbar = Toolbar( p_htmlStructure );
         
-        that.deck.add( that.screenShare ); 
-    }
-    
-    this.buttonIndex.disable();
-
-    
-    that.deck.moveOnTop( that.screenIndex );
-    this.screenPhoto.eventOnHiding.subscribe( function() { that.hidePhoto(); } );
+    that.deck.moveOnTop( that.toolbar.screenIndex );
+    that.toolbar.screenPhoto.eventOnHiding.subscribe( function() { that.hidePhoto(); } );
 
     $(window).resize( function() {
         TOOLS.trace( "Evt resize");
@@ -119,10 +64,7 @@ function CDisplay( p_properties, p_htmlStructure )
     {
         that.idCurrentPhoto = id;
         //that.url.setHash( id );
-        /*that.html.photo.$screen.fadeIn(400, function() {
-            that.html.index.$screen.hide();
-        });*/
-        that.screenPhoto.display();
+        that.toolbar.screenPhoto.display();
         that.html.photo.buttons.$next.verticalCenter( that.computeToolbarTopHeigth()/2 );
         that.html.photo.buttons.$previous.css("top",  that.html.photo.buttons.$next.css("top") ); //no v center on previous to correct an ie8 bug
         
@@ -136,10 +78,7 @@ function CDisplay( p_properties, p_htmlStructure )
     this.hidePhoto = function( ) 
     {
         TOOLS.trace("hidePhoto");
-      /*  //that.url.clearHash();
-        that.html.index.$screen.show();
-        
-        that.html.photo.$screen.fadeOut('fast');        */
+        //that.url.clearHash();
         var $thumbBox =  that.html.index.mosaic.$thumbBoxes.eq( that.idCurrentPhoto - 1 );
         that.indexScreenEvent.fire( $thumbBox );
     }

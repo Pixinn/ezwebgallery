@@ -38,6 +38,11 @@ a:visited {color: black;}
 a:active {color: black;}
 
 
+/* All optional items hidden by default */
+.display_optional {
+    display:none;
+}
+
 
 /* **** Progress bar. voir http://digitalbush.com/projects/progress-bar-plugin/ **** */
 
@@ -221,6 +226,8 @@ and (orientation: portrait){
         height:7%;
     }
 }
+
+
 /********************************************/
 
 

@@ -140,5 +140,6 @@ function CButtonToolbar( p_options )
                                 that.enable();
                             } )
     }
+    that.$handle.show(); //displaying optional buttons (hidden by default)
     this.enable();
 };
