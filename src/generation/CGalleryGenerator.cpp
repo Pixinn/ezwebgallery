@@ -37,6 +37,7 @@
 #include "CTaggedString.h"
 #include "CPlatform.h"
 #include "CCss.h"
+#include "CToolbar.h"
 #include "CLogger.h"
 #include "CMessage.h"
 #include "CError.h"
@@ -52,6 +53,7 @@ using namespace JSON;
 
 //------------------ DEFINITIONS ----------------------//
 
+#define JSTOOLBARFILENAME   "Toolbar.js"
 #define CSSSKINFILENAME     "skin.css"
 #define SHARPENINGTHRESHOLD 0.04        /* équivalent à 10 */
 
@@ -140,6 +142,7 @@ bool CGalleryGenerator::generateGallery( const CGalleryGeneratorFeeder & gallery
 
         //-- Init
         m_skinParameters = m_feeder.getSkinParams();
+        m_toolbarButtons.share = m_feeder.getProjectParams().m_galleryConfig.f_shareOnSocialNetworks;
         displayProgressBar( 0, "green", PtrMessage(new CMessage( tr("Initialization...") )) );
 
         //-- Start
@@ -236,7 +239,7 @@ bool CGalleryGenerator::generateFileStructure( )
 
     //Copie des fichiers ressources (ie non modifiables, ne faisant pas partie des skins)
     outPath = QDir( m_feeder.getProjectParams().m_galleryConfig.outputDir );
-    QDir srcPath( CPlatform::resourceDirPath()  );;
+    QDir srcPath( CPlatform::resourceDirPath()  );
     if( !srcPath.exists() ){
         m_msgErrorList.append(  PtrMessage(new CError(CError::error(CError::SourceFileNotFound), srcPath.absolutePath())) );
         emit abordGenerationSignal( );
@@ -391,7 +394,7 @@ bool CGalleryGenerator::generateJsFiles( )
 
     //////////// Configuration ///////////////
 
-    // --- JSON
+    // --- JSON    
     // -- technical properties
     Object& jsonPhotos = m_jsonRoot.addObject( "photos" );
     Object& jsonPhotosProperties = jsonPhotos.addObject( "technical" );
@@ -430,7 +433,7 @@ bool CGalleryGenerator::generateJsFiles( )
 
 
     //////////// Presentation ///////////////
-   // Attention : certaines proprits doivent tre en phase avec les css
+   // Attention : certaines proprites doivent etre en phase avec les css
 
     //---- JSON index
     Object& index = m_jsonRoot.addObject( "index" );
@@ -531,6 +534,28 @@ bool CGalleryGenerator::skinning( )
     skinCssSheet.toStream( cssSkinStream );
     skinCssFile.close();
 
+
+    //--------------- TOOLBAR --------------//
+    //--- Ouverture du fichier
+    QDir outJsToolbarPath( m_feeder.getProjectParams().m_galleryConfig.outputDir );
+    if( !outJsToolbarPath.mkpath( JSPATH ) ){
+        m_msgErrorList.append( PtrMessage(new CError(CError::FileCreation, outSkinPath.absolutePath() + QString("/") + QString(JSPATH))) );
+        emit abordGenerationSignal( );
+        return false;
+    }
+    outJsToolbarPath.cd( JSPATH );
+    QFile toolbarJsFile( outJsToolbarPath.absoluteFilePath( JSTOOLBARFILENAME ) );
+    if (!toolbarJsFile.open(QIODevice::WriteOnly | QIODevice::WriteOnly | QIODevice::Text)){
+            m_msgErrorList.append( PtrMessage(new CError(CError::FileOpening, toolbarJsFile.fileName())) );
+            emit abordGenerationSignal( );
+            return false;
+    }
+    toolbarJsFile.setPermissions( QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::WriteUser | QFile::ReadGroup | QFile::ReadOther );
+    QTextStream toolbarJsStream( &toolbarJsFile );
+    toolbarJsStream.setCodec( "UTF-8" );
+    toolbarJsStream.setGenerateByteOrderMark (true);
+    CToolbarBehavior toolbar( m_toolbarButtons );
+    toolbarJsStream << toolbar.getJavascript();
 
 //-------- MODIFICATIONS HTML -------//
     QDir outPath( m_feeder.getProjectParams().m_galleryConfig.outputDir );

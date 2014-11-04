@@ -1,4 +1,4 @@
-﻿<Skin release="20140703" name="Winter">
+﻿<Skin release="20141026" name="Winter">
     <StyleSheet name="noname">
         <Selection selector="#mosaic">
             <background-image>url(../images/Dodge.png)</background-image>
@@ -31,9 +31,6 @@
             <background-color>#132950</background-color>
             <background-image>url(../images/SnowBackground.jpg)</background-image>
         </Selection>
-        <Selection selector="#toolbar">
-            <background-color>#111111</background-color>
-        </Selection>
         <Selection selector=".mainPhoto">
             <border-color>#1d1d1d</border-color>
             <border-width>3px</border-width>
@@ -48,6 +45,9 @@
             <Selection selector="img:hover">
                 <border-color>#ffffff</border-color>
             </Selection>
+        </Selection>
+        <Selection selector=".toolbar">
+            <background-color>#111111</background-color>
         </Selection>
         <Selection selector="div#cadrePhoto">
             <background-color>#edeef0</background-color>

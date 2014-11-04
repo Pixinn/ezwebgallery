@@ -1,4 +1,4 @@
-﻿<Skin release="20140703" name="Autumn">
+﻿<Skin release="20141026" name="Autumn">
     <StyleSheet name="noname">
         <Selection selector="#mosaic">
             <background-image>url(../images/Brown-Transparency.png)</background-image>
@@ -31,9 +31,6 @@
             <background-color>#cfad76</background-color>
             <background-image>url(../images/Leaves-Paper-Background.jpg)</background-image>
         </Selection>
-        <Selection selector="#toolbar">
-            <background-color>#111111</background-color>
-        </Selection>
         <Selection selector=".mainPhoto">
             <border-color>#000000</border-color>
             <border-width>3px</border-width>
@@ -48,6 +45,9 @@
             <Selection selector="img:hover">
                 <border-color>#ffffff</border-color>
             </Selection>
+        </Selection>
+        <Selection selector=".toolbar">
+            <background-color>#111111</background-color>
         </Selection>
         <Selection selector="div#cadrePhoto">
             <background-color>#b4ada5</background-color>

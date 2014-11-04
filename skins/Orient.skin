@@ -1,4 +1,4 @@
-﻿<Skin release="20140703" name="Orient">
+﻿<Skin release="20141026" name="Orient">
     <StyleSheet name="noname">
         <Selection selector="#mosaic">
             <background-color>#e0d7c3</background-color>
@@ -31,9 +31,6 @@
             <background-color>#07060e</background-color>
             <background-image>url(../images/Arabic.jpg)</background-image>
         </Selection>
-        <Selection selector="#toolbar">
-            <background-color>#111111</background-color>
-        </Selection>
         <Selection selector=".mainPhoto">
             <border-color>#3b0000</border-color>
             <border-width>2px</border-width>
@@ -48,6 +45,9 @@
             <Selection selector="img:hover">
                 <border-color>#c8b489</border-color>
             </Selection>
+        </Selection>
+        <Selection selector=".toolbar">
+            <background-color>#111111</background-color>
         </Selection>
         <Selection selector="div#cadrePhoto">
             <background-color>#eadbb9</background-color>

@@ -1,5 +1,5 @@
-ezwebgallery (0.53-0ubuntu1) saucy; urgency=low
+ezwebgallery (0.54-0ubuntu1) saucy; urgency=low
 
-    * Hidden arrows for mouse navigation on desktops
+    * Adding a Share button
 
- -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Sun, 06 Jul 2014 16:55:11 +0100
+ -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Mon, 03 Oct 2014 15:55:11 +0100

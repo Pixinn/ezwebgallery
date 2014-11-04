@@ -20,6 +20,7 @@
         <link rel="stylesheet" TYPE="text/css" HREF="resources/css/index.css">
         <link rel="stylesheet" TYPE="text/css" HREF="resources/css/image.css">
         <link rel="stylesheet" TYPE="text/css" HREF="resources/css/skin.css">
+        <link rel="stylesheet" TYPE="text/css" HREF="resources/css/opt/share.css">
 
         <!-- L'ordre des inclsions est important ! !-->
         <script type="text/javascript" src="resources/javascript/modernizr/modernizr.custom.js"></script>
@@ -36,8 +37,9 @@
         <script type="text/javascript" src="resources/javascript/jquery/plugins/jquery.hammer.js"></script>
 
         <script type="text/javascript" src="resources/parameters.json"></script> 
-        <script type="text/javascript" src="resources/javascript/ezwg-min.js"></script> 
-        <!-- DEBUG
+        
+         <script type="text/javascript" src="resources/javascript/ezwg-min.js"></script>
+        <!-- ****** DEBUG **********
         <script type="text/javascript" src="resources/javascript/CEvent.js"></script>
         <script type="text/javascript" src="resources/javascript/CHashTable.js"></script>
         <script type="text/javascript" src="resources/javascript/CPhoto.js"></script>
@@ -49,15 +51,15 @@
         <script type="text/javascript" src="resources/javascript/CPhotoStrategy.js"></script>
         <script type="text/javascript" src="resources/javascript/CPhotoLoader.js"></script>
         <script type="text/javascript" src="resources/javascript/CUrl.js"></script>
+        <script type="text/javascript" src="resources/javascript/CScreen.js"></script>
         <script type="text/javascript" src="resources/javascript/CDisplay.js"></script>
         <script type="text/javascript" src="resources/javascript/CScroller.js"></script>
         <script type="text/javascript" src="resources/javascript/CProgressBar.js"></script>
         <script type="text/javascript" src="resources/javascript/CMosaic.js"></script>
         <script type="text/javascript" src="resources/javascript/CNavBars.js"></script>
         <script type="text/javascript" src="resources/javascript/start.js"></script>
-        !-->
-
-
+        ******************* !-->
+        <script type="text/javascript" src="resources/javascript/Toolbar.js"></script>
         
     </head>
 
@@ -70,6 +72,28 @@
                 </div>
         </div>        
 
+        
+        <div id="screenShare" class="fullScreen">
+            <div class="toolbar">             
+                [TOOLBAR]
+            </div>
+            <div id="wrapper_share">
+                <!-- AddToAny BEGIN -->
+                <div class="a2a_kit a2a_kit_size_96 a2a_default_style">
+                <a class="a2a_button_facebook addtoany_button"></a>
+                <a class="a2a_button_twitter addtoany_button"></a>
+                <a class="a2a_button_baidu addtoany_button"></a>                                
+                <a class="a2a_button_reddit addtoany_button"></a>
+                <a class="a2a_button_whatsapp addtoany_button"></a>
+                <a class="a2a_button_pinterest addtoany_button"></a>
+                <a class="a2a_button_tumblr addtoany_button"></a>
+                <a class="a2a_button_google_plus addtoany_button"></a>
+                </div>
+                <!-- AddToAny END -->
+            </div>
+        </div>
+        
+        
         <!-- ****************** !-->
         <!-- DIV AFFICHAGE INDEX !-->
         <!-- Div absolute recouvrant tout l'écran !-->
@@ -77,15 +101,15 @@
         <!-- Permet à l'élement d'afficher/cacher tous ces blocs d'un seul coup !-->
 
         
-        <div id="screenIndex"  class="fullScreen" >      
-            <div id="mosaic" >           
-                <div id="indexTitle">[CONTENT_TITLE]</div>  <!-- TITRE !-->
-                <!-- VIGNETTES !--> 
-                            </div>
-
-            <div class="footer">            
-                <a href="http://www.ezwebgallery.org/">[EZWEBGALLERY_LOGO]</a>
-                [BUTTON_ADDTHIS]
+        <div id="screenIndex"  class="fullScreen" >
+            <div class="toolbar">        
+            [TOOLBAR]
+            </div>
+            <div id="wrapper_mosaic" class="centralZone">
+                <div id="mosaic" >           
+                    <div id="indexTitle">[CONTENT_TITLE]</div>  <!-- TITRE !-->
+                    <!-- VIGNETTES !--> 
+                </div>
             </div>
         </div><!-- ScreenIndex !-->
             
@@ -98,7 +122,7 @@
         <!-- Permet à l'élement d'afficher/cacher tous ces blocs d'un seul coup !-->
 
         <div id="screenPhoto" class="fullScreen">
-            <div id="toolbar">
+            <div class="toolbar">
             [TOOLBAR]
             </div>
             <!-- photoLefter et photoRighter doivent se trouver AVANT wrapperAffichagePhoto pour avoir trois colonnes.

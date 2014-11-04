@@ -20,7 +20,7 @@
 
 function CMosaic( p_properties, p_htmlStructure ) 
 {    
-   
+    this.html = p_htmlStructure;
     // ++++ Methods ++++ //
       
     //Building the thumbnail mosaic
@@ -85,9 +85,13 @@ function CMosaic( p_properties, p_htmlStructure )
     };
     
     //showing the mosaic
-    this.show = function()
+    this.show = function( $thumbDisplayed )
     {
         that.htmlStructure.index.mosaic.$thumbnails.verticalCenter(0);
+        //centering on $thumbDisplayed
+        if(typeof $thumbDisplayed != "undefined") {
+            that.center( $thumbDisplayed );
+        }
     }
     
     this.hide = function()
@@ -96,12 +100,14 @@ function CMosaic( p_properties, p_htmlStructure )
     }
     
     
-    //On window resize
-    this.onResize = function()
+    this.center = function( $thumbDisplayed )
     {
-      // that.htmlStructure.index.mosaic.$container.verticalCenter( 0 );
+        var $firstThumbBox = that.html.index.mosaic.$thumbBoxes.eq(0);
+        var scrollAmount = $thumbDisplayed.offset().top - $firstThumbBox.offset().top;
+        that.html.index.mosaic.$wrapper.scrollTop( scrollAmount );
+        TOOLS.trace( "scrollAmount: " + scrollAmount );
     }
-     
+    
     
     //Returns the loading Event
     this.getLoadingEvent = function() {
@@ -121,14 +127,11 @@ function CMosaic( p_properties, p_htmlStructure )
     {
         var fSetFound = false;
         var thumbSet = that.properties.index.mosaic.defaultSet;    //if no suitable set is found
-        var availableWidth = that.htmlStructure.$window.innerWidth() - that.properties.index.mosaic.unavailable.horizontal - that.mosaicSizeMargin/2; //$window.innerWidth(): "visual viewport" width: http://www.quirksmode.org/mobile/viewports2.html
-        var availableHeight = that.htmlStructure.$window.innerHeight() - that.properties.index.mosaic.unavailable.vertical - that.mosaicSizeMargin;
+        var availableWidth = that.htmlStructure.index.mosaic.$wrapper.innerWidth() * 0.9;
         
         $.each( that.properties.index.mosaic.sizes, function( key, size ) //iterating on the object using jQuery
         {
-            if (   !fSetFound
-                && (availableWidth > size * that.properties.index.mosaic.nbCols)
-                /*&& (availableHeight > size * that.properties.index.mosaic.nbRows)*/ )
+            if (   !fSetFound && (availableWidth > size * that.properties.index.mosaic.nbCols)  )
             {
                 thumbSet = key;
                 fSetFound = true;

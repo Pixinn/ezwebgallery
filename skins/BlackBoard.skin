@@ -1,4 +1,4 @@
-﻿<Skin release="20140703" name="Black Board">
+﻿<Skin release="20141026" name="Black Board">
     <StyleSheet name="noname">
         <Selection selector="#mosaic">
             <background-color>#cbc9c9</background-color>
@@ -31,9 +31,6 @@
             <background-color>#1d1c1b</background-color>
             <background-image>url(../images/Crayonne_Dark-Seamless.jpg)</background-image>
         </Selection>
-        <Selection selector="#toolbar">
-            <background-color>#111111</background-color>
-        </Selection>
         <Selection selector=".mainPhoto">
             <border-color>#000000</border-color>
             <border-width>2px</border-width>
@@ -48,6 +45,9 @@
             <Selection selector="img:hover">
                 <border-color>#ffffff</border-color>
             </Selection>
+        </Selection>
+        <Selection selector=".toolbar">
+            <background-color>#111111</background-color>
         </Selection>
         <Selection selector="div#cadrePhoto">
             <background-color>#edeef0</background-color>

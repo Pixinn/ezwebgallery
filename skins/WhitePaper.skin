@@ -1,4 +1,4 @@
-﻿<Skin release="20140703" name="White Paper">
+﻿<Skin release="20141026" name="White Paper">
     <StyleSheet name="noname">
         <Selection selector="#mosaic">
             <background-image>url(../images/Burn.png)</background-image>
@@ -31,9 +31,6 @@
             <background-color>#edeef0</background-color>
             <background-image>url(../images/WhitePaper.jpg)</background-image>
         </Selection>
-        <Selection selector="#toolbar">
-            <background-color>#EEEEEE</background-color>
-        </Selection>
         <Selection selector=".mainPhoto">
             <border-color>#ffffff</border-color>
             <border-width>1px</border-width>
@@ -48,6 +45,9 @@
             <Selection selector="img:hover">
                 <border-color>#ffffff</border-color>
             </Selection>
+        </Selection>
+        <Selection selector=".toolbar">
+            <background-color>#EEEEEE</background-color>
         </Selection>
         <Selection selector="div#cadrePhoto">
             <background-color>#19191a</background-color>
