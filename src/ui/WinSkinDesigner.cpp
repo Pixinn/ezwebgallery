@@ -24,7 +24,7 @@
 #include <QSettings>
 
 #include "WinSkinDesigner.h"
-#include "ui/ui_WinSkinDesigner.h" //Gnr par qmake
+#include "ui_WinSkinDesigner.h"
 #include "GlobalDefinitions.h"
 #include "CPlatform.h"
 #include "CLogger.h"

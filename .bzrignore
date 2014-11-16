@@ -441,3 +441,12 @@ build/.obj/CToolbar.sbr
 moc_*.cpp
 qrc_*.cpp
 src/widgets/Makefile
+ezwebgallery.opensdf
+ezwebgallery.sdf
+ezwebgallery.sln
+ezwebgallery.v12.suo
+ezwebgallery.vcxproj.user
+*.vcxproj.use
+build/.obj/ezwebgallery.tlog
+build/.obj/ezwebgallery.unsuccessfulbuild
+build/.obj/vc120.pdb
