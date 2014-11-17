@@ -49,16 +49,17 @@ md %TEMPDIR%\skins
 xcopy /e ..\Skins %TEMPDIR%\skins\
 
 REM --- COPYING DLL TO TEMP DIR
-copy %QTDIR%\bin\QtCore4.dll %TEMPDIR%
-copy %QTDIR%\bin\QtGui4.dll %TEMPDIR%
-copy %QTDIR%\bin\QtXml4.dll %TEMPDIR%
+copy %QTDIR%\bin\Qt5Core.dll %TEMPDIR%
+copy %QTDIR%\bin\Qt5Gui.dll %TEMPDIR%
+copy %QTDIR%\bin\Qt5Widgets.dll %TEMPDIR%
+copy %QTDIR%\bin\Qt5Xml.dll %TEMPDIR%
 md   %TEMPDIR%\imageformats
-copy %QTDIR%\plugins\imageformats\qgif4.dll %TEMPDIR%\imageformats
-copy %QTDIR%\plugins\imageformats\qico4.dll %TEMPDIR%\imageformats
-copy %QTDIR%\plugins\imageformats\qjpeg4.dll %TEMPDIR%\imageformats
-copy %QTDIR%\plugins\imageformats\qmng4.dll %TEMPDIR%\imageformats
-copy %QTDIR%\plugins\imageformats\qsvg4.dll %TEMPDIR%\imageformats
-copy %QTDIR%\plugins\imageformats\qtiff4.dll %TEMPDIR%\imageformats
+copy %QTDIR%\plugins\imageformats\qgif.dll %TEMPDIR%\imageformats
+copy %QTDIR%\plugins\imageformats\qico.dll %TEMPDIR%\imageformats
+copy %QTDIR%\plugins\imageformats\qjpeg.dll %TEMPDIR%\imageformats
+copy %QTDIR%\plugins\imageformats\qmng.dll %TEMPDIR%\imageformats
+copy %QTDIR%\plugins\imageformats\qsvg.dll %TEMPDIR%\imageformats
+copy %QTDIR%\plugins\imageformats\qtiff.dll %TEMPDIR%\imageformats
 
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_bzlib_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_jpeg_.dll %TEMPDIR%
@@ -69,7 +70,7 @@ copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_png_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_tiff_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_ttf_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_wand_.dll %TEMPDIR%
-copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_xlib_.dll %TEMPDIR%
+rem copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_xlib_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_zlib_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\IM_MOD_RL_jpeg_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\IM_MOD_RL_png_.dll %TEMPDIR%
