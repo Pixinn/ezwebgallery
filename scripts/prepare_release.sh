@@ -9,6 +9,7 @@ DATADIR=$SCRIPTDIR/../deployment/common
 
 #Creating the folder structure
 mkdir --parents $DATADIR/data/resources/css
+mkdir --parents $DATADIR/data/resources/css/opt
 mkdir --parents $DATADIR/data/resources/php
 mkdir --parents $DATADIR/data/resources/images/smileys
 mkdir --parents $DATADIR/data/resources/javascript/jquery/plugins
@@ -22,6 +23,7 @@ cp $SCRIPTDIR/../web/resources/php/*.php $DATADIR/data/resources/php
 cp $SCRIPTDIR/../web/resources/images/*.* $DATADIR/data/resources/images
 cp $SCRIPTDIR/../web/resources/images/smileys/*.* $DATADIR/data/resources/images/smileys
 cp $SCRIPTDIR/../web/resources/css/*.css $DATADIR/data/resources/css
+cp $SCRIPTDIR/../web/resources/css/opt/*.css $DATADIR/data/resources/css/opt
 cp $SCRIPTDIR/../web/resources/javascript/jquery/*.js $DATADIR/data/resources/javascript/jquery
 cp $SCRIPTDIR/../web/resources/javascript/jquery/plugins/*.js $DATADIR/data/resources/javascript/jquery/plugins
 cp $SCRIPTDIR/../web/resources/javascript/hammer/*.js $DATADIR/data/resources/javascript/hammer

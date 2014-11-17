@@ -1,6 +1,6 @@
 ﻿/*
  *  EZWebGallery:
- *  Copyright (C) 2013 Christophe Meneboeuf <xtof@ezwebgallery.org>
+ *  Copyright (C) 2013-2014 Christophe Meneboeuf <xtof@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ function CDisplay( p_properties, p_htmlStructure )
 
     this.properties = p_properties;
     this.carrousel = new CCarrousel( p_properties, this.html.photo );
+    this.navBars = new CNavBars( p_htmlStructure );
     this.url = new CUrl( p_properties.photos.list );
     this.idCurrentPhoto = -1;
     this.photoScreenEvent = new CEvent();
@@ -31,8 +32,15 @@ function CDisplay( p_properties, p_htmlStructure )
     this.disableUISignal = new CEvent();
     this.enableUISignal = new CEvent();
     this.displayedPhotoLoadedEvent = new CEvent();
-
     this.availableSpace = {h: 0, w:0};
+    
+    $(".display_optional").hide(); //Hiding all optional items
+
+    this.deck = new CDeck();
+    this.toolbar = Toolbar( p_htmlStructure );
+        
+    that.deck.moveOnTop( that.toolbar.screenIndex );
+    that.toolbar.screenPhoto.eventOnHiding.subscribe( function() { that.hidePhoto(); } );
 
     $(window).resize( function() {
         TOOLS.trace( "Evt resize");
@@ -56,30 +64,23 @@ function CDisplay( p_properties, p_htmlStructure )
     {
         that.idCurrentPhoto = id;
         //that.url.setHash( id );
-        that.html.photo.$screen.fadeIn(400, function() {
-            that.html.index.$screen.hide();
-        });
+        that.toolbar.screenPhoto.display();
         that.html.photo.buttons.$next.verticalCenter( that.computeToolbarTopHeigth()/2 );
         that.html.photo.buttons.$previous.css("top",  that.html.photo.buttons.$next.css("top") ); //no v center on previous to correct an ie8 bug
         
         that.setSpace( that.computeAvailableSpace() );
         that.load( id, that.carrousel.load );
         
-        that.photoScreenEvent.fire(  {id: id} );
+        that.photoScreenEvent.fire();
     }
 
     //back to index
-    this.hidePhoto = function( ) {
+    this.hidePhoto = function( ) 
+    {
+        TOOLS.trace("hidePhoto");
         //that.url.clearHash();
-        that.html.index.$screen.show();
-        
-        //center mosaic on current photo
-        var $firstThumbBox = that.html.index.mosaic.$thumbBoxes.eq(0);
         var $thumbBox =  that.html.index.mosaic.$thumbBoxes.eq( that.idCurrentPhoto - 1 );
-        that.html.index.$screen.scrollTop( $thumbBox.offset().top - $firstThumbBox.offset().top );
-        
-        that.html.photo.$screen.fadeOut('fast');        
-        that.indexScreenEvent.fire();
+        that.indexScreenEvent.fire( $thumbBox );
     }
     
 
@@ -119,7 +120,6 @@ function CDisplay( p_properties, p_htmlStructure )
     {
         return that.carrousel.getScrolledEvent();
     }
-
 
     this.onPrevious = function()
     {
@@ -180,9 +180,6 @@ function CDisplay( p_properties, p_htmlStructure )
     }
         //non available space
         var frameBorderSize = parseInt( that.html.photo.$frame.css("padding-top").replace("px","") );
-        //NB: On ne peut pas utiliser g_$divDisplayZoneName.innerWidth( ), car bug sous IE6 :(
-        //Du coup il faut que:	+ g_$divDisplayZoneName.siblings()::margin = 0px
-        //+ g_$divDisplayZoneName::border=0 et ::margin=0
         var height = that.html.photo.$wrapper.innerHeight() - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - wastedPixelTop;
         var width =  that.html.photo.$wrapper.innerWidth( ) - widthWasted - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - ie6BugCorrection;
 
@@ -224,8 +221,6 @@ function CDisplay( p_properties, p_htmlStructure )
 
         photo.verticalCenter( 0 );  //inside its frame
         
-        that.html.photo.buttons.$previous.verticalCenter( toolbarHeight_2 );
-        that.html.photo.buttons.$next.verticalCenter( toolbarHeight_2 );        
     }
     
     //Computes the height of the toolbar on the top.
@@ -233,7 +228,7 @@ function CDisplay( p_properties, p_htmlStructure )
     this.computeToolbarTopHeigth = function() 
     {
         //Toolbar height
-        var toolbarHeight = $("#toolbar").outerHeight();
+        var toolbarHeight = $(".toolbar").filter(":visible").outerHeight();
         if( toolbarHeight > $(document).height() / 2 ) { //if vertical
             toolbarHeight = 0;
         }

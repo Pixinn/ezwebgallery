@@ -22,11 +22,8 @@ function CEvent( )
     
     CEvent.prototype.subscribe = function( subscriber )
     {
-        if( subscriber != undefined ) {
+        if( (subscriber != undefined) && (this.subscribers.indexOf( subscriber ) == -1)  ) {
             this.subscribers.push( subscriber );
-        }
-        else {
-            TOOLS.trace("CEvent::Subscribe error");
         }
     };
     

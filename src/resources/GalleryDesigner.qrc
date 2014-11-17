@@ -3,29 +3,6 @@
     <file>languages/GalleryDesigner_fr.qm</file>
     <file>languages/GalleryDesigner_en.qm</file>
   </qresource>
-  <qresource prefix="/text">
-    <file alias="tagList_en.html">text/translatable/tagList_en.html</file>
-    <file alias="tagList_fr.html">text/translatable/tagList_fr.html</file>
-    <file alias="about_en.html">text/translatable/about_en.html</file>
-    <file alias="about_fr.html">text/translatable/about_fr.html</file>
-    <file alias="aboutImageMagick.html">text/aboutImageMagick.html</file>
-  </qresource>
-  <qresource prefix="/smileys">
-    <file alias="bad.gif">images/smileys/bad.gif</file>
-    <file alias="crying.gif">images/smileys/crying.gif</file>
-    <file alias="embarassed.gif">images/smileys/embarassed.gif</file>
-    <file alias="evil.gif">images/smileys/evil.gif</file>
-    <file alias="good.gif">images/smileys/good.gif</file>
-    <file alias="kiss.gif">images/smileys/kiss.gif</file>
-    <file alias="laugh.gif">images/smileys/laugh.gif</file>
-    <file alias="love.gif">images/smileys/love.gif</file>
-    <file alias="sad.gif">images/smileys/sad.gif</file>
-    <file alias="skeptical.gif">images/smileys/skeptical.gif</file>
-    <file alias="smile.gif">images/smileys/smile.gif</file>
-    <file alias="surprise.gif">images/smileys/surprise.gif</file>
-    <file alias="tongue.gif">images/smileys/tongue.gif</file>
-    <file alias="wink.gif">images/smileys/wink.gif</file>
-  </qresource>
   <qresource prefix="/icons">
     <file>images/configure.png</file>
     <file>images/face-smile-gearhead-male.png</file>
@@ -48,5 +25,33 @@
     <file>images/utilities-terminal.png</file>
     <file>images/qt-logo.png</file>
     <file>images/imagemagick-logo.png</file>
+  </qresource>
+  <qresource prefix="/smileys">
+    <file alias="bad.gif">images/smileys/bad.gif</file>
+    <file alias="crying.gif">images/smileys/crying.gif</file>
+    <file alias="embarassed.gif">images/smileys/embarassed.gif</file>
+    <file alias="evil.gif">images/smileys/evil.gif</file>
+    <file alias="good.gif">images/smileys/good.gif</file>
+    <file alias="kiss.gif">images/smileys/kiss.gif</file>
+    <file alias="laugh.gif">images/smileys/laugh.gif</file>
+    <file alias="love.gif">images/smileys/love.gif</file>
+    <file alias="sad.gif">images/smileys/sad.gif</file>
+    <file alias="skeptical.gif">images/smileys/skeptical.gif</file>
+    <file alias="smile.gif">images/smileys/smile.gif</file>
+    <file alias="surprise.gif">images/smileys/surprise.gif</file>
+    <file alias="tongue.gif">images/smileys/tongue.gif</file>
+    <file alias="wink.gif">images/smileys/wink.gif</file>
+  </qresource>
+  <qresource prefix="/text">
+    <file alias="tagList_en.html">text/translatable/tagList_en.html</file>
+    <file alias="tagList_fr.html">text/translatable/tagList_fr.html</file>
+    <file alias="about_en.html">text/translatable/about_en.html</file>
+    <file alias="about_fr.html">text/translatable/about_fr.html</file>
+    <file alias="aboutImageMagick.html">text/aboutImageMagick.html</file>
+  </qresource>
+  <qresource prefix="/web">
+    <file alias="ShareButton.js">web/ShareButton.js</file>
+    <file alias="ShareScreen.js">web/ShareScreen.js</file>
+    <file alias="Toolbar.js">web/Toolbar.js</file>
   </qresource>
 </RCC>

@@ -1,0 +1,19 @@
+﻿#screenShare {
+    background-color:#151515;
+    text-align:center;
+}
+#wrapper_share {
+    max-width:66%;
+    background-color:#c0c0c0;
+    border:medium solid white;
+    display:block;
+    margin:auto;
+    position:relative;
+}
+.addtoany_button {
+    margin:1em;
+    position:static;
+};
+.a2a_default_style {
+    text-align:center;
+}

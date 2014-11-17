@@ -36,9 +36,10 @@ TOOLS = {
     debug: function( msg ) { //displays a debug message on the top of the page
         $("#DEBUG").append( msg )
                    .show();
-    }
+    },
+    
+    
 }
-
 
 /*
  * Pseudo plugin JQuery pour centrer un objet verticalement dans son parent
@@ -60,7 +61,6 @@ jQuery.fn.verticalCenter = function( offset ) {
      }
   });
 };
-
 
 
 /*
@@ -96,9 +96,19 @@ $(document).ready(function()
         $box : $("#progressbarWrapper"),
         $bar : $("#progressbar")        
     },
+    toolbar : {
+        $buttonShare: $(".button_share"),
+        $buttonIndex:  $(".button_browse")
+    },
+    share : {
+        $screen : $("#screenShare"), 
+        $wrapper : $("#wrapper_share"),
+        $buttons : $(".addtoany_button")
+    },
     index : {
         $screen : $("#screenIndex"),
         mosaic : {
+            $wrapper :  $("#wrapper_mosaic"),
             $handle : $("#mosaic"),
             $title : $("#indexTitle")
             }
@@ -109,17 +119,18 @@ $(document).ready(function()
         $frame : $("#cadrePhoto"),
         $wrapper : $("#wrapperAffichagePhoto"),
         $div : $("#divPhoto"),
-        $caption :$(".photoCaption"),
+        $caption : $(".photoCaption"),
+        $navBars : $.merge( $('#photoLefter'), $('#photoRighter') ),
         buttons : {
                 $previous : $("#boutonPrevious"),
                 $next : $("#boutonNext"),
-                $close : $("#boutonIndex")
+                $close :  $("#screenPhoto").find(".button_browse")
         }
        }
     };
     
-    HtmlStructure.index.z_index = HtmlStructure.index.$screen.css("z-index");
-    HtmlStructure.photo.z_index = HtmlStructure.photo.$screen.css("z-index");
+    HtmlStructure.index.$screen.find(".button_browse").css("opacity","0.4")
+                                                    .css("filter","alpha(opacity=40)");
 
     //Creating instances
     Mosaic = new CMosaic( g_properties, HtmlStructure );
@@ -147,6 +158,7 @@ $(document).ready(function()
         UserHandler.start();
         Display.getPhotoDisplayedLoadedEvent().subscribe( function() { UserHandler.onPhotoDisplayedLoaded( this.id ); } );
         Display.getPhotoScreenEvent().subscribe( UserHandler.onPhotoScreen );
+        Display.getIndexScreenEvent().subscribe( function() { Mosaic.show( this ); } );
         Display.getIndexScreenEvent().subscribe( UserHandler.onIndexScreen );
         Display.getDisableUISignal().subscribe( UserHandler.disablePreviousNext );
         Display.getEnableUISignal().subscribe( UserHandler.enablePreviousNext );
@@ -156,13 +168,16 @@ $(document).ready(function()
         //Subscribing to user events
         UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );
         UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( parseInt(this.id) ); } ); //this, will be the object clicked
-        UserHandler.getClosePhotoEvent().subscribe( Display.hidePhoto );
+        //UserHandler.getClosePhotoEvent().subscribe( Display.hidePhoto );
         UserHandler.getPreviousPhotoEvent().subscribe( Display.onPrevious );        
         UserHandler.getNextPhotoEvent().subscribe( Display.onNext );
         
         //Display according to URL
         Display.displayCurrentUrl(); // --> STARTING POINT FOR THE USER <--
     });
+
+    //Loading share api
+    //$.getScript( "//static.addtoany.com/menu/page.js",  Display.buttonShare.enable );
 
     //Building the mosaic / Loading the thumbnails
     progressBar.show();    

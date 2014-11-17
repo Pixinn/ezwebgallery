@@ -1,4 +1,4 @@
-﻿<Skin release="20131107" name="Moria">
+﻿<Skin release="20141026" name="Moria">
     <StyleSheet name="noname">
         <Selection selector="#mosaic">
             <background-color>#b1aaa3</background-color>
@@ -35,19 +35,6 @@
             <border-color>#000000</border-color>
             <border-width>4px</border-width>
         </Selection>
-        <Selection selector=".photoButtonDisabled">
-            <border-color>#000000</border-color>
-            <border-width>0px</border-width>
-        </Selection>
-        <Selection selector=".photoButtonEnabled">
-            <border-color>#000000</border-color>
-            <border-width>0px</border-width>
-        </Selection>
-        <Selection selector=".photoButtonEnabled:hover">
-            <border-color>#e3e3e3</border-color>
-            <border-width>2px</border-width>
-            <margin>-2px</margin>
-        </Selection>
         <Selection selector=".thumbBox">
             <border-color>#424242</border-color>
             <border-width>1px</border-width>
@@ -58,6 +45,9 @@
             <Selection selector="img:hover">
                 <border-color>#ffffff</border-color>
             </Selection>
+        </Selection>
+        <Selection selector=".toolbar">
+            <background-color>#111111</background-color>
         </Selection>
         <Selection selector="div#cadrePhoto">
             <background-color>#b1aaa3</background-color>
@@ -71,14 +61,6 @@
             <text-align>left</text-align>
             <text-shadow>4px 2px 4px rgba(150, 150, 150, 0.8)</text-shadow>
         </Selection>
-        <Selection selector="div#photoLefter">
-            <background-color>transparent</background-color>
-            <width>80px</width>
-        </Selection>
-        <Selection selector="div#photoRighter">
-            <background-color>transparent</background-color>
-            <width>80px</width>
-        </Selection>
         <Selection selector="div.photoCaption">
             <color>#fffaf1</color>
             <font-family>Times, "Times New Roman", "Liberation Serif", FreeSerif, serif</font-family>
@@ -89,8 +71,8 @@
     <Ressources>
         <File id="IndexPage_BckgTexture">Moria_background.jpg</File>
         <File id="Mosaic_BckgTexture">Moria_paper.jpg</File>
-        <File id="PhotoButtonNext">RightArrow_craie.png</File>
-        <File id="PhotoButtonPrevious">LeftArrow_craie.png</File>
+        <File id="PhotoButtonNext">Dwarf_Arrow_Right.png</File>
+        <File id="PhotoButtonPrevious">Dwarf_Arrow_Left.png</File>
         <File id="PhotoFraming_Texture">Moria_paper.jpg</File>
         <File id="PhotoPage_BckgTexture">Moria_background.jpg</File>
     </Ressources>

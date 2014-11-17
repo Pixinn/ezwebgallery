@@ -23,6 +23,7 @@
 #include <QTextStream>
 
 #include "CSkinParameters.h"
+#include "CToolbar.h"
 #include "CPlatform.h"
 #include "GlobalDefinitions.h"
 #include "CError.h"
@@ -46,7 +47,7 @@
 *****************************************************/
 CSkinParameters::CSkinParameters() :
     QObject(),
-    m_toolbar( QColor("white") ), f_initialized( false )
+    f_initialized( false )
 {        
     //--- Inits
     m_styleSheet = CCssSheet("skin");
@@ -56,8 +57,7 @@ CSkinParameters::CSkinParameters() :
 
 
 CSkinParameters::CSkinParameters( const CSkinParameters & other ) :
-    QObject(),
-    m_toolbar( other.m_toolbar )
+    QObject()
 {
     *this = other;
 }
@@ -87,7 +87,6 @@ CSkinParameters& CSkinParameters::operator=(const CSkinParameters &source)
         this->m_filePath = source.m_filePath;
         this->m_version = source.m_version;
         this->f_initialized = source.f_initialized;
-        this->m_toolbar = source.m_toolbar;
     }
     return *this;
 }
@@ -110,7 +109,6 @@ bool CSkinParameters::operator==( const CSkinParameters &source)
     if( this->m_filePath != source.m_filePath ){    return false;   }
     if( this->m_version != source.m_version ){ return false; }
     if( this->f_initialized != source.f_initialized ){ return false; }
-    if( this->m_toolbar != source.m_toolbar ){ return false; }
     return true;
 }
 
@@ -185,10 +183,6 @@ void CSkinParameters::fromUi( )
     m_resources.insert( "PhotoPage_BckgTexture",m_p_ui->cImagePicker_Photo_BckgTexture->fileName() );    
     m_resources.insert( "PhotoButtonPrevious", m_p_ui->CImagePicker_PreviousButton_Icon->fileName() );
     m_resources.insert( "PhotoButtonNext", m_p_ui->CImagePicker_NextButton_Icon->fileName() );
-    //Ressources ajoutes sous conditions
-    if( m_p_ui->groupBox_PhotoNavBlocksBckg->isChecked() ){
-        m_resources.insert( "PhotoNavBlocks_BckgTexture", m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->fileName() );
-    }
     //Filtrage des ressources:
     removeEmptyResources( ); // On enlve de la liste les images "vides" (ie no image)
      
@@ -264,46 +258,8 @@ void CSkinParameters::fromUi( )
     m_styleSheet.addSelection( photoCaptions );
     
     //Toolbar
-    m_toolbar = CToolbar(  m_p_ui->cColorPicker_PhotoFraming_Color->value() );
-    CCssSelection toolbarCss = m_toolbar.getCss();
+    CCssSelection toolbarCss = CToolbarStyleFactory::GetInstance().getStyle( m_p_ui->cColorPicker_PhotoFraming_Color->value() ).getCss();
     m_styleSheet.addSelection( toolbarCss );
-
-    //Buttons
-    int buttonBorderW = m_p_ui->spinBox_PhotoButtonsEnabled_BorderWidth->value(); //Idem pour enabled / disabled
-    int buttonHoveredBorderW = m_p_ui->spinBox_PhotoButtonsHovered_BorderWidth->value();
-    CCssSelection buttonEnabled( QString(".photoButtonEnabled") );
-        buttonEnabled.setProperty( QString("border-width"), QString::number(buttonBorderW) + QString("px") );
-        buttonEnabled.setProperty( QString("border-color"), m_p_ui->cColorPicker_PhotoButtonsEnabled_BorderColor->value() );
-    m_styleSheet.addSelection( buttonEnabled );
-    CCssSelection buttonHovered( QString(".photoButtonEnabled:hover") );
-        buttonHovered.setProperty( QString("border-width"), QString::number(buttonHoveredBorderW) + QString("px") );
-        buttonHovered.setProperty( QString("border-color"), m_p_ui->cColorPicker_PhotoButtonsHovered_BorderColor->value() );
-        buttonHovered.setProperty( QString("margin"), QString::number(buttonBorderW - buttonHoveredBorderW) + QString("px") );
-    m_styleSheet.addSelection( buttonHovered );
-    CCssSelection buttonDisabled( QString(".photoButtonDisabled") );
-        buttonDisabled.setProperty( QString("border-width"), QString::number(buttonBorderW) + QString("px") ); //=.photoButtonEnabled::border-width
-        buttonDisabled.setProperty( QString("border-color"), m_p_ui->cColorPicker_PhotoButtonsDisabled_BorderColor->value() );
-    m_styleSheet.addSelection( buttonDisabled );
-    //Navigation Divs
-
-    CCssSelection photoLefter( QString("div#photoLefter") );
-        photoLefter.setProperty( QString("width"), QString::number(m_p_ui->spinBox_PhotoNavBlocks_Width->value()) + QString("px"));
-        if( m_p_ui->groupBox_PhotoNavBlocksBckg->isChecked() ){ //Fond non-transparent
-            photoLefter.setProperty( QString("background-color"), m_p_ui->cColorPicker_PhotoNavBlocks_BckgColor->value() );
-            photoLefter.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->fileName()).fileName() + QString(")") );
-        }else{ //Fond transparent
-            photoLefter.setProperty( QString("background-color"), QString("transparent") );
-        }
-     m_styleSheet.addSelection( photoLefter );
-     CCssSelection photoRighter( QString("div#photoRighter") );
-        photoRighter.setProperty( QString("width"), QString::number(m_p_ui->spinBox_PhotoNavBlocks_Width->value()) + QString("px"));
-         if( m_p_ui->groupBox_PhotoNavBlocksBckg->isChecked() ){ //Fond non-transparent
-            photoRighter.setProperty( QString("background-color"), m_p_ui->cColorPicker_PhotoNavBlocks_BckgColor->value() );
-             photoRighter.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->fileName()).fileName() + QString(")") );
-        }else{ //Fond transparent
-             photoRighter.setProperty( QString("background-color"), QString("transparent") );
-        }
-    m_styleSheet.addSelection( photoRighter );
     
     //--- Css
     //#progressbarWrapper
@@ -372,7 +328,6 @@ void CSkinParameters::fromDomDocument( QDomDocument &document )
     selectors.clear();
     selectors << "div#cadrePhoto";
     CCssSelection photoFrame = m_styleSheet.selection( selectors );
-    m_toolbar = CToolbar(  QColor(photoFrame.property("background-color")) );
     //Properties
     setName( rootAttributes.namedItem( "name" ).nodeValue() );
     QDomElement miscProperties = root.firstChildElement( "properties" );
@@ -419,7 +374,6 @@ void CSkinParameters::toUi(  )
     //--> NE PAS OUBLIER D'AJOUTER LES NOUVEAUX...
     m_p_ui->CImagePicker_NextButton_Icon->clearImage();
     m_p_ui->CImagePicker_PhotoFraming_Texture->clearImage();
-    m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->clearImage();
     m_p_ui->CImagePicker_PreviousButton_Icon->clearImage();
     m_p_ui->cImagePicker_Index_BckgTexture->clearImage();
     m_p_ui->cImagePicker_Mosaic_BckgTexture->clearImage();
@@ -520,38 +474,9 @@ void CSkinParameters::toUi(  )
         m_p_ui->doubleSpinBox_PhotoCaption_FontSize->setValue( photoCaptions.property("font-size").remove("em").toDouble() );
         m_p_ui->cColorPicker_PhotoCaption_TextColor->setColor( photoCaptions.property("color") );
     path.clear();
-    //Buttons
-    int buttonBorderW; //Idem pour enabled / disabled
-    int buttonHoveredBorderW;
-    path << ".photoButtonEnabled";
-    CCssSelection buttonEnabled = m_styleSheet.selection( path );
-        buttonBorderW = buttonEnabled.property("border-width").remove("px").toInt();
-        m_p_ui->spinBox_PhotoButtonsEnabled_BorderWidth->setValue( buttonBorderW );
-        m_p_ui->cColorPicker_PhotoButtonsEnabled_BorderColor->setColor( buttonEnabled.property("border-color") );
-    path.clear();
-    path << ".photoButtonEnabled:hover";
-    CCssSelection buttonHovered = m_styleSheet.selection( path );
-        buttonHoveredBorderW = buttonHovered.property("border-width").remove("px").toInt() ;
-        m_p_ui->spinBox_PhotoButtonsHovered_BorderWidth->setValue( buttonHoveredBorderW );
-        m_p_ui->cColorPicker_PhotoButtonsHovered_BorderColor->setColor( buttonHovered.property("border-color") );
-    path.clear();
-    path << ".photoButtonDisabled";
-    CCssSelection buttonDisabled = m_styleSheet.selection( path );
-        m_p_ui->cColorPicker_PhotoButtonsDisabled_BorderColor->setColor( buttonDisabled.property("border-color") );
-    path.clear();
     //Button Icons
     m_p_ui->CImagePicker_PreviousButton_Icon->setImage( getImagePath( m_resources.value("PhotoButtonPrevious").absoluteFilePath() ));
     m_p_ui->CImagePicker_NextButton_Icon->setImage( getImagePath( m_resources.value("PhotoButtonNext").absoluteFilePath() ));
-    //Navigation Divs
-    path << "div#photoLefter";
-    CCssSelection photoLeftAndRight = m_styleSheet.selection( path );
-        m_p_ui->spinBox_PhotoNavBlocks_Width->setValue( photoLeftAndRight.property("width").remove("px").toInt() );
-        m_p_ui->groupBox_PhotoNavBlocksBckg->setChecked( true );
-        if(  photoLeftAndRight.property( "background-color" ) == QString("transparent") ){
-            m_p_ui->groupBox_PhotoNavBlocksBckg->setChecked( false );
-        }
-        m_p_ui->CImagePicker_PhotoNavBlocks_BckgTexture->setImage( getImagePath( m_resources.value("PhotoNavBlocks_BckgTexture").absoluteFilePath() ));
-        m_p_ui->cColorPicker_PhotoNavBlocks_BckgColor->setColor( photoLeftAndRight.property("background-color") );
 
     //-------------- ///////////////// MISC //////////////// ----------------//
     path.clear();
@@ -798,7 +723,7 @@ bool CSkinParameters::load( const QString &skinFileName )
 * out : errorList, Liste des erreurs releves
 * out : warningList, Liste des avertissements releves
 ********************************************************************/
-void CSkinParameters::check( QStringList* errorList, QStringList* warningList)
+void CSkinParameters::check( QStringList* errorList, QStringList* )
 {
     //Maj
     fromUi();
@@ -816,12 +741,6 @@ void CSkinParameters::check( QStringList* errorList, QStringList* warningList)
     if( !m_resources.contains("PhotoButtonNext") ){
         errorList->append( tr("Button \"Next\" - an image is required.") );
     }
-    //Taille des blocs OK ?
-    if( m_p_ui->spinBox_PhotoNavBlocks_Width->value() <= m_p_ui->CImagePicker_NextButton_Icon->imageSize().width() ||
-        m_p_ui->spinBox_PhotoNavBlocks_Width->value() <= m_p_ui->CImagePicker_PreviousButton_Icon->imageSize().width() ){
-        warningList->append( tr("The zones containing the Previous/Next buttons are smaller than the buttons themselves."));
-    }
-
 }
 
 
@@ -909,6 +828,8 @@ void CSkinParameters::removeEmptyResources( )
 QString CSkinParameters::buttonImage( int button ) const
 {
     QString resource;
+    QStringList cssPath;
+    CCssSelection photoFrame;
 
     switch( button )
     {
@@ -918,8 +839,10 @@ QString CSkinParameters::buttonImage( int button ) const
     case CSkinParameters::buttonPrevious:
         resource = m_resources.value("PhotoButtonPrevious").fileName();
         break;
-    case CSkinParameters::toolbar:
-        resource = m_toolbar.getHtml();
+    case CSkinParameters::toolbar:        
+        cssPath << "div#cadrePhoto";
+        photoFrame = m_styleSheet.selection( cssPath );
+        resource = CToolbarStyleFactory::GetInstance().getStyle( photoFrame.property("background-color") ).getHtml();
         break;
     default:
         resource = QString("Error");

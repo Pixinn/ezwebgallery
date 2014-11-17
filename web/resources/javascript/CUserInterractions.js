@@ -49,8 +49,6 @@ function CUserInterractions( p_properties, htmlstructure )
         $(window).resize( function() { that.onWindowResized(); } );
     
         that.enableThumbnailClick();
-        
-        that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
         that.disablePreviousNext();                
         
         //intercept rightclick
@@ -145,9 +143,9 @@ function CUserInterractions( p_properties, htmlstructure )
         return that.thumbnailClickedEvent;
     }
     
-    this.getClosePhotoEvent = function() {
+    /*this.getClosePhotoEvent = function() {
         return that.closePhotoEvent;
-    }
+    }*/
     
     this.getPreviousPhotoEvent = function() {
         return that.previousPhotoEvent;
@@ -161,9 +159,6 @@ function CUserInterractions( p_properties, htmlstructure )
         that.windowResizedEvent.fire();
     }
     
-    this.onClosePhoto = function() {
-        that.closePhotoEvent.fire();
-    }
     
     this.onPhotoDisplayedLoaded = function( photoId )
     {
@@ -189,7 +184,6 @@ function CUserInterractions( p_properties, htmlstructure )
     
     this.onScrolled = function() {
         that.fCurrentlyScrolling = false;        
-        that.html.photo.buttons.$close.click( function() { that.onClosePhoto(); } );
         if( that.fEnablePreviousNextRequired ) {
             that.fEnablePreviousNextRequired = false;
             that.enablePreviousNext();
@@ -233,7 +227,7 @@ function CUserInterractions( p_properties, htmlstructure )
                     break;
                 case KEY_ESC:
                     that.watchedKeyDown = true;
-                    that.onClosePhoto();
+                    that.html.toolbar.$buttonIndex.click();  //using click event to be subject to enable / disable
                     that.watchedKeyDown = false;
                     break;				
             }

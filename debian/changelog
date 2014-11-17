@@ -1,6 +1,5 @@
-ezwebgallery (0.52-0ubuntu1) saucy; urgency=low
+ezwebgallery (0.55-0ubuntu1) saucy; urgency=low
 
-    * Touch driven slides
-    * Adding a toolbar
+    * Using Qt5
 
- -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Mon, 05 May 2014 00:19:11 +0100
+ -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Mon, 17 Oct 2014 23:55:11 +0100

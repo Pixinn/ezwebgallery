@@ -19,48 +19,16 @@
 
 #include <QString>
 #include <QColor>
+#include <QFile>
+#include <QTextStream>
+#include <QString>
 
 #include "CCss.h"
 #include "CToolbar.h"
 
-CToolbar::CToolbar( const QColor & color )
-{
-    setStyle( color );
-}
+CToolbarStyleFactory CToolbarStyleFactory::s_Instance;
 
-QString CToolbar::getHtml( void ) const
-{
-    QString html;
-
-    if( m_style == DARK ) {
-        html += "<li><img src=\"resources/images/toolbar_icon_white_browse.png\" id=\"boutonIndex\"></li>\n";
-        html += "<!--<li><img src=\"resources/images/toolbar_icon_white_caption.png\"></li>\n";
-        html += "<li><img src=\"resources/images/toolbar_icon_white_share.png\"></li> !-->\n";
-    }
-    else {
-        html += "<li><img src=\"resources/images/toolbar_icon_black_browse.png\" id=\"boutonIndex\"></li>";
-        html += "<!--<li><img src=\"resources/images/toolbar_icon_black_caption.png\"></li>\n";
-        html += "<li><img src=\"resources/images/toolbar_icon_black_share.png\"></li> !-->\n";
-    }
-
-    return html;
-}
-
-CCssSelection CToolbar::getCss( void ) const
-{
-    CCssSelection toolbar("#toolbar" );
-    
-    if( m_style == DARK ) {
-        toolbar.setProperty( "background-color", "#111111" );
-    }
-    else {
-        toolbar.setProperty( "background-color", "#EEEEEE" );
-    }
-
-    return toolbar;
-}
-
-void CToolbar::setStyle( const QColor & color )
+IToolbarStyle::eStyle CToolbarStyleFactory::computeStyle( const QColor & color ) const
 {
     qreal red = color.redF();
     qreal green = color.greenF();
@@ -68,6 +36,109 @@ void CToolbar::setStyle( const QColor & color )
 
     qreal luma = ( 0.299*red + 0.587*green + 0.114*blue ); //http://en.wikipedia.org/wiki/Luminosity
      
-    if( luma > 0.5 ) { m_style = DARK; }
-    else { m_style = LIGHT; }
+    if( luma > 0.5 ) { return IToolbarStyle::DARK; }
+    else { return IToolbarStyle::LIGHT; }
+}
+
+
+const IToolbarStyle& CToolbarStyleFactory::getStyle( const QColor & color )
+{
+    if( computeStyle( color ) == IToolbarStyle::DARK ) {
+        return m_dark;
+    }
+    else {
+        return m_light;
+    }
+}
+
+QString CToolbarStyleDark::getHtml( void ) const
+{
+    QString html;
+
+    html += "<li><img src=\"resources/images/toolbar_icon_white_browse.png\" class=\"button_browse\"></li>\n";
+    html += "<li><img src=\"resources/images/toolbar_icon_white_share.png\" class=\"button_share display_optional\"></li>\n";
+    html += "<li><a href=\"http://www.ezwebgallery.org/\"><img src=\"resources/images/toolbar_icon_browse_ezwebgallery.png\" class=\"button_ezwebgallery\"></a></li>";
+    html += "<!--<li><img src=\"resources/images/toolbar_icon_white_caption.png\"></li>\n";
+    html += "<li><img src=\"resources/images/toolbar_icon_white_share.png\"></li> !-->\n";
+
+    return html;
+}
+
+
+CCssSelection CToolbarStyleDark::getCss( void ) const
+{
+    CCssSelection toolbar(".toolbar" );
+    toolbar.setProperty( "background-color", "#111111" );
+    return toolbar;
+}
+
+
+QString CToolbarStyleLight::getHtml( void ) const
+{
+    QString html;
+
+    html += "<li><img src=\"resources/images/toolbar_icon_black_browse.png\" class=\"button_browse\"></li>";
+    html += "<li><img src=\"resources/images/toolbar_icon_black_share.png\" class=\"button_share\"></li>\n";
+    html += "<li><a href=\"http://www.ezwebgallery.org/\"><img src=\"resources/images/toolbar_icon_browse_ezwebgallery.png\" class=\"button_ezwebgallery\"></a></li>";
+    html += "<!--<li><img src=\"resources/images/toolbar_icon_black_caption.png\"></li>\n";
+    html += "<li><img src=\"resources/images/toolbar_icon_black_share.png\"></li> !-->\n";
+
+    return html;
+}
+
+
+CCssSelection CToolbarStyleLight::getCss( void ) const
+{
+    CCssSelection toolbar(".toolbar" );
+    toolbar.setProperty( "background-color", "#EEEEEE" );
+    return toolbar;
+}
+
+
+
+//////////////////////////////////////////////////
+
+
+const QString CToolbarBehavior::SHARE_BUTTON( "[SHARE_BUTTON]" );
+const QString CToolbarBehavior::SHARE_SCREEN( "[SHARE_SCREEN]" );
+
+
+CToolbarBehavior::CToolbarBehavior(  const t_Buttons& buttons ) :
+    m_buttons( buttons )
+{
+    QFile jsFile( ":/web/Toolbar.js" ); 
+    jsFile.open( QIODevice::Text|QIODevice::ReadOnly );
+    QTextStream jsTextStream( &jsFile );
+    jsTextStream.setCodec( "UTF-8" );
+    m_toolbarJs = jsTextStream.readAll();
+
+    QFile shareButtonJsFile( ":/web/ShareButton.js" ); 
+    shareButtonJsFile.open( QIODevice::Text|QIODevice::ReadOnly );
+    QTextStream shareButtonJsTextStream( &shareButtonJsFile );
+    shareButtonJsTextStream.setCodec( "UTF-8" );
+    m_shareButtonJs = shareButtonJsTextStream.readAll();
+
+    QFile shareScreenJsFile( ":/web/ShareScreen.js" );
+    shareScreenJsFile.open( QIODevice::Text|QIODevice::ReadOnly );
+    QTextStream shareScreenJsTextStream( &shareScreenJsFile );
+    shareScreenJsTextStream.setCodec( "UTF-8" );
+    m_shareScreenJs = shareScreenJsTextStream.readAll();
+}
+
+
+    
+QString CToolbarBehavior::getJavascript( void ) const
+{
+    QString javascript( m_toolbarJs );
+
+    if( m_buttons.share ) {
+        javascript.replace( SHARE_BUTTON, m_shareButtonJs );
+        javascript.replace( SHARE_SCREEN, m_shareScreenJs );
+    }
+    else {
+        javascript.remove( SHARE_BUTTON );
+        javascript.remove( SHARE_SCREEN );
+    }
+
+    return javascript;
 }
