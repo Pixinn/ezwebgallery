@@ -117,7 +117,7 @@ Function CheckVCRedist
 
    ; check for the key in registry
    ; http://blogs.msdn.com/b/astebner/archive/2010/05/05/10008146.aspx
-   ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\VisualStudio\12.0\VC\VCRedist\x86" "Installed"
+   ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\DevDiv\vc\Servicing\12.0\RuntimeMinimum" "Install"
    ${If} $R0 == 1
         return        
    ${Else}
@@ -155,6 +155,7 @@ Section "Uninstall"
   ; Delete Files
   Delete "$INSTDIR\*.*"
   RMDir /r "$INSTDIR\imageformats"; /recursive
+  RMDir /r "$INSTDIR\platforms"; /recursive
   RMDir /r "$INSTDIR\data"
   ;non recursive because user could have personnal skins here
   Delete "$INSTDIR\skins\Autumn.skin"
@@ -186,4 +187,3 @@ Section "Uninstall"
   RMDir  "$INSTDIR\.." ;will only delete the folder if it is empty : MAY BE ON FILESYSTEM --> NEVER PUT /r !!!!!!
 
 SectionEnd
-

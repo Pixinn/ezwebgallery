@@ -55,6 +55,11 @@ copy %QTDIR%\bin\Qt5Core.dll %TEMPDIR%
 copy %QTDIR%\bin\Qt5Gui.dll %TEMPDIR%
 copy %QTDIR%\bin\Qt5Widgets.dll %TEMPDIR%
 copy %QTDIR%\bin\Qt5Xml.dll %TEMPDIR%
+copy %QTDIR%\bin\icudt52.dll %TEMPDIR%
+copy %QTDIR%\bin\icuin52.dll %TEMPDIR%
+copy %QTDIR%\bin\icuuc52.dll %TEMPDIR%
+copy %QTDIR%\bin\libEGL.dll %TEMPDIR%
+copy %QTDIR%\bin\libGLESv2.dll %TEMPDIR%
 md   %TEMPDIR%\imageformats
 copy %QTDIR%\plugins\imageformats\qgif.dll %TEMPDIR%\imageformats
 copy %QTDIR%\plugins\imageformats\qico.dll %TEMPDIR%\imageformats
@@ -62,6 +67,8 @@ copy %QTDIR%\plugins\imageformats\qjpeg.dll %TEMPDIR%\imageformats
 copy %QTDIR%\plugins\imageformats\qmng.dll %TEMPDIR%\imageformats
 copy %QTDIR%\plugins\imageformats\qsvg.dll %TEMPDIR%\imageformats
 copy %QTDIR%\plugins\imageformats\qtiff.dll %TEMPDIR%\imageformats
+md   %TEMPDIR%\platforms
+copy %QTDIR%\plugins\platforms\qwindows.dll %TEMPDIR%\platforms
 
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_bzlib_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_jpeg_.dll %TEMPDIR%
@@ -72,7 +79,8 @@ copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_png_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_tiff_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_ttf_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_wand_.dll %TEMPDIR%
-rem copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_xlib_.dll %TEMPDIR%
+copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_glib_.dll %TEMPDIR%
+copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_lqr_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_zlib_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\IM_MOD_RL_jpeg_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\IM_MOD_RL_png_.dll %TEMPDIR%
