@@ -67,13 +67,13 @@ Section "EZWebGallery"
   ;Required (read only)
   SectionIn RO
 
-  ;Install VC2010 Redistribuable if not present
+  ;Install VC2013 Redistribuable if not present
   Call CheckVCRedist
   ${If} $R0 != 1
-    DetailPrint "Visual C++ 2010 redistributable not found."
+    DetailPrint "Visual C++ 2013 redistributable not found."
     Call InstallVCRedist       
   ${Else}
-    DetailPrint "Visual C++ 2010 redistributable already installed."
+    DetailPrint "Visual C++ 2013 redistributable already installed."
   ${EndIf}
 
   ;Set output path to the installation directory.
@@ -112,12 +112,12 @@ SectionEnd
 
 
 
-; Check for Visual Studio 2010 C++ redistributable
+; Check for Visual Studio 2013 C++ redistributable
 Function CheckVCRedist
 
    ; check for the key in registry
    ; http://blogs.msdn.com/b/astebner/archive/2010/05/05/10008146.aspx
-   ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\VisualStudio\10.0\VC\VCRedist\x86" "Installed"
+   ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\DevDiv\vc\Servicing\12.0\RuntimeMinimum" "Install"
    ${If} $R0 == 1
         return        
    ${Else}
@@ -126,18 +126,18 @@ Function CheckVCRedist
    
 FunctionEnd
 
-; install Visual Studio 2010 C++ redistributable
+; install Visual Studio 2013 C++ redistributable
 Function InstallVcRedist
 
     SetOutPath '$TEMP'
     SetOverwrite on    
     File "vcredist_x86.exe"
     ExecWait '"$TEMP\vcredist_x86.exe" /norestart /nq' $VCREDISTRETURNED
-    DetailPrint "Visual C++ 2010 redistributable installer returned $VCREDISTRETURNED"
+    DetailPrint "Visual C++ 2013 redistributable installer returned $VCREDISTRETURNED"
     Delete "$TEMP\vcredist_x86.exe"
     
     ${If} $VCREDISTRETURNED != 0
-        Abort 'Abording: "Visual C++ 2010 redistributable" was not installed.'
+        Abort 'Abording: "Visual C++ 2013 redistributable" was not installed.'
     ${EndIf}
     
 FunctionEnd
@@ -155,6 +155,7 @@ Section "Uninstall"
   ; Delete Files
   Delete "$INSTDIR\*.*"
   RMDir /r "$INSTDIR\imageformats"; /recursive
+  RMDir /r "$INSTDIR\platforms"; /recursive
   RMDir /r "$INSTDIR\data"
   ;non recursive because user could have personnal skins here
   Delete "$INSTDIR\skins\Autumn.skin"
@@ -186,4 +187,3 @@ Section "Uninstall"
   RMDir  "$INSTDIR\.." ;will only delete the folder if it is empty : MAY BE ON FILESYSTEM --> NEVER PUT /r !!!!!!
 
 SectionEnd
-

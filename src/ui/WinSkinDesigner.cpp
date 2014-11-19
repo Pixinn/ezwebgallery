@@ -24,7 +24,7 @@
 #include <QSettings>
 
 #include "WinSkinDesigner.h"
-#include "ui/ui_WinSkinDesigner.h" //Gnr par qmake
+#include "ui_WinSkinDesigner.h"
 #include "GlobalDefinitions.h"
 #include "CPlatform.h"
 #include "CLogger.h"
@@ -80,18 +80,18 @@ WinSkinDesigner::WinSkinDesigner( CSkinParameters* skinParameters, QWidget *pare
 
     //--- Connections ---//
     //Basic UI interractions
-    bool fConnected = connect( this->m_ui->checkBox_Mosaic_BckgColor_Enabled, SIGNAL(toggled(bool)), this, SLOT(onMosaicBckgEnable(bool)));
+    bool fConnected = static_cast<bool>( connect( this->m_ui->checkBox_Mosaic_BckgColor_Enabled, SIGNAL(toggled(bool)), this, SLOT(onMosaicBckgEnable(bool))) );
 
     //Nouveau/Ouvrir/Sauver Skin
-    fConnected &= connect( this->m_ui->action_New, SIGNAL(triggered()), this, SLOT(onNewSkin()));
-    fConnected &= connect( this->m_ui->action_Open, SIGNAL(triggered()), this, SLOT(onOpenSkin()));
-    fConnected &= connect( this->m_ui->action_Save, SIGNAL(triggered()), this, SLOT(onSaveSkin()));
-    fConnected &= connect( this->m_ui->action_SaveAs, SIGNAL(triggered()), this, SLOT(onSaveSkinAs()));
-    fConnected &= connect( this->m_ui->action_Check_Skin, SIGNAL(triggered()), this, SLOT(checkSkin()));    
-    fConnected &= connect( skinParameters, SIGNAL(skinOpened(QString)), this, SLOT(changeWindowTitle(QString)));
-    fConnected &= connect( skinParameters, SIGNAL(skinSaved(QString)), this, SLOT(changeWindowTitle(QString)));
-    fConnected &= connect (skinParameters, SIGNAL(skinSaved(QString)), this, SLOT(skinSaved(QString)));
-    fConnected &= connect (skinParameters, SIGNAL(skinOpened(QString)), this, SLOT(skinLoaded(QString)));
+    fConnected &= static_cast<bool>( connect( this->m_ui->action_New, SIGNAL(triggered()), this, SLOT(onNewSkin())) );
+    fConnected &= static_cast<bool>( connect( this->m_ui->action_Open, SIGNAL(triggered()), this, SLOT(onOpenSkin())) );
+    fConnected &= static_cast<bool>( connect( this->m_ui->action_Save, SIGNAL(triggered()), this, SLOT(onSaveSkin())) );
+    fConnected &= static_cast<bool>( connect( this->m_ui->action_SaveAs, SIGNAL(triggered()), this, SLOT(onSaveSkinAs())) );
+    fConnected &= static_cast<bool>( connect( this->m_ui->action_Check_Skin, SIGNAL(triggered()), this, SLOT(checkSkin())) );
+    fConnected &= static_cast<bool>( connect( skinParameters, SIGNAL(skinOpened(QString)), this, SLOT(changeWindowTitle(QString))) );
+    fConnected &= static_cast<bool>( connect( skinParameters, SIGNAL(skinSaved(QString)), this, SLOT(changeWindowTitle(QString))) );
+    fConnected &= static_cast<bool>( connect (skinParameters, SIGNAL(skinSaved(QString)), this, SLOT(skinSaved(QString))) );
+    fConnected &= static_cast<bool>( connect (skinParameters, SIGNAL(skinOpened(QString)), this, SLOT(skinLoaded(QString))) );
     
 }
 

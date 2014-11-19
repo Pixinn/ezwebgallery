@@ -52,7 +52,6 @@ public:
     static QString language();                  //Renvoie la langue de l'ui
     static QStringList languageList();          //Liste de toutes les langues disponibles
     static void setLanguage( const QString &language );       //Indique la langue de l'ui
-    static QString appDataDir();				//Retourne le rpertoire o sont sauves les donnes persistantes du programme
     static QRegExp forbiddenCharacters();       //Retourne les caractres interdits (pour un nom de fichier par exemple)
     static void limitOpenMPThreads(void);
 

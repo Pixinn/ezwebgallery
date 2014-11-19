@@ -7,8 +7,6 @@ EZWWidgets::EZWWidgets(QObject *parent)
 {
     m_widgets.append(new CColorPickerPlugin(this));
     m_widgets.append(new CImagePickerPlugin(this));
- //   m_widgets.append(new CTexturePickerPlugin(this));
-
 }
 
 QList<QDesignerCustomWidgetInterface*> EZWWidgets::customWidgets() const
@@ -16,4 +14,6 @@ QList<QDesignerCustomWidgetInterface*> EZWWidgets::customWidgets() const
     return m_widgets;
 }
 
-Q_EXPORT_PLUGIN2(ezwwidgetsplugin, EZWWidgets)
+#if QT_VERSION < 0x050000
+Q_EXPORT_PLUGIN2(EZWWidgetsPlugin, EZWWidgets)
+#endif // QT_VERSION < 0x050000

@@ -1,8 +1,8 @@
 
-CONFIG  += debug_and_release \
-#       += link_prl
+CONFIG  += debug_and_release
 
 QT += xml
+QT += widgets
 
 ### User defined variables ###
 Debug|Release{
@@ -141,11 +141,6 @@ TRANSLATIONS += ./src/resources/languages/GalleryDesigner_en.ts \
 RESOURCES = ./src/resources/GalleryDesigner.qrc
 win32:RC_FILE = ./src/resources/win32/GalleryDesigner.rc
 
-### POST BUILD STEPS : calling the deployment script
-#unix {
-#    Release{ QMAKE_POST_LINK += $$SCRIPTDIR/prepare_release.sh
-#    }
-#}
 
 
 ### DEPLOYMENT
@@ -180,7 +175,7 @@ QMAKE_CLEAN += $$MINJS_DIR/common-min.js \
                $$MINJS_DIR/core/classTablePhoto-min.js \
                $$MINJS_DIR/core/ \
                $$PWD/src/builddate.h \
-               -r $$BUILDDIR \
+               $$BUILDDIR/.obj/*
          #     -r $$PWD/deployment/common/data/resources
 
 QMAKE_DISTCLEAN += -r   $$BUILDDIR/ \

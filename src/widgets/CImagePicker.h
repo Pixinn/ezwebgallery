@@ -20,9 +20,9 @@
 #ifndef CImagePicker_H
 #define CImagePicker_H
 
-#include <QtGui/QWidget>
-#include <QtGui/QLabel>
-#include <QtGui/QVBoxLayout>
+#include <QWidget>
+#include <QLabel>
+#include <QVBoxLayout>
 #include <QImage>
 #include <QDir>
 #include <QSize>

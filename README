@@ -7,9 +7,9 @@ EZWebGallery.
 UBUNTU or DEBIAN:
 
     install the required packages:
-        sudo apt-get install libqt4-dev libmagick++-dev yui-compressor
+        sudo apt-get install libqt5-dev libmagick++-dev yui-compressor
     build the sources then install ezwebgallery:
-        sudo qmake-qt4 && make install
+        sudo qmake && make install
     
     AFTERWARDS, you can build a functional DEBUG ezwebgallery.
 

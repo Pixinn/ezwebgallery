@@ -104,19 +104,18 @@ int main(int argc, char *argv[])
         //Instanciation UI
         CTerminalUi* appCLI = new CTerminalUi( galleryGenerator, appli.arguments().at(1) );
 
-        bool fConnected = true;
         //Connections UI<->Générateur
-        fConnected &= QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, PtrMessage ) ), appCLI, SLOT( onProgressBar( int, QString, PtrMessage ) ) );
-        fConnected &= QObject::connect( &galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), appCLI, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
-        fConnected &= QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( PtrMessageList ) ), appCLI, SLOT( onForceStoppedFinished( PtrMessageList ) ) );
+        QObject::connect( &galleryGenerator, SIGNAL( progressBarSignal( int, QString, PtrMessage ) ), appCLI, SLOT( onProgressBar( int, QString, PtrMessage ) ) );
+        QObject::connect( &galleryGenerator, SIGNAL( generationFinishedSignal(QList<CPhotoProperties> ) ), appCLI, SLOT( onGalleryGenerationFinished( QList<CPhotoProperties> ) ) );
+        QObject::connect( &galleryGenerator, SIGNAL( forceStoppedFinishedSignal( PtrMessageList ) ), appCLI, SLOT( onForceStoppedFinished( PtrMessageList ) ) );
         // DB -> UI
-        fConnected &= QObject::connect( &photoDatabase, SIGNAL( error( PtrMessage ) ), appCLI, SLOT( error( PtrMessage ) ) );
-        fConnected &= QObject::connect( &photoDatabase, SIGNAL( warning( PtrMessage ) ), appCLI, SLOT( warning( PtrMessage ) ) );
-        fConnected &= QObject::connect( &photoDatabase, SIGNAL( message( PtrMessage ) ), appCLI, SLOT( information( PtrMessage ) ) );
+        QObject::connect( &photoDatabase, SIGNAL( error( PtrMessage ) ), appCLI, SLOT( error( PtrMessage ) ) );
+        QObject::connect( &photoDatabase, SIGNAL( warning( PtrMessage ) ), appCLI, SLOT( warning( PtrMessage ) ) );
+        QObject::connect( &photoDatabase, SIGNAL( message( PtrMessage ) ), appCLI, SLOT( information( PtrMessage ) ) );
         // Logger
-        fConnected &= QObject::connect( &(CLogger::getInstance()), SIGNAL( displayMessage(PtrMessage) ), appCLI, SLOT( onLogMsg(PtrMessage) ) );
+        QObject::connect( &(CLogger::getInstance()), SIGNAL( displayMessage(PtrMessage) ), appCLI, SLOT( onLogMsg(PtrMessage) ) );
         //Excution
-        fConnected &= QObject::connect( appCLI, SIGNAL(done()), &appli, SLOT(quit()), Qt::QueuedConnection);
+        QObject::connect( appCLI, SIGNAL(done()), &appli, SLOT(quit()), Qt::QueuedConnection);
         QTimer::singleShot( 1000, appCLI, SLOT(run()) );
         exitValue = appli.exec(); //La boucle d'excution fait partir le timer qui lance terminalDisplay->run()
 
