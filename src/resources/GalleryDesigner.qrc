@@ -5,6 +5,7 @@
   </qresource>
   <qresource prefix="/icons">
     <file>images/configure.png</file>
+    <file>images/EZWG-Icone.svg</file>
     <file>images/face-smile-gearhead-male.png</file>
     <file>images/arrow-left-2.png</file>
     <file>images/text-x-authors.png</file>

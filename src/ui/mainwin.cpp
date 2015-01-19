@@ -16,6 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QtWebkitWidgets/QWebView>
+
 #include <QCoreApplication>
 #include <QDesktopServices>
 #include <QSettings>
@@ -226,8 +228,17 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
     
     //Ouverture de la galerie
     if( m_p_configureWindow->openGeneratedGallery() ) {
+        if (m_p_webView != nullptr) {
+            m_p_webView->close();
+            delete m_p_webView;            
+        }
+        QWebSettings::clearMemoryCaches();
         QString indexPath = QDir(m_projectParameters.m_galleryConfig.outputDir).absoluteFilePath("index.html");
-        QDesktopServices::openUrl( QUrl::fromLocalFile( indexPath ) );
+        m_p_webView = new QWebView();
+        m_p_webView->setWindowTitle(tr("PREVIEW"));
+        m_p_webView->resize(1024, 768);
+        m_p_webView->load(QUrl::fromLocalFile(indexPath));
+        m_p_webView->show();
     }
 
 }
@@ -238,7 +249,7 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
 
 MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& projectParameters, QWidget *parent ) :
     QMainWindow( parent ),
-    m_ui(new Ui::MainWin),    
+    m_ui(new Ui::MainWin), m_p_webView( nullptr ),
     m_projectParameters( projectParameters ),
     m_photoFeeder( static_cast<CPhotoFeederDirectory&>(CPhotoFeederDirectory::getInstance()) ),
     m_photoDatabase( CPhotoDatabase::getInstance() ),
@@ -342,6 +353,9 @@ MainWin::~MainWin()
 {
     delete m_p_configureWindow;
     delete m_p_skinDesignerWindow;
+    if (m_p_webView != nullptr ) {
+        delete m_p_webView;
+    }
 }
 
 void MainWin::init( void )
@@ -437,6 +451,9 @@ void MainWin::changeEvent(QEvent *e)
     m_p_tagsWindow->deleteLater();
     m_p_skinDesignerWindow->close();
     m_p_configureWindow->close();
+    if (m_p_webView != nullptr) {
+        m_p_webView->close();
+    }
 
     //fermeture
     event->accept();

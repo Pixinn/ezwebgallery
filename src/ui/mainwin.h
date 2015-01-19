@@ -56,6 +56,9 @@ namespace Ui { //Pour diffrencier de la classe MainWin de mainwin.h et accder  l
     class MainWin;
 }
 
+/************* FORWARD DELCARATIONS **************/
+class QWebView;
+
 
 /*********** DEFINITIONS **********/
 #define NBMAXRECENTFILES    5
@@ -155,6 +158,7 @@ private:
     QStringList m_recentSessions;           //Liste contenant les NBMAXRECENTFILES derniers fichiers projets ouverts
     QAction *m_recentSessionsActions[NBMAXRECENTFILES];
     CLanguageManager m_languageManager;
+    QWebView* m_p_webView;
     //conf    
     CCaptionManager m_captionManager;
     CProjectParameters m_newProjectParameters;
