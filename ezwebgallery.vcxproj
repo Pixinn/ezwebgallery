@@ -408,6 +408,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
+    <ClInclude Include="src\ui\CPhotosListView.h" />
     <ClInclude Include="src\ui\IUserInterface.h" />
     <ClInclude Include="src\Json.h" />
     <CustomBuild Include="src\ui\WinConfigure.h">
