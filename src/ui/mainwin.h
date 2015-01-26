@@ -45,6 +45,7 @@
 #include "CSkinParameters.h"
 #include "WinSkinDesigner.h"
 #include "WinConfigure.h"
+#include "WinPreview.h"
 #include "CCaptionManager.h"
 #include "CLanguageManager.h"
 #include "CPhotoFeederDirectory.h"
@@ -154,11 +155,11 @@ private:
     QTextEdit* m_p_tagsWindow;
     WinSkinDesigner* m_p_skinDesignerWindow;
     WinConfigure* m_p_configureWindow;
+    WinPreview* m_p_winPreview;
     enum { eGenerating, eNotGenerating } m_stateGeneration;
     QStringList m_recentSessions;           //Liste contenant les NBMAXRECENTFILES derniers fichiers projets ouverts
     QAction *m_recentSessionsActions[NBMAXRECENTFILES];
     CLanguageManager m_languageManager;
-    QWebView* m_p_webView;
     //conf    
     CCaptionManager m_captionManager;
     CProjectParameters m_newProjectParameters;

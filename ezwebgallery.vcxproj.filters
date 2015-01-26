@@ -237,6 +237,12 @@
     <ClCompile Include="src\widgets\CImagePicker.cpp">
       <Filter>Source Files\widgets</Filter>
     </ClCompile>
+    <ClCompile Include="build\.moc\moc_WinPreview.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WinPreview.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CCaption.h">
@@ -314,6 +320,9 @@
     <ClInclude Include="src\ui\IUserInterface.h">
       <Filter>Header Files\ui</Filter>
     </ClInclude>
+    <ClInclude Include="build\.GeneratedFiles\ui_WinPreview.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\resources\languages\GalleryDesigner_en.ts">
@@ -371,6 +380,12 @@
     </CustomBuild>
     <CustomBuild Include="src\widgets\CImagePicker.h">
       <Filter>Header Files\widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\WinPreview.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\WinPreview.h">
+      <Filter>Header Files\ui</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

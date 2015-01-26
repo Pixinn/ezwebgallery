@@ -16,8 +16,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QtWebkitWidgets/QWebView>
-
 #include <QCoreApplication>
 #include <QDesktopServices>
 #include <QSettings>
@@ -227,18 +225,13 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
     m_ui->statusbar->showMessage( tr("Generation successfully completed."), 7000 );
     
     //Ouverture de la galerie
-    if( m_p_configureWindow->openGeneratedGallery() ) {
-        if (m_p_webView != nullptr) {
-            m_p_webView->close();
-            delete m_p_webView;            
-        }
-        QWebSettings::clearMemoryCaches();
+    if( m_p_configureWindow->openGeneratedGallery() )
+    {
         QString indexPath = QDir(m_projectParameters.m_galleryConfig.outputDir).absoluteFilePath("index.html");
-        m_p_webView = new QWebView();
-        m_p_webView->setWindowTitle(tr("PREVIEW"));
-        m_p_webView->resize(1024, 768);
-        m_p_webView->load(QUrl::fromLocalFile(indexPath));
-        m_p_webView->show();
+        if (m_p_winPreview == nullptr) {
+            m_p_winPreview = new WinPreview(this);
+        }
+        m_p_winPreview->show(indexPath);
     }
 
 }
@@ -249,7 +242,7 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
 
 MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& projectParameters, QWidget *parent ) :
     QMainWindow( parent ),
-    m_ui(new Ui::MainWin), m_p_webView( nullptr ),
+    m_ui(new Ui::MainWin), m_p_winPreview(nullptr),
     m_projectParameters( projectParameters ),
     m_photoFeeder( static_cast<CPhotoFeederDirectory&>(CPhotoFeederDirectory::getInstance()) ),
     m_photoDatabase( CPhotoDatabase::getInstance() ),
@@ -353,8 +346,8 @@ MainWin::~MainWin()
 {
     delete m_p_configureWindow;
     delete m_p_skinDesignerWindow;
-    if (m_p_webView != nullptr ) {
-        delete m_p_webView;
+    if (m_p_winPreview != nullptr) {
+        delete m_p_winPreview;
     }
 }
 
@@ -451,9 +444,6 @@ void MainWin::changeEvent(QEvent *e)
     m_p_tagsWindow->deleteLater();
     m_p_skinDesignerWindow->close();
     m_p_configureWindow->close();
-    if (m_p_webView != nullptr) {
-        m_p_webView->close();
-    }
 
     //fermeture
     event->accept();

@@ -181,9 +181,11 @@
     <ClCompile Include="build\.moc\moc_IPhotoFeeder.cpp" />
     <ClCompile Include="build\.moc\moc_mainwin.cpp" />
     <ClCompile Include="build\.moc\moc_WinConfigure.cpp" />
+    <ClCompile Include="build\.moc\moc_WinPreview.cpp" />
     <ClCompile Include="build\.moc\moc_WinSkinDesigner.cpp" />
     <ClCompile Include="src\CCaption.cpp" />
     <ClCompile Include="src\CCaptionManager.cpp" />
+    <ClCompile Include="src\ui\WinPreview.cpp" />
     <ClCompile Include="src\widgets\CColorPicker.cpp" />
     <ClCompile Include="src\CCss.cpp" />
     <ClCompile Include="src\generation\CDirChecker.cpp" />
@@ -216,8 +218,19 @@
   <ItemGroup>
     <ClInclude Include="build\.GeneratedFiles\ui_mainwin.h" />
     <ClInclude Include="build\.GeneratedFiles\ui_WinConfigure.h" />
+    <ClInclude Include="build\.GeneratedFiles\ui_WinPreview.h" />
     <ClInclude Include="build\.GeneratedFiles\ui_WinSkinDesigner.h" />
     <ClInclude Include="src\CCaption.h" />
+    <CustomBuild Include="src\ui\WinPreview.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing WinPreview.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\build\.moc\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\build\.moc\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -DQT_DLL "-I.\src" "-I.\src\generation" "-I.\src\widgets" "-I.\src\ui" "-I.\src\global" "-I$(MAGICK_HOME)\." "-I$(MAGICK_HOME)\Magick++\lib" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtANGLE" "-I$(QTDIR)\include\QtCore" "-I.\build\.moc" "-I.\build\.GeneratedFiles"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing WinPreview.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\build\.moc\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\build\.moc\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -DNDEBUG -DQT_DLL "-I.\src" "-I.\src\generation" "-I.\src\widgets" "-I.\src\ui" "-I.\src\global" "-I$(MAGICK_HOME)\." "-I$(MAGICK_HOME)\Magick++\lib" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtANGLE" "-I$(QTDIR)\include\QtCore" "-I.\build\.moc" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\build\.GeneratedFiles"</Command>
+    </CustomBuild>
     <CustomBuild Include="src\CCaptionManager.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\build\.moc\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -DNDEBUG -DQT_DLL  "-I.\src" "-I.\src\generation" "-I.\src\widgets" "-I.\src\ui" "-I.\src\global" "-I$(MAGICK_HOME)\." "-I$(MAGICK_HOME)\Magick++\lib" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtANGLE" "-I$(QTDIR)\include\QtCore" "-I.\build\.moc" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\build\.GeneratedFiles"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing CCaptionManager.h...</Message>
@@ -445,6 +458,16 @@
   <ItemGroup>
     <None Include="src\resources\languages\GalleryDesigner_en.ts" />
     <None Include="src\resources\languages\GalleryDesigner_fr.ts" />
+    <CustomBuild Include="src\ui\WinPreview.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\build\.GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\build\.GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\build\.GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\build\.GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="src\ui\WinConfigure.ui">
@@ -669,7 +692,7 @@
   <ImportGroup Label="ExtensionTargets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties UicDir=".\build\.GeneratedFiles" RccDir=".\build\.GeneratedFiles" Qt5Version_x0020_Win32="msvc2013" />
+      <UserProperties UicDir=".\build\.GeneratedFiles" RccDir=".\build\.GeneratedFiles" Qt5Version_x0020_Win32="$(DefaultQtVersion)" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
