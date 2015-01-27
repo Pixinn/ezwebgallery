@@ -99,9 +99,6 @@
     <ClCompile Include="src\CPhotoFeederDirectory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CPhotoProcessor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\CPhotoProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -148,9 +145,6 @@
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="build\.moc\moc_CPhotoDatabase.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="build\.moc\moc_CPhotoProcessor.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="build\.moc\moc_CPhotoProperties.cpp">
@@ -243,6 +237,12 @@
     <ClCompile Include="src\ui\WinPreview.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClCompile Include="build\.moc\moc_CPhotoProcessor.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generation\CPhotoProcessor.cpp">
+      <Filter>Source Files\generation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CCaption.h">
@@ -263,9 +263,6 @@
     <ClInclude Include="src\CPhotoFeederDirectory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <CustomBuild Include="src\CPhotoProcessor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="src\CPhotoProperties.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -386,6 +383,9 @@
     </CustomBuild>
     <CustomBuild Include="src\ui\WinPreview.h">
       <Filter>Header Files\ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\generation\CPhotoProcessor.h">
+      <Filter>Header Files\generation</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

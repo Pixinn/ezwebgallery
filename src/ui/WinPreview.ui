@@ -25,10 +25,6 @@
   <property name="windowTitle">
    <string>PREVIEW - Click on &quot;Generate&quot; to update the gallery</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="../resources/GalleryDesigner.qrc">
-    <normaloff>:/icons/images/EZWG-Icone.svg</normaloff>:/icons/images/EZWG-Icone.svg</iconset>
-  </property>
   <property name="iconSize">
    <size>
     <width>32</width>

@@ -229,7 +229,7 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
     {
         QString indexPath = QDir(m_projectParameters.m_galleryConfig.outputDir).absoluteFilePath("index.html");
         if (m_p_winPreview == nullptr) {
-            m_p_winPreview = new WinPreview(this);
+            m_p_winPreview = new WinPreview();
         }
         m_p_winPreview->show(indexPath);
     }

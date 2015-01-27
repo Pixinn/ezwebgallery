@@ -127,7 +127,7 @@ function CMosaic( p_properties, p_htmlStructure )
     {
         var fSetFound = false;
         var thumbSet = that.properties.index.mosaic.defaultSet;    //if no suitable set is found
-        var availableWidth = that.htmlStructure.index.mosaic.$wrapper.innerWidth() * 0.9;
+        var availableWidth = that.htmlStructure.index.mosaic.$wrapper.innerWidth() * 0.85;
         
         $.each( that.properties.index.mosaic.sizes, function( key, size ) //iterating on the object using jQuery
         {

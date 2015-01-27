@@ -40,7 +40,6 @@ using namespace Magick;
 
 //////////////////// DEFINITIONS ////////////////
 #define QIMAGETOMAGICKFORMAT    "png"           /* Format pour convertion entre QImage et Image */
-#define QIMAGETOMAGICKDEPTH     8               /* Profondeur pour convertion entre QImage et Image */
 
 ///////////////////////////////////////////////////////////////////
 /////////////// CLASSE CMAGICK ///////////////////
@@ -204,7 +203,7 @@ bool CWatermark::fromQImage( const QImage &qimage )
 	//Lecture du buffer de donnes
     try{
         Blob newImageBlob(qimageData.data(),qimageData.size());
-        this->read( newImageBlob, Geometry( qimage.width(),qimage.height() ), QIMAGETOMAGICKDEPTH, QIMAGETOMAGICKFORMAT);
+        this->read(newImageBlob);
         f_converted = true;
     }
     catch( Magick::Error &error ){
