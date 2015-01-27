@@ -454,3 +454,8 @@ build/.obj/vc120.pdb
 src/widgets/EzwWidgets.v12.suo
 ./debug
 ./release
+*.obj
+*.sdf
+*.suo
+*.sln
+*.vcxproj.user
