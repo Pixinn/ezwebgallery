@@ -444,6 +444,9 @@ void MainWin::changeEvent(QEvent *e)
     m_p_tagsWindow->deleteLater();
     m_p_skinDesignerWindow->close();
     m_p_configureWindow->close();
+    if (m_p_winPreview != nullptr) {
+        m_p_winPreview->close();
+    }
 
     //fermeture
     event->accept();

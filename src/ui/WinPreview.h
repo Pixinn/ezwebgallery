@@ -46,6 +46,7 @@ public:
     void show(const QString& path);
 
 public slots:
+    void onLoadFinished(bool);
     void onRatio4_3(void);
     void onRatio16_9(void);
     void onRotate(void);

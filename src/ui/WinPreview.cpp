@@ -29,9 +29,10 @@ WinPreview::WinPreview(QWidget* parent)
         m_wasShown(false)
 {
     //Init UI
-    m_ui->setupUi( this );
+    m_ui->setupUi( this );    
 
     //---- Connnections
+    connect(this->m_ui->webView, SIGNAL(loadFinished(bool)), this, SLOT(onLoadFinished(bool)));
     connect( this->m_ui->actionRatio_16_9, SIGNAL(triggered()), this, SLOT(onRatio16_9()) );
     connect( this->m_ui->actionRatio_4_3, SIGNAL(triggered()), this, SLOT(onRatio4_3()) );
     connect( this->m_ui->actionRotate, SIGNAL(triggered()), this, SLOT(onRotate()) );
@@ -46,15 +47,31 @@ void WinPreview::show( const QString& path )
 {
     QWebSettings::clearMemoryCaches();
     QMainWindow::show();
+    m_ui->webView->hide();
+    m_ui->label_BuildingPreview->show();
     if (!m_wasShown) {
         resize(1024, 768);
         m_ui->webView->load(QUrl::fromLocalFile(path));
         m_wasShown = true;
     }
-    else {
-        m_ui->webView->reload();
+    else {                
+        m_ui->webView->reload();        
     }
+
 }
+
+
+/**************************
+* On load finished,
+* hide the label and sho the webview
+**************************/
+void WinPreview::onLoadFinished(bool)
+{
+    m_ui->label_BuildingPreview->hide();
+    m_ui->webView->show();
+}
+
+
 
 /**************************
 * Ratio 16:9
