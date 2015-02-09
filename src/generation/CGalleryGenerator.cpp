@@ -408,8 +408,9 @@ bool CGalleryGenerator::generateJsFiles( )
     Object& maxSize = jsonPhotosProperties.addObject( "maxSize" );
     maxSize.addNumber("width", m_feeder.getProjectParams().m_photosConfig.maxSizeW );
     maxSize.addNumber("height", m_feeder.getProjectParams().m_photosConfig.maxSizeH );
-    Object& decoration = jsonPhotosProperties.addObject( "decoration" );
-    decoration.addNumber( "padding", m_skinParameters.photoPaddingSize );
+    Object& decorationPhoto = jsonPhotosProperties.addObject( "decoration" );
+    decorationPhoto.addNumber( "padding", m_skinParameters.photoPaddingSize );
+
 
     // -- photo properties
     int numPhoto = 1; //m_photoPropertiesList and m_photoSizes must be coherent. Bad design!
@@ -454,6 +455,9 @@ bool CGalleryGenerator::generateJsFiles( )
     Object& unavailable = mosaic.addObject( "unavailable" );
     unavailable.addNumber( "horizontal", unavailableSpace.width() );
     unavailable.addNumber( "vertical", unavailableSpace.height() );
+    Object& decorationMosaic = mosaic.addObject("decoration");
+    decorationMosaic.addNumber("borderBox", m_skinParameters.thumbBoxBorderSize);
+    decorationMosaic.addNumber("borderPhoto", m_skinParameters.thumbImgBorderSize);
 
     // Writing document to disk
     QDir jsonPath( m_feeder.getProjectParams().m_galleryConfig.outputDir );
