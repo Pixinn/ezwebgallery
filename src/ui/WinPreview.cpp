@@ -16,7 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
+#include <QFileInfo>
+#include <QDesktopServices>
 
 #include "WinPreview.h"
 
@@ -32,11 +33,11 @@ WinPreview::WinPreview(QWidget* parent)
     m_ui->setupUi( this );    
 
     //---- Connnections
-    connect(this->m_ui->webView, SIGNAL(loadFinished(bool)), this, SLOT(onLoadFinished(bool)));
+    connect( this->m_ui->webView, SIGNAL(loadFinished(bool)), this, SLOT(onLoadFinished(bool)));
     connect( this->m_ui->actionRatio_16_9, SIGNAL(triggered()), this, SLOT(onRatio16_9()) );
     connect( this->m_ui->actionRatio_4_3, SIGNAL(triggered()), this, SLOT(onRatio4_3()) );
     connect( this->m_ui->actionRotate, SIGNAL(triggered()), this, SLOT(onRotate()) );
-
+    connect( this->m_ui->actionOpenOutputDirectory, SIGNAL(triggered()), this, SLOT(onOpenFolder()));
 }
 
 
@@ -57,6 +58,9 @@ void WinPreview::show( const QString& path )
     else {                
         m_ui->webView->reload();        
     }
+
+    auto fileInfo = QFileInfo(path);
+    m_outDir = fileInfo.dir();
 
 }
 
@@ -120,4 +124,13 @@ void WinPreview::onRotate(void)
         resize(h, w);
         m_ui->webView->reload();
     }
+}
+
+
+/*************************
+* Open the output folder
+*************************/
+void WinPreview::onOpenFolder(void)
+{
+    QDesktopServices::openUrl(QUrl::fromLocalFile(m_outDir.absolutePath()));
 }

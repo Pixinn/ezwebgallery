@@ -102,6 +102,8 @@
    <addaction name="actionRatio_4_3"/>
    <addaction name="actionRatio_16_9"/>
    <addaction name="actionRotate"/>
+   <addaction name="separator"/>
+   <addaction name="actionOpenOutputDirectory"/>
   </widget>
   <action name="actionRatio_4_3">
    <property name="icon">
@@ -134,6 +136,18 @@
    </property>
    <property name="toolTip">
     <string>Rotate the window</string>
+   </property>
+  </action>
+  <action name="actionOpenOutputDirectory">
+   <property name="icon">
+    <iconset resource="../resources/GalleryDesigner.qrc">
+     <normaloff>:/icons/images/folder-image.png</normaloff>:/icons/images/folder-image.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open Output Directory</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the output directory containing the gallery's files.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
  </widget>

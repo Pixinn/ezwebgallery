@@ -35,7 +35,7 @@
     </message>
     <message>
         <location filename="../../generation/CGalleryGenerator.cpp" line="348"/>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="682"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="686"/>
         <source>Generating the photos : </source>
         <translation>Generating the photos :</translation>
     </message>
@@ -54,22 +54,22 @@
         <translation>Cannot connect photoprocessor:</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="492"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="496"/>
         <source>Skinning...</source>
         <translation>Skinning...</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="597"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="601"/>
         <source>Photo gallery designed and generated using EZWebGallery.</source>
         <translation>Photo gallery designed and generated using EZWebGallery.</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="618"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="622"/>
         <source>Previous photo</source>
         <translation>Previous photo</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="622"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="626"/>
         <source>Next photo</source>
         <translation>Next photo</translation>
     </message>
@@ -78,7 +78,7 @@
         <translation type="obsolete">Browse the gallery</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="698"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="702"/>
         <source>Unspecified.</source>
         <translation>Unspecified.</translation>
     </message>
@@ -1619,6 +1619,60 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>-&gt;</source>
         <translation type="obsolete">-&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>Preview</name>
+    <message>
+        <location filename="../../ui/WinPreview.ui" line="26"/>
+        <source>PREVIEW - Click on &quot;Generate&quot; to update the gallery</source>
+        <translation>PREVIEW - Click on &quot;Generate&quot; to update the gallery</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinPreview.ui" line="39"/>
+        <source>... BUILDING PREVIEW ...</source>
+        <translation>... BUILDING PREVIEW ...</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinPreview.ui" line="65"/>
+        <source>about:blank</source>
+        <translation>about:blank</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinPreview.ui" line="94"/>
+        <source>toolBar</source>
+        <translation>toolBar</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinPreview.ui" line="114"/>
+        <location filename="../../ui/WinPreview.ui" line="117"/>
+        <source>Ratio 4:3</source>
+        <translation>Ratio 4:3</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinPreview.ui" line="126"/>
+        <source>Ratio 16:9</source>
+        <translation>Ratio 16:9</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinPreview.ui" line="135"/>
+        <source>Rotate</source>
+        <translation>Rotate</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinPreview.ui" line="138"/>
+        <source>Rotate the window</source>
+        <translation>Rotate the window</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinPreview.ui" line="147"/>
+        <source>Open Output Directory</source>
+        <translation>Open Output Directory</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinPreview.ui" line="150"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the output directory containing the gallery&apos;s files.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>Open the output directory containing the gallery&apos;s files.</translation>
     </message>
 </context>
 <context>

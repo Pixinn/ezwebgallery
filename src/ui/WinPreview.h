@@ -25,9 +25,10 @@
 #include <QMainWindow>
 #include <QUrl>
 #include <QThread>
+#include <QDir>
 
 #include "ui_WinPreview.h" //Gnr par qmake. Ncessaire pour accs  la classe gnre par le formulaire .ui
-
+ 
 namespace Ui { //Voir le bas du fichier ui_winConfigure.h
     class Preview;
 }
@@ -50,6 +51,7 @@ public slots:
     void onRatio4_3(void);
     void onRatio16_9(void);
     void onRotate(void);
+    void onOpenFolder(void);
 
 signals:
     void load(const QUrl url);
@@ -58,6 +60,8 @@ signals:
 private:
     Ui::Preview* m_ui;
     bool m_wasShown;
+
+    QDir m_outDir;
 
 };
 
