@@ -224,8 +224,9 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
     swapButtons( ); //Bouton "cancel" redevient "generate" et réactivation des actions
     m_ui->statusbar->showMessage( tr("Generation successfully completed."), 7000 );
     
-    //Ouverture de la galerie
-    if( m_p_configureWindow->openGeneratedGallery() )
+    //Afterwards action?
+    //Preview
+    if( m_p_configureWindow->previewGallery() )
     {
         QString indexPath = QDir(m_projectParameters.m_galleryConfig.outputDir).absoluteFilePath("index.html");
         if (m_p_winPreview == nullptr) {
@@ -233,7 +234,10 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
         }
         m_p_winPreview->show(indexPath);
     }
-
+    //Open the folder
+    else if (m_p_configureWindow->openGalleryFolder()) {
+        QDesktopServices::openUrl(QUrl::fromLocalFile(m_projectParameters.m_galleryConfig.outputDir));
+    }
 }
 
 

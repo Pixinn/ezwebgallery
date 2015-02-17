@@ -56,15 +56,41 @@
        <property name="fieldGrowthPolicy">
         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
        </property>
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="label_Language">
          <property name="text">
           <string>Prefered language</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="1">
         <widget class="QComboBox" name="comboBox_Language"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_AfterProduction">
+         <property name="text">
+          <string>After producing the gallery</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="comboBox_AfterProduction">
+         <item>
+          <property name="text">
+           <string>Display the gallery</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Open the output folder</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Do nothing</string>
+          </property>
+         </item>
+        </widget>
        </item>
       </layout>
      </item>
@@ -85,19 +111,6 @@
       <widget class="QCheckBox" name="checkBox_RecentProject">
        <property name="text">
         <string>Open the most recent project when launching EZWebGallery</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBox_OpenGallery">
-       <property name="text">
-        <string>Open the generated gallery when the process is completed</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-       <property name="tristate">
-        <bool>false</bool>
        </property>
       </widget>
      </item>
