@@ -4,7 +4,12 @@
     <file>languages/GalleryDesigner_en.qm</file>
   </qresource>
   <qresource prefix="/icons">
+    <file>images/folder-image.png</file>
+    <file>images/object-rotate-right.png</file>
+    <file>images/ratio4_3.png</file>
+    <file>images/ratio16_9.png</file>
     <file>images/configure.png</file>
+    <file>images/EZWG-Icone.svg</file>
     <file>images/face-smile-gearhead-male.png</file>
     <file>images/arrow-left-2.png</file>
     <file>images/text-x-authors.png</file>

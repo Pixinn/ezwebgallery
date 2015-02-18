@@ -55,6 +55,30 @@
       <Extensions>ts;xlf</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
+    <Filter Include="Source Files\generation">
+      <UniqueIdentifier>{8be56f03-a68c-4f38-abad-5462ed78c53b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\global">
+      <UniqueIdentifier>{8024efb9-553a-4472-879f-f5fd44e2dd5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui">
+      <UniqueIdentifier>{69ec6ce7-93ee-4d15-b1c9-651ed3b3889e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generation">
+      <UniqueIdentifier>{448fc59c-bc18-4f91-9c44-0f59b218913f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\global">
+      <UniqueIdentifier>{49e10831-d3f7-4730-a915-d6f3036fbf3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui">
+      <UniqueIdentifier>{d117227d-12ab-4b42-84fe-45e33d78e9c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\widgets">
+      <UniqueIdentifier>{c319ee5e-e1c0-47a6-8ebe-99c08dda0491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\widgets">
+      <UniqueIdentifier>{ca967a58-f2d6-4dd2-8896-d9951b2f6538}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CCaption.cpp">
@@ -63,34 +87,7 @@
     <ClCompile Include="src\CCaptionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\widgets\CColorPicker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\CCss.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\generation\CDirChecker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\global\CError.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\generation\CGalleryGenerator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\generation\CGalleryGeneratorFeeder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\widgets\CImagePicker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\CLanguageManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\global\CLogger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\global\CMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CPhoto.cpp">
@@ -102,13 +99,7 @@
     <ClCompile Include="src\CPhotoFeederDirectory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CPhotoProcessor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\CPhotoProperties.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\global\CPlatform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CProjectParameters.cpp">
@@ -120,31 +111,13 @@
     <ClCompile Include="src\CTaggedString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\CTerminalUi.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\CThumbnailLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\generation\CToolbar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\global\CWarning.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Json.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\WinConfigure.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\WinSkinDesigner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\mainwin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="build\.moc\moc_CCaptionManager.cpp">
@@ -172,9 +145,6 @@
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="build\.moc\moc_CPhotoDatabase.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="build\.moc\moc_CPhotoProcessor.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="build\.moc\moc_CPhotoProperties.cpp">
@@ -213,6 +183,66 @@
     <ClCompile Include="build\.GeneratedFiles\qrc_GalleryDesigner.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\generation\CDirChecker.cpp">
+      <Filter>Source Files\generation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generation\CGalleryGenerator.cpp">
+      <Filter>Source Files\generation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generation\CGalleryGeneratorFeeder.cpp">
+      <Filter>Source Files\generation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generation\CToolbar.cpp">
+      <Filter>Source Files\generation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\global\CError.cpp">
+      <Filter>Source Files\global</Filter>
+    </ClCompile>
+    <ClCompile Include="src\global\CLogger.cpp">
+      <Filter>Source Files\global</Filter>
+    </ClCompile>
+    <ClCompile Include="src\global\CMessage.cpp">
+      <Filter>Source Files\global</Filter>
+    </ClCompile>
+    <ClCompile Include="src\global\CPlatform.cpp">
+      <Filter>Source Files\global</Filter>
+    </ClCompile>
+    <ClCompile Include="src\global\CWarning.cpp">
+      <Filter>Source Files\global</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\CLanguageManager.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\CTerminalUi.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\mainwin.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WinConfigure.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WinSkinDesigner.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\widgets\CColorPicker.cpp">
+      <Filter>Source Files\widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\widgets\CImagePicker.cpp">
+      <Filter>Source Files\widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="build\.moc\moc_WinPreview.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WinPreview.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="build\.moc\moc_CPhotoProcessor.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generation\CPhotoProcessor.cpp">
+      <Filter>Source Files\generation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CCaption.h">
@@ -221,36 +251,9 @@
     <CustomBuild Include="src\CCaptionManager.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="src\widgets\CColorPicker.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <ClInclude Include="src\CCss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\generation\CDirChecker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="src\global\CError.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\generation\CGalleryGenerator.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <ClInclude Include="src\generation\CGalleryGeneratorFeeder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="src\widgets\CImagePicker.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\ui\CLanguageManager.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\global\CLogger.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\global\CMessage.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <ClInclude Include="src\CPhoto.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -260,15 +263,9 @@
     <ClInclude Include="src\CPhotoFeederDirectory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <CustomBuild Include="src\CPhotoProcessor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="src\CPhotoProperties.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <ClInclude Include="src\global\CPlatform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <CustomBuild Include="src\CProjectParameters.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -278,45 +275,21 @@
     <ClInclude Include="src\CTaggedString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <CustomBuild Include="src\ui\CTerminalUi.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="src\CThumbnailLoader.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <ClInclude Include="src\generation\CToolbar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="src\global\CWarning.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <ClInclude Include="src\global\GlobalDefinitions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <CustomBuild Include="src\global\IMessage.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <ClInclude Include="src\IParameters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <CustomBuild Include="src\IPhotoFeeder.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <ClInclude Include="src\ui\IUserInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Json.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <CustomBuild Include="src\ui\WinConfigure.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\ui\WinSkinDesigner.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\ui\mainwin.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <ClInclude Include="build\.GeneratedFiles\ui_WinConfigure.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -324,6 +297,27 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="build\.GeneratedFiles\ui_mainwin.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\generation\CDirChecker.h">
+      <Filter>Header Files\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\generation\CGalleryGeneratorFeeder.h">
+      <Filter>Header Files\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\generation\CToolbar.h">
+      <Filter>Header Files\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\global\CPlatform.h">
+      <Filter>Header Files\global</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\CPhotosListView.h">
+      <Filter>Header Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\IUserInterface.h">
+      <Filter>Header Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="build\.GeneratedFiles\ui_WinPreview.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -344,6 +338,54 @@
     </CustomBuild>
     <CustomBuild Include="src\ui\mainwin.ui">
       <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\generation\CGalleryGenerator.h">
+      <Filter>Header Files\generation</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\global\CError.h">
+      <Filter>Header Files\global</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\global\CLogger.h">
+      <Filter>Header Files\global</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\global\CMessage.h">
+      <Filter>Header Files\global</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\global\CWarning.h">
+      <Filter>Header Files\global</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\global\IMessage.h">
+      <Filter>Header Files\global</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\CLanguageManager.h">
+      <Filter>Header Files\ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\CTerminalUi.h">
+      <Filter>Header Files\ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\mainwin.h">
+      <Filter>Header Files\ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\WinConfigure.h">
+      <Filter>Header Files\ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\WinSkinDesigner.h">
+      <Filter>Header Files\ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\widgets\CColorPicker.h">
+      <Filter>Header Files\widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\widgets\CImagePicker.h">
+      <Filter>Header Files\widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\WinPreview.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\WinPreview.h">
+      <Filter>Header Files\ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\generation\CPhotoProcessor.h">
+      <Filter>Header Files\generation</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

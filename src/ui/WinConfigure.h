@@ -39,7 +39,8 @@ public:
     ~WinConfigure();
     int exec(); //Surcharge de QDialog::exec() pour initialiser combobox de langue
     void retranslate(); //Traduit la fentre dans la nouvelle langue
-    bool openGeneratedGallery();
+    bool previewGallery();
+    bool openGalleryFolder();
     bool openMostRecentProject();
 
     /********* SLOTS ********/
@@ -58,6 +59,12 @@ private:
     /********** Membres *********/
 private:
     Ui::Configure* m_ui;
+
+    enum {
+        OPEN_PREVIEW = 0,
+        OPEN_FOLDER,
+        DO_NOTHING
+    };
 
 };
 

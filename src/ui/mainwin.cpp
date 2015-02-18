@@ -224,12 +224,20 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
     swapButtons( ); //Bouton "cancel" redevient "generate" et réactivation des actions
     m_ui->statusbar->showMessage( tr("Generation successfully completed."), 7000 );
     
-    //Ouverture de la galerie
-    if( m_p_configureWindow->openGeneratedGallery() ) {
+    //Afterwards action?
+    //Preview
+    if( m_p_configureWindow->previewGallery() )
+    {
         QString indexPath = QDir(m_projectParameters.m_galleryConfig.outputDir).absoluteFilePath("index.html");
-        QDesktopServices::openUrl( QUrl::fromLocalFile( indexPath ) );
+        if (m_p_winPreview == nullptr) {
+            m_p_winPreview = new WinPreview();
+        }
+        m_p_winPreview->show(indexPath);
     }
-
+    //Open the folder
+    else if (m_p_configureWindow->openGalleryFolder()) {
+        QDesktopServices::openUrl(QUrl::fromLocalFile(m_projectParameters.m_galleryConfig.outputDir));
+    }
 }
 
 
@@ -238,7 +246,7 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
 
 MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& projectParameters, QWidget *parent ) :
     QMainWindow( parent ),
-    m_ui(new Ui::MainWin),    
+    m_ui(new Ui::MainWin), m_p_winPreview(nullptr),
     m_projectParameters( projectParameters ),
     m_photoFeeder( static_cast<CPhotoFeederDirectory&>(CPhotoFeederDirectory::getInstance()) ),
     m_photoDatabase( CPhotoDatabase::getInstance() ),
@@ -342,6 +350,9 @@ MainWin::~MainWin()
 {
     delete m_p_configureWindow;
     delete m_p_skinDesignerWindow;
+    if (m_p_winPreview != nullptr) {
+        delete m_p_winPreview;
+    }
 }
 
 void MainWin::init( void )
@@ -437,6 +448,9 @@ void MainWin::changeEvent(QEvent *e)
     m_p_tagsWindow->deleteLater();
     m_p_skinDesignerWindow->close();
     m_p_configureWindow->close();
+    if (m_p_winPreview != nullptr) {
+        m_p_winPreview->close();
+    }
 
     //fermeture
     event->accept();

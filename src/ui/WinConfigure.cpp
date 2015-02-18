@@ -39,11 +39,9 @@ WinConfigure::WinConfigure( QWidget* parent )
 
     //Recupration des settings
     QSettings settings;
-    if( settings.contains( SETTINGS_OPENGENERATEDGAL ) ) { //On doit test si la clef est contenue : ce n'est pas le cas au 1er lancement...
-        m_ui->checkBox_OpenGallery->setChecked( (bool)settings.value( SETTINGS_OPENGENERATEDGAL ).toInt() );
-    }
     if( settings.contains( SETTINGS_OPENMOSTRECENTPJT ) ) {
-        m_ui->checkBox_RecentProject->setChecked( (bool)settings.value( SETTINGS_OPENMOSTRECENTPJT ).toInt() );
+        bool openPjt = (settings.value(SETTINGS_OPENMOSTRECENTPJT).toInt() == 1);
+        m_ui->checkBox_RecentProject->setChecked(openPjt);
     }
 
     //---- Connnections
@@ -64,13 +62,19 @@ WinConfigure::~WinConfigure()
 /*************************
 * exec( )
 * ---------------
-* Surcharge de QDialog::exec() afin d'initialiser la slection du combobox de langue
+* Surcharge de QDialog::exec() afin d'initialiser la slection des comboboxs
 *************************/
 int WinConfigure::exec()
 {
+    //language
     int currentLangIndex;
     currentLangIndex = m_ui->comboBox_Language->findText( CLanguageManager::currentLanguage() );
     m_ui->comboBox_Language->setCurrentIndex( currentLangIndex );
+    //action after generation
+    QSettings settings;
+    if (settings.contains(SETTINGS_AFTERGENERATION)) { //On doit test si la clef est contenue : ce n'est pas le cas au 1er lancement...
+        m_ui->comboBox_AfterProduction->setCurrentIndex(settings.value(SETTINGS_AFTERGENERATION).toInt());
+    }
 
     return QDialog::exec();
 }
@@ -117,8 +121,10 @@ void WinConfigure::onOK( )
     QString newLanguage = CLanguageManager::languageCode( m_ui->comboBox_Language->currentText() );
 
     //sauvegarde de la config
-    settings->setValue( SETTINGS_OPENMOSTRECENTPJT, (int)m_ui->checkBox_RecentProject->isChecked() );
-    settings->setValue( SETTINGS_OPENGENERATEDGAL, (int)m_ui->checkBox_OpenGallery->isChecked() );
+    int openPjt = 0;
+    if (m_ui->checkBox_RecentProject->isChecked()) {    openPjt = 1;      }
+    settings->setValue(SETTINGS_OPENMOSTRECENTPJT, openPjt);
+    settings->setValue( SETTINGS_AFTERGENERATION, (int)m_ui->comboBox_AfterProduction->currentIndex() );
     if( currentLanguage != newLanguage ) { //seulement si la langue change
         settings->setValue( SETTINGS_LANGUAGE, newLanguage );
         emit languageChanged( );  //Traduit tout ce qui est ncessaire
@@ -142,13 +148,22 @@ void WinConfigure::onCancel( )
 
 
 /*************************
-* openGeneratedGallery( )
+* previewGallery( )
 * ---------------
-* Renvoie true si on a configur l'ouverture de la galerie gnre
 *************************/
-bool WinConfigure::openGeneratedGallery( )
+bool WinConfigure::previewGallery()
 {
-    return m_ui->checkBox_OpenGallery->isChecked();
+    return (m_ui->comboBox_AfterProduction->currentIndex() == OPEN_PREVIEW);
+}
+
+
+/*************************
+* openGalleryFolder( )
+* ---------------
+*************************/
+bool WinConfigure::openGalleryFolder()
+{
+    return (m_ui->comboBox_AfterProduction->currentIndex() == OPEN_FOLDER);
 }
 
 

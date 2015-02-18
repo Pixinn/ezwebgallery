@@ -1,8 +1,11 @@
 
-CONFIG  += debug_and_release
+CONFIG  += debug_and_release \
+           c++11
 
-QT += xml
-QT += widgets
+
+QT += xml \
+      widgets \
+      webkitwidgets
 
 ### User defined variables ###
 Debug|Release{
@@ -68,11 +71,14 @@ DEPENDPATH += ./src/widgets
 HEADERS += ./src/generation/CGalleryGenerator.h \
     ./src/generation/CDirChecker.h \
     ./src/generation/CToolbar.h \
+    ./src/generation/CPhotoProcessor.h \
+    ./src/generation/CGalleryGeneratorFeeder.h \
     ./src/ui/mainwin.h \
     ./src/ui/IUserInterface.h \
     ./src/ui/WinSkinDesigner.h \
     ./src/ui/CTerminalUi.h \
     ./src/ui/WinConfigure.h \
+    ./src/ui/WinPreview.h    \
     ./src/ui/CLanguageManager.h \
     ./src/global/CPlatform.h \
     ./src/global/GlobalDefinitions.h \
@@ -84,8 +90,7 @@ HEADERS += ./src/generation/CGalleryGenerator.h \
     ./src/widgets/CImagePicker.h \
     ./src/widgets/CColorPicker.h \
     ./src/CPhotoProperties.h \
-    ./src/CPhoto.h \
-    ./src/CPhotoProcessor.h \
+    ./src/CPhoto.h \    
     ./src/CCss.h \
     ./src/CTaggedString.h \
     ./src/CCaption.h \
@@ -97,17 +102,19 @@ HEADERS += ./src/generation/CGalleryGenerator.h \
     ./src/CPhotoFeederDirectory.h \
     ./src/CPhotoDatabase.h \
     ./src/CThumbnailLoader.h \
-    ./src/Json.h \
-    src/generation/CGalleryGeneratorFeeder.h
+    ./src/Json.h    
 
 SOURCES += ./src/main.cpp \
     ./src/generation/CGalleryGenerator.cpp \
     ./src/generation/CDirChecker.cpp \
     ./src/generation/CToolbar.cpp \
+    ./src/generation/CPhotoProcessor.cpp \
+    ./src/generation/CGalleryGeneratorFeeder.cpp \
     ./src/ui/mainwin.cpp \
     ./src/ui/WinSkinDesigner.cpp \
     ./src/ui/CTerminalUi.cpp \
     ./src/ui/WinConfigure.cpp \
+    ./src/ui/WinPreview.cpp \
     ./src/ui/CLanguageManager.cpp \
     ./src/global/CError.cpp \
     ./src/global/CWarning.cpp \
@@ -117,8 +124,7 @@ SOURCES += ./src/main.cpp \
     ./src/widgets/CImagePicker.cpp \
     ./src/widgets/CColorPicker.cpp \
     ./src/CPhotoProperties.cpp \
-    ./src/CPhoto.cpp \
-    ./src/CPhotoProcessor.cpp \
+    ./src/CPhoto.cpp \    
     ./src/CCss.cpp \
     ./src/CTaggedString.cpp \
     ./src/CCaption.cpp \
@@ -128,12 +134,13 @@ SOURCES += ./src/main.cpp \
     ./src/CPhotoFeederDirectory.cpp \
     ./src/CPhotoDatabase.cpp \
     ./src/CThumbnailLoader.cpp \
-    ./src/Json.cpp \
-    src/generation/CGalleryGeneratorFeeder.cpp
+    ./src/Json.cpp
+    
 
 FORMS += ./src/ui/mainwin.ui \
     ./src/ui/WinSkinDesigner.ui \
-    ./src/ui/WinConfigure.ui
+    ./src/ui/WinConfigure.ui \
+    ./src/ui/WinPreview.ui
 
 TRANSLATIONS += ./src/resources/languages/GalleryDesigner_en.ts \
     ./src/resources/languages/GalleryDesigner_fr.ts
