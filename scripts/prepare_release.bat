@@ -55,9 +55,9 @@ copy %QTDIR%\bin\Qt5Core.dll %TEMPDIR%
 copy %QTDIR%\bin\Qt5Gui.dll %TEMPDIR%
 copy %QTDIR%\bin\Qt5Widgets.dll %TEMPDIR%
 copy %QTDIR%\bin\Qt5Xml.dll %TEMPDIR%
-copy %QTDIR%\bin\icudt52.dll %TEMPDIR%
-copy %QTDIR%\bin\icuin52.dll %TEMPDIR%
-copy %QTDIR%\bin\icuuc52.dll %TEMPDIR%
+copy %QTDIR%\bin\icudt53.dll %TEMPDIR%
+copy %QTDIR%\bin\icuin53.dll %TEMPDIR%
+copy %QTDIR%\bin\icuuc53.dll %TEMPDIR%
 copy %QTDIR%\bin\libEGL.dll %TEMPDIR%
 copy %QTDIR%\bin\libGLESv2.dll %TEMPDIR%
 md   %TEMPDIR%\imageformats
