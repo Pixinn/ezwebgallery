@@ -18,22 +18,32 @@
 
 #include <QFileInfo>
 #include <QDesktopServices>
+#include <QWebEngineView>
 
 #include "WinPreview.h"
 
 
 /*************************
-* Constructeur
+* Constructor
 *************************/
 WinPreview::WinPreview(QWidget* parent)
     :   QMainWindow( parent ), m_ui( new Ui::Preview ),
         m_wasShown(false)
 {
     //Init UI
-    m_ui->setupUi( this );    
+    m_ui->setupUi( this );
+    m_webView = new QWebEngineView(m_ui->centralwidget);
+    m_webView->setObjectName(QStringLiteral("webView"));
+    m_webView->setEnabled(true);
+    m_webView->setMinimumSize(QSize(0, 0));
+    m_webView->setUrl(QUrl(QStringLiteral("about:blank")));
+    m_webView->hide();
+    //webView->setRenderHints(QPainter::Antialiasing | QPainter::HighQualityAntialiasing | QPainter::SmoothPixmapTransform | QPainter::TextAntialiasing);
+    m_ui->horizontalLayout->addWidget(m_webView);
+
 
     //---- Connnections
-    connect( this->m_ui->webView, SIGNAL(loadFinished(bool)), this, SLOT(onLoadFinished(bool)));
+    connect( this->m_webView, SIGNAL(loadFinished(bool)), this, SLOT(onLoadFinished(bool)));
     connect( this->m_ui->actionRatio_16_9, SIGNAL(triggered()), this, SLOT(onRatio16_9()) );
     connect( this->m_ui->actionRatio_4_3, SIGNAL(triggered()), this, SLOT(onRatio4_3()) );
     connect( this->m_ui->actionRotate, SIGNAL(triggered()), this, SLOT(onRotate()) );
@@ -41,22 +51,30 @@ WinPreview::WinPreview(QWidget* parent)
 }
 
 
+/*************************
+* Destructor
+*************************/
+WinPreview::~WinPreview(void)
+{
+    m_webView->deleteLater();
+}
+
 /**************************
 * Display the window
 **************************/
 void WinPreview::show( const QString& path )
 {
-    QWebSettings::clearMemoryCaches();
+//    QWebSettings::clearMemoryCaches();
     QMainWindow::show();
-    m_ui->webView->hide();
+    m_webView->hide();
     m_ui->label_BuildingPreview->show();
     if (!m_wasShown) {
         resize(1024, 768);
-        m_ui->webView->load(QUrl::fromLocalFile(path));
+        m_webView->load(QUrl::fromLocalFile(path));
         m_wasShown = true;
     }
     else {                
-        m_ui->webView->reload();        
+        m_webView->reload();        
     }
 
     auto fileInfo = QFileInfo(path);
@@ -72,7 +90,7 @@ void WinPreview::show( const QString& path )
 void WinPreview::onLoadFinished(bool)
 {
     m_ui->label_BuildingPreview->hide();
-    m_ui->webView->show();
+    m_webView->show();
 }
 
 
@@ -85,11 +103,11 @@ void WinPreview::onRatio16_9(void)
     //Landscape
     if (this->size().width() > this->size().height()) {
         this->resize(QSize{ 1280, 720 });
-        m_ui->webView->reload();
+        m_webView->reload();
     }
     else if (this->size().width() < this->size().height()){ //portrait
         this->resize(QSize{ 720, 1080 });
-        m_ui->webView->reload();
+        m_webView->reload();
     }
     
 }
@@ -103,11 +121,11 @@ void WinPreview::onRatio4_3(void)
     //Landscape
     if (size().width() > size().height()) {
         resize(QSize{ 1024, 768 });
-        m_ui->webView->reload();
+        m_webView->reload();
     }
     else if (size().width() < size().height()) { //portrait
         resize(QSize{ 768, 1024 });
-        m_ui->webView->reload();
+        m_webView->reload();
     }
     
 }
@@ -122,7 +140,7 @@ void WinPreview::onRotate(void)
     auto w = size().width();
     if (w != h) {
         resize(h, w);
-        m_ui->webView->reload();
+        m_webView->reload();
     }
 }
 

@@ -33,7 +33,7 @@ namespace Ui { //Voir le bas du fichier ui_winConfigure.h
     class Preview;
 }
 
-
+class QWebEngineView;
 
 class WinPreview : public QMainWindow
 {
@@ -42,7 +42,7 @@ class WinPreview : public QMainWindow
         /********** Methodes *********/
 public:
     WinPreview(QWidget* parent = 0);
-    ~WinPreview( void ){}
+    ~WinPreview(void);
 
     void show(const QString& path);
 
@@ -59,6 +59,7 @@ signals:
 
 private:
     Ui::Preview* m_ui;
+    QWebEngineView* m_webView;
     bool m_wasShown;
 
     QDir m_outDir;
