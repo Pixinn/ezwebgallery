@@ -101,6 +101,8 @@ public slots:
     void onOpenRecentSession( void );
     bool onSaveSession( void );
     bool onSaveSessionAs( void );
+    void onPreviewGallery(void);
+    void onOpenGalleryFolder(void);
     void onHiDPI( int );
     void onManualPhotoConf( int );
     void showTagsWindow( void );
@@ -146,6 +148,8 @@ public slots:
     void warning( PtrMessage );         //A warning occured
     void information( PtrMessage );     //Display an iformative message
 
+signals:
+    void generationInProgress(void);
 
 /******** ATTRIBUTS *********/
 private:

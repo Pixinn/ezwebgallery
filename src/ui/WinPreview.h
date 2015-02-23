@@ -52,17 +52,23 @@ public slots:
     void onRatio16_9(void);
     void onRotate(void);
     void onOpenFolder(void);
+    void onRefresh(void);
+    void onEnable(void);
+    void onDisable(void);
 
 signals:
     void load(const QUrl url);
     void reload(void);
+    void refresh(void);
+    void enabled(bool);
 
 private:
     Ui::Preview* m_ui;
     QWebEngineView* m_webView;
     bool m_wasShown;
 
-    QDir m_outDir;
+    QDir    m_outDir;
+    QUrl    m_Url;
 
 };
 

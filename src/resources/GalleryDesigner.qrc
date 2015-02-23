@@ -4,6 +4,7 @@
     <file>languages/GalleryDesigner_en.qm</file>
   </qresource>
   <qresource prefix="/icons">
+    <file>images/emblem-photos.png</file>
     <file>images/folder-image.png</file>
     <file>images/object-rotate-right.png</file>
     <file>images/ratio4_3.png</file>

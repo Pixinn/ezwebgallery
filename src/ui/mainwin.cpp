@@ -223,20 +223,18 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
 
     swapButtons( ); //Bouton "cancel" redevient "generate" et réactivation des actions
     m_ui->statusbar->showMessage( tr("Generation successfully completed."), 7000 );
+
+    m_ui->action_Preview->setDisabled(false);
+    m_ui->action_OpenGalleryFolder->setDisabled(false);
     
     //Afterwards action?
     //Preview
-    if( m_p_configureWindow->previewGallery() )
-    {
-        QString indexPath = QDir(m_projectParameters.m_galleryConfig.outputDir).absoluteFilePath("index.html");
-        if (m_p_winPreview == nullptr) {
-            m_p_winPreview = new WinPreview();
-        }
-        m_p_winPreview->show(indexPath);
+    if( m_p_configureWindow->previewGallery() )    {
+        onPreviewGallery();
     }
     //Open the folder
     else if (m_p_configureWindow->openGalleryFolder()) {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(m_projectParameters.m_galleryConfig.outputDir));
+        onOpenGalleryFolder();
     }
 }
 
@@ -300,6 +298,9 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& proje
     connect( this->m_ui->action_ShowLogWindow, SIGNAL(triggered()), this, SLOT(showLogWindow()));
     //Afficher la fenêtre de configuration
     connect( this->m_ui->action_Configure, SIGNAL(triggered()), this, SLOT(showConfigureWindow()));
+    //Preview the gallery
+    connect(this->m_ui->action_Preview, SIGNAL(triggered()), this, SLOT(onPreviewGallery()));
+    connect(this->m_ui->action_OpenGalleryFolder, SIGNAL(triggered()), this, SLOT(onOpenGalleryFolder()));
     //Help
     connect( this->m_ui->action_OnlineManual, SIGNAL(triggered()), this, SLOT(onlineManual()));
     connect( this->m_ui->action_About, SIGNAL(triggered()), this, SLOT(about()));
@@ -381,6 +382,8 @@ void MainWin::init( void )
     
     //UI tweaking
     m_ui->action_SaveSession->setDisabled( true );
+    m_ui->action_Preview->setDisabled(true);
+    m_ui->action_OpenGalleryFolder->setDisabled(true);
 
     bool f_lastSessionOK = false;
     //Par défaut : Nouvelle session
@@ -931,6 +934,8 @@ void MainWin::generateGallery( )
             //GENERATION !
             if( m_photoDatabase.size() != 0 )
             {
+                emit generationInProgress();
+
                 //Affichage bouton annulation et désativation de certaines actions
                 swapButtons( );
 
@@ -1052,6 +1057,25 @@ void MainWin::information( PtrMessage info )
     modalErrorBox.setDetailedText( info->details() );
     modalErrorBox.setIcon( QMessageBox::Information );
     modalErrorBox.exec();
+}
+
+
+void MainWin::onPreviewGallery(void)
+{
+    QString indexPath = QDir(m_projectParameters.m_galleryConfig.outputDir).absoluteFilePath("index.html");
+    if (m_p_winPreview == nullptr) {
+        m_p_winPreview = new WinPreview();
+        connect(m_p_winPreview, SIGNAL(refresh()), this, SLOT(generateGallery()));
+        connect(m_p_winPreview, SIGNAL(enabled(bool)), this->m_ui->action_Preview, SLOT(setEnabled(bool)));
+        connect(this, SIGNAL(generationInProgress()), m_p_winPreview, SLOT(onDisable()));
+    }
+    m_p_winPreview->show(indexPath);
+}
+
+
+void MainWin::onOpenGalleryFolder(void)
+{
+    QDesktopServices::openUrl(QUrl::fromLocalFile(m_projectParameters.m_galleryConfig.outputDir));
 }
 
 

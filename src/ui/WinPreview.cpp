@@ -37,9 +37,10 @@ WinPreview::WinPreview(QWidget* parent)
     m_webView->setEnabled(true);
     m_webView->setMinimumSize(QSize(0, 0));
     m_webView->setUrl(QUrl(QStringLiteral("about:blank")));
-    m_webView->hide();
+    m_webView->hide();   
     //webView->setRenderHints(QPainter::Antialiasing | QPainter::HighQualityAntialiasing | QPainter::SmoothPixmapTransform | QPainter::TextAntialiasing);
     m_ui->horizontalLayout->addWidget(m_webView);
+    m_ui->action_Refresh->setEnabled(false);
 
 
     //---- Connnections
@@ -47,7 +48,9 @@ WinPreview::WinPreview(QWidget* parent)
     connect( this->m_ui->actionRatio_16_9, SIGNAL(triggered()), this, SLOT(onRatio16_9()) );
     connect( this->m_ui->actionRatio_4_3, SIGNAL(triggered()), this, SLOT(onRatio4_3()) );
     connect( this->m_ui->actionRotate, SIGNAL(triggered()), this, SLOT(onRotate()) );
-    connect( this->m_ui->actionOpenOutputDirectory, SIGNAL(triggered()), this, SLOT(onOpenFolder()));
+    connect(this->m_ui->action_Refresh, SIGNAL(triggered()), this, SLOT(onRefresh()));
+    connect(this->m_webView, SIGNAL(loadStarted()), this, SLOT(onDisable()));
+    connect(this->m_webView, SIGNAL(loadFinished(bool)), this, SLOT(onEnable()));
 }
 
 
@@ -65,23 +68,31 @@ WinPreview::~WinPreview(void)
 void WinPreview::show( const QString& path )
 {
 //    QWebSettings::clearMemoryCaches();
+    m_Url = QUrl::fromLocalFile(path);
+    m_outDir = QFileInfo(path).dir();
+    
     QMainWindow::show();
     m_webView->hide();
     m_ui->label_BuildingPreview->show();
     if (!m_wasShown) {
         resize(1024, 768);
-        m_webView->load(QUrl::fromLocalFile(path));
+        m_webView->load(m_Url);
         m_wasShown = true;
     }
-    else {                
-        m_webView->reload();        
+    else {
+        m_webView->reload();
     }
-
-    auto fileInfo = QFileInfo(path);
-    m_outDir = fileInfo.dir();
-
 }
 
+
+/**************************
+* Refresh the preview
+**************************/
+void WinPreview::onRefresh(void)
+{
+    onDisable();
+    emit refresh();
+}
 
 /**************************
 * On load finished,
@@ -152,3 +163,32 @@ void WinPreview::onOpenFolder(void)
 {
     QDesktopServices::openUrl(QUrl::fromLocalFile(m_outDir.absolutePath()));
 }
+
+
+/*************************
+* Enable all the actions
+*************************/
+void WinPreview::onEnable(void)
+{
+    m_ui->actionRatio_16_9->setEnabled(true);
+    m_ui->actionRatio_4_3->setEnabled(true);
+    m_ui->actionRotate->setEnabled(true);
+    m_ui->action_Refresh->setEnabled(true);
+    statusBar()->showMessage(tr("THIS IS NOT A REALTIME PREVIEW! Click on \"Refresh\" or \"Generate\" to produce a gallery reflecting any change."));
+    emit enabled(true);
+}
+
+
+/*************************
+* Disable all the actions
+*************************/
+void WinPreview::onDisable(void)
+{
+    m_ui->actionRatio_16_9->setEnabled(false);
+    m_ui->actionRatio_4_3->setEnabled(false);
+    m_ui->actionRotate->setEnabled(false);
+    m_ui->action_Refresh->setEnabled(false);
+    statusBar()->showMessage(tr("Waiting for an updated gallery."));
+    emit enabled(false);
+}
+
