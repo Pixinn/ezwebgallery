@@ -35,6 +35,14 @@ namespace Ui { //Voir le bas du fichier ui_winConfigure.h
 
 class QWebEngineView;
 
+template<bool>
+class TWebViewFacade
+{
+public:
+
+};
+
+
 class WinPreview : public QMainWindow
 {
     Q_OBJECT

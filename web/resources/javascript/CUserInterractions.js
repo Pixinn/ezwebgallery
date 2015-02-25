@@ -73,8 +73,13 @@ function CUserInterractions( p_properties, htmlstructure )
             that.fEnablePreviousNextRequired = false;
             //These options may have to be call after every slides
             //This is the case as prev/next are disabled during scrolling
-            that.html.photo.$current.data("hammer").options[ "prevent_default" ] = true;
-            that.html.photo.$current.data("hammer").options[ "swipe_velocity" ] = 0.7;
+            var hammertime = that.html.photo.$current.data("hammer");
+            //hammertime.options[ "prevent_default" ] = true;
+            //hammertime.options[ "swipe_velocity" ] = 0.7;
+            hammertime.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL });
+            hammertime.get('doubletap').set({ enable: false });
+            hammertime.get('pan').set({ enable: false });
+            hammertime.get('press').set({ enable: false });
         }
         else {
             that.fEnablePreviousNextRequired = true;

@@ -198,7 +198,7 @@ void MainWin::onForceStoppedFinished( PtrMessageList errorMessages )
         swapButtons( );
         m_ui->progressBar_Generation->setValue( 0 );
         m_ui->pushButton_Generation->setDisabled( false );
-        m_ui->statusbar->showMessage( tr("Generation cancelled."), 7000 );
+        m_ui->statusbar->showMessage( tr("Generation cancelled. Gallery's files are out of sync and have to be produced again.") );
     }
 }
 
