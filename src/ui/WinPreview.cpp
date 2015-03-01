@@ -18,7 +18,8 @@
 
 #include <QFileInfo>
 #include <QDesktopServices>
-#include <QWebEngineView>
+
+
 
 #include "WinPreview.h"
 
@@ -32,25 +33,19 @@ WinPreview::WinPreview(QWidget* parent)
 {
     //Init UI
     m_ui->setupUi( this );
-    m_webView = new QWebEngineView(m_ui->centralwidget);
-    m_webView->setObjectName(QStringLiteral("webView"));
-    m_webView->setEnabled(true);
-    m_webView->setMinimumSize(QSize(0, 0));
-    m_webView->setUrl(QUrl(QStringLiteral("about:blank")));
+    m_webView = new CWebViewFacade(m_ui->centralwidget);
     m_webView->hide();   
-    //webView->setRenderHints(QPainter::Antialiasing | QPainter::HighQualityAntialiasing | QPainter::SmoothPixmapTransform | QPainter::TextAntialiasing);
-    m_ui->horizontalLayout->addWidget(m_webView);
+    m_webView->addToLayout(m_ui->horizontalLayout);
     m_ui->action_Refresh->setEnabled(false);
 
-
     //---- Connnections
-    connect( this->m_webView, SIGNAL(loadFinished(bool)), this, SLOT(onLoadFinished(bool)));
+    connect(this->m_webView->_concreteView, SIGNAL(loadFinished(bool)), this, SLOT(onLoadFinished(bool)));
     connect( this->m_ui->actionRatio_16_9, SIGNAL(triggered()), this, SLOT(onRatio16_9()) );
     connect( this->m_ui->actionRatio_4_3, SIGNAL(triggered()), this, SLOT(onRatio4_3()) );
     connect( this->m_ui->actionRotate, SIGNAL(triggered()), this, SLOT(onRotate()) );
     connect(this->m_ui->action_Refresh, SIGNAL(triggered()), this, SLOT(onRefresh()));
-    connect(this->m_webView, SIGNAL(loadStarted()), this, SLOT(onDisable()));
-    connect(this->m_webView, SIGNAL(loadFinished(bool)), this, SLOT(onEnable()));
+    connect(this->m_webView->_concreteView, SIGNAL(loadStarted()), this, SLOT(onDisable()));
+    connect(this->m_webView->_concreteView, SIGNAL(loadFinished(bool)), this, SLOT(onEnable()));
 }
 
 
@@ -59,7 +54,7 @@ WinPreview::WinPreview(QWidget* parent)
 *************************/
 WinPreview::~WinPreview(void)
 {
-    m_webView->deleteLater();
+    delete m_webView;
 }
 
 /**************************
@@ -67,7 +62,6 @@ WinPreview::~WinPreview(void)
 **************************/
 void WinPreview::show( const QString& path )
 {
-//    QWebSettings::clearMemoryCaches();
     m_Url = QUrl::fromLocalFile(path);
     m_outDir = QFileInfo(path).dir();
     
