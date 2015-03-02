@@ -229,7 +229,9 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
     
     //Afterwards action?
     //Preview
-    if( m_p_configureWindow->previewGallery() )    {
+    if (m_p_configureWindow->previewGallery() || 
+        (m_p_winPreview != nullptr && m_p_winPreview->isVisible()) )   
+    {
         onPreviewGallery();
     }
     //Open the folder
