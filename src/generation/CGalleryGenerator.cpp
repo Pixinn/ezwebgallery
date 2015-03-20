@@ -105,7 +105,8 @@ CGalleryGenerator::CGalleryGenerator( ) :
     m_nbPhotoProcessFailed = 0;
     m_f_WorkInProgress = false;
     m_fStopRequested = false;
-    m_p_photoProcessorPool = new QThreadPool( this );    
+    m_p_photoProcessorPool = new QThreadPool( this ); 
+    m_p_photoProcessorPool->setMaxThreadCount(fmin(4, QThread::idealThreadCount()));//no more than 4 threads
     
     m_errorMsg = tr("No error.");
 
