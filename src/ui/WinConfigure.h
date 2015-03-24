@@ -33,6 +33,13 @@ class WinConfigure : public QDialog
 {
     Q_OBJECT
 
+private:
+    enum {
+        OPEN_FOLDER = 0,
+        OPEN_PREVIEW,
+        DO_NOTHING
+    };
+
     /********** Mthodes *********/
 public:
     WinConfigure( QWidget* parent = 0 );
@@ -48,6 +55,7 @@ public slots:
     //void onChangeLanguage( );
     void onOK( );
     void onCancel( );
+    void onEnablePreview(int state);
 
     /****** SIGNAUX ******/
 signals:
@@ -55,17 +63,11 @@ signals:
 
 private:
     void initLanguageCombobox( ); //Initialise la combobox de choix de langue
+    void enablePreview(const bool);
 
     /********** Membres *********/
 private:
-    Ui::Configure* m_ui;
-
-    enum {
-        OPEN_PREVIEW = 0,
-        OPEN_FOLDER,
-        DO_NOTHING
-    };
-
+    Ui::Configure* m_ui;    
 };
 
 #endif

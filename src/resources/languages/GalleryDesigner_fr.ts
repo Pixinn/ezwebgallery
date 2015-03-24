@@ -12,7 +12,7 @@
 <context>
     <name>CGalleryGenerator</name>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="110"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="111"/>
         <source>No error.</source>
         <translation>Pas d&apos;erreur.</translation>
     </message>
@@ -29,13 +29,13 @@
         <translation type="obsolete">Erreur inconnue.</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="220"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="221"/>
         <source>Generating the file structure...</source>
         <translation>Production de l&apos;arborescence...</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="348"/>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="686"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="349"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="687"/>
         <source>Generating the photos : </source>
         <translation>Production des photos :</translation>
     </message>
@@ -44,32 +44,32 @@
         <translation type="obsolete">Génération du thème...</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="146"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="147"/>
         <source>Initialization...</source>
         <translation>Initialisation...</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="365"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="366"/>
         <source>Cannot connect photoprocessor: </source>
         <translation>Impossible de se connecter au processeur de photos : </translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="496"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="497"/>
         <source>Skinning...</source>
         <translation>Application du thème...</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="601"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="602"/>
         <source>Photo gallery designed and generated using EZWebGallery.</source>
         <translation>Album photo conçu et produit avec EZWebGallery.</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="622"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="623"/>
         <source>Previous photo</source>
         <translation>Photo précédante</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="626"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="627"/>
         <source>Next photo</source>
         <translation>Photo suivante</translation>
     </message>
@@ -78,7 +78,7 @@
         <translation type="obsolete">Parcourir la galerie</translation>
     </message>
     <message>
-        <location filename="../../generation/CGalleryGenerator.cpp" line="702"/>
+        <location filename="../../generation/CGalleryGenerator.cpp" line="703"/>
         <source>Unspecified.</source>
         <translation>Indéfinie.</translation>
     </message>
@@ -323,22 +323,28 @@
         <translation>Après la production de la galerie</translation>
     </message>
     <message>
-        <location filename="../../ui/WinConfigure.ui" line="80"/>
+        <location filename="../../ui/WinConfigure.ui" line="88"/>
         <source>Display the gallery</source>
         <translation>Afficher un aperçu de la galerie</translation>
     </message>
     <message>
-        <location filename="../../ui/WinConfigure.ui" line="85"/>
+        <location filename="../../ui/WinConfigure.ui" line="123"/>
+        <source>Enable galery previewing (experimental, may close the program!)</source>
+        <translation>Permettre d&apos;afficher l&apos;aperçu de la galerie (expérimenta!!!)</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinConfigure.ui" line="79"/>
+        <location filename="../../ui/WinConfigure.ui" line="83"/>
         <source>Open the output folder</source>
         <translation>Ouvrir le répertoire de sortie</translation>
     </message>
     <message>
-        <location filename="../../ui/WinConfigure.ui" line="90"/>
+        <location filename="../../ui/WinConfigure.ui" line="93"/>
         <source>Do nothing</source>
         <translation>Ne rien faire</translation>
     </message>
     <message>
-        <location filename="../../ui/WinConfigure.ui" line="113"/>
+        <location filename="../../ui/WinConfigure.ui" line="116"/>
         <source>Open the most recent project when launching EZWebGallery</source>
         <translation>Ouvrir le projet le plus récent lors du lancement d&apos;EZWebGallery</translation>
     </message>
