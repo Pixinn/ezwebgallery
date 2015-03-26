@@ -60,10 +60,10 @@ public slots:
     /****** SIGNAUX ******/
 signals:
     void languageChanged( );
+    void enablePreview(bool);
 
 private:
     void initLanguageCombobox( ); //Initialise la combobox de choix de langue
-    void enablePreview(const bool);
 
     /********** Membres *********/
 private:

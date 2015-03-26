@@ -323,28 +323,27 @@
         <translation>After producing the gallery</translation>
     </message>
     <message>
-        <location filename="../../ui/WinConfigure.ui" line="88"/>
+        <location filename="../../ui/WinConfigure.ui" line="85"/>
         <source>Display the gallery</source>
         <translation>Preview the gallery</translation>
     </message>
     <message>
-        <location filename="../../ui/WinConfigure.ui" line="123"/>
+        <location filename="../../ui/WinConfigure.ui" line="120"/>
         <source>Enable galery previewing (experimental, may close the program!)</source>
         <translation>Enable galery previewing (experimental, may close the program!)</translation>
     </message>
     <message>
-        <location filename="../../ui/WinConfigure.ui" line="79"/>
-        <location filename="../../ui/WinConfigure.ui" line="83"/>
+        <location filename="../../ui/WinConfigure.ui" line="80"/>
         <source>Open the output folder</source>
         <translation>Open the output folder</translation>
     </message>
     <message>
-        <location filename="../../ui/WinConfigure.ui" line="93"/>
+        <location filename="../../ui/WinConfigure.ui" line="90"/>
         <source>Do nothing</source>
         <translation>Do nothing</translation>
     </message>
     <message>
-        <location filename="../../ui/WinConfigure.ui" line="116"/>
+        <location filename="../../ui/WinConfigure.ui" line="113"/>
         <source>Open the most recent project when launching EZWebGallery</source>
         <translation>Open the most recent project when launching EZWebGallery</translation>
     </message>
@@ -364,7 +363,7 @@
         <translation type="obsolete">Your skin has been modified.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="513"/>
+        <location filename="../../ui/mainwin.cpp" line="519"/>
         <source>Open a project</source>
         <translation>Open a project</translation>
     </message>
@@ -389,7 +388,7 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete">Please select the directory containing the project&apos;s photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="652"/>
+        <location filename="../../ui/mainwin.cpp" line="658"/>
         <source>Save a project</source>
         <translation>Save a project</translation>
     </message>
@@ -422,8 +421,8 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete"> Some photos cannot be found in this folder.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="632"/>
-        <location filename="../../ui/mainwin.cpp" line="670"/>
+        <location filename="../../ui/mainwin.cpp" line="638"/>
+        <location filename="../../ui/mainwin.cpp" line="676"/>
         <source>The session could not be saved.</source>
         <translation>The session could not be saved.</translation>
     </message>
@@ -432,28 +431,28 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;This program is a &lt;b&gt;FREEWARE&lt;/b&gt;. You can copy it and use it for any purpose but you are not allowed to modify it. It is provided &quot;as-is&quot; and cannot be held liable for any damage caused to your computer or your softwares.&lt;br&gt;Please read the provided &quot;ReadMe.txt&quot; file for further details.&lt;br&gt;&lt;br&gt;Download the latest version &lt;a href=&quot;http://ezwebgallery.pixinn.net/&quot;&gt;here&lt;/a&gt;.&lt;br&gt;Follow the news on &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;You can reach us at this address: ezwebgallery@pixinn.net</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="817"/>
+        <location filename="../../ui/mainwin.cpp" line="823"/>
         <source>Please select an input directory containing your pictures.</source>
         <translation>Please select an input directory containing your pictures.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="861"/>
+        <location filename="../../ui/mainwin.cpp" line="867"/>
         <source>Please select the output directory.</source>
         <translation>Please select the output directory.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="898"/>
+        <location filename="../../ui/mainwin.cpp" line="904"/>
         <source>Some configuration fields were not properly set.</source>
         <translation>Some configuration fields were not properly set.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="922"/>
+        <location filename="../../ui/mainwin.cpp" line="928"/>
         <source>Your skin is not valid.                                                                                </source>
         <comment>Please leave 60 blank space !</comment>
         <translation>Your skin is not valid.                                                                                </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="930"/>
+        <location filename="../../ui/mainwin.cpp" line="936"/>
         <source>Building photo list.</source>
         <translation>Building photo list.</translation>
     </message>
@@ -488,7 +487,7 @@ The legends have been automatically reassociated, but the process failed for %n 
         <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;This program is a &lt;b&gt;FREEWARE&lt;/b&gt;. You can copy it and use it for any purpose but you are not allowed to modify it. It is provided &quot;as-is&quot; and cannot be held liable for any damage caused to your computer or your softwares.&lt;br&gt;Please read the provided &quot;ReadMe.txt&quot; file for further details.&lt;br&gt;&lt;br&gt;Download the latest version &lt;a href=&quot;http://ezwebgallery.org/&quot;&gt;here&lt;/a&gt;.&lt;br&gt;Follow the news on &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;You can reach us at this address: dev@ezwebgallery.org</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="274"/>
+        <location filename="../../ui/mainwin.cpp" line="279"/>
         <source>TAG list</source>
         <translation>TAG list</translation>
     </message>
@@ -497,7 +496,7 @@ The legends have been automatically reassociated, but the process failed for %n 
         <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;This program is a &lt;b&gt;FREEWARE&lt;/b&gt;. You can copy it and use it for any purpose but you are not allowed to modify it. It is provided &quot;as-is&quot; and cannot be held liable for any damage caused to your computer or your softwares.&lt;br&gt;Please read the provided &quot;ReadMe.txt&quot; file for further details.&lt;br&gt;&lt;br&gt;Download the latest version &lt;a href=&quot;http://www.ezwebgallery.org/&quot;&gt;here&lt;/a&gt;.&lt;br&gt;Follow the news on &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;You can reach us at this address: dev@ezwebgallery.org</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="269"/>
+        <location filename="../../ui/mainwin.cpp" line="274"/>
         <source>Logs</source>
         <translation>Logs</translation>
     </message>
@@ -547,90 +546,90 @@ Using default skin instead.</translation>
         <translation type="obsolete">Using default skin instead.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="201"/>
+        <location filename="../../ui/mainwin.cpp" line="206"/>
         <source>Generation cancelled. Gallery&apos;s files are out of sync and have to be produced again.</source>
         <translation>Generation cancelled. Gallery&apos;s files are out of sync and have to be produced again.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="590"/>
+        <location filename="../../ui/mainwin.cpp" line="596"/>
         <source>Skin loaded: </source>
         <translation>Skin loaded: </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="747"/>
+        <location filename="../../ui/mainwin.cpp" line="753"/>
         <source>About EZWebGallery - build date: </source>
         <translation>About EZWebGallery - build date: </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="956"/>
+        <location filename="../../ui/mainwin.cpp" line="962"/>
         <source>No photo to process!</source>
         <translation>No photo to process!</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="980"/>
+        <location filename="../../ui/mainwin.cpp" line="986"/>
         <source>Displaying thumbnail: </source>
         <translation>Displaying thumbnail: </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1008"/>
+        <location filename="../../ui/mainwin.cpp" line="1014"/>
         <source>Clearing thumbnails</source>
         <translation>Clearing thumbnails</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1099"/>
+        <location filename="../../ui/mainwin.cpp" line="1105"/>
         <source>Skin Path: </source>
         <translation>Skin Path: </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1116"/>
+        <location filename="../../ui/mainwin.cpp" line="1122"/>
         <source>The input directory does not exist.</source>
         <comment>Check before gallery generation</comment>
         <translation>The input directory does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1120"/>
+        <location filename="../../ui/mainwin.cpp" line="1126"/>
         <source>You have to define a title for your gallery.</source>
         <comment>Check before gallery generation</comment>
         <translation>You have to define a title for your gallery.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1124"/>
+        <location filename="../../ui/mainwin.cpp" line="1130"/>
         <source>The output directory does not exist.</source>
         <comment>Check before gallery generation</comment>
         <translation>The output directory does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1185"/>
+        <location filename="../../ui/mainwin.cpp" line="1191"/>
         <source>Do you want to save your changes?</source>
         <translation>Do you want to save your changes?</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1191"/>
+        <location filename="../../ui/mainwin.cpp" line="1197"/>
         <source>Your project has been modified.</source>
         <translation>Your project has been modified.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1205"/>
+        <location filename="../../ui/mainwin.cpp" line="1211"/>
         <source>Your project and your skin have been modified.</source>
         <translation>Your project and your skin have been modified.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1231"/>
+        <location filename="../../ui/mainwin.cpp" line="1237"/>
         <source>You are opening a project made with a version of EZWebGallery more recent than this one. Some parameters may get lost.</source>
         <translation>You are opening a project made with a version of EZWebGallery more recent than this one. Some parameters may get lost.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1316"/>
+        <location filename="../../ui/mainwin.cpp" line="1322"/>
         <source>this directory does not exist.</source>
         <translation>this directory does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="849"/>
+        <location filename="../../ui/mainwin.cpp" line="855"/>
         <source>Invalid directory.</source>
         <translation>Invalid directory.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="182"/>
+        <location filename="../../ui/mainwin.cpp" line="187"/>
         <source>Forced Stop</source>
         <translation>Forced Stop</translation>
     </message>
@@ -639,7 +638,7 @@ Using default skin instead.</translation>
         <translation type="vanished">Generation cancelled.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="225"/>
+        <location filename="../../ui/mainwin.cpp" line="230"/>
         <source>Generation successfully completed.</source>
         <translation>Generation successfully completed.</translation>
     </message>
@@ -648,15 +647,15 @@ Using default skin instead.</translation>
         <translation type="obsolete">The provided output directory does not exist.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1317"/>
+        <location filename="../../ui/mainwin.cpp" line="1323"/>
         <source>Do you want to create it ?</source>
         <translation>Do you want to create it ?</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="191"/>
-        <location filename="../../ui/mainwin.cpp" line="599"/>
-        <location filename="../../ui/mainwin.cpp" line="921"/>
-        <location filename="../../ui/mainwin.cpp" line="1330"/>
+        <location filename="../../ui/mainwin.cpp" line="196"/>
+        <location filename="../../ui/mainwin.cpp" line="605"/>
+        <location filename="../../ui/mainwin.cpp" line="927"/>
+        <location filename="../../ui/mainwin.cpp" line="1336"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
@@ -669,23 +668,23 @@ Using default skin instead.</translation>
         <translation type="obsolete">The input directory is empty !</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="964"/>
+        <location filename="../../ui/mainwin.cpp" line="970"/>
         <source>Canceling...</source>
         <translation>Canceling...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="991"/>
+        <location filename="../../ui/mainwin.cpp" line="997"/>
         <source>No preview available.</source>
         <translation>No preview available.</translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.ui" line="2224"/>
-        <location filename="../../ui/mainwin.cpp" line="1135"/>
+        <location filename="../../ui/mainwin.cpp" line="1141"/>
         <source>&amp;Generate</source>
         <translation>&amp;Generate</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1141"/>
+        <location filename="../../ui/mainwin.cpp" line="1147"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancel</translation>
     </message>
@@ -1374,7 +1373,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../ui/mainwin.ui" line="2421"/>
-        <location filename="../../ui/mainwin.cpp" line="758"/>
+        <location filename="../../ui/mainwin.cpp" line="764"/>
         <source>About ImageMagick</source>
         <translation>About ImageMagick</translation>
     </message>
@@ -1686,9 +1685,13 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">about:blank</translation>
     </message>
     <message>
-        <location filename="../../ui/WinPreview.ui" line="26"/>
         <source>PREVIEW</source>
-        <translation>PREVIEW</translation>
+        <translation type="vanished">PREVIEW</translation>
+    </message>
+    <message>
+        <location filename="../../ui/WinPreview.ui" line="26"/>
+        <source>PREVIEW (!!experimental!!)</source>
+        <translation>PREVIEW (!!experimental!!)</translation>
     </message>
     <message>
         <location filename="../../ui/WinPreview.ui" line="73"/>

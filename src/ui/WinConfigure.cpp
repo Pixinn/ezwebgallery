@@ -152,30 +152,6 @@ void WinConfigure::onCancel( )
     close();
 }
 
-/*************************
-* enablePreview( )
-* ---------------
-* Enabling previewing
-*************************/
-void WinConfigure::enablePreview(const bool enabled)
-{
-    //Disable the choice in the combolist
-    auto model = qobject_cast<const QStandardItemModel*>(m_ui->comboBox_AfterProduction->model());
-    auto item = model->item(OPEN_PREVIEW);
-    item->setFlags(!enabled ? item->flags() & ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled) \
-                            : Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-    item->setData(!enabled ? m_ui->comboBox_AfterProduction->palette().color(QPalette::Disabled, QPalette::Text) \
-                            : QVariant(), // clear item data in order to use default color
-                            Qt::TextColorRole);
-    //Change the choice if necessary
-    if ( !enabled && 
-        m_ui->comboBox_AfterProduction->currentIndex() == OPEN_PREVIEW
-       )
-    {
-        m_ui->comboBox_AfterProduction->setCurrentIndex(OPEN_FOLDER);
-    }
-}
-
 
 /*************************
 * onEnablePreview( )
@@ -184,7 +160,25 @@ void WinConfigure::enablePreview(const bool enabled)
 *************************/
 void WinConfigure::onEnablePreview(int state)
 {
-    enablePreview(state == Qt::Checked);
+    const bool enabled = (state == Qt::Checked);
+    
+    //Disable the choice in the combolist
+    auto model = qobject_cast<const QStandardItemModel*>(m_ui->comboBox_AfterProduction->model());
+    auto item = model->item(OPEN_PREVIEW);
+    item->setFlags(!enabled ? item->flags() & ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled) \
+        : Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    item->setData(!enabled ? m_ui->comboBox_AfterProduction->palette().color(QPalette::Disabled, QPalette::Text) \
+        : QVariant(), // clear item data in order to use default color
+        Qt::TextColorRole);
+    //Change the choice if necessary
+    if (!enabled &&
+        m_ui->comboBox_AfterProduction->currentIndex() == OPEN_PREVIEW
+        )
+    {
+        m_ui->comboBox_AfterProduction->setCurrentIndex(OPEN_FOLDER);
+    }
+
+    emit enablePreview(enabled);
 }
 
 

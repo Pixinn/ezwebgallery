@@ -136,6 +136,7 @@ public slots:
     //Generation
     void generateGallery( void );
     //-- externes
+    void onEnablePreview(bool);
     void onLogMsg( PtrMessage );
     void onProgressBar( int completion, QString color, PtrMessage msg, int timeout = 0 );
     void onGalleryGenerationFinished( QList<CPhotoProperties>  );

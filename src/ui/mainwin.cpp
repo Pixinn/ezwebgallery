@@ -170,6 +170,11 @@ void MainWin::onProgressBar( int completion, QString color, PtrMessage msg, int 
     CLogger::getInstance().log( PtrMessage(new CMessage( msg->message() )) );
 }
 
+void MainWin::onEnablePreview(bool enabled)
+{
+    m_ui->action_Preview->setEnabled(enabled && !m_projectParameters.m_photosConfig.f_regeneration);
+}
+
 void MainWin::onLogMsg( PtrMessage msg )
 {
     m_p_logDisplay->setTextColor( msg->color() );
@@ -307,9 +312,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& proje
     connect( this->m_ui->action_OnlineManual, SIGNAL(triggered()), this, SLOT(onlineManual()));
     connect( this->m_ui->action_About, SIGNAL(triggered()), this, SLOT(about()));
     connect( this->m_ui->action_AboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-    connect( this->m_ui->action_AboutImageMagick, SIGNAL(triggered()), this, SLOT(aboutImageMagick()));
-    //Traductions    
-    connect( m_p_configureWindow, SIGNAL( languageChanged() ), &m_languageManager, SLOT(translate()) );
+    connect( this->m_ui->action_AboutImageMagick, SIGNAL(triggered()), this, SLOT(aboutImageMagick()));    
     //Répertoire source
     connect( this->m_ui->pushButton_SourceFolder, SIGNAL(clicked()), this, SLOT(choosePhotosDir()));
     connect( this->m_ui->lineEdit_SourceFolder, SIGNAL(editingFinished()), this, SLOT(choosePhotosDirManually()));
@@ -347,6 +350,9 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& proje
     connect( this->m_ui->comboBox_WatermarkType, SIGNAL(activated(int)), this, SLOT(watermarkTypeChanged(int)) );
     connect( this->m_ui->groupBox_Watermark, SIGNAL(toggled(bool)), this, SLOT(watermarkGroupChecked(bool)) );
     connect( this->m_ui->checkBox_WatermarkTextColorAuto, SIGNAL(stateChanged(int)), this, SLOT(watermarkAutoColorChecked(int)));    
+    //Preferences
+    connect(m_p_configureWindow, SIGNAL(languageChanged()), &m_languageManager, SLOT(translate()));
+    connect(m_p_configureWindow, SIGNAL(enablePreview(bool)), this, SLOT(onEnablePreview(bool)));
 }
 
 MainWin::~MainWin()

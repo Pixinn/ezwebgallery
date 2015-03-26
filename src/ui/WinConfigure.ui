@@ -75,9 +75,6 @@
        </item>
        <item row="2" column="1">
         <widget class="QComboBox" name="comboBox_AfterProduction">
-         <property name="currentText">
-          <string>Open the output folder</string>
-         </property>
          <item>
           <property name="text">
            <string>Open the output folder</string>
@@ -121,6 +118,12 @@
       <widget class="QCheckBox" name="checkBox_EnablePreview">
        <property name="text">
         <string>Enable galery previewing (experimental, may close the program!)</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+       <property name="tristate">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

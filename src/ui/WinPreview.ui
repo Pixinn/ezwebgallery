@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>PREVIEW</string>
+   <string>PREVIEW (!!experimental!!)</string>
   </property>
   <property name="iconSize">
    <size>
