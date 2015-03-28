@@ -154,8 +154,11 @@ Section "Uninstall"
   
   ; Delete Files
   Delete "$INSTDIR\*.*"
-  RMDir /r "$INSTDIR\imageformats"; /recursive
-  RMDir /r "$INSTDIR\platforms"; /recursive
+  RMDir /r "$INSTDIR\bearer" ; /recursive
+  RMDir /r "$INSTDIR\iconengines"
+  RMDir /r "$INSTDIR\imageformats"
+  RMDir /r "$INSTDIR\platforms"
+  RMDir /r "$INSTDIR\qtwebengine_locales"
   RMDir /r "$INSTDIR\data"
   ;non recursive because user could have personnal skins here
   Delete "$INSTDIR\skins\Autumn.skin"

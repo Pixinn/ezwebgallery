@@ -77,12 +77,12 @@
         <widget class="QComboBox" name="comboBox_AfterProduction">
          <item>
           <property name="text">
-           <string>Open the output folder</string>
+           <string>Display the gallery</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Display the gallery</string>
+           <string>Open the output folder</string>
           </property>
          </item>
          <item>

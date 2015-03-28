@@ -51,39 +51,7 @@ md %TEMPDIR%\skins
 xcopy /e ..\Skins %TEMPDIR%\skins\
 
 REM --- COPYING DLL TO TEMP DIR
-copy %QTDIR%\bin\Qt5Core.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5Gui.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5Widgets.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5Xml.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5Multimedia.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5MultimediaWidgets.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5Network.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5OpenGL.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5Positioning.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5PrintSupport.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5Qml.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5Quick.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5Sensors.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5Sql.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5WebChannel.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5WebEngine.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5WebEngineCore.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5WebEngineWidgets.dll %TEMPDIR%
-copy %QTDIR%\bin\Qt5WebChannel.dll %TEMPDIR%
-copy %QTDIR%\bin\icudt53.dll %TEMPDIR%
-copy %QTDIR%\bin\icuin53.dll %TEMPDIR%
-copy %QTDIR%\bin\icuuc53.dll %TEMPDIR%
-copy %QTDIR%\bin\libEGL.dll %TEMPDIR%
-copy %QTDIR%\bin\libGLESv2.dll %TEMPDIR%
-md   %TEMPDIR%\imageformats
-copy %QTDIR%\plugins\imageformats\qgif.dll %TEMPDIR%\imageformats
-copy %QTDIR%\plugins\imageformats\qico.dll %TEMPDIR%\imageformats
-copy %QTDIR%\plugins\imageformats\qjpeg.dll %TEMPDIR%\imageformats
-copy %QTDIR%\plugins\imageformats\qmng.dll %TEMPDIR%\imageformats
-copy %QTDIR%\plugins\imageformats\qsvg.dll %TEMPDIR%\imageformats
-copy %QTDIR%\plugins\imageformats\qtiff.dll %TEMPDIR%\imageformats
-md   %TEMPDIR%\platforms
-copy %QTDIR%\plugins\platforms\qwindows.dll %TEMPDIR%\platforms
+windeployqt --release --dir %TEMPDIR% --no-compiler-runtime %2
 
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_bzlib_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_jpeg_.dll %TEMPDIR%

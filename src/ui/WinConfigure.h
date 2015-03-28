@@ -34,9 +34,9 @@ class WinConfigure : public QDialog
     Q_OBJECT
 
 private:
-    enum {
-        OPEN_FOLDER = 0,
-        OPEN_PREVIEW,
+    enum {        
+        OPEN_PREVIEW = 0,
+        OPEN_FOLDER ,
         DO_NOTHING
     };
 
@@ -49,6 +49,9 @@ public:
     bool previewGallery();
     bool openGalleryFolder();
     bool openMostRecentProject();
+    inline bool isPreviewGalleryAllowed() {
+        return m_ui->checkBox_EnablePreview->isChecked();
+    }
 
     /********* SLOTS ********/
 public slots:

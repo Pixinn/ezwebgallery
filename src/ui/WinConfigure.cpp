@@ -79,7 +79,7 @@ int WinConfigure::exec()
     //action after generation
     QSettings settings;
     if (settings.contains(SETTINGS_AFTERGENERATION)) {     //On doit test si la clef est contenue : ce n'est pas le cas au 1er lancement...
-        enablePreview(m_ui->checkBox_EnablePreview->isChecked());
+        onEnablePreview(m_ui->checkBox_EnablePreview->checkState());
         auto idx = settings.value(SETTINGS_AFTERGENERATION).toInt();
         m_ui->comboBox_AfterProduction->setCurrentIndex(idx);
     }

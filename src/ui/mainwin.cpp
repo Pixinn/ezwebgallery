@@ -229,7 +229,7 @@ void MainWin::onGalleryGenerationFinished( QList<CPhotoProperties> propertiesLis
     swapButtons( ); //Bouton "cancel" redevient "generate" et réactivation des actions
     m_ui->statusbar->showMessage( tr("Generation successfully completed."), 7000 );
 
-    m_ui->action_Preview->setDisabled(false);
+    m_ui->action_Preview->setEnabled(m_p_configureWindow->isPreviewGalleryAllowed());
     m_ui->action_OpenGalleryFolder->setDisabled(false);
     
     //Afterwards action?
