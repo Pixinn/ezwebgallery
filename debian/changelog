@@ -1,5 +1,6 @@
-ezwebgallery (0.56-0ubuntu1) saucy; urgency=low
+ezwebgallery (0.57-0ubuntu1) saucy; urgency=low
 
-    * Adding a preview window
+    * Better touch support
+    * Preview using chromium on windows and webkit on Linux
 
- -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Mon, 19 Fev 2015 00:12:11 +0100
+ -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Fri, 20 Mar 2015 23:47:11 +0100

@@ -56,7 +56,7 @@ unix|macx {
 
 LIBS += -lMagick++ -lMagickCore -lMagickWand
 
-UI_DIR = $${PWD}/src/ui
+#UI_DIR = $${PWD}/src/ui
 
 INCLUDEPATH +=  ./src \
                 ./src/generation \

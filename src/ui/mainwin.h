@@ -101,6 +101,8 @@ public slots:
     void onOpenRecentSession( void );
     bool onSaveSession( void );
     bool onSaveSessionAs( void );
+    void onPreviewGallery(void);
+    void onOpenGalleryFolder(void);
     void onHiDPI( int );
     void onManualPhotoConf( int );
     void showTagsWindow( void );
@@ -134,6 +136,7 @@ public slots:
     //Generation
     void generateGallery( void );
     //-- externes
+    void onEnablePreview(bool);
     void onLogMsg( PtrMessage );
     void onProgressBar( int completion, QString color, PtrMessage msg, int timeout = 0 );
     void onGalleryGenerationFinished( QList<CPhotoProperties>  );
@@ -146,6 +149,8 @@ public slots:
     void warning( PtrMessage );         //A warning occured
     void information( PtrMessage );     //Display an iformative message
 
+signals:
+    void generationInProgress(void);
 
 /******** ATTRIBUTS *********/
 private:

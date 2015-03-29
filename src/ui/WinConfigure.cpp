@@ -20,6 +20,7 @@
 #include <QSettings>
 #include <QStringList>
 #include <QPushButton>
+#include <QStandardItemModel>
 
 #include "WinConfigure.h"
 #include "GlobalDefinitions.h"
@@ -43,10 +44,15 @@ WinConfigure::WinConfigure( QWidget* parent )
         bool openPjt = (settings.value(SETTINGS_OPENMOSTRECENTPJT).toInt() == 1);
         m_ui->checkBox_RecentProject->setChecked(openPjt);
     }
+    if (settings.contains(SETTINGS_ENABLEPREVIEW)) {
+        bool openPjt = (settings.value(SETTINGS_ENABLEPREVIEW).toInt() == 1);
+        m_ui->checkBox_EnablePreview->setChecked(openPjt);
+    }
 
     //---- Connnections
     connect( this->m_ui->buttonBox, SIGNAL(accepted( )), this, SLOT(onOK()) );
     connect( this->m_ui->buttonBox, SIGNAL(rejected( )), this, SLOT(onCancel()) );
+    connect(this->m_ui->checkBox_EnablePreview, SIGNAL(stateChanged(int)), this, SLOT(onEnablePreview(int)));
 
 }
 
@@ -72,8 +78,10 @@ int WinConfigure::exec()
     m_ui->comboBox_Language->setCurrentIndex( currentLangIndex );
     //action after generation
     QSettings settings;
-    if (settings.contains(SETTINGS_AFTERGENERATION)) { //On doit test si la clef est contenue : ce n'est pas le cas au 1er lancement...
-        m_ui->comboBox_AfterProduction->setCurrentIndex(settings.value(SETTINGS_AFTERGENERATION).toInt());
+    if (settings.contains(SETTINGS_AFTERGENERATION)) {     //On doit test si la clef est contenue : ce n'est pas le cas au 1er lancement...
+        onEnablePreview(m_ui->checkBox_EnablePreview->checkState());
+        auto idx = settings.value(SETTINGS_AFTERGENERATION).toInt();
+        m_ui->comboBox_AfterProduction->setCurrentIndex(idx);
     }
 
     return QDialog::exec();
@@ -121,9 +129,8 @@ void WinConfigure::onOK( )
     QString newLanguage = CLanguageManager::languageCode( m_ui->comboBox_Language->currentText() );
 
     //sauvegarde de la config
-    int openPjt = 0;
-    if (m_ui->checkBox_RecentProject->isChecked()) {    openPjt = 1;      }
-    settings->setValue(SETTINGS_OPENMOSTRECENTPJT, openPjt);
+    settings->setValue(SETTINGS_OPENMOSTRECENTPJT, m_ui->checkBox_RecentProject->isChecked() ? 1 : 0);
+    settings->setValue(SETTINGS_ENABLEPREVIEW, m_ui->checkBox_EnablePreview->isChecked() ? 1 : 0);
     settings->setValue( SETTINGS_AFTERGENERATION, (int)m_ui->comboBox_AfterProduction->currentIndex() );
     if( currentLanguage != newLanguage ) { //seulement si la langue change
         settings->setValue( SETTINGS_LANGUAGE, newLanguage );
@@ -145,6 +152,34 @@ void WinConfigure::onCancel( )
     close();
 }
 
+
+/*************************
+* onEnablePreview( )
+* ---------------
+* Checkbox enabling previewing was modified
+*************************/
+void WinConfigure::onEnablePreview(int state)
+{
+    const bool enabled = (state == Qt::Checked);
+    
+    //Disable the choice in the combolist
+    auto model = qobject_cast<const QStandardItemModel*>(m_ui->comboBox_AfterProduction->model());
+    auto item = model->item(OPEN_PREVIEW);
+    item->setFlags(!enabled ? item->flags() & ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled) \
+        : Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    item->setData(!enabled ? m_ui->comboBox_AfterProduction->palette().color(QPalette::Disabled, QPalette::Text) \
+        : QVariant(), // clear item data in order to use default color
+        Qt::TextColorRole);
+    //Change the choice if necessary
+    if (!enabled &&
+        m_ui->comboBox_AfterProduction->currentIndex() == OPEN_PREVIEW
+        )
+    {
+        m_ui->comboBox_AfterProduction->setCurrentIndex(OPEN_FOLDER);
+    }
+
+    emit enablePreview(enabled);
+}
 
 
 /*************************

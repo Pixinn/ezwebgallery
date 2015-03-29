@@ -30,6 +30,7 @@
 #define SETTINGS_RECENTSKINS        "Recent Skins List"
 #define SETTINGS_LANGUAGE           "Prefered Language"
 #define SETTINGS_OPENMOSTRECENTPJT  "Open Most Recent Project"
+#define SETTINGS_ENABLEPREVIEW      "Enable Preview"
 #define SETTINGS_AFTERGENERATION    "Action after producing the gallery"
 
 /*** GUI ***/

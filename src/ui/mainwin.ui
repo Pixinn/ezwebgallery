@@ -2056,6 +2056,7 @@ p, li { white-space: pre-wrap; }
 &lt;table border=&quot;0&quot; style=&quot;-qt-table-type: root; margin-top:4px; margin-bottom:4px; margin-left:4px; margin-right:4px;&quot;&gt;
 &lt;tr&gt;
 &lt;td style=&quot;border: none;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -2327,6 +2328,9 @@ Use it if photos were added or removed.</string>
    <addaction name="action_DisplayTags"/>
    <addaction name="action_ShowLogWindow"/>
    <addaction name="separator"/>
+   <addaction name="action_Preview"/>
+   <addaction name="action_OpenGalleryFolder"/>
+   <addaction name="separator"/>
    <addaction name="action_Configure"/>
    <addaction name="action_OnlineManual"/>
   </widget>
@@ -2448,6 +2452,30 @@ Use it if photos were added or removed.</string>
    </property>
    <property name="toolTip">
     <string>Configure EZWebGallery</string>
+   </property>
+  </action>
+  <action name="action_OpenGalleryFolder">
+   <property name="icon">
+    <iconset resource="../resources/GalleryDesigner.qrc">
+     <normaloff>:/icons/images/folder-image.png</normaloff>:/icons/images/folder-image.png</iconset>
+   </property>
+   <property name="text">
+    <string>_OpenGalleryFolder</string>
+   </property>
+   <property name="toolTip">
+    <string>Open the folder of the produced gallery</string>
+   </property>
+  </action>
+  <action name="action_Preview">
+   <property name="icon">
+    <iconset resource="../resources/GalleryDesigner.qrc">
+     <normaloff>:/icons/images/emblem-photos.png</normaloff>:/icons/images/emblem-photos.png</iconset>
+   </property>
+   <property name="text">
+    <string>_Preview</string>
+   </property>
+   <property name="toolTip">
+    <string>Preview the gallery</string>
    </property>
   </action>
  </widget>
