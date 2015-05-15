@@ -134,6 +134,8 @@ class CPhoto : public CMagick
         static const QString EXIFflash;
         static const QString EXIFisoSpeedRatings;
 
+        static const QString TAGname;
+        static const QString TAGheadline;
         static const QString TAGcaption;
         static const QString TAGcountry;
         static const QString TAGcity;

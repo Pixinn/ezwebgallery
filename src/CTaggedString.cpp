@@ -41,6 +41,9 @@ const QString CTaggedString::TAGexposureProgram("[EXIF:ExposureProgram]");
 const QString CTaggedString::TAGflash("[EXIF:Flash]");
 const QString CTaggedString::TAGisoSpeedRatings("[EXIF:Iso]");
 //Iptc
+//Read this spec for explanations on fields: https://www.iptc.org/std/IIM/4.1/specification/IIMV4.1.pdf
+const QString CTaggedString::TAGname("[IPTC:Name]");
+const QString CTaggedString::TAGheadline( "[IPTC:Headline]" );
 const QString CTaggedString::TAGcaption("[IPTC:Caption]");
 const QString CTaggedString::TAGcountry("[IPTC:Country]");
 const QString CTaggedString::TAGcity("[IPTC:City]");

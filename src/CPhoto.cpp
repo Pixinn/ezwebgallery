@@ -389,6 +389,8 @@ const QString CPhoto::EXIFflash("EXIF:Flash");
 const QString CPhoto::EXIFisoSpeedRatings("EXIF:ISOSpeedRatings");
 
 //For IPTC Code, see http://www.imagemagick.org/script/escape.php and http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/IPTC.html
+const QString CPhoto::TAGname( "IPTC:2:05" );
+const QString CPhoto::TAGheadline( "IPTC:2:105" );
 const QString CPhoto::TAGcaption("IPTC:2:120");
 const QString CPhoto::TAGcountry("IPTC:2:101");
 const QString CPhoto::TAGcity("IPTC:2:90");
@@ -794,6 +796,8 @@ void CPhoto::readExifTags( )
     m_exifTags.insert( CTaggedString::TAGexposureTime,    rationalToDoubleStr( attribute( EXIFexposureTime.toLatin1().constData() ).c_str()) + QString("s") );
     m_exifTags.insert( CTaggedString::TAGfNumber,         QString("f/") + rationalToDoubleStr( attribute( EXIFfNumber.toLatin1().constData() ).c_str()) );
     m_exifTags.insert( CTaggedString::TAGisoSpeedRatings, QString( attribute( EXIFisoSpeedRatings.toLatin1().constData() ).c_str()) );
+    m_exifTags.insert( CTaggedString::TAGname,          QString::fromUtf8( attribute( TAGname.toLatin1().constData() ).c_str() ) );
+    m_exifTags.insert( CTaggedString::TAGheadline,      QString::fromUtf8( attribute( TAGheadline.toLatin1().constData() ).c_str() ) );
     m_exifTags.insert( CTaggedString::TAGcaption,        QString::fromUtf8( attribute( TAGcaption.toLatin1().constData() ).c_str()) );
     m_exifTags.insert( CTaggedString::TAGcountry,        QString::fromUtf8(attribute( TAGcountry.toLatin1().constData() ).c_str()) );
     m_exifTags.insert( CTaggedString::TAGcity,           QString::fromUtf8(attribute( TAGcity.toLatin1().constData() ).c_str()) );

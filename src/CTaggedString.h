@@ -53,6 +53,8 @@ public:
         static const QString TAGflash;
         static const QString TAGisoSpeedRatings;
         //Iptc
+        static const QString TAGname;
+        static const QString TAGheadline;
         static const QString TAGcaption;
         static const QString TAGcountry;
         static const QString TAGcity;
