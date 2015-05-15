@@ -1,6 +1,5 @@
-ezwebgallery (0.57-0ubuntu1) saucy; urgency=low
+ezwebgallery (0.58-0ubuntu1) saucy; urgency=low
 
-    * Better touch support
-    * Preview using chromium on windows and webkit on Linux
+    * Supporting Name and Headline IPTC tag
 
- -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Fri, 20 Mar 2015 23:47:11 +0100
+ -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Fri, 15 May 2015 23:47:11 +0100
