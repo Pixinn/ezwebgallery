@@ -63,7 +63,10 @@ INCLUDEPATH +=  ./src \
                 ./src/widgets \
                 ./src/ui \
                 ./src/global
-unix:INCLUDEPATH += /usr/include/ImageMagick/
+#On Linux Magick++ include files location are give by Magick++-config
+unix {
+    QMAKE_CXXFLAGS += `Magick++-config --cppflags`
+}
 macx:INCLUDEPATH += /usr/local/include/ImageMagick/
 
 DEPENDPATH += ./src/widgets

@@ -1,5 +1,5 @@
-ezwebgallery (0.58-0ubuntu1) saucy; urgency=low
+ezwebgallery (0.58-1ubuntu1) saucy; urgency=low
 
-    * Supporting Name and Headline IPTC tag
+    * Modifications to build on Ubuntu Vivid
 
- -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Fri, 15 May 2015 23:47:11 +0100
+ -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Fri, 16 May 2015 22:15:11 +0100
