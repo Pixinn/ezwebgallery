@@ -2,7 +2,7 @@ source: ezwebgallery
 Section: utils
 Priority: optional
 Maintainer: Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>
-Build-Depends: build-essential, qt5-default, libqt5webkit5-dev, libmagick++-dev, cdbs, debhelper (>= 8)
+Build-Depends: build-essential, pkg-config, qt5-default, libqt5webkit5-dev, libmagick++-dev, cdbs, debhelper (>= 8)
 Standards-Version: 3.9.3
 Homepage: http://www.ezwebgallery.org
 

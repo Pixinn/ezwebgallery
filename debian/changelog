@@ -1,5 +1,5 @@
-ezwebgallery (0.58-1ubuntu1) saucy; urgency=low
+ezwebgallery (0.58-2ubuntu1) saucy; urgency=low
 
-    * Modifications to build on Ubuntu Vivid
+    * Corrections to build using pkg-config
 
- -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Fri, 16 May 2015 22:15:11 +0100
+ -- Christophe Meneboeuf (XtoF) <xtof@ezwebgallery.org>  Fri, 17 May 2015 19:55:11 +0100

@@ -54,8 +54,6 @@ unix|macx {
     }
 }
 
-LIBS += -lMagick++ -lMagickCore -lMagickWand
-
 #UI_DIR = $${PWD}/src/ui
 
 INCLUDEPATH +=  ./src \
@@ -65,9 +63,11 @@ INCLUDEPATH +=  ./src \
                 ./src/global
 #On Linux Magick++ include files location are give by Magick++-config
 unix {
-    QMAKE_CXXFLAGS += `Magick++-config --cppflags`
+    QMAKE_CXXFLAGS += `pkg-config Magick++ --cflags`
+    LIBS += `pkg-config Magick++ --libs`
 }
-macx:INCLUDEPATH += /usr/local/include/ImageMagick/
+win32:LIBS += -lMagick++ -lMagickCore -lMagickWand
+#macx:INCLUDEPATH += /usr/local/include/ImageMagick/
 
 DEPENDPATH += ./src/widgets
 
