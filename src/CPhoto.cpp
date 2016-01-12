@@ -294,8 +294,8 @@ void CWatermark::setTaggedString( CTaggedString inText, QFont inFont, QColor inC
 void CWatermark::setOpacity( const unsigned int opacity )
 {
     PixelPacket* pixel;
-    int nbCols;
-    int nbRows;
+    size_t nbCols;
+    size_t nbRows;
     
     if( opacity != 100 )
     {
@@ -452,12 +452,12 @@ bool CPhoto::watermark(CWatermark watermarkImage, int position, int orientation,
 {
     bool f_success;
     Geometry watermarkSize;
-    int watermarkLength;
+    size_t watermarkLength;
     size_t newWatermarkWidth;
     size_t newWatermarkHeight;
     QRect watermarkRectangle;
     Geometry photoSize;
-    int photoLength;
+    size_t photoLength;
     GravityType gravity;
     qreal scaleFactor;
     qreal realRelativeSize;
@@ -501,48 +501,48 @@ bool CPhoto::watermark(CWatermark watermarkImage, int position, int orientation,
         {
         case t_watermark::SOUTHEAST:
             gravity = SouthEastGravity;
-            watermarkRectangle = QRect( photoSize.width() - newWatermarkWidth, photoSize.height() - newWatermarkHeight,
-                                        newWatermarkWidth, newWatermarkHeight );
+            watermarkRectangle = QRect(static_cast<int>(photoSize.width() - newWatermarkWidth), static_cast<int>(photoSize.height() - newWatermarkHeight),
+                static_cast<int>(newWatermarkWidth), static_cast<int>(newWatermarkHeight));
             break;
         case t_watermark::SOUTH:
             gravity = SouthGravity;
-             watermarkRectangle = QRect( photoSize.width()/2 - newWatermarkWidth/2, photoSize.height() - newWatermarkHeight,
-                                        newWatermarkWidth, newWatermarkHeight );
+            watermarkRectangle = QRect(static_cast<int>(photoSize.width() / 2u - newWatermarkWidth / 2u), static_cast<int>(photoSize.height() - newWatermarkHeight),
+                static_cast<int>(newWatermarkWidth), static_cast<int>(newWatermarkHeight));
             break;
         case t_watermark::SOUTHWEST:
             gravity = SouthWestGravity;
-             watermarkRectangle = QRect( 0, photoSize.height() - newWatermarkHeight,
-                                        newWatermarkWidth, newWatermarkHeight );            
+            watermarkRectangle = QRect(0u, static_cast<int>(photoSize.height() - newWatermarkHeight),
+                static_cast<int>(newWatermarkWidth), static_cast<int>(newWatermarkHeight));
             break;
         case t_watermark::WEST:
             gravity = WestGravity;
-             watermarkRectangle = QRect( 0, photoSize.height()/2 - newWatermarkHeight/2,
-                                        newWatermarkWidth, newWatermarkHeight );            
+            watermarkRectangle = QRect(0u, static_cast<int>(photoSize.height() / 2u - newWatermarkHeight / 2u),
+                static_cast<int>(newWatermarkWidth), static_cast<int>(newWatermarkHeight));
             break;
         case t_watermark::NORTHWEST:
             gravity = NorthWestGravity;
-             watermarkRectangle = QRect( 0, 0,
-                                        newWatermarkWidth, newWatermarkHeight );            
+             watermarkRectangle = QRect( 0u, 0u,
+                 static_cast<int>(newWatermarkWidth), static_cast<int>(newWatermarkHeight));
             break;
         case t_watermark::NORTH:
             gravity = NorthGravity;
-             watermarkRectangle = QRect( photoSize.width()/2 - newWatermarkWidth/2, 0,
-                                        newWatermarkWidth, newWatermarkHeight );            
+            watermarkRectangle = QRect(static_cast<int>(photoSize.width() / 2 - newWatermarkWidth / 2u), 0u,
+                static_cast<int>(newWatermarkWidth), static_cast<int>(newWatermarkHeight));
             break;
         case t_watermark::NORTHEAST:
             gravity = NorthEastGravity;
-             watermarkRectangle = QRect( photoSize.width() - newWatermarkWidth, 0,
-                                        newWatermarkWidth, newWatermarkHeight );            
+            watermarkRectangle = QRect(static_cast<int>(photoSize.width() - newWatermarkWidth), 0u,
+                static_cast<int>(newWatermarkWidth), static_cast<int>(newWatermarkHeight));
             break;
         case t_watermark::EAST:
             gravity = EastGravity;
-             watermarkRectangle = QRect( photoSize.width() - newWatermarkWidth, photoSize.height()/2 - newWatermarkHeight/2,
-                                        newWatermarkWidth, newWatermarkHeight );            
+            watermarkRectangle = QRect(static_cast<int>(photoSize.width() - newWatermarkWidth), static_cast<int>(photoSize.height() / 2u - newWatermarkHeight / 2u),
+                static_cast<int>(newWatermarkWidth), static_cast<int>(newWatermarkHeight));
             break;
         default:
             gravity = CenterGravity;
-             watermarkRectangle = QRect( photoSize.width()/2 - newWatermarkWidth/2, photoSize.height()/2 - newWatermarkHeight/2,
-                                        newWatermarkWidth, newWatermarkHeight );            
+            watermarkRectangle = QRect(static_cast<int>(photoSize.width() / 2u - newWatermarkWidth / 2u), static_cast<int>(photoSize.height() / 2u - newWatermarkHeight / 2u),
+                static_cast<int>(newWatermarkWidth), static_cast<int>(newWatermarkHeight));
             break;
         }
 
@@ -747,7 +747,7 @@ void CPhoto::removeMetadata( )
 ********************************************************************/
 QSize CPhoto::size()
 {
-    return QSize( Image::size().width(), Image::size().height() );
+    return QSize(static_cast<int>(Image::size().width()), static_cast<int>(Image::size().height()));
 }
 
 /*******************************************************************
@@ -760,7 +760,7 @@ QImage CPhoto::qimage(  )
 
     const PixelPacket* pixels;
     ColorRGB rgb;
-    QImage newQImage = QImage( this->columns(), this->rows(), QImage::Format_RGB32);
+    QImage newQImage = QImage(static_cast<int>(this->columns()), static_cast<int>(this->rows()), QImage::Format_RGB32);
 
     for( int y = 0; y < newQImage.height(); y++ ) //Pour chaque ligne
     {
