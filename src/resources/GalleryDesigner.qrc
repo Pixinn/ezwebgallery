@@ -3,6 +3,11 @@
     <file>languages/GalleryDesigner_fr.qm</file>
     <file>languages/GalleryDesigner_en.qm</file>
   </qresource>
+  <qresource prefix="/toolbar">
+    <file>../../web/resources/images/toolbar_icon_black_fullscreen.png</file>
+    <file>../../web/resources/images/toolbar_icon_black_map.png</file>
+    <file>../../web/resources/images/toolbar_icon_black_share.png</file>
+  </qresource>
   <qresource prefix="/icons">
     <file>images/emblem-photos.png</file>
     <file>images/folder-image.png</file>
