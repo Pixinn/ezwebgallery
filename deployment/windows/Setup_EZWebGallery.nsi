@@ -131,10 +131,10 @@ Function InstallVcRedist
 
     SetOutPath '$TEMP'
     SetOverwrite on    
-    File "vcredist_x86.exe"
-    ExecWait '"$TEMP\vcredist_x86.exe" /norestart /nq' $VCREDISTRETURNED
+    File "vcredist_x64.exe"
+    ExecWait '"$TEMP\vcredist_x64.exe" /norestart /nq' $VCREDISTRETURNED
     DetailPrint "Visual C++ 2013 redistributable installer returned $VCREDISTRETURNED"
-    Delete "$TEMP\vcredist_x86.exe"
+    Delete "$TEMP\vcredist_x64.exe"
     
     ${If} $VCREDISTRETURNED != 0
         Abort 'Abording: "Visual C++ 2013 redistributable" was not installed.'
