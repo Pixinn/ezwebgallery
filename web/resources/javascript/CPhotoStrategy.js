@@ -56,7 +56,7 @@ function CPhotoStrategy( p_properties )
     //Returning the first photo > biggest dimension
     this.getBiggerImage = function( numPhoto )
     {     
-    
+        TOOLS.trace( "getBiggerImage" );
         var f_OK = false;
         var sizes = that.properties.photos.list[ numPhoto - 1].sizes;
         var suitableSizes = new Object();
@@ -95,6 +95,7 @@ function CPhotoStrategy( p_properties )
     //Return the first fitting in the available space
     this.getSmallerImage = function( numPhoto )
     {
+        TOOLS.trace("getSmallerImage");
         var f_OK = false;
         var sizes = that.properties.photos.list[ numPhoto - 1].sizes;
         var suitableSizes = new Object();
@@ -127,9 +128,9 @@ function CPhotoStrategy( p_properties )
     }
     
     // +++++ Strategy
-    this.getImageStrategyStr = {
-        0: that.getSmallerImage,
-        1: that.getBiggerImage
+    this.getImageStrategyStr = {        
+        0: that.getBiggerImage,
+        1: that.getSmallerImage,
     };
     
     //++++ Init

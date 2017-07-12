@@ -134,8 +134,8 @@ public:
     //Ces énumérations doivent correspondre Ã  la position des items dans les comboboxs
     enum e_optimizationStrategy
     {
-        OPTIMIZE_QUALITY = 0,
-        OPTIMIZE_SCREENUSAGE
+        OPTIMIZE_SCREENUSAGE = 0,
+        OPTIMIZE_QUALITY    
     };
 
 }; //Configuration des photos
