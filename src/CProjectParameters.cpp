@@ -223,7 +223,7 @@ void CProjectParameters::fromUi( /*const Ui::MainWin* const ui */)
     m_galleryConfig.outputDir = m_p_ui->lineEdit_DestinationFolder->text();
     m_galleryConfig.url = m_p_ui->lineEdit_URL->text();
     m_galleryConfig.f_rightClickEnabled = m_p_ui->checkBox_clicDroitAutorise->isChecked();
-    m_galleryConfig.f_shareOnSocialNetworks = m_p_ui->checkBox_SocialNetworks->isChecked();
+    m_galleryConfig.f_shareOnSocialNetworks = m_p_ui->checkBox_ButtonShare->isChecked();
 
     //Remplissage structure Config Vignettes
     m_thumbsConfig.nbColumns = m_p_ui->spinBox_ThumbNbCol->value();
@@ -514,7 +514,7 @@ void CProjectParameters::toUi( )
     m_p_ui->lineEdit_DestinationFolder->setText( m_galleryConfig.outputDir );
     m_p_ui->lineEdit_URL->setText( m_galleryConfig.url );
     m_p_ui->checkBox_clicDroitAutorise->setChecked( m_galleryConfig.f_rightClickEnabled );
-    m_p_ui->checkBox_SocialNetworks->setChecked( m_galleryConfig.f_shareOnSocialNetworks );
+    m_p_ui->checkBox_ButtonShare->setChecked( m_galleryConfig.f_shareOnSocialNetworks );
 
     //Lecture structure Config Vignettes
     m_p_ui->spinBox_ThumbNbCol->setValue( m_thumbsConfig.nbColumns );
