@@ -65,6 +65,7 @@ public:
     void toUi(  ) /*const*/;                                               //Rempli l'UI = affichage des paramtres
     CCssSheet toCss( ) const;                                          //Cr une feuille de style CSS
     QString buttonImage( int ) const;                                  //Renvoie le nom du fichier de l'icone dsire
+    QString toolbar() const;                                            //REnvoie le code HTML pour la toolbar
     QDomDocument toDomDocument( ) /*const*/;                               //Gnre un QDomDocument rempli des paramtres
     QSize mosaicDecoration( unsigned int );        //Returns space used by the mosaic decoration on the index page
 
@@ -95,8 +96,7 @@ public:
     //Boutons
     enum Buttons{ //Sert  passer un paramtre  la fonction buttonImage( int )
         buttonNext = 0,
-        buttonPrevious,
-        toolbar
+        buttonPrevious
     };
 
 private:

@@ -607,7 +607,7 @@ bool CGalleryGenerator::skinning( )
                                             <script type=\"text/javascript\">var addthis_config = { services_compact: \'facebook, twitter, google_plusone_share, pinterest, email, more\', services_exclude: \'print, printfriendly\', ui_offset_top: 10, ui_offset_left: 25 }</script>\n \
                                             <script type=\"text/javascript\" src=\"http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-50aab6894a58676c\"></script>");
             htmlString.replace( "[BUTTON_ADDTHIS]", addthisString );
-        }else{
+        } else{
             htmlString.remove( "[BUTTON_ADDTHIS]" );
         }
 
@@ -618,7 +618,7 @@ bool CGalleryGenerator::skinning( )
 
         //------ BOUTONS (SCREEN PHOTO) -------//
         //Toolbar
-        htmlString.replace( "[TOOLBAR]", m_skinParameters.buttonImage( CSkinParameters::toolbar ) );
+        htmlString.replace( "[TOOLBAR]", m_skinParameters.toolbar() );
         //Previous
         htmlString.replace( "[BUTTON_PREVIOUSPHOTO]", QString("<img alt=\"") + tr("Previous photo")
                                                                 +QString("\" class=\"photoButtonEnabled\" id=\"boutonPrevious\" src=\"resources/images/")

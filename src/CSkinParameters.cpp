@@ -839,11 +839,6 @@ QString CSkinParameters::buttonImage( int button ) const
     case CSkinParameters::buttonPrevious:
         resource = m_resources.value("PhotoButtonPrevious").fileName();
         break;
-    case CSkinParameters::toolbar:        
-        cssPath << "div#cadrePhoto";
-        photoFrame = m_styleSheet.selection( cssPath );
-        resource = CToolbarStyleFactory::GetInstance().getStyle( photoFrame.property("background-color") ).getHtml();
-        break;
     default:
         resource = QString("Error");
     }
@@ -852,4 +847,17 @@ QString CSkinParameters::buttonImage( int button ) const
 }
 
 
+
+/*******************************************************************
+* buttonImage( int button )
+* ------------------------
+* Renvoie le code HTML de la toolbar
+********************************************************************/
+QString CSkinParameters::toolbar() const
+{
+    QStringList cssPath;
+    cssPath << "div#cadrePhoto";
+    auto photoFrame = m_styleSheet.selection(cssPath);
+    return CToolbarStyleFactory::GetInstance().getStyle(photoFrame.property("background-color")).getHtml();
+}
 
