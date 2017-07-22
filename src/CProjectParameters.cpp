@@ -44,7 +44,7 @@ bool t_galleryConf::operator==(const t_galleryConf& source)
         //&& f_regeneration == source.f_regeneration  Ne pas le comparer, car modifi automatique lors de la gnration
         && skinPath == source.skinPath
         && thumbPhoto == source.thumbPhoto
-        && f_shareOnSocialNetworks == source.f_shareOnSocialNetworks  )        
+        && f_buttonShare == source.f_buttonShare  )        
     { return true; }
     else{
         return false;
@@ -223,7 +223,8 @@ void CProjectParameters::fromUi( /*const Ui::MainWin* const ui */)
     m_galleryConfig.outputDir = m_p_ui->lineEdit_DestinationFolder->text();
     m_galleryConfig.url = m_p_ui->lineEdit_URL->text();
     m_galleryConfig.f_rightClickEnabled = m_p_ui->checkBox_clicDroitAutorise->isChecked();
-    m_galleryConfig.f_shareOnSocialNetworks = m_p_ui->checkBox_ButtonShare->isChecked();
+    m_galleryConfig.f_buttonShare = m_p_ui->checkBox_ButtonShare->isChecked();
+    m_galleryConfig.f_buttonFullscreen = m_p_ui->checkBox_ButtonFullscreen->isChecked();
 
     //Remplissage structure Config Vignettes
     m_thumbsConfig.nbColumns = m_p_ui->spinBox_ThumbNbCol->value();
@@ -307,7 +308,7 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     m_galleryConfig.skinPath = galleryConfElem.firstChildElement( "Skin" ).firstChildElement( "Path" ).text();
     m_p_skin->setName( galleryConfElem.firstChildElement( "Skin" ).attribute("name") );
     m_galleryConfig.thumbPhoto = galleryConfElem.firstChildElement( "thumbnail" ).text();
-    m_galleryConfig.f_shareOnSocialNetworks = galleryConfElem.firstChildElement( "shareOnSocialNetworks" ).text().toInt();
+    m_galleryConfig.f_buttonShare = galleryConfElem.firstChildElement( "shareOnSocialNetworks" ).text().toInt();
 
     //--- CONFIG THUMBS
     m_thumbsConfig.nbColumns = thumbsConfElem.firstChildElement( "nbColumns" ).text().toInt();
@@ -414,7 +415,7 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
     galleryConfig.appendChild( thumbnail );
     QDomElement shareOnSocialNetworks = document.createElement( "shareOnSocialNetworks" );
     galleryConfig.appendChild( shareOnSocialNetworks );
-    shareOnSocialNetworks.appendChild( document.createTextNode( QString::number(m_galleryConfig.f_shareOnSocialNetworks) ) );
+    shareOnSocialNetworks.appendChild( document.createTextNode( QString::number(m_galleryConfig.f_buttonShare) ) );
 
     //--- CONFIG THUMB
     QDomElement thumbsConfig  = document.createElement( "ThumbsConfig" );
@@ -514,7 +515,8 @@ void CProjectParameters::toUi( )
     m_p_ui->lineEdit_DestinationFolder->setText( m_galleryConfig.outputDir );
     m_p_ui->lineEdit_URL->setText( m_galleryConfig.url );
     m_p_ui->checkBox_clicDroitAutorise->setChecked( m_galleryConfig.f_rightClickEnabled );
-    m_p_ui->checkBox_ButtonShare->setChecked( m_galleryConfig.f_shareOnSocialNetworks );
+    m_p_ui->checkBox_ButtonShare->setChecked( m_galleryConfig.f_buttonShare );
+    m_p_ui->checkBox_ButtonFullscreen->setChecked(m_galleryConfig.f_buttonFullscreen);
 
     //Lecture structure Config Vignettes
     m_p_ui->spinBox_ThumbNbCol->setValue( m_thumbsConfig.nbColumns );

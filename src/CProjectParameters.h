@@ -99,7 +99,8 @@ public:
     int nbPhotosToPrefetch;
     int prefetchCacheSize;     
     bool f_rightClickEnabled;    
-    bool f_shareOnSocialNetworks;
+    bool f_buttonShare;
+    bool f_buttonFullscreen;
 
     bool f_regeneration;
 }; //Configuration gnrale de la gallerie

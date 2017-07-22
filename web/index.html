@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html> 
+﻿<!DOCTYPE html>
 <html>
     <head>
         [HTML_TITLE]
@@ -15,7 +15,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-        
+
         <link rel="stylesheet" TYPE="text/css" HREF="resources/css/common.css">
         <link rel="stylesheet" TYPE="text/css" HREF="resources/css/index.css">
         <link rel="stylesheet" TYPE="text/css" HREF="resources/css/image.css">
@@ -24,6 +24,7 @@
 
         <!-- L'ordre des inclsions est important ! !-->
         <script type="text/javascript" src="resources/javascript/modernizr/modernizr.custom.js"></script>
+        <script type="text/javascript" src="resources/javascript/screenfull/screenfull.min.js"></script>
         <!--[if lt IE 9]>
             <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
             <script src="resources/javascript/jquery/jquery-1.x-min.js"></script>
@@ -36,8 +37,8 @@
         <script type="text/javascript" src="resources/javascript/hammer/hammer-min.js"></script>
         <script type="text/javascript" src="resources/javascript/jquery/plugins/jquery.hammer.js"></script>
 
-        <script type="text/javascript" src="resources/parameters.json"></script> 
-        
+        <script type="text/javascript" src="resources/parameters.json"></script>
+
 
         <script type="text/javascript" src="resources/javascript/CEvent.js"></script>
         <script type="text/javascript" src="resources/javascript/CHashTable.js"></script>
@@ -59,7 +60,7 @@
         <script type="text/javascript" src="resources/javascript/start.js"></script>
 
         <script type="text/javascript" src="resources/javascript/Toolbar.js"></script>
-        
+
     </head>
 
     <body>
@@ -69,11 +70,11 @@
                     Loading...<p></p>
                     <div id="progressbar"></div>
                 </div>
-        </div>        
+        </div>
 
-        
+
         <div id="screenShare" class="fullScreen">
-            <div class="toolbar">             
+            <div class="toolbar">
                 [TOOLBAR]
             </div>
             <div id="wrapper_share">
@@ -81,7 +82,7 @@
                 <div class="a2a_kit a2a_kit_size_96 a2a_default_style">
                 <a class="a2a_button_facebook addtoany_button"></a>
                 <a class="a2a_button_twitter addtoany_button"></a>
-                <a class="a2a_button_baidu addtoany_button"></a>                                
+                <a class="a2a_button_baidu addtoany_button"></a>
                 <a class="a2a_button_reddit addtoany_button"></a>
                 <a class="a2a_button_whatsapp addtoany_button"></a>
                 <a class="a2a_button_pinterest addtoany_button"></a>
@@ -91,27 +92,27 @@
                 <!-- AddToAny END -->
             </div>
         </div>
-        
-        
+
+
         <!-- ****************** !-->
         <!-- DIV AFFICHAGE INDEX !-->
         <!-- Div absolute recouvrant tout l'écran !-->
         <!-- Pour les blocks internes, permet d'avoir un layout normal sans utilise *absolute* !-->
         <!-- Permet à l'élement d'afficher/cacher tous ces blocs d'un seul coup !-->
 
-        
+
         <div id="screenIndex"  class="fullScreen" >
-            <div class="toolbar">        
+            <div class="toolbar">
             [TOOLBAR]
             </div>
             <div id="wrapper_mosaic" class="centralZone">
-                <div id="mosaic" >           
+                <div id="mosaic" >
                     <div id="indexTitle">[CONTENT_TITLE]</div>  <!-- TITRE !-->
-                    <!-- VIGNETTES !--> 
+                    <!-- VIGNETTES !-->
                 </div>
             </div>
         </div><!-- ScreenIndex !-->
-            
+
         <!-- ****************** !-->
 
         <!-- ****************** !-->
@@ -128,12 +129,12 @@
                  cf. http://www.alsacreations.com/tuto/lire/588-design-trois-colonnes-positionnement-flottant.html !-->
             <div  class="leftZone" id="photoLefter"> <!-- A gauche de la photo !-->
                 [BUTTON_PREVIOUSPHOTO]
-            </div> 
+            </div>
             <div class="rightZone" id="photoRighter"><!-- A droite de la photo !-->
                 [BUTTON_NEXTPHOTO]
-            </div> 
+            </div>
             <!-- Zone centrale pour affichage de la photo !-->
-            <div class="centralZone" id="wrapperAffichagePhoto">	
+            <div class="centralZone" id="wrapperAffichagePhoto">
                 <div id="photoViewport">
                     <div id="slidesContainer">
                         <div class="slide" id="previousSlide">
@@ -142,7 +143,7 @@
                         <div class="slide" id="currentSlide">
                             <div id="cadrePhoto">
                                 <div id="divPhoto">
-                                    <!-- runtime generated content !-->                        
+                                    <!-- runtime generated content !-->
                                 </div>
                                 <div class="photoCaption">
                                     <!-- runtime generated content !-->
@@ -152,7 +153,7 @@
                         <div class="slide" id="nextSlide">
                             <!-- runtime generated content !-->
                         </div>
-                    </div>		
+                    </div>
                 </div>
             </div>
         </div> <!-- screenPhoto !-->
@@ -163,7 +164,7 @@
         <div>
             <img src="images/galleryThumbnail.jpg" style="display:none" />
         </div>
-        
+
         <div id="DEBUG"></div>
 
     </body>

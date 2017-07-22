@@ -22,6 +22,7 @@ md %DATADIR%\data\resources\javascript\jquery
 md %DATADIR%\data\resources\javascript\jquery\plugins
 md %DATADIR%\data\resources\javascript\hammer
 md %DATADIR%\data\resources\javascript\modernizr
+md %DATADIR%\data\resources\javascript\screenfull
 md %DATADIR%\data\resources\javascript\tools
 
 REM --- MINIMZING JS
@@ -40,6 +41,7 @@ copy "..\Web\resources\javascript\jquery\*.js" %DATADIR%\data\resources\javascri
 copy "..\Web\resources\javascript\jquery\plugins\*.js" %DATADIR%\data\resources\javascript\jquery\plugins
 copy "..\Web\resources\javascript\hammer\*.js" %DATADIR%\data\resources\javascript\hammer
 copy "..\Web\resources\javascript\modernizr\*.js" %DATADIR%\data\resources\javascript\modernizr
+copy "..\Web\resources\javascript\screenfull\*.js" %DATADIR%\data\resources\javascript\screenfull
 copy "..\Web\resources\javascript\tools\*.js" %DATADIR%\data\resources\javascript\tools
 
 

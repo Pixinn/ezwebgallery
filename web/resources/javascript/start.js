@@ -37,14 +37,14 @@ TOOLS = {
         $("#DEBUG").append( msg )
                    .show();
     },
-    
-    
+
+
 }
 
 /*
  * Pseudo plugin JQuery pour centrer un objet verticalement dans son parent
- * On peut passer un décalage en paramètre pour ajuster le calcul si l'objet n'est pas seul dans son parent
- * !! -> Nécessite un objet en position RELATIVE !!
+ * On peut passer un dï¿½calage en paramï¿½tre pour ajuster le calcul si l'objet n'est pas seul dans son parent
+ * !! -> Nï¿½cessite un objet en position RELATIVE !!
  */
 jQuery.fn.verticalCenter = function( offset ) {
   return this.each(function(  ){
@@ -72,14 +72,14 @@ jQuery.fn.fit = function( width ) {
     var ratio = obj.width() / obj.height();
     obj.width( width )
         .height( width / ratio );
-     
+
   });
 };
 
 //Never called as attr("src",...) are not ajax loadings
 $(document).ajaxError( function()
 {
-    TOOLS.trace("Error ajax: " + $(this).attr("src") );                            
+    TOOLS.trace("Error ajax: " + $(this).attr("src") );
 });
 
 
@@ -87,21 +87,22 @@ $(document).ajaxError( function()
 $(document).ready(function()
 {
     g_properties.defines = Defines;
-    
-    HtmlStructure = 
+
+    HtmlStructure =
     {
     $window : $(window),
     progressBar : {
         $screen : $("#screenProgress"),
         $box : $("#progressbarWrapper"),
-        $bar : $("#progressbar")        
+        $bar : $("#progressbar")
     },
     toolbar : {
+        $buttonFullscreen: $(".button_screen"),
         $buttonShare: $(".button_share"),
         $buttonIndex:  $(".button_browse")
     },
     share : {
-        $screen : $("#screenShare"), 
+        $screen : $("#screenShare"),
         $wrapper : $("#wrapper_share"),
         $buttons : $(".addtoany_button")
     },
@@ -128,7 +129,7 @@ $(document).ready(function()
         }
        }
     };
-    
+
     HtmlStructure.index.$screen.find(".button_browse").css("opacity","0.4")
                                                     .css("filter","alpha(opacity=40)");
 
@@ -145,13 +146,13 @@ $(document).ready(function()
           HtmlStructure.progressBar.$screen.remove(  );
           delete HtmlStructure.progressBar.$screen;
     } );
-    
-    var Display = new CDisplay( g_properties, HtmlStructure );    
+
+    var Display = new CDisplay( g_properties, HtmlStructure );
     var UserHandler; //Managing user events
-    
+
     // --- ENTERING THIS FUNCTION WHEN THE THUMBNAILS ARE LOADED
     Mosaic.getLoadedEvent().subscribe( function()
-    {   
+    {
         //at this point, HtmlStructure must be *completed* !
         //Handling user' interractions
         UserHandler = new CUserInterractions( g_properties, HtmlStructure );
@@ -164,14 +165,14 @@ $(document).ready(function()
         Display.getEnableUISignal().subscribe( UserHandler.enablePreviousNext );
         Display.getScrollingEvent().subscribe( UserHandler.onScrolling );
         Display.getScrolledEvent().subscribe( UserHandler.onScrolled );
-        
+
         //Subscribing to user events
         UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );
         UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( parseInt(this.id) ); } ); //this, will be the object clicked
         //UserHandler.getClosePhotoEvent().subscribe( Display.hidePhoto );
-        UserHandler.getPreviousPhotoEvent().subscribe( Display.onPrevious );        
+        UserHandler.getPreviousPhotoEvent().subscribe( Display.onPrevious );
         UserHandler.getNextPhotoEvent().subscribe( Display.onNext );
-        
+
         //Display according to URL
         Display.displayCurrentUrl(); // --> STARTING POINT FOR THE USER <--
     });
@@ -180,7 +181,7 @@ $(document).ready(function()
     //$.getScript( "//static.addtoany.com/menu/page.js",  Display.buttonShare.enable );
 
     //Building the mosaic / Loading the thumbnails
-    progressBar.show();    
+    progressBar.show();
     HtmlStructure = Mosaic.buildHtml(); //loads the thumbnails and build the html
 
 } );

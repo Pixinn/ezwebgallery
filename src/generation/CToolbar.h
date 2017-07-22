@@ -91,7 +91,8 @@ class CToolbarBehavior
 public:
     //optional buttons
     typedef struct {
-        bool share;
+        bool share = false;
+        bool fullscreen = false;
     } t_Buttons;
 
     explicit CToolbarBehavior( const t_Buttons& );
@@ -102,10 +103,12 @@ public:
 private:
     const static QString SHARE_BUTTON;
     const static QString SHARE_SCREEN;
+    const static QString FULLSCREEN_BUTTON;
 
     QString m_toolbarJs;
     QString m_shareButtonJs;
     QString m_shareScreenJs;
+    QString m_fullscreenButtonJs;
     t_Buttons m_buttons;
 };
 

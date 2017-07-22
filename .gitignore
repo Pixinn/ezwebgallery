@@ -4,6 +4,7 @@ build/
 ./src/ezwebgallery.sdf
 ./src/GeneratedFiles
 ./src/builddate.h
+src/builddate.h
 ./src/ezwebgallery.pro.user
 ./src/EZWebGallery.sdf
 ./src/EZWebGallery.suo

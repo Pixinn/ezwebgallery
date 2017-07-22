@@ -143,7 +143,9 @@ bool CGalleryGenerator::generateGallery( const CGalleryGeneratorFeeder & gallery
 
         //-- Init
         m_skinParameters = m_feeder.getSkinParams();
-        m_toolbarButtons.share = m_feeder.getProjectParams().m_galleryConfig.f_shareOnSocialNetworks;
+        const auto& param = m_feeder.getProjectParams();
+        m_toolbarButtons.share = param.m_galleryConfig.f_buttonShare;
+        m_toolbarButtons.fullscreen = param.m_galleryConfig.f_buttonFullscreen;
         displayProgressBar( 0, "green", PtrMessage(new CMessage( tr("Initialization...") )) );
 
         //-- Start
@@ -602,7 +604,7 @@ bool CGalleryGenerator::skinning( )
                                                             + tr("Photo gallery designed and generated using EZWebGallery.")
                                                             + QString("\" alt=\"EZWebGallery\"/>") );
 		//Add-this
-        if( m_feeder.getProjectParams().m_galleryConfig.f_shareOnSocialNetworks ){
+        if( m_feeder.getProjectParams().m_galleryConfig.f_buttonShare ){
             QString addthisString = QString("<a class=\"addthis_button\" href=\"http://www.addthis.com/bookmark.php?v=300&amp;pubid=xa-50aab6894a58676c\"><img src=\"http://s7.addthis.com/static/btn/v2/lg-share-en.gif\" width=\"125\" height=\"16\" alt=\"Bookmark and Share\" style=\"border:0\"/></a>\n \
                                             <script type=\"text/javascript\">var addthis_config = { services_compact: \'facebook, twitter, google_plusone_share, pinterest, email, more\', services_exclude: \'print, printfriendly\', ui_offset_top: 10, ui_offset_left: 25 }</script>\n \
                                             <script type=\"text/javascript\" src=\"http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-50aab6894a58676c\"></script>");
