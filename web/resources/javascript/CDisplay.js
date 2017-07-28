@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function CDisplay( p_properties, p_htmlStructure )
+function CDisplay( p_properties, p_htmlStructure)
 {
     var that = this;
     this.html = p_htmlStructure;
@@ -33,12 +33,12 @@ function CDisplay( p_properties, p_htmlStructure )
     this.enableUISignal = new CEvent();
     this.displayedPhotoLoadedEvent = new CEvent();
     this.availableSpace = {h: 0, w:0};
-    
+
     $(".display_optional").hide(); //Hiding all optional items
 
     this.deck = new CDeck();
-    this.toolbar = Toolbar( p_htmlStructure );
-        
+    this.toolbar = Toolbar( p_htmlStructure);
+
     that.deck.moveOnTop( that.toolbar.screenIndex );
     that.toolbar.screenPhoto.eventOnHiding.subscribe( function() { that.hidePhoto(); } );
 
@@ -54,7 +54,7 @@ function CDisplay( p_properties, p_htmlStructure )
 
 
     // ++++ Methods ++++ //
-    
+
     this.displayCurrentUrl = function()
     {
         that.url.display( that.displayPhoto );
@@ -67,22 +67,22 @@ function CDisplay( p_properties, p_htmlStructure )
         that.toolbar.screenPhoto.display();
         that.html.photo.buttons.$next.verticalCenter( that.computeToolbarTopHeigth()/2 );
         that.html.photo.buttons.$previous.css("top",  that.html.photo.buttons.$next.css("top") ); //no v center on previous to correct an ie8 bug
-        
+
         that.setSpace( that.computeAvailableSpace() );
         that.load( id, that.carrousel.load );
-        
+
         that.photoScreenEvent.fire();
     }
 
     //back to index
-    this.hidePhoto = function( ) 
+    this.hidePhoto = function( )
     {
         TOOLS.trace("hidePhoto");
         //that.url.clearHash();
         var $thumbBox =  that.html.index.mosaic.$thumbBoxes.eq( that.idCurrentPhoto - 1 );
         that.indexScreenEvent.fire( $thumbBox );
     }
-    
+
 
     //+++ EVENTS
 
@@ -90,32 +90,32 @@ function CDisplay( p_properties, p_htmlStructure )
     {
         return that.displayedPhotoLoadedEvent;
     }
-    
+
     this.getPhotoScreenEvent = function()
     {
         return that.photoScreenEvent;
     }
-    
+
     this.getIndexScreenEvent = function()
     {
         return that.indexScreenEvent
-    } 
-    
+    }
+
     this.getDisableUISignal = function()
     {
         return that.disableUISignal;
     }
-    
+
     this.getEnableUISignal = function()
     {
         return that.enableUISignal;
     }
-    
+
     this.getScrollingEvent = function()
     {
         return that.carrousel.getScrollingEvent();
     }
-    
+
     this.getScrolledEvent = function()
     {
         return that.carrousel.getScrolledEvent();
@@ -138,12 +138,12 @@ function CDisplay( p_properties, p_htmlStructure )
     this.onPhotoDisplayedLoaded = function()
     {
         that.displayedPhotoLoadedEvent.fire( this );
-        that.fitPhoto( this );        
+        that.fitPhoto( this );
     }
     that.carrousel.getPhotoDisplayedLoadedEvent().subscribe( this.onPhotoDisplayedLoaded );
-    
+
     //+++ Private
-    
+
     this.setSpace = function( space )
     {
         var mySpace = {};
@@ -152,18 +152,18 @@ function CDisplay( p_properties, p_htmlStructure )
         that.availableSpace = mySpace;
         that.carrousel.setSpace( mySpace );
     }
-    
+
     this.load = function( id, loadFct ) //loadFct( id ) : function used to fetch the photo
     {
         that.disableUISignal.fire();
         var photo = loadFct( id ); //must be placed *after* the fadein or the dimensions will be incorrectly computed
         if( photo.isLoaded() == true ) {
-            that.displayedPhotoLoadedEvent.fire( photo );            
+            that.displayedPhotoLoadedEvent.fire( photo );
         }
         that.fitPhoto( photo );
     }
-    
-    
+
+
     //+++ Computing the maximal available size on screen
     this.computeAvailableSpace = function( )
     {
@@ -190,7 +190,7 @@ function CDisplay( p_properties, p_htmlStructure )
     {
         var ratio = photo.nativeSize.h / photo.nativeSize.w;
         var newPhotoSz = {};
-        
+
         //Finding the biggest rectangle fitting in the available space
         if( ratio > 1 ) { //vertical photo
             newPhotoSz.h = that.availableSpace.h;
@@ -206,9 +206,9 @@ function CDisplay( p_properties, p_htmlStructure )
             if( newPhotoSz.h  > that.availableSpace.h ) {
                 newPhotoSz.h = that.availableSpace.h;
                 newPhotoSz.w = Math.round( newPhotoSz.h / ratio );
-            }        
+            }
         }
-        
+
         var toolbarHeight_2 = that.computeToolbarTopHeigth() / 2; //<<-- IT SHOULDN'T BE NECESSARY TO OFFSET THE VERTICAL CENTERING!!!
         //resizing (capped) and vertical centering the photo
         photo.resize( newPhotoSz );
@@ -217,15 +217,15 @@ function CDisplay( p_properties, p_htmlStructure )
         that.html.photo.$frame.width( that.html.photo.$div.outerWidth() )
                                         .height( that.html.photo.$div.outerHeight() + that.html.photo.$caption.outerHeight() )
                                         .css("position","relative")
-                                        .verticalCenter( toolbarHeight_2 );   
+                                        .verticalCenter( toolbarHeight_2 );
 
         photo.verticalCenter( 0 );  //inside its frame
-        
+
     }
-    
+
     //Computes the height of the toolbar on the top.
     //0 if vertical toolbar
-    this.computeToolbarTopHeigth = function() 
+    this.computeToolbarTopHeigth = function()
     {
         //Toolbar height
         var toolbarHeight = $(".toolbar").filter(":visible").outerHeight();

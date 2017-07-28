@@ -5,27 +5,30 @@ function Toolbar( p_htmlStructure )
     var that = this;
     this.html = p_htmlStructure;
     this.deck = new CDeck();
+    this.buttons = [];
 
-    that.isFullscreenButton = p_htmlStructure.toolbar.$buttonFullscreen.length != 0; ///< Is the optional fullscreen button present?
+
+    // Shows optional buttons
+    this.showButtons = function()
+    {
+        $.each(that.buttons, function( index, button ) {
+            button.onLoaded();
+        });
+    }
+
+
 
     this.buttonIndex = new CButtonToolbar( {    $handle: p_htmlStructure.toolbar.$buttonIndex,
-                                                onClick: function()
-                                                {
-                                                //   if (that.isFullscreenButton && screenfull.enabled)  //using screenfull.js
-                                                //   {
-                                                //     if( screenfull.isFullscreen ) {
-                                                //       that.buttonFullscreen.click();
-                                                //       p_htmlStructure.toolbar.$buttonFullscreen.attr("fs_requested","true");
-                                                //     }
-                                                //     else {
-                                                //       p_htmlStructure.toolbar.$buttonFullscreen.attr("fs_requested","false");
-                                                //     }
-                                                //   }
-                                                  that.screenIndex.display();
-                                                  //that.buttonFullscreen.disable();
+                                                onClick: function() {
+                                                    that.screenIndex.display();
+                                                },
+                                                onLoaded: function() {
+                                                    this.$handle.show();
                                                 }
-                                           }
-                                         );
+                                           } );
+
+     this.buttons.push(this.buttonIndex);
+     this.buttonIndex.$handle.hide();
 
     [FULLSCREEN_BUTTON]
 
@@ -56,7 +59,8 @@ function Toolbar( p_htmlStructure )
 
     return {
         screenIndex: this.screenIndex,
-        screenPhoto: this.screenPhoto
+        screenPhoto: this.screenPhoto,
+        showButtons: this.showButtons
     }
 
 }

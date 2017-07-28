@@ -52,6 +52,7 @@ src/builddate.h
 *.tlog
 moc_*.cpp
 qrc_*.cpp
+*.bak
 src/widgets/Makefile
 ezwebgallery.opensdf
 ezwebgallery.sdf

@@ -159,15 +159,20 @@ $(document).ready(function()
         UserHandler.start();
         Display.getPhotoDisplayedLoadedEvent().subscribe( function() { UserHandler.onPhotoDisplayedLoaded( this.id ); } );
         Display.getPhotoScreenEvent().subscribe( UserHandler.onPhotoScreen );
-        Display.getIndexScreenEvent().subscribe( function() { Mosaic.show( this ); } );
+        Display.getIndexScreenEvent().subscribe( function() {
+            Mosaic.show( this );
+            Mosaic.resize();
+        } );
         Display.getIndexScreenEvent().subscribe( UserHandler.onIndexScreen );
         Display.getDisableUISignal().subscribe( UserHandler.disablePreviousNext );
         Display.getEnableUISignal().subscribe( UserHandler.enablePreviousNext );
         Display.getScrollingEvent().subscribe( UserHandler.onScrolling );
         Display.getScrolledEvent().subscribe( UserHandler.onScrolled );
 
+        Display.toolbar.showButtons();
+
         //Subscribing to user events
-        UserHandler.getWindowResizedEvent().subscribe( Mosaic.onResize );
+        UserHandler.getWindowResizedEvent().subscribe( function() { Mosaic.resize(); } ); // Mosaic.resize() is VERY slow
         UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( parseInt(this.id) ); } ); //this, will be the object clicked
         //UserHandler.getClosePhotoEvent().subscribe( Display.hidePhoto );
         UserHandler.getPreviousPhotoEvent().subscribe( Display.onPrevious );

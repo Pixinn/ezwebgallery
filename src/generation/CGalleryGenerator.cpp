@@ -450,7 +450,7 @@ bool CGalleryGenerator::generateJsFiles( )
     const unsigned int nbCols =  m_feeder.getProjectParams().m_thumbsConfig.nbColumns;
     const QSize unavailableSpace = m_skinParameters.mosaicDecoration( nbCols );
     mosaic.addNumber( "nbCols",  nbCols);
-    mosaic.addString( "defaultSet", QString(RESOLUTIONPATH) + ("8") );
+    mosaic.addString( "defaultSet", QString(RESOLUTIONPATH) + ("1") );
     Object& sizes = mosaic.addObject( "sizes" );
     foreach( QSize size, m_feeder.getThumbSizes() ) {
         sizes.addNumber( m_feeder.getThumbSizes().key(size), size.width() );

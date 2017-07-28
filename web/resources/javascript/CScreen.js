@@ -20,16 +20,16 @@ function CDeck()
 {
     var that = this;
     this.storage = new Array();
-    
+
     this.add = function( screen )   {
         that.storage.push( screen );
     }
-        
+
     this.getTop = function( )
     {
         return that.storage[ that.storage.length - 1 ];
     }
-   
+
     this.moveOnTop = function( screen )
     {
         var idx = that.storage.indexOf( screen );
@@ -40,7 +40,7 @@ function CDeck()
             that.storage[ idx ] = oldScrTop;
         }
     }
-    
+
     this.removeFromTop = function()
     {
         //swapping the topmost with the one beaneath it
@@ -50,7 +50,7 @@ function CDeck()
             that.storage[ idxTop ] = that.storage[ idxTop - 1 ];
             that.storage[ idxTop - 1 ] = oldScrTop;
         }
-        
+
     }
 }
 
@@ -66,18 +66,18 @@ function CScreen( p_options )
     this.eventOnDisplayed = new CEvent();
     this.eventOnHiding = new CEvent();
     this.eventOnHidden = new CEvent();
-    
-    
+
+
     this.display = function()
     {
         if( that.buttonScreen !== "undefined" ) {
             that.buttonScreen.disable();
         }
         that.$handle.css("z-index","100")
-                    .fadeIn( "fast", function() 
-                    {           
+                    .fadeIn( "fast", function()
+                    {
                         for ( var i = 0; i < that.listButtonsOther.length; i++)
-                        {  
+                        {
                             if( typeof that.listButtonsOther[ i ] !== "undefined" ) {
                             that.listButtonsOther[ i ].enable();
                         }
@@ -89,8 +89,8 @@ function CScreen( p_options )
                     } );
         that.eventOnDisplaying.fire();
     }
-    
-    
+
+
     this.hide = function()
     {
         that.eventOnHiding.fire();
@@ -105,8 +105,9 @@ function CButtonToolbar( p_options )
 {
     var that = this;
     that.$handle = p_options.$handle;
-    that.onClick = p_options.onClick;
-    if( typeof p_options.script !== "undefined" && p_options.script.indexOf("//") != -1 ) {    
+    that.onClick = p_options.onClick;   // When clicking on the button
+    that.onLoaded = p_options.onLoaded;  // When the Index is fully loaded
+    if( typeof p_options.script !== "undefined" && p_options.script.indexOf("//") != -1 ) {
         that.script = p_options.script;
         that.isLocked = true; //locked until the script is loaded
      }
@@ -114,7 +115,7 @@ function CButtonToolbar( p_options )
         that.script = "undefined";
         that.isLocked = false;
     }
-    
+
     this.enable = function()
     {
         if( !that.isLocked ) {
@@ -124,15 +125,15 @@ function CButtonToolbar( p_options )
                     .click( that.onClick );
     }
     }
-    
+
     this.disable = function()
     {
         that.$handle.css( "opacity", "0.4")
                     .css( "cursor", "not-allowed" )
                     .unbind();
     }
-    
-    
+
+
     if( that.script != "undefined" ) {
         $.getScript( that.script,
                 function() {
