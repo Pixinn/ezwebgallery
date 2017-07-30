@@ -1,9 +1,10 @@
 
 // Buttons AND SCREENS!
-function Toolbar( p_htmlStructure )
+function Toolbar( p_htmlStructure, p_user_interactions  )
 {
     var that = this;
     this.html = p_htmlStructure;
+    this.ui = p_user_interactions;
     this.deck = new CDeck();
     this.buttons = [];
 
@@ -40,6 +41,10 @@ function Toolbar( p_htmlStructure )
                                       buttonScreen: that.buttonIndex
                                     }
                                   );
+    this.screenIndex.eventOnDisplaying.subscribe( function() {
+        Mosaic.redraw();
+        that.ui.onIndexScreen();
+    } );
     that.deck.add( that.screenIndex );
 
     this.screenPhoto = new CScreen( { $handle: that.html.photo.$screen,

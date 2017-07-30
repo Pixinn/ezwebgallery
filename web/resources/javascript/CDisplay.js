@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function CDisplay( p_properties, p_htmlStructure)
+function CDisplay( p_properties, p_htmlStructure, user_interactions)
 {
     var that = this;
     this.html = p_htmlStructure;
@@ -37,7 +37,7 @@ function CDisplay( p_properties, p_htmlStructure)
     $(".display_optional").hide(); //Hiding all optional items
 
     this.deck = new CDeck();
-    this.toolbar = Toolbar( p_htmlStructure);
+    this.toolbar = Toolbar( p_htmlStructure, user_interactions);
 
     that.deck.moveOnTop( that.toolbar.screenIndex );
     that.toolbar.screenPhoto.eventOnHiding.subscribe( function() { that.hidePhoto(); } );

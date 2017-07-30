@@ -78,7 +78,7 @@ function CMosaic( p_properties, p_htmlStructure )
         that.ratioThumbboxeBorders = $thumbBoxes.eq(0).css("border-left-width").replace("px", "") / that.htmlStructure.index.mosaic.$handle.width();
         that.ratioThumbnailBorders = $thumbnails.eq(0).css("border-left-width").replace("px", "") / that.htmlStructure.index.mosaic.$handle.width();
 
-        that.resize();
+        that.redraw();
     };
 
     //showing the mosaic
@@ -140,7 +140,7 @@ function CMosaic( p_properties, p_htmlStructure )
 
     // Resize the mosaic and all its elements to fit the display
     // This is a *SLOW* function -> call it with care
-    this.resize = function()
+    this.redraw = function()
     {
         var $thumbBoxes = that.htmlStructure.index.mosaic.$thumbBoxes;
         var $thumbnails = that.htmlStructure.index.mosaic.$thumbnails;
@@ -187,29 +187,6 @@ function CMosaic( p_properties, p_htmlStructure )
             }
             heightMosaic += heightMax;
         }
-        // Adjusting Thumbboxes' sizes - Mean height
-        // var nbLines = Math.ceil(that.mosaicNbThumbnails / that.properties.index.mosaic.nbCols);
-        // var idx = 0;
-        // var idxLine = 0;
-        // var nbThumbsLeft = that.mosaicNbThumbnails;
-        // for(var i = 0; i < nbLines; ++i) {
-        //     var heights = 0;
-        //     var idxLine = idx;
-        //     var nbThumbs = Math.min(that.properties.index.mosaic.nbCols, nbThumbsLeft);
-        //     // Find max height of the line
-        //     for( var j = 0; j < nbThumbs; ++j) {
-        //         var $thumb = $thumbnails.eq(idx++);
-        //         heights +=  $thumb.height();
-        //         --nbThumbsLeft;
-        //     }
-        //     var heightMean = heights / nbThumbs;
-        //     // All heights of the line ) max height
-        //     for( var j = 0; j < nbThumbs; ++j) {
-        //         $thumbBoxes.eq(idxLine++).css("height", heightMean + "px");
-        //     }
-        //     // Update the total height of the thumbboxes
-        //     heightThumbs += heightMean;
-        // }
         $thumbnails.verticalCenter(0);
         // Masaic height
         heightMosaic += that.htmlStructure.index.mosaic.$title.outerHeight(true) + 50;

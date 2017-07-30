@@ -79,8 +79,8 @@ function CScreen( p_options )
                         for ( var i = 0; i < that.listButtonsOther.length; i++)
                         {
                             if( typeof that.listButtonsOther[ i ] !== "undefined" ) {
-                            that.listButtonsOther[ i ].enable();
-                        }
+                                that.listButtonsOther[ i ].enable();
+                            }
                         }
                         scr = that.deck.getTop();
                         scr.hide();

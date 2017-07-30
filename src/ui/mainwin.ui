@@ -278,6 +278,9 @@
                  </item>
                  <item row="2" column="0">
                   <widget class="QCheckBox" name="checkBox_">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
                    <property name="text">
                     <string>Display a map</string>
                    </property>
@@ -336,7 +339,11 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit_ButtonMap"/>
+                    <widget class="QLineEdit" name="lineEdit_ButtonMap">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
                    </item>
                    <item>
                     <spacer name="horizontalSpacer_12">
@@ -2193,6 +2200,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -2640,15 +2648,15 @@ Use it if photos were added or removed.</string>
   <tabstop>pushButton_SourceFolder</tabstop>
   <tabstop>lineEdit_DestinationFolder</tabstop>
   <tabstop>pushButton_DestinationFolder</tabstop>
+  <tabstop>lineEdit_URL</tabstop>
+  <tabstop>checkBox_ButtonFullscreen</tabstop>
+  <tabstop>checkBox_ButtonShare</tabstop>
+  <tabstop>checkBox_</tabstop>
+  <tabstop>lineEdit_ButtonMap</tabstop>
   <tabstop>checkBox_clicDroitAutorise</tabstop>
+  <tabstop>groupBox_AdvancedOptions</tabstop>
   <tabstop>spinbox_nbPhotosPreCharger</tabstop>
   <tabstop>spinbox_tailleDuCache</tabstop>
-  <tabstop>pushButton_OpenSkin</tabstop>
-  <tabstop>pushButton_DesignSkin</tabstop>
-  <tabstop>spinBox_ThumbNbCol</tabstop>
-  <tabstop>spinbox_PhotoMaxHSize</tabstop>
-  <tabstop>spinBox_PhotoMaxVSize</tabstop>
-  <tabstop>spinbox_PhotoMinHSize</tabstop>
   <tabstop>spinbox_PhotoMinVSize</tabstop>
   <tabstop>spinBox_PhotoNbRes</tabstop>
   <tabstop>horizontalSlider_PhotoJpegQuality</tabstop>
@@ -2676,7 +2684,19 @@ Use it if photos were added or removed.</string>
   <tabstop>pushButton_Generation</tabstop>
   <tabstop>textEdit_captionPreview</tabstop>
   <tabstop>checkBox_WatermarkTextColorAuto</tabstop>
-  <tabstop>lineEdit_URL</tabstop>
+  <tabstop>spinBox_ThumbNbCol</tabstop>
+  <tabstop>spinBox_PhotoMaxVSize</tabstop>
+  <tabstop>spinbox_PhotoMinHSize</tabstop>
+  <tabstop>pushButton_OpenSkin</tabstop>
+  <tabstop>pushButton_DesignSkin</tabstop>
+  <tabstop>spinbox_PhotoMaxHSize</tabstop>
+  <tabstop>checkBox_HiDPI</tabstop>
+  <tabstop>checkBox_ManualConf</tabstop>
+  <tabstop>comboBox_ImageQualityStrategy</tabstop>
+  <tabstop>groupBox_Watermark</tabstop>
+  <tabstop>pushButton_WatermarkTextShortcuts</tabstop>
+  <tabstop>lineEdit_Caption</tabstop>
+  <tabstop>pushButton_CaptionShortcuts</tabstop>
  </tabstops>
  <resources>
   <include location="../resources/GalleryDesigner.qrc"/>

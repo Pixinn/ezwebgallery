@@ -147,9 +147,8 @@ $(document).ready(function()
           delete HtmlStructure.progressBar.$screen;
     } );
 
-    var Display = new CDisplay( g_properties, HtmlStructure );
-    var UserHandler; //Managing user events
-
+    var UserHandler;
+    var Display;
     // --- ENTERING THIS FUNCTION WHEN THE THUMBNAILS ARE LOADED
     Mosaic.getLoadedEvent().subscribe( function()
     {
@@ -157,13 +156,14 @@ $(document).ready(function()
         //Handling user' interractions
         UserHandler = new CUserInterractions( g_properties, HtmlStructure );
         UserHandler.start();
+        Display = new CDisplay( g_properties, HtmlStructure, UserHandler );
         Display.getPhotoDisplayedLoadedEvent().subscribe( function() { UserHandler.onPhotoDisplayedLoaded( this.id ); } );
         Display.getPhotoScreenEvent().subscribe( UserHandler.onPhotoScreen );
         Display.getIndexScreenEvent().subscribe( function() {
             Mosaic.show( this );
-            Mosaic.resize();
+            Mosaic.redraw();
         } );
-        Display.getIndexScreenEvent().subscribe( UserHandler.onIndexScreen );
+        //Display.getIndexScreenEvent().subscribe( UserHandler.onIndexScreen );
         Display.getDisableUISignal().subscribe( UserHandler.disablePreviousNext );
         Display.getEnableUISignal().subscribe( UserHandler.enablePreviousNext );
         Display.getScrollingEvent().subscribe( UserHandler.onScrolling );
@@ -172,7 +172,7 @@ $(document).ready(function()
         Display.toolbar.showButtons();
 
         //Subscribing to user events
-        UserHandler.getWindowResizedEvent().subscribe( function() { Mosaic.resize(); } ); // Mosaic.resize() is VERY slow
+        UserHandler.getWindowResizedEvent().subscribe( function() { Mosaic.redraw(); } ); // Mosaic.resize() is VERY slow
         UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( parseInt(this.id) ); } ); //this, will be the object clicked
         //UserHandler.getClosePhotoEvent().subscribe( Display.hidePhoto );
         UserHandler.getPreviousPhotoEvent().subscribe( Display.onPrevious );
