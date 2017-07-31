@@ -33,8 +33,6 @@ function Toolbar( p_htmlStructure, p_user_interactions  )
 
     [FULLSCREEN_BUTTON]
 
-    [SHARE_BUTTON]
-
     this.screenIndex = new CScreen( { $handle: that.html.index.$screen,
                                       deck: that.deck,
                                       listButtonsOther: [ that.buttonShare ],
@@ -54,8 +52,6 @@ function Toolbar( p_htmlStructure, p_user_interactions  )
                                     }
                                   );
     that.deck.add( that.screenPhoto );
-
-    [SHARE_SCREEN]
 
     this.buttonIndex.disable();
     that.deck.moveOnTop( that.screenIndex );

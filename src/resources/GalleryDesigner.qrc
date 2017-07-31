@@ -61,8 +61,6 @@
     <file alias="aboutImageMagick.html">text/aboutImageMagick.html</file>
   </qresource>
   <qresource prefix="/web">
-    <file alias="ShareButton.js">web/ShareButton.js</file>
-    <file alias="ShareScreen.js">web/ShareScreen.js</file>
     <file alias="Toolbar.js">web/Toolbar.js</file>
     <file alias="FullscreenButton.js">web/FullscreenButton.js</file>
   </qresource>

@@ -106,8 +106,6 @@ private:
     const static QString FULLSCREEN_BUTTON;
 
     QString m_toolbarJs;
-    QString m_shareButtonJs;
-    QString m_shareScreenJs;
     QString m_fullscreenButtonJs;
     t_Buttons m_buttons;
 };

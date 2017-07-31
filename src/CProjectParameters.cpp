@@ -222,8 +222,7 @@ void CProjectParameters::fromUi( /*const Ui::MainWin* const ui */)
     m_galleryConfig.inputDir = m_p_ui->lineEdit_SourceFolder->text();
     m_galleryConfig.outputDir = m_p_ui->lineEdit_DestinationFolder->text();
     m_galleryConfig.url = m_p_ui->lineEdit_URL->text();
-    m_galleryConfig.f_rightClickEnabled = m_p_ui->checkBox_clicDroitAutorise->isChecked();
-    m_galleryConfig.f_buttonShare = m_p_ui->checkBox_ButtonShare->isChecked();
+    m_galleryConfig.f_rightClickEnabled = m_p_ui->checkBox_rightClickEnabled->isChecked();
     m_galleryConfig.f_buttonFullscreen = m_p_ui->checkBox_ButtonFullscreen->isChecked();
 
     //Remplissage structure Config Vignettes
@@ -514,8 +513,7 @@ void CProjectParameters::toUi( )
     m_p_ui->lineEdit_SourceFolder->setText( m_galleryConfig.inputDir );
     m_p_ui->lineEdit_DestinationFolder->setText( m_galleryConfig.outputDir );
     m_p_ui->lineEdit_URL->setText( m_galleryConfig.url );
-    m_p_ui->checkBox_clicDroitAutorise->setChecked( m_galleryConfig.f_rightClickEnabled );
-    m_p_ui->checkBox_ButtonShare->setChecked( m_galleryConfig.f_buttonShare );
+    m_p_ui->checkBox_rightClickEnabled->setChecked( m_galleryConfig.f_rightClickEnabled );
     m_p_ui->checkBox_ButtonFullscreen->setChecked(m_galleryConfig.f_buttonFullscreen);
 
     //Lecture structure Config Vignettes

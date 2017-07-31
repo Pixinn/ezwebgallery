@@ -113,18 +113,6 @@ CToolbarBehavior::CToolbarBehavior(  const t_Buttons& buttons ) :
     jsTextStream.setCodec( "UTF-8" );
     m_toolbarJs = jsTextStream.readAll();
 
-    QFile shareButtonJsFile( ":/web/ShareButton.js" ); 
-    shareButtonJsFile.open( QIODevice::Text|QIODevice::ReadOnly );
-    QTextStream shareButtonJsTextStream( &shareButtonJsFile );
-    shareButtonJsTextStream.setCodec( "UTF-8" );
-    m_shareButtonJs = shareButtonJsTextStream.readAll();
-
-    QFile shareScreenJsFile( ":/web/ShareScreen.js" );
-    shareScreenJsFile.open( QIODevice::Text|QIODevice::ReadOnly );
-    QTextStream shareScreenJsTextStream( &shareScreenJsFile );
-    shareScreenJsTextStream.setCodec( "UTF-8" );
-    m_shareScreenJs = shareScreenJsTextStream.readAll();
-
     QFile fullscreenButtonJsFile(":/web/FullscreenButton.js");
     fullscreenButtonJsFile.open(QIODevice::Text | QIODevice::ReadOnly);
     QTextStream fullscreenButtonJsTextStream(&fullscreenButtonJsFile);
@@ -138,15 +126,6 @@ QString CToolbarBehavior::getJavascript( void ) const
 {
     QString javascript( m_toolbarJs );
 
-    // SHARE
-    if( m_buttons.share ) {
-        javascript.replace( SHARE_BUTTON, m_shareButtonJs );
-        javascript.replace( SHARE_SCREEN, m_shareScreenJs );
-    }
-    else {
-        javascript.remove( SHARE_BUTTON );
-        javascript.remove( SHARE_SCREEN );
-    }
     // FULLSCREEN
     if (m_buttons.fullscreen) {
         javascript.replace(FULLSCREEN_BUTTON, m_fullscreenButtonJs);

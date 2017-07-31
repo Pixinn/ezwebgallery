@@ -392,15 +392,6 @@ void MainWin::init( void )
     m_ui->action_SaveSession->setDisabled( true );
     m_ui->action_Preview->setDisabled(true);
     m_ui->action_OpenGalleryFolder->setDisabled(true);
-    const auto scaleFactor = 2u;
-    const QSize szImage(m_ui->image_ButtonFullscreen->height()*scaleFactor, \
-        m_ui->image_ButtonFullscreen->height()*scaleFactor);
-    auto image = m_ui->image_ButtonFullscreen->pixmap();
-    m_ui->image_ButtonFullscreen->setPixmap(image->scaled(szImage, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    image = m_ui->image_ButtonMap->pixmap();
-    m_ui->image_ButtonMap->setPixmap(image->scaled(szImage, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    image = m_ui->image_ButtonShare->pixmap();
-    m_ui->image_ButtonShare->setPixmap(image->scaled(szImage, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     bool f_lastSessionOK = false;
     //Par défaut : Nouvelle session
