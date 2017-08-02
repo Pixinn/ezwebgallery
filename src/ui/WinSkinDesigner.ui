@@ -71,7 +71,7 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="CColorPicker" name="cColorPicker_Index_BckgColor"/>
+              <widget class="CColorPicker" name="cColorPicker_Index_BckgColor" native="true"/>
              </item>
              <item row="2" column="0">
               <widget class="QLabel" name="label_Index_BckgCover">
@@ -159,7 +159,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="CColorPicker" name="cColorPicker_VTitleText_TextColor"/>
+              <widget class="CColorPicker" name="cColorPicker_VTitleText_TextColor" native="true"/>
              </item>
              <item row="3" column="0">
               <widget class="QLabel" name="label_VTitle_Alignment">
@@ -262,7 +262,7 @@
                 </widget>
                </item>
                <item row="3" column="1">
-                <widget class="CColorPicker" name="cColorPicker_Mosaic_BorderColor"/>
+                <widget class="CColorPicker" name="cColorPicker_Mosaic_BorderColor" native="true"/>
                </item>
                <item row="4" column="0">
                 <widget class="QLabel" name="label_Mosaic_SpacingWidth">
@@ -298,12 +298,12 @@
                 </widget>
                </item>
                <item row="5" column="1">
-                <widget class="CColorPicker" name="cColorPicker_Mosaic_SpacingColor"/>
+                <widget class="CColorPicker" name="cColorPicker_Mosaic_SpacingColor" native="true"/>
                </item>
                <item row="1" column="1">
                 <layout class="QHBoxLayout" name="horizontalLayout_5">
                  <item>
-                  <widget class="CColorPicker" name="cColorPicker_Mosaic_BckgColor"/>
+                  <widget class="CColorPicker" name="cColorPicker_Mosaic_BckgColor" native="true"/>
                  </item>
                  <item>
                   <widget class="QCheckBox" name="checkBox_Mosaic_BckgColor_Enabled">
@@ -393,7 +393,7 @@
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="CColorPicker" name="cColorPicker_Thumbnail_BorderColor"/>
+                <widget class="CColorPicker" name="cColorPicker_Thumbnail_BorderColor" native="true"/>
                </item>
                <item row="3" column="0">
                 <widget class="QLabel" name="label_Thumbnail_Hovered_BorderColor">
@@ -403,7 +403,7 @@
                 </widget>
                </item>
                <item row="3" column="1">
-                <widget class="CColorPicker" name="cColorPicker_Thumbnail_Hovered_BorderColor"/>
+                <widget class="CColorPicker" name="cColorPicker_Thumbnail_Hovered_BorderColor" native="true"/>
                </item>
               </layout>
              </item>
@@ -461,7 +461,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="CColorPicker" name="cColorPicker_Photo_BckgColor"/>
+              <widget class="CColorPicker" name="cColorPicker_Photo_BckgColor" native="true"/>
              </item>
              <item row="3" column="0">
               <widget class="QLabel" name="label_Photo_BckgCover">
@@ -602,7 +602,7 @@
                   </size>
                  </property>
                  <property name="minimum">
-                  <number>1</number>
+                  <number>0</number>
                  </property>
                  <property name="maximum">
                   <number>20</number>
@@ -616,7 +616,7 @@
                 <widget class="CImagePicker" name="CImagePicker_PhotoFraming_Texture"/>
                </item>
                <item row="2" column="1">
-                <widget class="CColorPicker" name="cColorPicker_PhotoFraming_Color"/>
+                <widget class="CColorPicker" name="cColorPicker_PhotoFraming_Color" native="true"/>
                </item>
                <item row="3" column="1">
                 <widget class="QSpinBox" name="spinBox_PhotoFraming_PaddingWidth">
@@ -644,7 +644,7 @@
                 </widget>
                </item>
                <item row="4" column="1">
-                <widget class="CColorPicker" name="cColorPicker_PhotoFraming_PaddingColor"/>
+                <widget class="CColorPicker" name="cColorPicker_PhotoFraming_PaddingColor" native="true"/>
                </item>
               </layout>
              </item>
@@ -698,7 +698,7 @@
                 <widget class="QComboBox" name="comboBox_PhotoCaption_FontWeight"/>
                </item>
                <item row="3" column="1">
-                <widget class="CColorPicker" name="cColorPicker_PhotoCaption_TextColor"/>
+                <widget class="CColorPicker" name="cColorPicker_PhotoCaption_TextColor" native="true"/>
                </item>
                <item row="1" column="1">
                 <widget class="QDoubleSpinBox" name="doubleSpinBox_PhotoCaption_FontSize">
@@ -718,7 +718,7 @@
                   <number>1</number>
                  </property>
                  <property name="minimum">
-                  <double>0.500000000000000</double>
+                  <double>0.000000000000000</double>
                  </property>
                  <property name="maximum">
                   <double>2.000000000000000</double>
@@ -777,7 +777,7 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="CColorPicker" name="cColorPicker_Box_TextColor"/>
+              <widget class="CColorPicker" name="cColorPicker_Box_TextColor" native="true"/>
              </item>
              <item row="3" column="0">
               <widget class="QLabel" name="label_Box_BorderWidth">
@@ -813,7 +813,7 @@
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="CColorPicker" name="cColorPicker_Box_BorderColor"/>
+              <widget class="CColorPicker" name="cColorPicker_Box_BorderColor" native="true"/>
              </item>
              <item row="5" column="0">
               <widget class="QLabel" name="label_Box_BackgroundColor">
@@ -823,7 +823,7 @@
               </widget>
              </item>
              <item row="5" column="1">
-              <widget class="CColorPicker" name="cColorPicker_Box_BackgroundColor"/>
+              <widget class="CColorPicker" name="cColorPicker_Box_BackgroundColor" native="true"/>
              </item>
              <item row="0" column="1">
               <widget class="QComboBox" name="comboBox_Box_FontFamily"/>
@@ -858,7 +858,7 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="CColorPicker" name="cColorPicker_ProgressBar_UnloadedTextColor"/>
+              <widget class="CColorPicker" name="cColorPicker_ProgressBar_UnloadedTextColor" native="true"/>
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_ProgressBar_UnloadedBackgroundColor">
@@ -868,7 +868,7 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="CColorPicker" name="cColorPicker_ProgressBar_UnloadedBackgroundColor"/>
+              <widget class="CColorPicker" name="cColorPicker_ProgressBar_UnloadedBackgroundColor" native="true"/>
              </item>
              <item row="2" column="0">
               <widget class="QLabel" name="label_ProgressBar_LoadedTextColor">
@@ -878,7 +878,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="CColorPicker" name="cColorPicker_ProgressBar_LoadedTextColor"/>
+              <widget class="CColorPicker" name="cColorPicker_ProgressBar_LoadedTextColor" native="true"/>
              </item>
              <item row="3" column="0">
               <widget class="QLabel" name="label_ProgressBar_LoadedBackgroundColor">
@@ -888,7 +888,7 @@
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="CColorPicker" name="cColorPicker_ProgressBar_LoadedBackgroundColor"/>
+              <widget class="CColorPicker" name="cColorPicker_ProgressBar_LoadedBackgroundColor" native="true"/>
              </item>
              <item row="4" column="0">
               <widget class="QLabel" name="label_ProgressBar_BorderWidth">
@@ -924,7 +924,7 @@
               </widget>
              </item>
              <item row="5" column="1">
-              <widget class="CColorPicker" name="cColorPicker_ProgressBar_BorderColor"/>
+              <widget class="CColorPicker" name="cColorPicker_ProgressBar_BorderColor" native="true"/>
              </item>
             </layout>
            </item>

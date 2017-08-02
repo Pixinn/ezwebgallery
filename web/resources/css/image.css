@@ -1,4 +1,4 @@
-/* 
+/*
  *  EZWebGallery:
  *  Copyright (C) 2011 The EZWebGallery Dev Team <dev@ezwebgallery.org>
  *
@@ -34,7 +34,7 @@
 .photoButtonDisabled{
 	position: relative;		/* pour centrage vertical */
     cursor: not-allowed; /*css3*/
-	margin: auto;	
+	margin: auto;
     width: 75%;
 	opacity: 0.4;
 	filter:alpha(opacity=40); /*ie ...*/
@@ -51,7 +51,7 @@
 /* PORTRAIT: just right of the browser window
 /* -> div#photoRighter::left = 0
 *********************************************/
-div#photoRighter{	
+div#photoRighter{
 	margin: 0px; /* OBLIGATOIRE !! Sinon pb pour calculer taille max photo */
     display:none;
     z-index:-10; /*background when starting */
@@ -67,13 +67,13 @@ div#photoLefter{
 }
 
 /* All Smartphones landscape */
-@media only screen 
-and (max-device-width : 960px) 
+@media only screen
+and (max-device-width : 960px)
 and (orientation: landscape){
    div#photoLefter {
         left:7%; /* MUST BE = to toolbar width in landscape!!! */
     }
-}	
+}
 
 /* portrait */
 @media only screen
@@ -124,7 +124,7 @@ div.photoFooter{
 
 /* 	Les background-color: transparent sont urilisés si on veut un fond uni et donc si aucun des 3 div
 	n'a d'image ou de couleur de fond
-*/	
+*/
 div#wrapperAffichagePhoto{
 	background-color: transparent;
     width:auto;
@@ -141,8 +141,8 @@ div#wrapperAffichagePhoto{
     height:100%;
     overflow:hidden;
   }
-  
-  
+
+
 #slidesContainer {
     background:transparent;
     width:300%;
@@ -151,7 +151,7 @@ div#wrapperAffichagePhoto{
     top: 0px;
     left: 0px;
  }
- 
+
 div.slide {
     background:transparent;
     width:33.333%;
@@ -159,7 +159,7 @@ div.slide {
     text-align:center;
     float:left;
   }
- 
+
 
 
 
@@ -171,9 +171,6 @@ div#cadrePhoto{
 	position:relative;		/* vertical centering */
 	margin:auto;                    /* horizontal centering on modern browsers */
 	cursor:default;
-    -moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-    border-radius: 6px;
 }
 
 div#divPhoto{
@@ -209,8 +206,6 @@ div.photoCaption {
 	border: solid;
 	border-width: 0px; /*OBLIGATOIRE SINON BUG SOUS IE6 */
 	padding : 0.2em 0 0.2em 0;
-    min-height: 10px;  /* Bouton - padding */
+    /*min-height: 10px;*/  /* Bouton - padding */
 }
 /**************************************/
-	
-

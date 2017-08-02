@@ -44,7 +44,7 @@ bool t_galleryConf::operator==(const t_galleryConf& source)
         //&& f_regeneration == source.f_regeneration  Ne pas le comparer, car modifi automatique lors de la gnration
         && skinPath == source.skinPath
         && thumbPhoto == source.thumbPhoto
-        && f_buttonShare == source.f_buttonShare  )        
+        && f_buttonFullscreen == source.f_buttonFullscreen )
     { return true; }
     else{
         return false;
@@ -307,7 +307,6 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     m_galleryConfig.skinPath = galleryConfElem.firstChildElement( "Skin" ).firstChildElement( "Path" ).text();
     m_p_skin->setName( galleryConfElem.firstChildElement( "Skin" ).attribute("name") );
     m_galleryConfig.thumbPhoto = galleryConfElem.firstChildElement( "thumbnail" ).text();
-    m_galleryConfig.f_buttonShare = galleryConfElem.firstChildElement( "shareOnSocialNetworks" ).text().toInt();
 
     //--- CONFIG THUMBS
     m_thumbsConfig.nbColumns = thumbsConfElem.firstChildElement( "nbColumns" ).text().toInt();
@@ -412,9 +411,6 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
     QDomElement thumbnail = document.createElement( "thumbnail" );
     thumbnail.appendChild( document.createTextNode( m_galleryConfig.thumbPhoto ) );
     galleryConfig.appendChild( thumbnail );
-    QDomElement shareOnSocialNetworks = document.createElement( "shareOnSocialNetworks" );
-    galleryConfig.appendChild( shareOnSocialNetworks );
-    shareOnSocialNetworks.appendChild( document.createTextNode( QString::number(m_galleryConfig.f_buttonShare) ) );
 
     //--- CONFIG THUMB
     QDomElement thumbsConfig  = document.createElement( "ThumbsConfig" );

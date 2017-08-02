@@ -57,7 +57,6 @@ QString CToolbarStyleDark::getHtml( void ) const
 
     html += "<li><img src=\"resources/images/toolbar_icon_white_browse.png\" class=\"button_browse\"></li>\n";
     html += "<li><img src=\"resources/images/toolbar_icon_white_fullscreen.png\" class=\"button_screen display_optional\" ></li>\n";
-    html += "<li><img src=\"resources/images/toolbar_icon_white_share.png\" class=\"button_share display_optional\"></li>\n";
     html += "<li><a href=\"http://www.ezwebgallery.org/\"><img src=\"resources/images/toolbar_icon_browse_ezwebgallery.png\" class=\"button_ezwebgallery\"></a></li>";
 
     return html;
@@ -78,10 +77,8 @@ QString CToolbarStyleLight::getHtml( void ) const
 
     html += "<li><img src=\"resources/images/toolbar_icon_black_browse.png\" class=\"button_browse\"></li>";
     html += "<li><img src=\"resources/images/toolbar_icon_black_fullscreen.png\" class=\"button_screen display_optional\" ></li>\n";
-    html += "<li><img src=\"resources/images/toolbar_icon_black_share.png\" class=\"button_share\"></li>\n";
     html += "<li><a href=\"http://www.ezwebgallery.org/\"><img src=\"resources/images/toolbar_icon_browse_ezwebgallery.png\" class=\"button_ezwebgallery\"></a></li>";
     html += "<!--<li><img src=\"resources/images/toolbar_icon_black_caption.png\"></li>\n";
-    html += "<li><img src=\"resources/images/toolbar_icon_black_share.png\"></li> !-->\n";
 
     return html;
 }
@@ -99,8 +96,6 @@ CCssSelection CToolbarStyleLight::getCss( void ) const
 //////////////////////////////////////////////////
 
 
-const QString CToolbarBehavior::SHARE_BUTTON( "[SHARE_BUTTON]" );
-const QString CToolbarBehavior::SHARE_SCREEN( "[SHARE_SCREEN]" );
 const QString CToolbarBehavior::FULLSCREEN_BUTTON("[FULLSCREEN_BUTTON]");
 
 

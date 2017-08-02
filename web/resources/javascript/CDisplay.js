@@ -167,9 +167,9 @@ function CDisplay( p_properties, p_htmlStructure, user_interactions)
     //+++ Computing the maximal available size on screen
     this.computeAvailableSpace = function( )
     {
-        var ie6BugCorrection = 6;
-        var wastedPixelTop = 33;
-        var wastedPixelBottom = 33;
+        var ie6BugCorrection = 0/*6*/;
+        var wastedPixelTop = 0/* 33*/;
+        var wastedPixelBottom = 0/*33*/;
         var widthWasted = 0;
 
         //Computing width used by other divs
@@ -180,7 +180,8 @@ function CDisplay( p_properties, p_htmlStructure, user_interactions)
     }
         //non available space
         var frameBorderSize = parseInt( that.html.photo.$frame.css("padding-top").replace("px","") );
-        var height = that.html.photo.$wrapper.innerHeight() - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - wastedPixelTop;
+        var heightCaption = 2*$(".photoCaption").css("padding-bottom").replace("px","") + $(".photoCaption").innerHeight();
+        var height = that.html.photo.$wrapper.innerHeight() - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - heightCaption - wastedPixelTop;
         var width =  that.html.photo.$wrapper.innerWidth( ) - widthWasted - 2*frameBorderSize - 2*that.properties.photos.technical.decoration.padding - ie6BugCorrection;
 
         return { h: height, w: width };

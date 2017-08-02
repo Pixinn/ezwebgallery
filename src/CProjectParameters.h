@@ -99,7 +99,6 @@ public:
     int nbPhotosToPrefetch;
     int prefetchCacheSize;     
     bool f_rightClickEnabled;    
-    bool f_buttonShare;
     bool f_buttonFullscreen;
 
     bool f_regeneration;
