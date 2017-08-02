@@ -1,4 +1,4 @@
-﻿/* 
+﻿/*
  *  EZWebGallery:
  *  Copyright (C) 2011 The EZWebGallery Dev Team <dev@ezwebgallery.org>
  *
@@ -19,25 +19,25 @@
 	function CHashTable( )
 {
 	var that = this;
-    
+
 	this.len = 0;
 	this.items = new Array();
-	
+
 	for (var i = 0; i < arguments.length; i += 2) {
 		if (typeof(arguments[i + 1]) != 'undefined') {
 			that.items[arguments[i]] = arguments[i + 1];
 			that.len++;
 		}
 	}
-   
+
 	this.removeItem = function(in_key)
 	{
 		if (typeof(that.items[in_key]) != 'undefined') {
 			that.len--;
-			delete that.items[in_key]; //removes the element from the table, does not destroy it! A job for the GC
+			that.items.splice(in_key, 1); //removes the element from the table, does not destroy it! A job for the GC
 		}
 	}
-	
+
 	this.addItem = function(in_key, in_value)
 	{
 		if (  typeof(in_value) != 'undefined'  && typeof(that.items[in_key]) == 'undefined' /* Item non déjà présent */)  {
@@ -47,7 +47,7 @@
 		}
 		else {
 			return 'undefined';
-		}	
+		}
 	}
 
 	this.getItem = function(in_key) {
@@ -58,7 +58,7 @@
 	{
 		return typeof(that.items[in_key]) != 'undefined';
 	}
-	
+
 	this.getLength = function( )
 	{
 		return that.len;
