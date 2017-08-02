@@ -22,33 +22,41 @@ function CFrameFactory( p_photoList )
     this.strPhoto = "divPhoto";
     this.strFrame = "cadrePhoto";
     this.strCaption ="photoCaption";
+    this.paddingCaption = "0";
     this.captions = [];
-    
+
     for( i = 0; i < p_photoList.length; i++ ) {
         this.captions[i] = p_photoList[i].caption;
     }
-    
+
     this.frame = function( $parent, id )  {
         $parent.append( "<div id=\""+that.strFrame+"\"><div id=\""+that.strTitle+"\"></div><div id=\""+that.strPhoto+"\"></div><div class=\""+that.strCaption+"\"></div></div>" );
         that.caption( $parent.find(that.getStrCaption()), id );
     }
-    
+
     this.caption = function( $parent, id )
     {
         $parent.empty()
-                   .append( that.captions[ id ] );
-                   //.height( Math.min( $parent.height(), $parent.parent().find( that.getStrTitle() ).height() ) );
+                .append( that.captions[ id ] );
+        if(that.captions[ id ] === "") {
+            $parent.css("padding-top", "0").css("padding-bottom", "0");
+        }
+        else {
+            $parent.css("padding-top", that.paddingCaption).css("padding-bottom", that.paddingCaption);
+        }
     }
-    
+
     this.getStrPhoto = function( ) {
         return "#"+ that.strPhoto;
     }
-    
+
     this.getStrFrame = function( )  {
         return "#"+ that.strFrame;
     }
-    
+
     this.getStrCaption = function( )  {
         return "."+ that.strCaption;
     }
+
+    this.paddingCaption = $(".photoCaption").length === 0 ? 0 : $(this.getStrCaption()).css("padding-bottom");
 };
