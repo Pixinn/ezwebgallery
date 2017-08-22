@@ -30,6 +30,6 @@ this.buttonFullscreen = new CButtonToolbar( {
       }
     } );
 
+this.buttonFullscreen.$handle.hide();
 this.buttons.push(this.buttonFullscreen);
 that.buttonFullscreen.disable();
-this.buttonFullscreen.$handle.hide();
