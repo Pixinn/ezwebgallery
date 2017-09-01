@@ -39,7 +39,7 @@ unix|macx {
     Debug{
 #           scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh )
 #           versiontarget.target = builddate.h
-#            versiontarget.commands = $$system( $$SCRIPTDIR/date.sh > src/builddate.h )
+#            versiontarget.commands = $$system( python $$SCRIPTDIR/date.py > src/builddate.h )
 #            versiontarget.depends = FORCE
 #            PRE_TARGETDEPS += builddate.h
 #            QMAKE_EXTRA_TARGETS += versiontarget
@@ -47,7 +47,7 @@ unix|macx {
     Release{
             scripts.commands = $$system( chmod ug+x $$SCRIPTDIR/*.sh )
             versiontarget.target = builddate.h
-            versiontarget.commands = $$system( $$SCRIPTDIR/date.sh > src/builddate.h )
+            versiontarget.commands = $$system( python $$SCRIPTDIR/date.py > src/builddate.h )
             versiontarget.depends = FORCE
             PRE_TARGETDEPS += builddate.h
             QMAKE_EXTRA_TARGETS += versiontarget

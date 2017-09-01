@@ -7,7 +7,7 @@ EZWebGallery.
 UBUNTU or DEBIAN:
 
     install the required packages:
-        sudo apt-get install libqt5-dev libmagick++-dev yui-compressor
+        sudo apt-get install libqt5-dev libmagick++-dev
     build the sources then install ezwebgallery:
         sudo qmake && make install
     
@@ -16,6 +16,8 @@ UBUNTU or DEBIAN:
 
 
 WINDOWS:
+
+    Python 2 or 3 is required!
 
     1 - Build a release target using the Visual Studio project located in src.
     2 - Run scripts/prepare_release.bat.

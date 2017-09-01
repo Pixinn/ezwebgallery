@@ -42,6 +42,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <IntermediateDirectory>build\.obj\</IntermediateDirectory>
     <PrimaryOutput>ezwebgallery</PrimaryOutput>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <PlatformToolSet>v141</PlatformToolSet>
@@ -199,7 +200,7 @@
       <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_OPENGL_ES_2;QT_OPENGL_ES_2_ANGLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <CustomBuildStep>
-      <Command>bzr version-info --custom --template="#define BUILD_DATE \"{build_date}\" " &gt; src\builddate.h</Command>
+      <Command>python scripts/date.py &gt; src\builddate.h</Command>
       <Message>BUILD DATE</Message>
       <Outputs>builddate.h</Outputs>
     </CustomBuildStep>
@@ -294,7 +295,7 @@
       <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;QT_WIDGETS_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_OPENGL_ES_2;QT_OPENGL_ES_2_ANGLE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <CustomBuildStep>
-      <Command>bzr version-info --custom --template="#define BUILD_DATE \"{build_date}\" " &gt; src\builddate.h</Command>
+      <Command>python scripts/date.py &gt; src\builddate.h</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Outputs>builddate.h</Outputs>

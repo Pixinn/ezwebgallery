@@ -3,13 +3,14 @@
 ; INCLUDES
 ;/////////
 !include LogicLib.nsh       ; Use more familiar flow control
-!include  .\version.nsh
+!include x64.nsh
+
+!include .\version.nsh
 
 ;//////////////////
 ; GLOBALS VARS
 ;/////////////////
 Var VCREDISTRETURNED
-
 
 ;--------------------------------
 
@@ -20,9 +21,9 @@ Name "EZWebGallery ${BUILD_DATE}"
 OutFile "Setup_EZWebGallery_${BUILD_DATE}.exe"
 
 ; The default installation directory
-InstallDir $PROGRAMFILES\EZWebGallery\${BUILD_DATE}
+InstallDir $PROGRAMFILES64\EZWebGallery\${BUILD_DATE}
 
-; Request application privileges for Windows Vista
+; Request application privileges for Windows Vista and newer
 RequestExecutionLevel admin
 
 ;Some infos
@@ -51,14 +52,13 @@ LicenseData "..\common\GPL_v3.txt"
 SetCompressor /SOLID /FINAL lzma
 ;--------------------------------
 
-; Function .onInit
-;  ;Ask to uninstall any prior version (TEMPORARY)
-;  MessageBox MB_YESNO|MB_ICONQUESTION "Please uninstall any prior version of EZWebGallery.$\r$\n$\r$\nShall we continue?" IDYES NoAbort
-;  abort:
-;    Abort "Aborting installation to manually uninstall prior version."
-;  NoAbort:
-; FunctionEnd
 
+; Fails on 32 bit systems
+function .onInit
+    ${IfNot} ${RunningX64}
+        Abort 'Abording: EZWebGallery requires a 64bit Windows.'
+    ${EndIf}
+functionEnd
 
 
 ; The stuff to install (required
@@ -67,13 +67,13 @@ Section "EZWebGallery"
   ;Required (read only)
   SectionIn RO
 
-  ;Install VC2013 Redistribuable if not present
+  ;Install VC2017 Redistribuable if not present
   Call CheckVCRedist
   ${If} $R0 != 1
-    DetailPrint "Visual C++ 2013 redistributable not found."
+    DetailPrint "Visual C++ 2017 redistributable not found."
     Call InstallVCRedist       
   ${Else}
-    DetailPrint "Visual C++ 2013 redistributable already installed."
+    DetailPrint "Visual C++ 2017 redistributable already installed."
   ${EndIf}
 
   ;Set output path to the installation directory.
@@ -112,12 +112,12 @@ SectionEnd
 
 
 
-; Check for Visual Studio 2013 C++ redistributable
+; Check for Visual Studio 2017 C++ redistributable
 Function CheckVCRedist
 
    ; check for the key in registry
    ; http://blogs.msdn.com/b/astebner/archive/2010/05/05/10008146.aspx
-   ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\DevDiv\vc\Servicing\12.0\RuntimeMinimum" "Install"
+   ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\DevDiv\vc\Servicing\14.0\RuntimeMinimum" "Install"
    ${If} $R0 == 1
         return        
    ${Else}
@@ -126,18 +126,18 @@ Function CheckVCRedist
    
 FunctionEnd
 
-; install Visual Studio 2013 C++ redistributable
+; install Visual Studio 2017 C++ redistributable
 Function InstallVcRedist
-
+    
     SetOutPath '$TEMP'
     SetOverwrite on    
-    File "vcredist_x64.exe"
-    ExecWait '"$TEMP\vcredist_x64.exe" /norestart /nq' $VCREDISTRETURNED
-    DetailPrint "Visual C++ 2013 redistributable installer returned $VCREDISTRETURNED"
-    Delete "$TEMP\vcredist_x64.exe"
+    File "VC_redist.x64.exe"
+    ExecWait '"$TEMP\VC_redist.x64.exe" /norestart /nq' $VCREDISTRETURNED
+    DetailPrint "Visual C++ 2017 redistributable installer returned $VCREDISTRETURNED"
+    Delete "$TEMP\VC_redist.x64.exe"
     
     ${If} $VCREDISTRETURNED != 0
-        Abort 'Abording: "Visual C++ 2013 redistributable" was not installed.'
+        Abort 'Abording: "Visual C++ 2017 redistributable" was not installed.'
     ${EndIf}
     
 FunctionEnd
@@ -169,6 +169,8 @@ Section "Uninstall"
   RMDir /r "$INSTDIR\skins\default_files"
   Delete "$INSTDIR\skins\Exemple_Highlight.skin"
   RMDir /r "$INSTDIR\skins\Exemple_Highlight_files"
+  Delete "$INSTDIR\skins\Fullscreen_Simple.skin"
+  RMDir /r "$INSTDIR\skins\Fullscreen_Simple_files"
   Delete "$INSTDIR\skins\Moria.skin"
   RMDir /r "$INSTDIR\skins\Moria_files"
   Delete "$INSTDIR\skins\Orient.skin"
