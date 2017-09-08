@@ -32,6 +32,7 @@ src/widgets/Release
 src/widgets/debug
 src/widgets/ipch
 src/widgets/tmp
+src/widgets/x64/
 deployment/*.exe
 .bzrignore
 checkin
@@ -50,6 +51,7 @@ ezwebgallery.pro.user
 
 *.exe
 *.tlog
+*.pdb
 moc_*.cpp
 qrc_*.cpp
 *.bak

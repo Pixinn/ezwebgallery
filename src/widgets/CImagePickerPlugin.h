@@ -1,7 +1,7 @@
 ﻿#ifndef CImagePickerPlugin_H
 #define CImagePickerPlugin_H
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
 class CImagePickerPlugin : public QObject, public QDesignerCustomWidgetInterface
 {
