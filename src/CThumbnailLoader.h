@@ -30,8 +30,8 @@
 #include <QMap>
 
 /******************************* DEFINES *********************************/
-#define THUMBNAIL_WIDTH     420
-#define THUMBNAIL_HEIGHT    360
+#define THUMBNAIL_WIDTH     1080
+#define THUMBNAIL_HEIGHT    1080
 
 
 /******************************** CLASSES ********************************/

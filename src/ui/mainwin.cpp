@@ -986,11 +986,13 @@ void MainWin::displayThumbnail( QModelIndex indexPhotoName )
     CLogger::getInstance().log( PtrMessage(new CMessage( tr("Displaying thumbnail: ") + photoFilename  )) );
 
     m_ui->label_thumbPhoto->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
+   // m_ui->label_thumbPhoto->setScaledContents(true);
    
     if( m_photoDatabase.contains( photoFilename ) )
     {
+        const QSize size{ m_ui->label_thumbPhoto->width(), m_ui->label_thumbPhoto->height() };
         const QImage& photoToDisplay = m_photoDatabase.thumbnail( indexPhotoName.row() );
-        QPixmap photoPxMap =  QPixmap::fromImage ( photoToDisplay );
+        QPixmap photoPxMap = QPixmap::fromImage(photoToDisplay.scaled(size, Qt::AspectRatioMode::KeepAspectRatio));
         m_ui->label_thumbPhoto->setPixmap( photoPxMap ); //Displaying the thumb
     }
     else{
