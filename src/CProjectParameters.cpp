@@ -33,22 +33,19 @@
 //--- BIEN METTRE A JOURS LES operator== EN CAS DE MODIFICATION DE CES CHAMPS ---//
 bool t_galleryConf::operator==(const t_galleryConf& source)
 {
-    if( title == source.title
-        && description == source.description
-        && inputDir == source.inputDir
-        && outputDir == source.outputDir
-        && url == source.url
-        && nbPhotosToPrefetch == source.nbPhotosToPrefetch
-        && prefetchCacheSize == source.prefetchCacheSize   
-        && f_rightClickEnabled == source.f_rightClickEnabled
-        //&& f_regeneration == source.f_regeneration  Ne pas le comparer, car modifi automatique lors de la gnration
-        && skinPath == source.skinPath
-        && thumbPhoto == source.thumbPhoto
-        && f_buttonFullscreen == source.f_buttonFullscreen )
-    { return true; }
-    else{
-        return false;
-    }
+    if (title != source.title) { return false; }
+    if (description != source.description) { return false; }
+    if (inputDir != source.inputDir) { return false; }
+    if (outputDir != source.outputDir) { return false; }
+    if (url != source.url) { return false; }
+    if (nbPhotosToPrefetch != source.nbPhotosToPrefetch) { return false; }
+    if (prefetchCacheSize != source.prefetchCacheSize) { return false; }
+    if (f_rightClickEnabled != source.f_rightClickEnabled) { return false; }
+    if (skinPath != source.skinPath) { return false; }
+    if (thumbPhoto != source.thumbPhoto) { return false; }
+    if (f_buttonFullscreen != source.f_buttonFullscreen) { return false; }
+     //&& f_regeneration != source.f_regeneration  Ne pas le comparer, car modifi automatique lors de la gnration
+    return true;
 }
 bool t_galleryConf::operator!=(const t_galleryConf &source)
 {
@@ -161,24 +158,34 @@ CProjectParameters& CProjectParameters::operator=(const CProjectParameters &sour
 // !!! ATTENTION : BIEN METTRE A JOUR CETTE FONCTION EN CAS D'AJOUTS D'ATTRIBUTS !!!!
 bool CProjectParameters::operator==(const CProjectParameters &source)
 {
-    bool f_result = true;
-    if( /*m_photosList != source.m_photosList      <<-- Renvoie toujours false !!?
-        &&*/ m_galleryConfig != source.m_galleryConfig
-        || m_thumbsConfig != source.m_thumbsConfig
-        || m_photosConfig != source.m_photosConfig
-        || m_p_ui != source.m_p_ui
-        || m_p_captionManager != source.m_p_captionManager
-        || m_p_skin != source.m_p_skin
-        || m_version != source.m_version
-        || m_feeder != source.m_feeder
-        || f_initialized != source.f_initialized
-       )
-    {
-        f_result =  false;
+    if (m_galleryConfig != source.m_galleryConfig) {
+        return false;
     }
-
-    return f_result;
-    
+    if (m_thumbsConfig != source.m_thumbsConfig) {
+        return false;
+    }
+    if (m_photosConfig != source.m_photosConfig) {
+        return false;
+    }
+    if (m_p_ui != source.m_p_ui) {
+        return false;
+    }
+    if (m_p_captionManager != source.m_p_captionManager) {
+        return false;
+    }
+    if (m_p_skin != source.m_p_skin) {
+        return false;
+    }
+    if (m_version != source.m_version) {
+        return false;
+    }
+    if (m_feeder != source.m_feeder) {
+        return false;
+    }
+    if (f_initialized != source.f_initialized) {
+        return false;
+    }
+    return true;
 }
 
 /****************************************************
@@ -287,7 +294,7 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
 
     //--- CONFIG GALLERY
     m_galleryConfig.title = galleryConfElem.firstChildElement( "title" ).text();
-    m_galleryConfig.description = galleryConfElem.firstChildElement( "description" ).text();
+    m_galleryConfig.description = galleryConfElem.firstChildElement( "description" ).text().replace("\r\n", "\n");
     m_galleryConfig.nbPhotosToPrefetch = galleryConfElem.firstChildElement( "nbPhotosToPrefetch" ).text().toInt();
     m_galleryConfig.prefetchCacheSize = galleryConfElem.firstChildElement( "prefetchCacheSize" ).text().toInt();
     m_galleryConfig.f_rightClickEnabled = galleryConfElem.firstChildElement( "rightClickEnabled" ).text().toInt();

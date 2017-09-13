@@ -543,60 +543,58 @@ void MainWin::openSession( const QString &sessionFile )
     //TODO : ASK THE USER IF HE WANTS TO CANCEL BEFORE LOADING THE PROJECT,
     //THEN LOAD, VERIFY IF MISSING PHOTOS !!
 
-    //Si lecture du fichier réussie
-    if( m_projectParameters.load( sessionFile ) )
-    {
-       //Si le projet courant n'a pas été sauvé, on propose de le faire    
-       //On propose la sauvegarde de la skin ici et non à l'ouverture effecture de la nouvelle :
-       //en effet, il faut pouvoir annuler le chargement de la session et de sa skin très en amont si
-       //pb ou annulation lors de la sauvegarde de la skin courante.
-       int retDlg = QMessageBox::Ok;
-       bool f_sessionUnsaved = isUnsaved();
-       bool f_skinUnsaved = m_p_skinDesignerWindow->isUnsaved();
-       //Affichage de la boite de dialogue si la session courante n'a pas été sauvée, récupération du code retour
-       if( f_sessionUnsaved || f_skinUnsaved || m_photoDatabase.hasChanged() ){
-           retDlg = displayUnsavedMsgBox( f_sessionUnsaved || m_photoDatabase.hasChanged(), f_skinUnsaved );
-       }
-       //Si annulation demandée
-       if( retDlg == QMessageBox::Cancel )   {
-           return;
-       }
-       else //Si pas d'annulation demandée
-       {
-            m_lastSelectedDir = QFileInfo(sessionFile).absolutePath();        
-            QMessageBox alertBox(this);
-            QStringList missingPhotos; 
+    // Test if the current project is unsaved
+    //Si le projet courant n'a pas été sauvé, on propose de le faire    
+    //On propose la sauvegarde de la skin ici et non à l'ouverture effecture de la nouvelle :
+    //en effet, il faut pouvoir annuler le chargement de la session et de sa skin très en amont si
+    //pb ou annulation lors de la sauvegarde de la skin courante.
+    int retDlg = QMessageBox::Ok;
+    bool f_sessionUnsaved = isUnsaved();
+    bool f_skinUnsaved = m_p_skinDesignerWindow->isUnsaved();
+    //Affichage de la boite de dialogue si la session courante n'a pas été sauvée, récupération du code retour
+    if (f_sessionUnsaved || f_skinUnsaved || m_photoDatabase.hasChanged()) {
+        retDlg = displayUnsavedMsgBox(f_sessionUnsaved || m_photoDatabase.hasChanged(), f_skinUnsaved);
+    }
+    //Si annulation demandée
+    if (retDlg == QMessageBox::Cancel) {
+        return;
+    }
 
-            //Affichage d'un message si la version du projet est plus récente que l'application
-            if( m_projectParameters.version( ) > CPlatform::revisionInt() ){
-                displayMoreRecentMsgBox( );
-            }
+    //Si lecture du fichier réussit
+    else if( m_projectParameters.load( sessionFile ) )
+    {
+        m_lastSelectedDir = QFileInfo(sessionFile).absolutePath();        
+        QMessageBox alertBox(this);
+        QStringList missingPhotos; 
+
+        //Affichage d'un message si la version du projet est plus récente que l'application
+        if( m_projectParameters.version( ) > CPlatform::revisionInt() ){
+            displayMoreRecentMsgBox( );
+        }
             
-            m_captionManager.reset();
+        m_captionManager.reset();
        
-            //Chargement de la skin
-            QList<CError> errors;
-            QString skinToLoad = m_projectParameters.m_galleryConfig.skinPath; //On sauve dans une variable car sera changé en "default" si erreur de chargement et donc le err msg affichera "default"
-            errors = m_p_skinDesignerWindow->openSkin( skinToLoad );
-            //Si des erreurs sont survenues
-            if( !errors.isEmpty() )
-            {      
-                QStringList errorsStr;
-                foreach( CError error, errors ) {
-                    errorsStr << error.message();
-                    CLogger::getInstance().log( PtrMessage(new CError(error)) );
-                }                                                              
-                QMessageBox msgBox( this );
-                msgBox.setInformativeText( CError::error(CError::SkinOpening) );
-                msgBox.setDetailedText( errorsStr.join("\n") );
-                msgBox.setIcon( QMessageBox::Information );
-                msgBox.exec();                                     
-            }
-            else {    
-                CLogger::getInstance().log( PtrMessage(new CMessage( tr("Skin loaded: ") + m_skinParameters.name())) );
-            }
-            
-        } //Fin du traitement de la session chargée
+        //Chargement de la skin
+        QList<CError> errors;
+        QString skinToLoad = m_projectParameters.m_galleryConfig.skinPath; //On sauve dans une variable car sera changé en "default" si erreur de chargement et donc le err msg affichera "default"
+        errors = m_p_skinDesignerWindow->openSkin( skinToLoad );
+        //Si des erreurs sont survenues
+        if( !errors.isEmpty() )
+        {      
+            QStringList errorsStr;
+            foreach( CError error, errors ) {
+                errorsStr << error.message();
+                CLogger::getInstance().log( PtrMessage(new CError(error)) );
+            }                                                              
+            QMessageBox msgBox( this );
+            msgBox.setInformativeText( CError::error(CError::SkinOpening) );
+            msgBox.setDetailedText( errorsStr.join("\n") );
+            msgBox.setIcon( QMessageBox::Information );
+            msgBox.exec();                                     
+        }
+        else {    
+            CLogger::getInstance().log( PtrMessage(new CMessage( tr("Skin loaded: ") + m_skinParameters.name())) );
+        }            
     }
         
     else //Erreur de chargement de la session
