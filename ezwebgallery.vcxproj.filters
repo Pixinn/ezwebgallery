@@ -79,6 +79,12 @@
     <Filter Include="Source Files\widgets">
       <UniqueIdentifier>{ca967a58-f2d6-4dd2-8896-d9951b2f6538}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\behaviors">
+      <UniqueIdentifier>{ce49d971-11ce-4a62-b0c8-1e848e01c582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\behaviors">
+      <UniqueIdentifier>{35b4b2c9-7ce5-446f-b703-284122e9569b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CCaption.cpp">
@@ -243,6 +249,9 @@
     <ClCompile Include="src\generation\CPhotoProcessor.cpp">
       <Filter>Source Files\generation</Filter>
     </ClCompile>
+    <ClCompile Include="src\behaviors\CBehaviorAnalytics.cpp">
+      <Filter>Source Files\behaviors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CCaption.h">
@@ -319,6 +328,12 @@
     </ClInclude>
     <ClInclude Include="build\.GeneratedFiles\ui_WinPreview.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\behaviors\IBehavior.hpp">
+      <Filter>Header Files\behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\behaviors\CBehaviorAnalytics.hpp">
+      <Filter>Header Files\behaviors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

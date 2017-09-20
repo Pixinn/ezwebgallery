@@ -335,6 +335,7 @@
     <ClCompile Include="build\.moc\moc_WinConfigure.cpp" />
     <ClCompile Include="build\.moc\moc_WinPreview.cpp" />
     <ClCompile Include="build\.moc\moc_WinSkinDesigner.cpp" />
+    <ClCompile Include="src\behaviors\CBehaviorAnalytics.cpp" />
     <ClCompile Include="src\CCaption.cpp" />
     <ClCompile Include="src\CCaptionManager.cpp" />
     <ClCompile Include="src\generation\CPhotoProcessor.cpp" />
@@ -372,6 +373,8 @@
     <ClInclude Include="build\.GeneratedFiles\ui_WinConfigure.h" />
     <ClInclude Include="build\.GeneratedFiles\ui_WinPreview.h" />
     <ClInclude Include="build\.GeneratedFiles\ui_WinSkinDesigner.h" />
+    <ClInclude Include="src\behaviors\CBehaviorAnalytics.hpp" />
+    <ClInclude Include="src\behaviors\IBehavior.hpp" />
     <ClInclude Include="src\CCaption.h" />
     <CustomBuild Include="src\ui\WinPreview.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

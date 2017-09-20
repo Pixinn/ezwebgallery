@@ -1,6 +1,6 @@
 ﻿/*
  *  EZWebGallery:
- *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
+ *  Copyright (C) 2011-2017 Christophe Meneboeuf <dev@ezwebgallery.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -67,37 +67,40 @@ CGalleryGenerator::CGalleryGenerator( ) :
 
     //--- Init de la machine Etat
     //Etats
-    m_p_waitingForOrders = new QState();
-    m_p_galleryGeneration = new QState();
-    m_p_abording = new QState();
-    m_p_init = new QState( m_p_galleryGeneration );
-    m_p_generatingFileStructure = new QState( m_p_galleryGeneration );
-    m_p_generatingPhotos = new QState( m_p_galleryGeneration );
-    m_p_generatingJSFiles = new QState( m_p_galleryGeneration );
-    m_p_skinning = new QState( m_p_galleryGeneration );
-    m_p_galleryGeneration->setInitialState( m_p_init );
+    m_p_waitingForOrders = std::make_unique<QState>();
+    m_p_galleryGeneration = std::make_unique<QState>();
+    m_p_abording = std::make_unique<QState>();
+    m_p_init = std::make_unique<QState>(m_p_galleryGeneration.get());
+    m_p_generatingFileStructure = std::make_unique<QState>(m_p_galleryGeneration.get());
+    m_p_generatingPhotos = std::make_unique<QState>(m_p_galleryGeneration.get());
+    m_p_generatingJSFiles = std::make_unique<QState>(m_p_galleryGeneration.get());
+    m_p_optionalBehaviors = std::make_unique<QState>(m_p_galleryGeneration.get());
+    m_p_skinning = std::make_unique<QState>(m_p_galleryGeneration.get());
+    m_p_galleryGeneration->setInitialState( m_p_init.get() );
     //Transitions
-    m_p_galleryGeneration->addTransition( this, SIGNAL( abordGenerationSignal( )), m_p_abording);
-    m_p_waitingForOrders->addTransition( this, SIGNAL(startGenerationSignal()), m_p_galleryGeneration);
-    m_p_init->addTransition( this, SIGNAL(jobDone()), m_p_generatingFileStructure);
-    m_p_generatingFileStructure->addTransition( this, SIGNAL(jobDone()), m_p_generatingPhotos);
-    m_p_generatingPhotos->addTransition( this, SIGNAL(jobDone()), m_p_generatingJSFiles);
-    m_p_generatingJSFiles->addTransition( this, SIGNAL(jobDone()), m_p_skinning);
-    m_p_skinning->addTransition( this, SIGNAL(jobDone()), m_p_waitingForOrders);
-    m_p_abording->addTransition( this, SIGNAL(abordGenerationSignal( )), m_p_abording);
-    m_p_abording->addTransition( this, SIGNAL(jobDone()), m_p_waitingForOrders);
+    m_p_galleryGeneration->addTransition( this, SIGNAL( abordGenerationSignal( )), m_p_abording.get());
+    m_p_waitingForOrders->addTransition( this, SIGNAL(startGenerationSignal()), m_p_galleryGeneration.get());
+    m_p_init->addTransition( this, SIGNAL(jobDone()), m_p_generatingFileStructure.get());
+    m_p_generatingFileStructure->addTransition( this, SIGNAL(jobDone()), m_p_generatingPhotos.get());
+    m_p_generatingPhotos->addTransition( this, SIGNAL(jobDone()), m_p_generatingJSFiles.get());
+    m_p_generatingJSFiles->addTransition( this, SIGNAL(jobDone()), m_p_optionalBehaviors.get());
+    m_p_optionalBehaviors->addTransition(this, SIGNAL(jobDone()), m_p_skinning.get());
+    m_p_skinning->addTransition( this, SIGNAL(jobDone()), m_p_waitingForOrders.get());
+    m_p_abording->addTransition( this, SIGNAL(abordGenerationSignal( )), m_p_abording.get());
+    m_p_abording->addTransition( this, SIGNAL(jobDone()), m_p_waitingForOrders.get());
     //Connections Etats<->Traitements
-    connect( m_p_init, SIGNAL(entered()), this, SLOT( initGeneration() ) );
-    connect( m_p_generatingFileStructure, SIGNAL(entered()), this, SLOT( generateFileStructure() ) );
-    connect( m_p_generatingPhotos, SIGNAL(entered()), this, SLOT( generatePhotos() ) );
-    connect( m_p_generatingJSFiles, SIGNAL(entered()), this, SLOT( generateJsFiles() ) );
-    connect( m_p_skinning, SIGNAL(entered()), this, SLOT( skinning() ) );
-    connect( m_p_abording, SIGNAL(entered()), this, SLOT( onAbordGeneration() ) );
+    connect( m_p_init.get(), SIGNAL(entered()), this, SLOT( initGeneration() ) );
+    connect( m_p_generatingFileStructure.get(), SIGNAL(entered()), this, SLOT( generateFileStructure() ) );
+    connect( m_p_generatingPhotos.get(), SIGNAL(entered()), this, SLOT( generatePhotos() ) );
+    connect( m_p_generatingJSFiles.get(), SIGNAL(entered()), this, SLOT( generateJsFiles() ) );
+    connect(m_p_optionalBehaviors.get(), SIGNAL(entered()), this, SLOT(optionnalBehaviors()));
+    connect( m_p_skinning.get(), SIGNAL(entered()), this, SLOT( skinning() ) );
+    connect( m_p_abording.get(), SIGNAL(entered()), this, SLOT( onAbordGeneration() ) );
     //Finalisation
-    m_stateMachine.addState( m_p_waitingForOrders );
-    m_stateMachine.addState( m_p_galleryGeneration );
-    m_stateMachine.addState( m_p_abording );
-    m_stateMachine.setInitialState( m_p_waitingForOrders );
+    m_stateMachine.addState( m_p_waitingForOrders.get() );
+    m_stateMachine.addState( m_p_galleryGeneration.get());
+    m_stateMachine.addState( m_p_abording.get());
+    m_stateMachine.setInitialState( m_p_waitingForOrders.get());
     //---
 
     m_nbPhotosToProcess = 0;
@@ -179,7 +182,25 @@ void CGalleryGenerator::displayProgressBar( int completion, QString color, const
     emit progressBarSignal( completion, color, message );
 }
 
+
+
+std::unique_ptr<QTextStream> CGalleryGenerator::readHtml(QFile& input) const
+{
+    if (input.open(QIODevice::Text | QIODevice::ReadWrite))
+    {
+        std::unique_ptr<QTextStream> htmlTextStream = std::make_unique<QTextStream>(&input);
+        htmlTextStream->setCodec("UTF-8");
+        htmlTextStream->setGenerateByteOrderMark(false); //False sinon pb avec ie6 car les premiers caractres ne sont pas le doctype...
+        return htmlTextStream;
+    }
+    else {
+        throw std::runtime_error{ "Cannot open the file" };
+    }
+}
+
 /***********************************************************************/
+
+
 
 
 /***************************************************************************************************/
@@ -484,6 +505,41 @@ bool CGalleryGenerator::generateJsFiles( )
 
 
 
+
+////////////////////////////////////////////////////
+///////////////// Adds the optionnal behaviors /////////////////////
+///////////////////////////////////////////////////
+
+bool CGalleryGenerator::optionnalBehaviors()
+{
+    QDir outPath{ m_feeder.getProjectParams().m_galleryConfig.outputDir };
+    QFile htmlFile{ outPath.absoluteFilePath(QString("index.html")) };
+    htmlFile.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::WriteUser | QFile::ReadGroup | QFile::ReadOther);
+    
+    try 
+    {
+        auto streamHtml = readHtml(htmlFile);
+        auto html = streamHtml->readAll();
+        const auto& behaviors = m_feeder.getOptionnalBehaviors();
+        for (const auto& behavior : behaviors) {
+            behavior->embedInHtml(html);
+        }
+        streamHtml->seek(0); //Reposition  0 pour remplacer le fichier et pas faire un append
+        *streamHtml << html;
+    }
+    catch (const std::runtime_error&) {
+        m_msgErrorList.append(PtrMessage(new CError(CError::FileOpening, htmlFile.fileName())));
+        emit abordGenerationSignal();
+        return false;
+    }
+ 
+    htmlFile.close();
+    emit jobDone();
+    return true;
+}
+
+
+
 ////////////////////////////////////////////////////
 ///////////////// css Skinning /////////////////////
 ///////////////////////////////////////////////////
@@ -567,71 +623,70 @@ bool CGalleryGenerator::skinning( )
     QDir outPath( m_feeder.getProjectParams().m_galleryConfig.outputDir );
     QFile htmlFile( outPath.absoluteFilePath( QString("index.html")) );
     htmlFile.setPermissions( QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::WriteUser | QFile::ReadGroup | QFile::ReadOther );
-    if( htmlFile.open( QIODevice::Text|QIODevice::ReadWrite ) )
-    {
-        QTextStream htmlTextStream( &htmlFile );
-        htmlTextStream.setCodec( "UTF-8" );
-        htmlTextStream.setGenerateByteOrderMark (false); //False sinon pb avec ie6 car les premiers caractres ne sont pas le doctype...
-        QString htmlString;
 
-        htmlString = htmlTextStream.readAll() ; //Lecture du fichier
-
-        //------ HEADER -----//
-        //Metatag generator
-        htmlString.replace( "[META_GENERATOR]", QString("<meta name=\"generator\" content=\"EZWebGallery r")+CPlatform::revision()+QString("\" />") );
-        //Metatags Content, title &  Description
-        htmlString.replace( "[META_TITLE]", QString("<meta name=\"title\" content=\"")+m_feeder.getProjectParams().m_galleryConfig.title+QString("\" />") );
-        htmlString.replace( "[META_DESCRIPTION]", QString("<meta name=\"description\" content=\"")+m_feeder.getProjectParams().m_galleryConfig.description+QString("\" />") );
-        htmlString.replace( "[META_CONTENT]", QString("<meta name=\"content\" content=\"")+m_feeder.getProjectParams().m_galleryConfig.description+QString("\" />") );
-        //Facebook's OpenGraph
-        QChar slash = '/';
-        QString galleryThumbURL = m_feeder.getProjectParams().m_galleryConfig.url; //Mise en forme de l'url de la vignette reprsentant la galerie
-        if( !galleryThumbURL.isEmpty() && galleryThumbURL.at( galleryThumbURL.size() - 1 ) != slash ){ //Ajout d'un / final si il n'y en a pas
-            galleryThumbURL += slash;
-        }
-        galleryThumbURL += PHOTOSPATH;
-        galleryThumbURL += slash;
-        galleryThumbURL += GALLERYTHUMBFILENAME;
-        QString openGraphString = QString("<meta property=\"og:image\" content=\"")+galleryThumbURL+QString("\" />\n") \
-                                    +QString("<meta property=\"og:title\" content=\"")+m_feeder.getProjectParams().m_galleryConfig.title+QString("\" />\n") \
-                                    +QString("<meta property=\"og:description\" content=\"")+m_feeder.getProjectParams().m_galleryConfig.description+QString("\" />\n")/*\
-                                    +QString("<meta property=\"fb:admins\" content=\"786810484\"/>" )*/;
-        htmlString.replace( "[META_OPENGRAPH]",	openGraphString );
-        //------ FOOTER -------//
-        //EZWebGallery Logo
-        htmlString.replace( "[EZWEBGALLERY_LOGO]", QString("<img src=\"resources/images/EZWebGallery.png\" id=\"logo\" title=\"")
-                                                            + tr("Photo gallery designed and generated using EZWebGallery.")
-                                                            + QString("\" alt=\"EZWebGallery\"/>") );
-
-        //------ TITRES -----//
-        //Titre de la page
-        htmlString.replace( "[HTML_TITLE]", QString("<title>")+m_feeder.getProjectParams().m_galleryConfig.title+QString("</title>") );
-        htmlString.replace( "[CONTENT_TITLE]", m_feeder.getProjectParams().m_galleryConfig.title );
-
-        //------ BOUTONS (SCREEN PHOTO) -------//
-        //Toolbar
-        htmlString.replace( "[TOOLBAR]", m_skinParameters.toolbar() );
-        //Previous
-        htmlString.replace( "[BUTTON_PREVIOUSPHOTO]", QString("<img alt=\"") + tr("Previous photo")
-                                                                +QString("\" class=\"photoButtonEnabled\" id=\"boutonPrevious\" src=\"resources/images/")
-                                                                +m_skinParameters.buttonImage( CSkinParameters::buttonPrevious )+QString("\" />") );
-        //Next
-        htmlString.replace( "[BUTTON_NEXTPHOTO]", QString("<img alt=\"") + tr("Next photo")
-                                                            +QString("\" class=\"photoButtonEnabled\" id=\"boutonNext\" src=\"resources/images/")
-                                                            +m_skinParameters.buttonImage( CSkinParameters::buttonNext )+QString("\" />") );
-
-        //---------------------//
-
-        htmlTextStream.seek( 0 ); //Reposition  0 pour remplacer le fichier et pas faire un append
-        htmlTextStream << htmlString;
-
-    } //fin modifications html
-    else{
-        m_msgErrorList.append(PtrMessage(new CError(CError::FileOpening, htmlFile.fileName())) );
-        emit abordGenerationSignal( );
+    QString htmlString;
+    std::unique_ptr<QTextStream> htmlTextStream;
+    try    {
+        htmlTextStream = readHtml(htmlFile);
+        htmlString = htmlTextStream->readAll();
+    }
+    catch (const std::runtime_error&) {
+        m_msgErrorList.append(PtrMessage(new CError(CError::FileOpening, htmlFile.fileName())));
+        emit abordGenerationSignal();
         return false;
     }
-    htmlFile.close();
+
+
+    //------ HEADER -----//
+    //Metatag generator
+    htmlString.replace( "[META_GENERATOR]", QString("<meta name=\"generator\" content=\"EZWebGallery r")+CPlatform::revision()+QString("\" />") );
+    //Metatags Content, title &  Description
+    htmlString.replace( "[META_TITLE]", QString("<meta name=\"title\" content=\"")+m_feeder.getProjectParams().m_galleryConfig.title+QString("\" />") );
+    htmlString.replace( "[META_DESCRIPTION]", QString("<meta name=\"description\" content=\"")+m_feeder.getProjectParams().m_galleryConfig.description+QString("\" />") );
+    htmlString.replace( "[META_CONTENT]", QString("<meta name=\"content\" content=\"")+m_feeder.getProjectParams().m_galleryConfig.description+QString("\" />") );
+    //Facebook's OpenGraph
+    QChar slash = '/';
+    QString galleryThumbURL = m_feeder.getProjectParams().m_galleryConfig.url; //Mise en forme de l'url de la vignette reprsentant la galerie
+    if( !galleryThumbURL.isEmpty() && galleryThumbURL.at( galleryThumbURL.size() - 1 ) != slash ){ //Ajout d'un / final si il n'y en a pas
+        galleryThumbURL += slash;
+    }
+    galleryThumbURL += PHOTOSPATH;
+    galleryThumbURL += slash;
+    galleryThumbURL += GALLERYTHUMBFILENAME;
+    QString openGraphString = QString("<meta property=\"og:image\" content=\"")+galleryThumbURL+QString("\" />\n") \
+                                +QString("<meta property=\"og:title\" content=\"")+m_feeder.getProjectParams().m_galleryConfig.title+QString("\" />\n") \
+                                +QString("<meta property=\"og:description\" content=\"")+m_feeder.getProjectParams().m_galleryConfig.description+QString("\" />\n")/*\
+                                +QString("<meta property=\"fb:admins\" content=\"786810484\"/>" )*/;
+    htmlString.replace( "[META_OPENGRAPH]",	openGraphString );
+    //------ FOOTER -------//
+    //EZWebGallery Logo
+    htmlString.replace( "[EZWEBGALLERY_LOGO]", QString("<img src=\"resources/images/EZWebGallery.png\" id=\"logo\" title=\"")
+                                                        + tr("Photo gallery designed and generated using EZWebGallery.")
+                                                        + QString("\" alt=\"EZWebGallery\"/>") );
+
+    //------ TITRES -----//
+    //Titre de la page
+    htmlString.replace( "[HTML_TITLE]", QString("<title>")+m_feeder.getProjectParams().m_galleryConfig.title+QString("</title>") );
+    htmlString.replace( "[CONTENT_TITLE]", m_feeder.getProjectParams().m_galleryConfig.title );
+
+    //------ BOUTONS (SCREEN PHOTO) -------//
+    //Toolbar
+    htmlString.replace( "[TOOLBAR]", m_skinParameters.toolbar() );
+    //Previous
+    htmlString.replace( "[BUTTON_PREVIOUSPHOTO]", QString("<img alt=\"") + tr("Previous photo")
+                                                            +QString("\" class=\"photoButtonEnabled\" id=\"boutonPrevious\" src=\"resources/images/")
+                                                            +m_skinParameters.buttonImage( CSkinParameters::buttonPrevious )+QString("\" />") );
+    //Next
+    htmlString.replace( "[BUTTON_NEXTPHOTO]", QString("<img alt=\"") + tr("Next photo")
+                                                        +QString("\" class=\"photoButtonEnabled\" id=\"boutonNext\" src=\"resources/images/")
+                                                        +m_skinParameters.buttonImage( CSkinParameters::buttonNext )+QString("\" />") );
+    //---------------------//
+
+    //------- OPTIONNAL BEHAVIORS ---------//
+
+    htmlTextStream->seek( 0 ); //Reposition  0 pour remplacer le fichier et pas faire un append
+    *htmlTextStream << htmlString;
+
 
 
     //-- FIN DE LA GENERATION --//

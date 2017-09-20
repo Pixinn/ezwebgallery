@@ -16,6 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "behaviors\CBehaviorAnalytics.hpp"
 #include "CGalleryGeneratorFeeder.h"
 #include "CDirChecker.h"
 
@@ -52,7 +53,7 @@ CGalleryGeneratorFeeder::CGalleryGeneratorFeeder(  const CProjectParameters & p_
     //Computes
     computePhotoSizes();
     computeThumbSizes();
-
+    optionnalBehaviors();
 }
 
 
@@ -147,4 +148,18 @@ void CGalleryGeneratorFeeder::computeThumbSizes( void )
       m_ThumbSizes.insert( QString(RESOLUTIONPATH) + QString::number(n++), QSize( size, size ) );
   }
 
+}
+
+
+
+/**************************************
+* optionnalBehaviors(  )
+*
+* Adds the optional behaviors of the gallery
+***************************************/
+void CGalleryGeneratorFeeder::optionnalBehaviors()
+{
+    // Google Analytics
+    // Added anyway or the tag won't be cleared in HTML
+    m_BehaviorsOptionnal.append(QSharedPointer<IBehavior>{new CBehaviorAnalytics{ m_ProjectParams.m_galleryConfig }});
 }

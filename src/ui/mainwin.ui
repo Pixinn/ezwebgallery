@@ -85,6 +85,9 @@
               <layout class="QVBoxLayout" name="verticalLayout_12">
                <item>
                 <widget class="QCheckBox" name="checkBox_ButtonFullscreen">
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a button to enable fullscreen mode&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
                  <property name="text">
                   <string>Go to fullscreen</string>
                  </property>
@@ -98,6 +101,158 @@
                </item>
               </layout>
              </widget>
+            </item>
+            <item row="0" column="1">
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <item>
+               <widget class="QGroupBox" name="groupBox_Options">
+                <property name="title">
+                 <string>Basic options:</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout666">
+                 <item>
+                  <layout class="QFormLayout" name="formLayout_5">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_rightClickEnabled">
+                     <property name="text">
+                      <string>Enable right-click</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QCheckBox" name="checkBox_rightClickEnabled">
+                     <property name="enabled">
+                      <bool>true</bool>
+                     </property>
+                     <property name="cursor">
+                      <cursorShape>ArrowCursor</cursorShape>
+                     </property>
+                     <property name="toolTip">
+                      <string>Enable right-clicking on the displayed photo.</string>
+                     </property>
+                     <property name="checked">
+                      <bool>false</bool>
+                     </property>
+                     <property name="tristate">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="groupBox_AdvancedOptions">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="title">
+                 <string>Advanced options :</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
+                </property>
+                <layout class="QGridLayout" name="gridLayout">
+                 <item row="0" column="0">
+                  <layout class="QFormLayout" name="formLayout">
+                   <property name="fieldGrowthPolicy">
+                    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+                   </property>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="nbPhotosPrChargerLabel">
+                     <property name="text">
+                      <string>Nb photos to prefetch</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QSpinBox" name="spinbox_nbPhotosPreCharger">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="toolTip">
+                      <string>Number of photos to load in advance.</string>
+                     </property>
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>10</number>
+                     </property>
+                     <property name="value">
+                      <number>8</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="tailleDuCacheLabel">
+                     <property name="text">
+                      <string>Cache size</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QSpinBox" name="spinbox_tailleDuCache">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="toolTip">
+                      <string>Size of the cache containing the preloaded photos.</string>
+                     </property>
+                     <property name="minimum">
+                      <number>9</number>
+                     </property>
+                     <property name="maximum">
+                      <number>50</number>
+                     </property>
+                     <property name="value">
+                      <number>15</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="4" column="1">
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="4" column="0">
+             <spacer name="verticalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
             </item>
             <item row="0" column="0">
              <widget class="QGroupBox" name="groupBox_General">
@@ -240,157 +395,57 @@
               </layout>
              </widget>
             </item>
-            <item row="0" column="1">
-             <layout class="QVBoxLayout" name="verticalLayout_7">
-              <item>
-               <widget class="QGroupBox" name="groupBox_Options">
-                <property name="title">
-                 <string>Basic options:</string>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout666">
-                 <item>
-                  <layout class="QFormLayout" name="formLayout_5">
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_rightClickEnabled">
-                     <property name="text">
-                      <string>Enable right-click</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="QCheckBox" name="checkBox_rightClickEnabled">
-                     <property name="enabled">
-                      <bool>true</bool>
-                     </property>
-                     <property name="cursor">
-                      <cursorShape>ArrowCursor</cursorShape>
-                     </property>
-                     <property name="toolTip">
-                      <string>Enable right-clicking on the displayed photo.</string>
-                     </property>
-                     <property name="checked">
-                      <bool>false</bool>
-                     </property>
-                     <property name="tristate">
-                      <bool>false</bool>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="QGroupBox" name="groupBox_AdvancedOptions">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="title">
-                 <string>Advanced options :</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-                <property name="checked">
-                 <bool>false</bool>
-                </property>
-                <layout class="QGridLayout" name="gridLayout">
-                 <item row="0" column="0">
-                  <layout class="QFormLayout" name="formLayout">
-                   <property name="fieldGrowthPolicy">
-                    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                   </property>
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="nbPhotosPrChargerLabel">
-                     <property name="text">
-                      <string>Nb photos to prefetch</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="QSpinBox" name="spinbox_nbPhotosPreCharger">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="toolTip">
-                      <string>Number of photos to load in advance.</string>
-                     </property>
-                     <property name="minimum">
-                      <number>1</number>
-                     </property>
-                     <property name="maximum">
-                      <number>10</number>
-                     </property>
-                     <property name="value">
-                      <number>8</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="tailleDuCacheLabel">
-                     <property name="text">
-                      <string>Cache size</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="1">
-                    <widget class="QSpinBox" name="spinbox_tailleDuCache">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="toolTip">
-                      <string>Size of the cache containing the preloaded photos.</string>
-                     </property>
-                     <property name="minimum">
-                      <number>9</number>
-                     </property>
-                     <property name="maximum">
-                      <number>50</number>
-                     </property>
-                     <property name="value">
-                      <number>15</number>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="3" column="1">
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
             <item row="3" column="0">
-             <spacer name="verticalSpacer_6">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
+             <widget class="QGroupBox" name="groupBox_Behavior">
+              <property name="title">
+               <string>Optionnal behaviors</string>
               </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
+              <layout class="QVBoxLayout" name="verticalLayout_13">
+               <item>
+                <widget class="QCheckBox" name="checkBox_Analytics">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Embed google Analytic's code in the gallery.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="text">
+                  <string>Enable Google Analytics</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QFormLayout" name="formLayout_6">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_GaTrackingId">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>Google Analytics Tracking ID</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="lineEdit_GaTrackingId">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tracking ID of your website&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="text">
+                    <string notr="true"/>
+                   </property>
+                   <property name="maxLength">
+                    <number>32767</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
             </item>
            </layout>
           </item>
@@ -2034,6 +2089,9 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -2492,6 +2550,18 @@ Use it if photos were added or removed.</string>
   <tabstop>groupBox_AdvancedOptions</tabstop>
   <tabstop>spinbox_nbPhotosPreCharger</tabstop>
   <tabstop>spinbox_tailleDuCache</tabstop>
+  <tabstop>checkBox_ButtonFullscreen</tabstop>
+  <tabstop>checkBox_Analytics</tabstop>
+  <tabstop>lineEdit_GaTrackingId</tabstop>
+  <tabstop>pushButton_OpenSkin</tabstop>
+  <tabstop>pushButton_DesignSkin</tabstop>
+  <tabstop>spinBox_ThumbNbCol</tabstop>
+  <tabstop>checkBox_HiDPI</tabstop>
+  <tabstop>checkBox_ManualConf</tabstop>
+  <tabstop>comboBox_ImageQualityStrategy</tabstop>
+  <tabstop>spinbox_PhotoMaxHSize</tabstop>
+  <tabstop>spinBox_PhotoMaxVSize</tabstop>
+  <tabstop>spinbox_PhotoMinHSize</tabstop>
   <tabstop>spinbox_PhotoMinVSize</tabstop>
   <tabstop>spinBox_PhotoNbRes</tabstop>
   <tabstop>horizontalSlider_PhotoJpegQuality</tabstop>
@@ -2500,6 +2570,7 @@ Use it if photos were added or removed.</string>
   <tabstop>doubleSpinBox_PhotoSharpeningRadius</tabstop>
   <tabstop>horizontalSlider_PhotoSharpeningAmount</tabstop>
   <tabstop>spinBox_PhotoSharpeningAmount</tabstop>
+  <tabstop>groupBox_Watermark</tabstop>
   <tabstop>comboBox_WatermarkType</tabstop>
   <tabstop>comboBox_WatermarkPosition</tabstop>
   <tabstop>comboBox_WatermarkOrientation</tabstop>
@@ -2507,31 +2578,21 @@ Use it if photos were added or removed.</string>
   <tabstop>spinBox_WatermarkSize</tabstop>
   <tabstop>horizontalSlider_WatermarkOpacity</tabstop>
   <tabstop>spinBox_WatermarkOpacity</tabstop>
+  <tabstop>pushButton_WatermarkTextShortcuts</tabstop>
   <tabstop>lineEdit_WatermarkText</tabstop>
   <tabstop>fontComboBox_WatermarkText</tabstop>
+  <tabstop>checkBox_WatermarkTextColorAuto</tabstop>
+  <tabstop>lineEdit_Caption</tabstop>
+  <tabstop>pushButton_CaptionShortcuts</tabstop>
   <tabstop>lineEdit_captionHeader</tabstop>
   <tabstop>lineEdit_captionEnding</tabstop>
   <tabstop>pushButton_PrevPhoto</tabstop>
   <tabstop>pushButton_nextPhoto</tabstop>
-  <tabstop>listView_Photos</tabstop>
+  <tabstop>textEdit_captionPreview</tabstop>
   <tabstop>pushButton_UpdatePhotoList</tabstop>
   <tabstop>checkBox_GalleryThumb</tabstop>
+  <tabstop>listView_Photos</tabstop>
   <tabstop>pushButton_Generation</tabstop>
-  <tabstop>textEdit_captionPreview</tabstop>
-  <tabstop>checkBox_WatermarkTextColorAuto</tabstop>
-  <tabstop>spinBox_ThumbNbCol</tabstop>
-  <tabstop>spinBox_PhotoMaxVSize</tabstop>
-  <tabstop>spinbox_PhotoMinHSize</tabstop>
-  <tabstop>pushButton_OpenSkin</tabstop>
-  <tabstop>pushButton_DesignSkin</tabstop>
-  <tabstop>spinbox_PhotoMaxHSize</tabstop>
-  <tabstop>checkBox_HiDPI</tabstop>
-  <tabstop>checkBox_ManualConf</tabstop>
-  <tabstop>comboBox_ImageQualityStrategy</tabstop>
-  <tabstop>groupBox_Watermark</tabstop>
-  <tabstop>pushButton_WatermarkTextShortcuts</tabstop>
-  <tabstop>lineEdit_Caption</tabstop>
-  <tabstop>pushButton_CaptionShortcuts</tabstop>
  </tabstops>
  <resources>
   <include location="../resources/GalleryDesigner.qrc"/>
@@ -2544,12 +2605,12 @@ Use it if photos were added or removed.</string>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>240</x>
-     <y>141</y>
+     <x>255</x>
+     <y>139</y>
     </hint>
     <hint type="destinationlabel">
-     <x>565</x>
-     <y>478</y>
+     <x>551</x>
+     <y>546</y>
     </hint>
    </hints>
   </connection>
@@ -2560,12 +2621,12 @@ Use it if photos were added or removed.</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>408</x>
-     <y>521</y>
+     <x>407</x>
+     <y>544</y>
     </hint>
     <hint type="destinationlabel">
-     <x>208</x>
-     <y>520</y>
+     <x>298</x>
+     <y>545</y>
     </hint>
    </hints>
   </connection>
@@ -2576,12 +2637,12 @@ Use it if photos were added or removed.</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>208</x>
-     <y>520</y>
+     <x>298</x>
+     <y>545</y>
     </hint>
     <hint type="destinationlabel">
-     <x>408</x>
-     <y>521</y>
+     <x>407</x>
+     <y>544</y>
     </hint>
    </hints>
   </connection>
@@ -2592,12 +2653,12 @@ Use it if photos were added or removed.</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>408</x>
-     <y>577</y>
+     <x>407</x>
+     <y>604</y>
     </hint>
     <hint type="destinationlabel">
-     <x>242</x>
-     <y>576</y>
+     <x>358</x>
+     <y>605</y>
     </hint>
    </hints>
   </connection>
@@ -2672,12 +2733,44 @@ Use it if photos were added or removed.</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>242</x>
-     <y>576</y>
+     <x>358</x>
+     <y>605</y>
     </hint>
     <hint type="destinationlabel">
-     <x>408</x>
-     <y>577</y>
+     <x>407</x>
+     <y>604</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_Analytics</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lineEdit_GaTrackingId</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>66</x>
+     <y>474</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>191</x>
+     <y>496</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_Analytics</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_GaTrackingId</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>471</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>54</x>
+     <y>492</y>
     </hint>
    </hints>
   </connection>

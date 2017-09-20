@@ -21,6 +21,7 @@
 #ifndef CGalleryGenerator_H
 #define CGalleryGenerator_H
 
+#include <memory>
 
 #include <QString>
 #include <QThread>
@@ -71,6 +72,7 @@ public slots:
     bool generateFileStructure( );          //retour: true si tout c'est bien pass
     int  generatePhotos( );                  //retour: Nombre photos dont le traitement est plannifi
     bool generateJsFiles( );
+    bool optionnalBehaviors();
     bool skinning( );
 
 
@@ -92,17 +94,21 @@ private:
     void debugDisplay( QString );		//Affichage d'un message de debug
     void displayProgressBar( int completion, QString color, const PtrMessage &message ); //Affiche un % d'avancement sur la progressBar
 
+    //-- tools
+    std::unique_ptr<QTextStream> readHtml(QFile& input) const; ///< Reads an html file. **Throws** an error if not possible.
+
     ///// Attributs //////
     //Machine Etat
     QStateMachine m_stateMachine;
-    QState* m_p_waitingForOrders;
-    QState* m_p_galleryGeneration;
-    QState* m_p_init;
-    QState* m_p_generatingFileStructure;
-    QState* m_p_generatingPhotos;
-    QState* m_p_generatingJSFiles;
-    QState* m_p_skinning;
-    QState* m_p_abording;
+    std::unique_ptr<QState> m_p_waitingForOrders;
+    std::unique_ptr<QState> m_p_galleryGeneration;
+    std::unique_ptr<QState> m_p_init;
+    std::unique_ptr<QState> m_p_generatingFileStructure;
+    std::unique_ptr<QState> m_p_generatingPhotos;
+    std::unique_ptr<QState> m_p_generatingJSFiles;
+    std::unique_ptr<QState> m_p_optionalBehaviors;
+    std::unique_ptr<QState> m_p_skinning;
+    std::unique_ptr<QState> m_p_abording;
     //Paramètres de la galerie
     CGalleryGeneratorFeeder m_feeder;
     QStringList m_captionsList;

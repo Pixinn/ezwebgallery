@@ -96,6 +96,10 @@ public:
     QString skinPath;
     QString thumbPhoto;
     QString url;
+    struct {
+        bool enabled = false;
+        QString id;
+    } analytics;
     int nbPhotosToPrefetch;
     int prefetchCacheSize;     
     bool f_rightClickEnabled;    

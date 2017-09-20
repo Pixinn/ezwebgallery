@@ -38,6 +38,8 @@ bool t_galleryConf::operator==(const t_galleryConf& source)
     if (inputDir != source.inputDir) { return false; }
     if (outputDir != source.outputDir) { return false; }
     if (url != source.url) { return false; }
+    if (analytics.enabled != source.analytics.enabled ) { return false; }
+    if (analytics.enabled && analytics.id != source.analytics.id) { return false; }
     if (nbPhotosToPrefetch != source.nbPhotosToPrefetch) { return false; }
     if (prefetchCacheSize != source.prefetchCacheSize) { return false; }
     if (f_rightClickEnabled != source.f_rightClickEnabled) { return false; }
@@ -231,6 +233,8 @@ void CProjectParameters::fromUi( /*const Ui::MainWin* const ui */)
     m_galleryConfig.url = m_p_ui->lineEdit_URL->text();
     m_galleryConfig.f_rightClickEnabled = m_p_ui->checkBox_rightClickEnabled->isChecked();
     m_galleryConfig.f_buttonFullscreen = m_p_ui->checkBox_ButtonFullscreen->isChecked();
+    m_galleryConfig.analytics.enabled = m_p_ui->checkBox_Analytics->isChecked();
+    m_galleryConfig.analytics.id = m_galleryConfig.analytics.enabled ? m_p_ui->lineEdit_GaTrackingId->text() : "";
 
     //Remplissage structure Config Vignettes
     m_thumbsConfig.nbColumns = m_p_ui->spinBox_ThumbNbCol->value();
@@ -314,6 +318,8 @@ void CProjectParameters::fromDomDocument( QDomDocument &document )
     m_galleryConfig.skinPath = galleryConfElem.firstChildElement( "Skin" ).firstChildElement( "Path" ).text();
     m_p_skin->setName( galleryConfElem.firstChildElement( "Skin" ).attribute("name") );
     m_galleryConfig.thumbPhoto = galleryConfElem.firstChildElement( "thumbnail" ).text();
+    m_galleryConfig.analytics.enabled = galleryConfElem.firstChildElement("analytics").firstChildElement("enabled").text() == "True" ? true : false;
+    m_galleryConfig.analytics.id = m_galleryConfig.analytics.enabled ? galleryConfElem.firstChildElement("analytics").firstChildElement("id").text() : "";
 
     //--- CONFIG THUMBS
     m_thumbsConfig.nbColumns = thumbsConfElem.firstChildElement( "nbColumns" ).text().toInt();
@@ -418,6 +424,14 @@ QDomDocument CProjectParameters::toDomDocument( /*CCaptionManagerr &captions*/ )
     QDomElement thumbnail = document.createElement( "thumbnail" );
     thumbnail.appendChild( document.createTextNode( m_galleryConfig.thumbPhoto ) );
     galleryConfig.appendChild( thumbnail );
+    QDomElement analytics = document.createElement("analytics");
+    QDomElement analytics_enabled = document.createElement("enabled");
+    analytics_enabled.appendChild(document.createTextNode(m_galleryConfig.analytics.enabled ? "True" : "False"));
+    QDomElement analytics_id = document.createElement("id");
+    analytics_id.appendChild(document.createTextNode(m_galleryConfig.analytics.id));
+    analytics.appendChild(analytics_enabled);
+    analytics.appendChild(analytics_id);
+    galleryConfig.appendChild(analytics);
 
     //--- CONFIG THUMB
     QDomElement thumbsConfig  = document.createElement( "ThumbsConfig" );
@@ -518,6 +532,8 @@ void CProjectParameters::toUi( )
     m_p_ui->lineEdit_URL->setText( m_galleryConfig.url );
     m_p_ui->checkBox_rightClickEnabled->setChecked( m_galleryConfig.f_rightClickEnabled );
     m_p_ui->checkBox_ButtonFullscreen->setChecked(m_galleryConfig.f_buttonFullscreen);
+    m_p_ui->checkBox_Analytics->setChecked(m_galleryConfig.analytics.enabled);
+    m_p_ui->lineEdit_GaTrackingId->setText(m_galleryConfig.analytics.id);
 
     //Lecture structure Config Vignettes
     m_p_ui->spinBox_ThumbNbCol->setValue( m_thumbsConfig.nbColumns );

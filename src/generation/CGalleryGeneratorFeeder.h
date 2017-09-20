@@ -25,8 +25,10 @@
 #include <QString>
 #include <QSize>
 
+#include "behaviors/IBehavior.hpp"
 #include "CProjectParameters.h"
 #include "CSkinParameters.h"
+
 
 
 /*********************************************************************************/
@@ -40,8 +42,7 @@
 class CGalleryGeneratorFeeder
 {
 public:
-    CGalleryGeneratorFeeder( void )
-    {   }
+    CGalleryGeneratorFeeder(void) = default;
     CGalleryGeneratorFeeder(  const CProjectParameters & p_ProjectParams,
                               const CSkinParameters & p_SkinParams,
                               const QList<CPhotoProperties*> & p_PhotoProperties);
@@ -54,16 +55,25 @@ public:
     inline QList<CPhotoProperties> getPhotoProperties( void ) { return m_PhotoProperties; }
     
     //Requested by CGalleryGenerator
-    inline const QMap<QString,QSize> & getPhotoSizes( void ) const { return m_PhotoSizes; }
-    inline const QMap<QString,QSize> & getThumbSizes( void ) const { return m_ThumbSizes; }
+    inline const QMap<QString,QSize> & getPhotoSizes( void ) const {
+        return m_PhotoSizes;
+    }
+    inline const QMap<QString,QSize> & getThumbSizes( void ) const { 
+        return m_ThumbSizes;
+    }
+    inline const QList<QSharedPointer<IBehavior>>& getOptionnalBehaviors() const {
+        return m_BehaviorsOptionnal;
+    }
 
 private:
    void computePhotoSizes( void );
    void computeThumbSizes( void );
+   void optionnalBehaviors();
 
    CProjectParameters m_ProjectParams;
    CSkinParameters m_SkinParams;
    QList<CPhotoProperties> m_PhotoProperties;
+   QList<QSharedPointer<IBehavior>> m_BehaviorsOptionnal;
 
    QMap<QString,QSize> m_PhotoSizes;
    QMap<QString,QSize> m_ThumbSizes;
