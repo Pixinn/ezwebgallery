@@ -19,7 +19,7 @@
 #ifndef BEHAVIORS_IBEHAVIOR_H__
 #define BEHAVIORS_IBEHAVIOR_H__
 
-/// @brief Interface to embedd some optionnal behavior code into the gallery
+/// @brief Interface to embed some optionnal behavior code into the gallery
 class IBehavior
 {
 public:

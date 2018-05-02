@@ -25,34 +25,39 @@
 #include <QDateTime>
 #include <QMap>
 
+
 /*** SETTINGS ***/
 #define SETTINGS_RECENTPROJECTS     "Recent Projects List"
 #define SETTINGS_RECENTSKINS        "Recent Skins List"
 #define SETTINGS_LANGUAGE           "Prefered Language"
 #define SETTINGS_OPENMOSTRECENTPJT  "Open Most Recent Project"
+#define SETTINGS_EMBEDGAID          "Embed a default GA tracking ID"
+#define SETTINGS_GAID               "Default GA ID"
 #define SETTINGS_ENABLEPREVIEW      "Enable Preview"
 #define SETTINGS_AFTERGENERATION    "Action after producing the gallery"
 
+
 /*** GUI ***/
-#define XMLSESSIONEXTENSION ".gallery"
-#define XMLLASTSESSIONFILE  "lastSession"
-#define SKINSESSIONEXTENSION ".skin"
-#define SKINLASTSESSIONFILE  "lastSkin"
+#define XMLSESSIONEXTENSION     ".gallery"
+#define XMLLASTSESSIONFILE      "lastSession"
+#define SKINSESSIONEXTENSION    ".skin"
+#define SKINLASTSESSIONFILE     "lastSkin"
 
 
 /*** Galerie ***/
-#define GALLERYTHUMBFILENAME "galleryThumbnail.jpg"
-#define PHOTOPREFIXE    "Photo_"
-#define THUMBPREFIXE    "tn_"
-#define THUMBSPATH      "thumbnails"
-#define PHOTOSPATH      "images"
-#define RESOLUTIONPATH  "res"
-#define RESPATH		"resources"
-#define CSSPATH		"resources/css"
-#define RESIMGPATH      "resources/images"
-#define RESEMOTICONSPATH  "resources/images/smileys/"
-#define JSPATH          "resources/javascript"
-#define IMAGEFILEEXTENSION ".jpg"
+#define GALLERYTHUMBFILENAME    "galleryThumbnail.jpg"
+#define PHOTOPREFIXE            "Photo_"
+#define THUMBPREFIXE            "tn_"
+#define THUMBSPATH              "thumbnails"
+#define PHOTOSPATH              "images"
+#define RESOLUTIONPATH          "res"
+#define RESPATH		            "resources"
+#define CSSPATH		            "resources/css"
+#define RESIMGPATH              "resources/images"
+#define RESEMOTICONSPATH        "resources/images/smileys/"
+#define JSPATH                  "resources/javascript"
+#define IMAGEFILEEXTENSION      ".jpg"
+
 
 /**** skins ****/
 #define DEFAULTSKINNAME    "default"

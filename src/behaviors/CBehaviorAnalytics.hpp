@@ -24,7 +24,7 @@
 #include "CProjectParameters.h"
 #include "IBehavior.hpp"
 
-/// @brief Interface to embedd some optionnal behavior code into the gallery
+/// @brief Interface to embed some optionnal behavior code into the gallery
 class CBehaviorAnalytics : public IBehavior
 {
 public:

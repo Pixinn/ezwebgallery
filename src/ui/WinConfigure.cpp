@@ -38,32 +38,13 @@ WinConfigure::WinConfigure( QWidget* parent )
     m_ui->setupUi( this ); //Obligatoire en tte d'init d'ui!
     initLanguageCombobox();
 
-    //Recupration des settings
-    QSettings settings;
-    if( settings.contains( SETTINGS_OPENMOSTRECENTPJT ) ) {
-        bool openPjt = (settings.value(SETTINGS_OPENMOSTRECENTPJT).toInt() == 1);
-        m_ui->checkBox_RecentProject->setChecked(openPjt);
-    }
-    if (settings.contains(SETTINGS_ENABLEPREVIEW)) {
-        bool openPjt = (settings.value(SETTINGS_ENABLEPREVIEW).toInt() == 1);
-        m_ui->checkBox_EnablePreview->setChecked(openPjt);
-    }
-
     //---- Connnections
-    connect( this->m_ui->buttonBox, SIGNAL(accepted( )), this, SLOT(onOK()) );
-    connect( this->m_ui->buttonBox, SIGNAL(rejected( )), this, SLOT(onCancel()) );
+    connect(this->m_ui->buttonBox, SIGNAL(accepted( )), this, SLOT(onOK()) );
+    connect(this->m_ui->buttonBox, SIGNAL(rejected( )), this, SLOT(onCancel()) );
     connect(this->m_ui->checkBox_EnablePreview, SIGNAL(stateChanged(int)), this, SLOT(onEnablePreview(int)));
-
 }
 
 
-/*************************
-* Destructeur
-*************************/
-WinConfigure::~WinConfigure()
-{
-
-}
 
 /*************************
 * exec( )
@@ -72,6 +53,7 @@ WinConfigure::~WinConfigure()
 *************************/
 int WinConfigure::exec()
 {
+    ReadSettings();
     //language
     int currentLangIndex;
     currentLangIndex = m_ui->comboBox_Language->findText( CLanguageManager::currentLanguage() );
@@ -124,20 +106,25 @@ void WinConfigure::retranslate( )
 *************************/
 void WinConfigure::onOK( )
 {
-    QSettings* settings = new QSettings();
-    QString currentLanguage = settings->value( SETTINGS_LANGUAGE ).toString();
+    QSettings settings;
+    QString currentLanguage = settings.value( SETTINGS_LANGUAGE ).toString();
     QString newLanguage = CLanguageManager::languageCode( m_ui->comboBox_Language->currentText() );
 
     //sauvegarde de la config
-    settings->setValue(SETTINGS_OPENMOSTRECENTPJT, m_ui->checkBox_RecentProject->isChecked() ? 1 : 0);
-    settings->setValue(SETTINGS_ENABLEPREVIEW, m_ui->checkBox_EnablePreview->isChecked() ? 1 : 0);
-    settings->setValue( SETTINGS_AFTERGENERATION, (int)m_ui->comboBox_AfterProduction->currentIndex() );
+    settings.setValue(SETTINGS_OPENMOSTRECENTPJT, m_ui->checkBox_RecentProject->isChecked() ? 1 : 0);
+    settings.setValue(SETTINGS_ENABLEPREVIEW, m_ui->checkBox_EnablePreview->isChecked() ? 1 : 0);
+    settings.setValue(SETTINGS_AFTERGENERATION, (int)m_ui->comboBox_AfterProduction->currentIndex() );
+    settings.setValue(SETTINGS_EMBEDGAID, m_ui->checkBox_EmbedAnalytics->isChecked() ? 1 : 0);
+    settings.setValue(SETTINGS_GAID, m_ui->lineEdit_TrackingId->text());
     if( currentLanguage != newLanguage ) { //seulement si la langue change
-        settings->setValue( SETTINGS_LANGUAGE, newLanguage );
+        settings.setValue( SETTINGS_LANGUAGE, newLanguage );
         emit languageChanged( );  //Traduit tout ce qui est ncessaire
     }
 
-    delete settings;
+    const auto idAnalytics = defaultGaId();
+    if (idAnalytics.size() != 0u) {
+        emit embedAnalytics(idAnalytics);
+    }
 
     close();
 }
@@ -182,6 +169,7 @@ void WinConfigure::onEnablePreview(int state)
 }
 
 
+
 /*************************
 * previewGallery( )
 * ---------------
@@ -213,4 +201,29 @@ bool WinConfigure::openGalleryFolder()
 bool WinConfigure::openMostRecentProject()
 {
     return m_ui->checkBox_RecentProject->isChecked();
+}
+
+
+
+void WinConfigure::ReadSettings()
+{
+    QSettings settings;
+    if (settings.contains(SETTINGS_OPENMOSTRECENTPJT)) {
+        const auto openPjt = (settings.value(SETTINGS_OPENMOSTRECENTPJT).toInt() == 1);
+        m_ui->checkBox_RecentProject->setChecked(openPjt);
+    }
+    bool enable_preview = false;
+    if (settings.contains(SETTINGS_ENABLEPREVIEW)) {
+        enable_preview = (settings.value(SETTINGS_ENABLEPREVIEW).toInt() == 1);
+        m_ui->checkBox_EnablePreview->setChecked(enable_preview);
+    }
+    if (settings.contains(SETTINGS_EMBEDGAID)) {
+        const auto embedd_ga = (settings.value(SETTINGS_EMBEDGAID).toInt() == 1);
+        m_ui->checkBox_EmbedAnalytics->setChecked(embedd_ga);
+    }
+    if (settings.contains(SETTINGS_GAID)) {
+        const auto ga_id = (settings.value(SETTINGS_GAID).toString());
+        m_ui->lineEdit_TrackingId->setText(ga_id);
+    }
+
 }

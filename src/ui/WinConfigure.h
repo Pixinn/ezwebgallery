@@ -43,14 +43,22 @@ private:
     /********** Mthodes *********/
 public:
     WinConfigure( QWidget* parent = 0 );
-    ~WinConfigure();
+    ~WinConfigure() = default;
     int exec(); //Surcharge de QDialog::exec() pour initialiser combobox de langue
     void retranslate(); //Traduit la fentre dans la nouvelle langue
     bool previewGallery();
     bool openGalleryFolder();
     bool openMostRecentProject();
-    inline bool isPreviewGalleryAllowed() {
+    inline bool isPreviewGalleryAllowed() const {
         return m_ui->checkBox_EnablePreview->isChecked();
+    }
+    inline QString defaultGaId() const {
+        if (m_ui->checkBox_EmbedAnalytics->isChecked() && m_ui->lineEdit_TrackingId->text().size() != 0u) {
+            return  m_ui->lineEdit_TrackingId->text();
+        }
+        else {
+            return QString();
+        }
     }
 
     /********* SLOTS ********/
@@ -58,16 +66,17 @@ public slots:
     //void onChangeLanguage( );
     void onOK( );
     void onCancel( );
-    void onEnablePreview(int state);
+    void onEnablePreview(int state);    
 
     /****** SIGNAUX ******/
 signals:
     void languageChanged( );
     void enablePreview(bool);
+    void embedAnalytics(QString);
 
 private:
     void initLanguageCombobox( ); //Initialise la combobox de choix de langue
-
+    void ReadSettings(); ///< @brief Reads the settings and sets up the UI
     /********** Membres *********/
 private:
     Ui::Configure* m_ui;    

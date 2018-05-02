@@ -102,6 +102,7 @@ public slots:
     bool onSaveSession( void );
     bool onSaveSessionAs( void );
     void onPreviewGallery(void);
+    void onEmbedAnalytics(QString id);
     void onOpenGalleryFolder(void);
     void onHiDPI( int );
     void onManualPhotoConf( int );

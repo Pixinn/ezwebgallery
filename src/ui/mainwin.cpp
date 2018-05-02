@@ -353,6 +353,7 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& proje
     //Preferences
     connect(m_p_configureWindow, SIGNAL(languageChanged()), &m_languageManager, SLOT(translate()));
     connect(m_p_configureWindow, SIGNAL(enablePreview(bool)), this, SLOT(onEnablePreview(bool)));
+    connect(m_p_configureWindow, SIGNAL(embedAnalytics(QString)), this, SLOT(onEmbedAnalytics(QString)));
 }
 
 MainWin::~MainWin()
@@ -507,8 +508,13 @@ void MainWin::newSession( )
         m_referenceProjectParameters = m_projectParameters;
         m_photoDatabase.saveState();
         //UI
-        m_ui->action_SaveSession->setDisabled( true );           //Il *faut* désactiver l'option save pour ne pas écraser le fichier le plus récent
+        m_ui->action_SaveSession->setDisabled( true );    //Il *faut* désactiver l'option save pour ne pas écraser le fichier le plus récent
         m_ui->label_thumbPhoto->clear();                  //Clearing the photo preview
+        //Using settings
+        const auto id_google_analytics = m_p_configureWindow->defaultGaId();
+        if (id_google_analytics.size() != 0u) {
+            onEmbedAnalytics(id_google_analytics);
+        }
 }
 
 
@@ -1078,6 +1084,15 @@ void MainWin::onPreviewGallery(void)
         connect(this, SIGNAL(generationInProgress()), m_p_winPreview, SLOT(onDisable()));
     }
     m_p_winPreview->show(indexPath);
+}
+
+
+void MainWin::onEmbedAnalytics(QString id)
+{
+    m_ui->checkBox_Analytics->setChecked(true);
+    if (m_ui->lineEdit_GaTrackingId->text().size() == 0u) {
+        m_ui->lineEdit_GaTrackingId->setText(id);
+    }
 }
 
 
