@@ -31,18 +31,19 @@ call compress_javascript.bat %DATADIR%\data\resources\javascript
 echo off
 
 REM --- COPYING WEB FILES TO DATA
-copy "..\Web\index.html" %DATADIR%\data
-copy "..\Web\resources\php\*.php" %DATADIR%\data\resources\php
-copy "..\Web\resources\images\*.*" %DATADIR%\data\resources\images
-copy "..\Web\resources\images\smileys\*.*" %DATADIR%\data\resources\images\smileys
-copy "..\Web\resources\css\*.css" %DATADIR%\data\resources\css
-copy "..\Web\resources\css\opt\*.css" %DATADIR%\data\resources\css\opt
-copy "..\Web\resources\javascript\jquery\*.js" %DATADIR%\data\resources\javascript\jquery
-copy "..\Web\resources\javascript\jquery\plugins\*.js" %DATADIR%\data\resources\javascript\jquery\plugins
-copy "..\Web\resources\javascript\hammer\*.js" %DATADIR%\data\resources\javascript\hammer
-copy "..\Web\resources\javascript\modernizr\*.js" %DATADIR%\data\resources\javascript\modernizr
-copy "..\Web\resources\javascript\screenfull\*.js" %DATADIR%\data\resources\javascript\screenfull
-copy "..\Web\resources\javascript\tools\*.js" %DATADIR%\data\resources\javascript\tools
+copy "..\web\index.html" %DATADIR%\data
+copy "..\web\resources\php\*.php" %DATADIR%\data\resources\php
+copy "..\web\resources\images\*.*" %DATADIR%\data\resources\images
+copy "..\web\resources\images\smileys\*.*" %DATADIR%\data\resources\images\smileys
+copy "..\web\resources\css\*.css" %DATADIR%\data\resources\css
+copy "..\web\resources\css\opt\*.css" %DATADIR%\data\resources\css\opt
+copy "..\web\resources\javascript\Toolbar.js" %DATADIR%\data\resources\javascript
+copy "..\web\resources\javascript\jquery\*.js" %DATADIR%\data\resources\javascript\jquery
+copy "..\web\resources\javascript\jquery\plugins\*.js" %DATADIR%\data\resources\javascript\jquery\plugins
+copy "..\web\resources\javascript\hammer\*.js" %DATADIR%\data\resources\javascript\hammer
+copy "..\web\resources\javascript\modernizr\*.js" %DATADIR%\data\resources\javascript\modernizr
+copy "..\web\resources\javascript\screenfull\*.js" %DATADIR%\data\resources\javascript\screenfull
+copy "..\web\resources\javascript\tools\*.js" %DATADIR%\data\resources\javascript\tools
 
 
 REM --- COPYING DATA AND SKINS TO TEMP DIR

@@ -44,7 +44,7 @@ debian/files
 debian/stamp-makefile-build
 debian/stamp-makefile-install
 ezwebgallery.pro.user
-deployment/common/data/ressources/javascript/jquery/plugins/jquery.animate-enhanced.js
+deployment/common/data/
 deployment/windows/Setup_EZWebGallery.exe
 deployment/windows/version.nsh
 ezwebgallery.pro.user
