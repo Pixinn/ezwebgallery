@@ -63,7 +63,6 @@ function CDisplay( p_properties, p_htmlStructure, user_interactions)
     this.displayPhoto = function( id )
     {
         that.idCurrentPhoto = id;
-        //that.url.setHash( id );
         that.toolbar.screenPhoto.display();
         that.html.photo.buttons.$next.verticalCenter( that.computeToolbarTopHeigth()/2 );
         that.html.photo.buttons.$previous.css("top",  that.html.photo.buttons.$next.css("top") ); //no v center on previous to correct an ie8 bug

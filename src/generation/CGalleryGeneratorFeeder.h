@@ -64,6 +64,12 @@ public:
     inline const QList<QSharedPointer<IBehavior>>& getOptionnalBehaviors() const {
         return m_BehaviorsOptionnal;
     }
+    inline void setThumbGallerySize(const QSize& size) {
+        m_ThumbGallerySize = size;
+    }
+    inline QSize getThumbGallerySize(void) const {
+        return m_ThumbGallerySize;
+    }
 
 private:
    void computePhotoSizes( void );
@@ -78,6 +84,8 @@ private:
    QMap<QString,QSize> m_PhotoSizes;
    QMap<QString,QSize> m_ThumbSizes;
    QQueue<int> m_Qualities; // <<< SHOULD BE PART OF PHOTOPROPERTIES ????!!!
+
+   QSize m_ThumbGallerySize = QSize{ 0, 0 };
 
     //static const
     static const int s_nbMosaicSizes = 8;

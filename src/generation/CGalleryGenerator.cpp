@@ -309,10 +309,11 @@ int CGalleryGenerator::generatePhotos( )
     }
     outPath.cd( PHOTOSPATH );
     if( photo.load( galleryThumbnailFile )){
-        thumbnail = photo.scaled( QSize(250,250),
+        thumbnail = photo.scaled(QSize{ 640,640 },
                                   Qt::KeepAspectRatio,
                                   Qt::SmoothTransformation );
         thumbnail.save( outPath.absoluteFilePath( GALLERYTHUMBFILENAME ), 0, 85 );
+        m_feeder.setThumbGallerySize(QSize{ thumbnail.size()});
     }
     else {
         //TODO : log an error
@@ -653,16 +654,22 @@ bool CGalleryGenerator::skinning( )
     galleryThumbURL += PHOTOSPATH;
     galleryThumbURL += slash;
     galleryThumbURL += GALLERYTHUMBFILENAME;
-    QString openGraphString = QString("<meta property=\"og:image\" content=\"")+galleryThumbURL+QString("\" />\n") \
-                                +QString("<meta property=\"og:title\" content=\"")+m_feeder.getProjectParams().m_galleryConfig.title+QString("\" />\n") \
-                                +QString("<meta property=\"og:description\" content=\"")+m_feeder.getProjectParams().m_galleryConfig.description+QString("\" />\n")/*\
-                                +QString("<meta property=\"fb:admins\" content=\"786810484\"/>" )*/;
+    m_feeder.getThumbGallerySize().width();
+    QString openGraphString = QString{ "<meta property=\"og:image\" content=\"" } +galleryThumbURL + QString{ "\" />\n" } \
+        + QString{ "<meta property=\"og:image:width\" content=\"" } + QString::number( m_feeder.getThumbGallerySize().width() ) +QString{ "px\" />\n" } \
+        + QString{ "<meta property=\"og:image:height\" content=\"" } +QString::number(m_feeder.getThumbGallerySize().height() ) +QString{ "px\" />\n" } \
+        + QString{ "<meta property=\"og:title\" content=\"" } +m_feeder.getProjectParams().m_galleryConfig.title + QString{ "\" />\n" } \
+        + QString{ "<meta property=\"og:description\" content=\"" } +m_feeder.getProjectParams().m_galleryConfig.description + QString{ "\" />\n" } \
+        + QString{ "<meta property=\"og:url\" content=\"" } +m_feeder.getProjectParams().m_galleryConfig.url + QString{ "\" />\n" };
+
+
     htmlString.replace( "[META_OPENGRAPH]",	openGraphString );
     //------ FOOTER -------//
     //EZWebGallery Logo
     htmlString.replace( "[EZWEBGALLERY_LOGO]", QString("<img src=\"resources/images/EZWebGallery.png\" id=\"logo\" title=\"")
                                                         + tr("Photo gallery designed and generated using EZWebGallery.")
                                                         + QString("\" alt=\"EZWebGallery\"/>") );
+
 
     //------ TITRES -----//
     //Titre de la page
