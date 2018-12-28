@@ -1,4 +1,4 @@
-
+﻿
 // Buttons AND SCREENS!
 function Toolbar( p_htmlStructure, p_user_interactions  )
 {
@@ -31,7 +31,42 @@ function Toolbar( p_htmlStructure, p_user_interactions  )
      this.buttons.push(this.buttonIndex);
      this.buttonIndex.$handle.hide();
 
-    [FULLSCREEN_BUTTON]
+    /***********************************
+*
+* FULLSCREEN_BUTTON
+*
+************************************/
+this.buttonFullscreen = new CButtonToolbar( {
+        $handle: p_htmlStructure.toolbar.$buttonFullscreen,
+        script: "undefined",
+
+        onClick: function() // Toggles the fullscreen
+        {
+          if (screenfull.enabled === true ) {
+            //A bug in chrome requires the toolbar to be redrawn after entering or exiting fullscreen
+            $(".toolbar").hide();
+            screenfull.toggle();
+            window.setTimeout( function() {
+                $(".toolbar").show();
+            }
+            , 20 );
+            Mosaic.redraw();
+          }
+      },
+
+      onLoaded: function()
+      {
+          if( screenfull.enabled ) {
+              this.enable();
+              this.$handle.show();
+          }
+      }
+    } );
+
+this.buttonFullscreen.$handle.hide();
+this.buttons.push(this.buttonFullscreen);
+that.buttonFullscreen.disable();
+
 
     this.screenIndex = new CScreen( { $handle: that.html.index.$screen,
                                       deck: that.deck,

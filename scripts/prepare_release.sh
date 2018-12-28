@@ -25,7 +25,6 @@ cp $SCRIPTDIR/../web/resources/images/*.* $DATADIR/data/resources/images
 cp $SCRIPTDIR/../web/resources/images/smileys/*.* $DATADIR/data/resources/images/smileys
 cp $SCRIPTDIR/../web/resources/css/*.css $DATADIR/data/resources/css
 cp $SCRIPTDIR/../web/resources/css/opt/*.css $DATADIR/data/resources/css/opt
-cp $SCRIPTDIR/../web/resources/javascript/Toolbar.js $DATADIR/data/resources/javascript
 cp $SCRIPTDIR/../web/resources/javascript/jquery/*.js $DATADIR/data/resources/javascript/jquery
 cp $SCRIPTDIR/../web/resources/javascript/jquery/plugins/*.js $DATADIR/data/resources/javascript/jquery/plugins
 cp $SCRIPTDIR/../web/resources/javascript/hammer/*.js $DATADIR/data/resources/javascript/hammer

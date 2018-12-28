@@ -18,8 +18,8 @@ JS_PATH=$SCRIPTDIR/../web/resources/javascript
 DESTDIR=$1
 
 mkdir -p $DESTDIR
-cat $JS_PATH/CEvent.js $JS_PATH/CHashTable.js $JS_PATH/CPhoto.js $JS_PATH/CFifo.js $JS_PATH/CStorage.js $JS_PATH/CUserInterractions.js $JS_PATH/CFrameFactory.js $JS_PATH/CCarrousel.js $JS_PATH/CPhotoStrategy.js $JS_PATH/CPhotoLoader.js $JS_PATH/CUrl.js $JS_PATH/CNavBars.js $JS_PATH/CScreen.js $JS_PATH/CDisplay.js $JS_PATH/CScroller.js  $JS_PATH/CProgressBar.js $JS_PATH/CMosaic.js $JS_PATH/start.js > /tmp/ezwg.js
-java -jar ../tools/yui-compressor-2.4.8.jar --charset UTF-8 -o $DESTDIR/ezwg-min.js /tmp/ezwg.js
+java -jar ../tools/closure/closure-compiler-v20181210.jar --js $JS_PATH/C*.js $JS_PATH/start.js --create_source_map $DESTDIR/ezwg.js.map --source_map_format=V3  --js_output_file $DESTDIR/ezwg-min.js
+echo "//# sourceMappingURL=ezwg-min.js.map" >> $DESTDIR/ezwg-min.js
 
 else
 

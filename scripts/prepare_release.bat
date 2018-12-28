@@ -37,7 +37,6 @@ copy "..\web\resources\images\*.*" %DATADIR%\data\resources\images
 copy "..\web\resources\images\smileys\*.*" %DATADIR%\data\resources\images\smileys
 copy "..\web\resources\css\*.css" %DATADIR%\data\resources\css
 copy "..\web\resources\css\opt\*.css" %DATADIR%\data\resources\css\opt
-copy "..\web\resources\javascript\Toolbar.js" %DATADIR%\data\resources\javascript
 copy "..\web\resources\javascript\jquery\*.js" %DATADIR%\data\resources\javascript\jquery
 copy "..\web\resources\javascript\jquery\plugins\*.js" %DATADIR%\data\resources\javascript\jquery\plugins
 copy "..\web\resources\javascript\hammer\*.js" %DATADIR%\data\resources\javascript\hammer
