@@ -41,6 +41,7 @@ function CCarrousel( p_properties, p_html )
     //In: CPhoto
     this.displayPhoto = function( photo, $slide )
     {
+        TOOLS.trace( "CCarrousel::displayPhoto - " + "photo: " + photo + "$slide: " + $slide);
         var $div = $slide.find( that.frameFactory.getStrPhoto() );
         $div.find('img').remove();
         var image = photo.getImage();
@@ -61,19 +62,22 @@ function CCarrousel( p_properties, p_html )
                           .height( $div.outerHeight() + $div.siblings().outerHeight() ) //photo + title + caption
                           .verticalCenter( 0 );
 
-        TOOLS.trace( "parent: " + $( that.frameFactory.getStrFrame() ).width() +  " - " + $( that.frameFactory.getStrFrame() ).parent().height() );
-        TOOLS.trace( "div: " + $div.width() +  " - " + $div.height() );
-        TOOLS.trace( "img: " + $image.width() +  " - " + $image.height() );
+        // TOOLS.trace( "CCarrousel::displayPhoto - " + "parent: " + $( that.frameFactory.getStrFrame() ).width() +  " - " + $( that.frameFactory.getStrFrame() ).parent().height() );
+        // TOOLS.trace( "CCarrousel::displayPhoto - " + "div size: " + $div.width() +  " - " + $div.height() );
+        // TOOLS.trace( "CCarrousel::displayPhoto - " + "img size: " + $image.width() +  " - " + $image.height() );
     }
 
     //Centers the viewport on the current slide
     this.centerViewport = function()
     {
+        TOOLS.trace( "CCarrousel::centerViewport");
         that.html.$viewport.scrollLeft( that.html.$current.position().left );
+
     }
 
     this.previous = function( newid )
     {
+        TOOLS.trace( "CCarrousel::previous" + "new id: " + newid);
         that.setCurrentPhoto( newid );
 
         var photo = that.loader.load( that.currPhoto, that.loader.PREVIOUS );
@@ -83,11 +87,14 @@ function CCarrousel( p_properties, p_html )
 
         that.scroll( that.html.$previous );
 
+        TOOLS.trace( "CCarrousel::previous");
+
         return photo;
     }
 
     this.load = function( id )
     {
+        TOOLS.trace( "CCarrousel::load - " + "id: " + id);
         that.setCurrentPhoto( id );
         var photo = that.loader.load( id, that.loader.NEXT );
         that.displayPhoto( photo, that.html.$current );
@@ -101,6 +108,7 @@ function CCarrousel( p_properties, p_html )
 
     this.next = function( newid )
     {
+        TOOLS.trace( "CCarrousel::next - " + "new id: " + newid);
         that.setCurrentPhoto( newid );
 
         var photo = that.loader.load( that.currPhoto, that.loader.NEXT );
@@ -116,18 +124,21 @@ function CCarrousel( p_properties, p_html )
 
     this.getCurrentPhoto = function()
     {
+        TOOLS.trace( "CCarrousel::getCurrentPhoto")
         return that.currentPhoto;
     }
 
     //updates the avalaible space
     this.setSpace = function( space )
     {
+        TOOLS.trace( "CCarrousel::setSpace - " + "space: " - space);
         that.loader.setSpace( space );
     }
 
     //+++ PRIVATE
     this.updateHandles = function()
     {
+        TOOLS.trace( "CCarrousel::updateHandles");
         that.html.$deprecated = $(".deprecated");
         that.html.$previous  = $("#previousSlide");
         that.html.$current  = $("#currentSlide");
@@ -140,6 +151,7 @@ function CCarrousel( p_properties, p_html )
 
     this.setCurrentPhoto = function( id )
     {
+        TOOLS.trace( "CCarrousel::setCurrentPhoto - " + "id: " + id);
         that.currPhoto = id;
         that.prevPhoto = id - 1;
         that.nextPhoto = id + 1;
@@ -148,19 +160,32 @@ function CCarrousel( p_properties, p_html )
 
     this.scroll = function( $target )
     {
+        TOOLS.trace( "CCarrousel::scroll - " + "$target: " + $target);
         that.scrollingEvent.fire();
 
-        //updating slides attributes and handles.
-        //"deprecated" will be erased from the hmt structure after the scrolling
+        // updating slides attributes and handles.
+        // "deprecated" will be erased from the hmt structure after the scrolling
         that.html.$frame.addClass("deprecated");
         if( $target == that.html.$previous ) { //backward scrolling
-            $("#slidesContainer").animate({left: "+="+that.html.$current.outerWidth()+"px"}, "fast", "swing", function() {that.onScrolled("BACKWARD");}  );
+            //$("#slidesContainer").animate({left: "+="+that.html.$current.outerWidth()+"px"}, "fast", "swing", function() {that.onScrolled("BACKWARD");}  );                         $("#slidesContainer").animate({left: "+="+that.html.$current.outerWidth()+"px"}, "fast", "swing", function() {
+            $("#slidesContainer").animate({left: "+="+that.html.$current.outerWidth()+"px"}, "fast", "swing", function() {    
+                window.setTimeout( function() { // better to wait a bit
+                                 that.onScrolled("BACKWARD");
+                             }
+                             , 20 );
+            }  );
             that.html.$next.addClass("deprecated");
             that.html.$current.attr("id","nextSlide");
             that.html.$previous.attr("id","currentSlide");
         }
         else { //forward scrolling
-            $("#slidesContainer").animate({left: "-="+that.html.$current.outerWidth()+"px"}, "fast", "swing", function() {that.onScrolled("FORWARD");}  );
+            //$("#slidesContainer").animate({left: "-="+that.html.$current.outerWidth()+"px"}, "fast", "swing", function() {that.onScrolled("FORWARD");}  );
+            $("#slidesContainer").animate({left: "-="+that.html.$current.outerWidth()+"px"}, "fast", "swing", function() {    
+                window.setTimeout( function() { // better to wait a bit
+                                 that.onScrolled("FORWARD");
+                             }
+                             , 20 );
+            }  );
             that.html.$previous.addClass("deprecated");
             that.html.$current.attr("id","previousSlide");
             that.html.$next.attr("id","currentSlide");
@@ -172,7 +197,9 @@ function CCarrousel( p_properties, p_html )
     //+++ EVENTS
 
     this.onPhotoLoaded = function(  )
-    {    //typeof this: CPhoto
+    {    
+        TOOLS.trace( "CCarrousel::onPhotoLoaded");
+        //typeof this: CPhoto
         if( this.id == that.currPhoto )  {
             that.displayPhoto( this, that.html.$current );
             that.photoDisplayedLoadedEvent.fire( this );
@@ -182,6 +209,7 @@ function CCarrousel( p_properties, p_html )
 
     this.onScrolled = function( direction )
     {
+        TOOLS.trace( "CCarrousel::onScrolled - " + "erase $deprecated: " + that.html.$deprecated);
         //updating page's structure
         that.html.$deprecated.remove(); //removing the deprecated structures changes the slide under the viewport
         if( direction == "FORWARD" ) {

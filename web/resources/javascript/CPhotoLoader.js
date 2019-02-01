@@ -38,7 +38,7 @@ function CPhotoLoader( p_properties, p_html )
     //Fetches the proper photo
     this.fetch = function( id )
     {
-        TOOLS.trace("Fetching " + id );
+        TOOLS.trace("CPhotoLoader::fetch - " + "Fetching " + id );
         var photoToLoad = that.strategy.getImage( id );
         var photo = that.storage.addPhoto( photoToLoad );
         if( photo.isLoaded() == false ) { //loading the photo if it has not already been loaded

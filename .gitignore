@@ -49,6 +49,8 @@ deployment/windows/Setup_EZWebGallery.exe
 deployment/windows/version.nsh
 ezwebgallery.pro.user
 
+**/.DS_Store
+
 *.exe
 *.tlog
 *.pdb

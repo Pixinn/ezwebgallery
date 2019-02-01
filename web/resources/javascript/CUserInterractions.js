@@ -68,20 +68,20 @@ function CUserInterractions( p_properties, htmlstructure )
     {
         if(  !that.fCurrentlyScrolling )  //Enabling buttons while scrolling is error prone
         {
+            TOOLS.trace("CUserInterractions::enablePreviousNext - " + "not scrolling -> immediate");
             that.enablePrevious();
             that.enableNext();
             that.fEnablePreviousNextRequired = false;
             //These options may have to be call after every slides
             //This is the case as prev/next are disabled during scrolling
             var hammertime = that.html.photo.$current.data("hammer");
-            //hammertime.options[ "prevent_default" ] = true;
-            //hammertime.options[ "swipe_velocity" ] = 0.7;
             hammertime.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL });
             hammertime.get('doubletap').set({ enable: false });
             hammertime.get('pan').set({ enable: false });
             hammertime.get('press').set({ enable: false });
         }
         else {
+            TOOLS.trace("CUserInterractions::enablePreviousNext - " + "scrolling -> defered");
             that.fEnablePreviousNextRequired = true;
         }
     }
@@ -90,7 +90,7 @@ function CUserInterractions( p_properties, htmlstructure )
     {
         if( that.previousPhotoId >= 1 )
         {
-            TOOLS.trace("enable previous " + that.previousPhotoId);
+            TOOLS.trace("CUserInterractions::enablePrevious - " + "enable previous " + that.previousPhotoId);
             //Button
             that.html.photo.buttons.$previous.removeClass()
                                               .addClass( that.buttonEnabledClass )
@@ -102,7 +102,7 @@ function CUserInterractions( p_properties, htmlstructure )
 
     this.disablePrevious = function()
     {
-        TOOLS.trace("disable previous");
+        TOOLS.trace("CUserInterractions::disablePrevious - " + "disable previous");
         that.html.photo.buttons.$previous.removeClass()
                                          .addClass( that.buttonDisabledClass )
                                          .unbind( "click" );
@@ -113,7 +113,7 @@ function CUserInterractions( p_properties, htmlstructure )
     {
         if( that.nextPhotoId <= that.properties.photos.list.length )
         {
-            TOOLS.trace("enable next " + that.nextPhotoId);
+            TOOLS.trace("CUserInterractions::enableNext - " + "enable next " + that.nextPhotoId);
             //Button
             that.html.photo.buttons.$next.removeClass()
                                           .addClass( that.buttonEnabledClass )
@@ -125,7 +125,7 @@ function CUserInterractions( p_properties, htmlstructure )
 
       this.disableNext = function()
       {
-            TOOLS.trace("disable next");
+            TOOLS.trace("CUserInterractions::disableNext - " + "disable next");
             that.html.photo.buttons.$next.removeClass()
                                          .addClass( that.buttonDisabledClass )
                                          .unbind( "click" );
@@ -135,7 +135,7 @@ function CUserInterractions( p_properties, htmlstructure )
     this.enableThumbnailClick = function()
     {
         that.html.index.mosaic.$thumbnails.click( function() {
-            TOOLS.trace( "thumbnail #" + this.id + " clicked." );
+            TOOLS.trace( "CUserInterractions::enableThumbnailClick - " + "thumbnail #" + this.id + " clicked." );
             that.thumbnailClickedEvent.fire( this );
         });
     }
@@ -191,13 +191,15 @@ function CUserInterractions( p_properties, htmlstructure )
     }
 
     this.onScrolled = function() {
+        TOOLS.trace("CUserInterractions::onScrolled - " + that.fEnablePreviousNextRequired);
         that.fCurrentlyScrolling = false;
         if( that.fEnablePreviousNextRequired ) {
             that.fEnablePreviousNextRequired = false;
-            window.setTimeout( function() { // better to wait a bit
-                that.enablePreviousNext();
-            }
-            , 20 );
+            that.enablePreviousNext();
+            // window.setTimeout( function() { // better to wait a bit
+            //     that.enablePreviousNext();
+            // }
+            // , 20 );
         }
     }
 

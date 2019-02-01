@@ -36,7 +36,7 @@ function CPhoto( id, targetedSize )
     {
         if( this.f_loaded == false ) {
             $(this.image).load( function() {  //Using "that" for "this" is the loaded Image
-                                    TOOLS.trace( this.src + " loaded." );
+                                    TOOLS.trace("CPhoto::prototype::load - " + this.src + " loaded." );
                                     that.f_loaded = true;
                                     callback( that );
                                 } )

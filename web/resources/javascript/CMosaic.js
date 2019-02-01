@@ -102,7 +102,6 @@ function CMosaic( p_properties, p_htmlStructure )
         var $firstThumbBox = that.htmlStructure.index.mosaic.$thumbBoxes.eq(0);
         var scrollAmount = $thumbDisplayed.offset().top - $firstThumbBox.offset().top;
         that.htmlStructure.index.mosaic.$wrapper.scrollTop( scrollAmount );
-        TOOLS.trace( "scrollAmount: " + scrollAmount );
     }
 
 

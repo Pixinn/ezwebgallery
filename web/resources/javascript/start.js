@@ -174,7 +174,6 @@ $(document).ready(function()
         //Subscribing to user events
         UserHandler.getWindowResizedEvent().subscribe( function() { Mosaic.redraw(); } ); // Mosaic.resize() is VERY slow
         UserHandler.getThumbnailClickedEvent().subscribe( function() { Display.displayPhoto( parseInt(this.id) ); } ); //this, will be the object clicked
-        //UserHandler.getClosePhotoEvent().subscribe( Display.hidePhoto );
         UserHandler.getPreviousPhotoEvent().subscribe( Display.onPrevious );
         UserHandler.getNextPhotoEvent().subscribe( Display.onNext );
 

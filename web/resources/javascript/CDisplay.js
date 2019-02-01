@@ -43,7 +43,7 @@ function CDisplay( p_properties, p_htmlStructure, user_interactions)
     that.toolbar.screenPhoto.eventOnHiding.subscribe( function() { that.hidePhoto(); } );
 
     $(window).resize( function() {
-        TOOLS.trace( "Evt resize");
+        //TOOLS.trace( "CDisplay::resize - " +  "Evt resize");
         that.setSpace( that.computeAvailableSpace() );
         if( that.html.photo.$screen.is(":visible") === true )
         {
@@ -57,11 +57,13 @@ function CDisplay( p_properties, p_htmlStructure, user_interactions)
 
     this.displayCurrentUrl = function()
     {
+        TOOLS.trace( "CDisplay::displayCurrentUrl");
         that.url.display( that.displayPhoto );
     }
 
     this.displayPhoto = function( id )
     {
+        TOOLS.trace( "CDisplay::displayPhoto - " + "id: " + id);
         that.idCurrentPhoto = id;
         that.toolbar.screenPhoto.display();
         that.html.photo.buttons.$next.verticalCenter( that.computeToolbarTopHeigth()/2 );
@@ -76,7 +78,7 @@ function CDisplay( p_properties, p_htmlStructure, user_interactions)
     //back to index
     this.hidePhoto = function( )
     {
-        TOOLS.trace("hidePhoto");
+        TOOLS.trace( "CDisplay::hidePhoto");
         //that.url.clearHash();
         var $thumbBox =  that.html.index.mosaic.$thumbBoxes.eq( that.idCurrentPhoto - 1 );
         that.indexScreenEvent.fire( $thumbBox );
@@ -145,6 +147,7 @@ function CDisplay( p_properties, p_htmlStructure, user_interactions)
 
     this.setSpace = function( space )
     {
+        TOOLS.trace( "CDisplay::setSpace - " + "space: " + space);
         var mySpace = {};
         mySpace.h = space.h - that.computeToolbarTopHeigth();
         mySpace.w = space.w;
@@ -154,6 +157,7 @@ function CDisplay( p_properties, p_htmlStructure, user_interactions)
 
     this.load = function( id, loadFct ) //loadFct( id ) : function used to fetch the photo
     {
+        TOOLS.trace( "CDisplay::load - " + "id: " + id);
         that.disableUISignal.fire();
         var photo = loadFct( id ); //must be placed *after* the fadein or the dimensions will be incorrectly computed
         if( photo.isLoaded() == true ) {
@@ -174,9 +178,10 @@ function CDisplay( p_properties, p_htmlStructure, user_interactions)
         //Computing width used by other divs
         //NOTE : only sibling divs are considerd
         //This allows to correct an IE6 bug.
-        for(var i = 0; i < that.html.photo.$wrapper.siblings().length; i++){
-      //      widthWasted += that.html.photo.$wrapper.siblings().eq(i).outerWidth( );
-    }
+        //for(var i = 0; i < that.html.photo.$wrapper.siblings().length; i++){
+            //      widthWasted += that.html.photo.$wrapper.siblings().eq(i).outerWidth( );
+        //}
+
         //non available space
         var frameBorderSize = parseInt( that.html.photo.$frame.css("padding-top").replace("px","") );
         var heightCaption = 2*$(".photoCaption").css("padding-bottom").replace("px","") + $(".photoCaption").innerHeight();
@@ -188,6 +193,7 @@ function CDisplay( p_properties, p_htmlStructure, user_interactions)
 
     this.fitPhoto = function( photo )
     {
+        //TOOLS.trace( "CDisplay::fitPhoto - " + "photo: " + photo);
         var ratio = photo.nativeSize.h / photo.nativeSize.w;
         var newPhotoSz = {};
 
@@ -232,7 +238,7 @@ function CDisplay( p_properties, p_htmlStructure, user_interactions)
         if( toolbarHeight > $(document).height() / 2 ) { //if vertical
             toolbarHeight = 0;
         }
-        TOOLS.trace("Toolbar up space: " + toolbarHeight +"px");
+        //TOOLS.trace("CDisplay::computeToolbarTopHeigth - " + "Toolbar up space: " + toolbarHeight +"px");
         return toolbarHeight;
     }
 
