@@ -30,6 +30,7 @@
 #include <QtAlgorithms>
 
 #include <cmath>
+#include <stdexcept>
 
 
 #include "CGalleryGenerator.h"
@@ -109,7 +110,7 @@ CGalleryGenerator::CGalleryGenerator( ) :
     m_f_WorkInProgress = false;
     m_fStopRequested = false;
     m_p_photoProcessorPool = new QThreadPool( this ); 
-    m_p_photoProcessorPool->setMaxThreadCount(fmin(4, QThread::idealThreadCount()));//no more than 4 threads
+    m_p_photoProcessorPool->setMaxThreadCount(QThread::idealThreadCount());
     
     m_errorMsg = tr("No error.");
 
@@ -790,7 +791,6 @@ void CGalleryGenerator::onAbordGeneration( )
     if( nbPhotosProcessed + nbPhotoProcessFailed == m_nbPhotosToProcess )
 	{
         m_p_photoProcessorPool->waitForDone(); 	//Pour que les derniers threads du pool aient le temps de se terminer proprement
-												//Dangereux si plus de deux cpus??
         emit jobDone();
         m_mutex.lock();
             m_f_WorkInProgress = false;

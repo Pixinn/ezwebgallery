@@ -53,7 +53,7 @@ md %TEMPDIR%\skins
 xcopy /e ..\skins %TEMPDIR%\skins\
 
 REM --- COPYING DLL TO TEMP DIR
-windeployqt --release --dir %TEMPDIR% --no-compiler-runtime %2
+%QTDIR%\bin\windeployqt.exe --release --dir %TEMPDIR% --no-compiler-runtime %2
 
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_bzlib_.dll %TEMPDIR%
 copy %MAGICK_HOME%\VisualMagick\bin\CORE_RL_jpeg_.dll %TEMPDIR%
