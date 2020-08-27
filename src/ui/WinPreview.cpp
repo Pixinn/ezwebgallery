@@ -54,7 +54,7 @@ WinPreview::WinPreview(QWidget* parent)
 *************************/
 WinPreview::~WinPreview(void)
 {
-    delete m_webView;
+ //   delete m_webView; // throws an exception????
 }
 
 /**************************

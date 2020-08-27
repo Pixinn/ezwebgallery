@@ -90,7 +90,7 @@ class CToolbarBehavior
 {
 public:
     //optional buttons
-    typedef struct {
+    typedef struct t_Buttons {
         bool fullscreen = false;
     } t_Buttons;
 

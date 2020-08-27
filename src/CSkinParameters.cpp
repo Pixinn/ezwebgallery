@@ -164,7 +164,7 @@ QString CSkinParameters::filePath( ) const
 /*******************************************************************
 * fromUi( )
 * ---------
-* Rempli les structures internes avec les donnes rcupres de l'UI
+* Rempli les structures internes avec les donnes recuperees de l'UI
 ********************************************************************/
 void CSkinParameters::fromUi( )
 {
@@ -205,7 +205,8 @@ void CSkinParameters::fromUi( )
     m_styleSheet.addSelection( indexTitle );
     //Mosaic
     CCssSelection thumbsMosaic( QString("#mosaic"));
-        thumbsMosaic.setProperty( QString("background-image"), QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")") );
+    const auto mosaic_img_bckg = QString("url(../images/") + QFileInfo(m_p_ui->cImagePicker_Mosaic_BckgTexture->fileName()).fileName() + QString(")");
+        thumbsMosaic.setProperty( QString("background-image"), mosaic_img_bckg);
         if( m_p_ui->checkBox_Mosaic_BckgColor_Enabled->isChecked() ) { //optional background color
             thumbsMosaic.setProperty( QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value() );            
         } else {
@@ -217,7 +218,18 @@ void CSkinParameters::fromUi( )
     CCssSelection thumbSpacing( QString(".thumbBox") );  //Espace entre les vignettes
         this->thumbBoxBorderSize = m_p_ui->spinBox_Mosaic_SpacingWidth->value();
         thumbSpacing.setProperty( QString("border-width"), QString::number( thumbBoxBorderSize ) + QString("px") );
-        thumbSpacing.setProperty( QString("border-color"), m_p_ui->cColorPicker_Mosaic_SpacingColor->value() );
+        if (!m_p_ui->checkBox_Mosaic_SpacingTransparent->isChecked()) {
+          thumbSpacing.setProperty(QString("border-color"), m_p_ui->cColorPicker_Mosaic_SpacingColor->value());
+        }
+        else { // same as the mosaic's background
+          thumbSpacing.setProperty(QString("ezwg-transparent"), "true");
+          if (m_p_ui->checkBox_Mosaic_BckgColor_Enabled->isChecked()) {
+            thumbSpacing.setProperty(QString("background-color"), m_p_ui->cColorPicker_Mosaic_BckgColor->value());
+          }
+          else {
+            thumbSpacing.setProperty(QString("border-image"), mosaic_img_bckg);           
+          }
+        }
     //.thumbBox img -> thumbnail
     CCssSelection thumbnail( QString("img"));
         this->thumbImgBorderSize = m_p_ui->spinBox_Thumbnail_BorderWidth->value();
@@ -415,7 +427,7 @@ void CSkinParameters::toUi(  )
         m_p_ui->spinBox_Mosaic_BorderWidth->setValue( thumbsMosaic.property("border-width").remove("px").toInt() );
         m_p_ui->cImagePicker_Mosaic_BckgTexture->setImage( m_resources.value("Mosaic_BckgTexture").absoluteFilePath() );
         //background color is optional
-        bool fHasBckgColor = (thumbsMosaic.property("ezwg-background-color-disabled") != "true");
+        const bool fHasBckgColor = (thumbsMosaic.property("ezwg-background-color-disabled") != "true");
         m_p_ui->cColorPicker_Mosaic_BckgColor->setEnabled( fHasBckgColor );
         if( fHasBckgColor ) { 
             m_p_ui->cColorPicker_Mosaic_BckgColor->setColor( thumbsMosaic.property("background-color") );            
@@ -425,8 +437,12 @@ void CSkinParameters::toUi(  )
     path.clear();
     path << ".thumbBox";
     CCssSelection thumbSpacing = m_styleSheet.selection( path );
+        const bool isSpacingTransparent = (thumbSpacing.property("ezwg-transparent") == "true");
         m_p_ui->spinBox_Mosaic_SpacingWidth->setValue( thumbSpacing.property("border-width").remove("px").toInt() );
-        m_p_ui->cColorPicker_Mosaic_SpacingColor->setColor( thumbSpacing.property("border-color") );
+        m_p_ui->cColorPicker_Mosaic_SpacingColor->setColor(thumbSpacing.property("border-color"));
+        m_p_ui->cColorPicker_Mosaic_SpacingColor->setEnabled(!isSpacingTransparent);
+        m_p_ui->checkBox_Mosaic_SpacingTransparent->setChecked(isSpacingTransparent);
+        //m_p_ui->cColorPicker_Mosaic_SpacingColor->setColor(thumbSpacing.property("border-color"));
     //.thumbBox img     Vignette
         path << "img";
         CCssSelection thumbnail = m_styleSheet.selection( path );

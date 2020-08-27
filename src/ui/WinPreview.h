@@ -139,8 +139,8 @@ signals:
     void enabled(bool);
 
 private:
-    Ui::Preview* m_ui;
     CWebViewFacade* m_webView;
+    Ui::Preview* m_ui;
     bool m_wasShown;
 
     QDir    m_outDir;
