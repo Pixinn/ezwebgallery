@@ -85,6 +85,12 @@
     <Filter Include="Header Files\behaviors">
       <UniqueIdentifier>{35b4b2c9-7ce5-446f-b703-284122e9569b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\off-the-shelf">
+      <UniqueIdentifier>{4c911774-e1b5-4ca7-a741-e626aef7a554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\off-the-shelf\easyexif-1.0">
+      <UniqueIdentifier>{c9c0f8b1-2463-4f04-9839-31c2adb12e29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CCaption.cpp">
@@ -252,6 +258,9 @@
     <ClCompile Include="src\behaviors\CBehaviorAnalytics.cpp">
       <Filter>Source Files\behaviors</Filter>
     </ClCompile>
+    <ClCompile Include="src\off-the-shelf\easyexif-1.0\exif.cpp">
+      <Filter>Source Files\off-the-shelf\easyexif-1.0</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CCaption.h">
@@ -334,6 +343,9 @@
     </ClInclude>
     <ClInclude Include="src\behaviors\CBehaviorAnalytics.hpp">
       <Filter>Header Files\behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\off-the-shelf\easyexif-1.0\exif.h">
+      <Filter>Source Files\off-the-shelf\easyexif-1.0</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

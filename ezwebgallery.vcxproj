@@ -192,6 +192,7 @@
     <ClCompile Include="src\CCaption.cpp" />
     <ClCompile Include="src\CCaptionManager.cpp" />
     <ClCompile Include="src\generation\CPhotoProcessor.cpp" />
+    <ClCompile Include="src\off-the-shelf\easyexif-1.0\exif.cpp" />
     <ClCompile Include="src\ui\WinPreview.cpp" />
     <ClCompile Include="src\widgets\CColorPicker.cpp" />
     <ClCompile Include="src\CCss.cpp" />
@@ -429,6 +430,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
+    <ClInclude Include="src\off-the-shelf\easyexif-1.0\exif.h" />
     <ClInclude Include="src\ui\CPhotosListView.h" />
     <ClInclude Include="src\ui\IUserInterface.h" />
     <ClInclude Include="src\Json.h" />

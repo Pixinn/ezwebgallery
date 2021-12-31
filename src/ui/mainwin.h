@@ -112,6 +112,7 @@ public slots:
     void onlineManual( void );    
     void about( void );
     void aboutImageMagick( void );
+    void aboutEasyExif(void);
     //Configuration
     void choosePhotosDir( void ); // Choix du rpertoire contenant les photos
     void choosePhotosDirManually( void );

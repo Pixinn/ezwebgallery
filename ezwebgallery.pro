@@ -92,6 +92,7 @@ HEADERS += ./src/generation/CGalleryGenerator.h \
     ./src/global/CLogger.h \
     ./src/widgets/CImagePicker.h \
     ./src/widgets/CColorPicker.h \
+	./src/off-the-shelf/easyexif-1.0/exif.h \
     ./src/CPhotoProperties.h \
     ./src/CPhoto.h \    
     ./src/CCss.h \
@@ -126,6 +127,7 @@ SOURCES += ./src/main.cpp \
     ./src/global/CLogger.cpp \
     ./src/widgets/CImagePicker.cpp \
     ./src/widgets/CColorPicker.cpp \
+	./src/off-the-shelf/easyexif-1.0/exif.cpp \
     ./src/CPhotoProperties.cpp \
     ./src/CPhoto.cpp \    
     ./src/CCss.cpp \

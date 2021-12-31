@@ -312,7 +312,8 @@ MainWin::MainWin( CGalleryGenerator &galleryGenerator, CProjectParameters& proje
     connect( this->m_ui->action_OnlineManual, SIGNAL(triggered()), this, SLOT(onlineManual()));
     connect( this->m_ui->action_About, SIGNAL(triggered()), this, SLOT(about()));
     connect( this->m_ui->action_AboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-    connect( this->m_ui->action_AboutImageMagick, SIGNAL(triggered()), this, SLOT(aboutImageMagick()));    
+    connect( this->m_ui->action_AboutImageMagick, SIGNAL(triggered()), this, SLOT(aboutImageMagick()));   
+    connect( this->m_ui->action_AboutEasyexif, SIGNAL(triggered()), this, SLOT(aboutEasyExif()));
     //Répertoire source
     connect( this->m_ui->pushButton_SourceFolder, SIGNAL(clicked()), this, SLOT(choosePhotosDir()));
     connect( this->m_ui->lineEdit_SourceFolder, SIGNAL(editingFinished()), this, SLOT(choosePhotosDirManually()));
@@ -767,6 +768,16 @@ void MainWin::aboutImageMagick( )
     textStream.setCodec("UTF-8");
     QMessageBox::about(this, tr("About ImageMagick"),
                        textStream.readAll() );
+}
+
+void MainWin::aboutEasyExif()
+{
+  QFile fileToRead(":/text/aboutEasyExif.html");
+  fileToRead.open(QIODevice::ReadOnly | QIODevice::Text);
+  QTextStream textStream(&fileToRead);
+  textStream.setCodec("UTF-8");
+  QMessageBox::about(this, tr("About EasyExif"), 
+                      textStream.readAll());
 }
 
 //--------------------------------

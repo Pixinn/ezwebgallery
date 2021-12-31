@@ -59,6 +59,7 @@
     <file alias="about_en.html">text/translatable/about_en.html</file>
     <file alias="about_fr.html">text/translatable/about_fr.html</file>
     <file alias="aboutImageMagick.html">text/aboutImageMagick.html</file>
+    <file alias="aboutEasyExif.html">text/aboutEasyExif.html</file>
   </qresource>
   <qresource prefix="/web">
     <file alias="Toolbar.js">web/Toolbar.js</file>

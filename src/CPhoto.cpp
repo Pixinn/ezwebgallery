@@ -28,6 +28,9 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <cassert>
+
+#include <off-the-shelf/easyexif-1.0/exif.h>
 
 #include "CPhoto.h"
 #include "CTaggedString.h"
@@ -102,6 +105,49 @@ bool CMagick::load( const QString & fileName )
 
 
 /*******************************************************************
+* ReplaceExifOrientation( Blob* jpeg )
+* ---------
+* Helper
+* Replaces the EXIF Orientation in the provided blob jpeg with "1"
+********************************************************************/
+bool ReplaceExifOrientation(Blob* jpeg, const int expectedOrientation)
+{
+  bool success = false;
+  if (expectedOrientation >= 1 && expectedOrientation <= 8)
+  {
+    // hacking easyexif to get the position of the byte encoding the orientation:
+    // ImageMagick only accept to modify it by giving a while EXIF blob via profile()
+    easyexif::EXIFInfo exifInfo;
+    unsigned char* pOrientation;
+    if (exifInfo.parseFrom(
+      static_cast<const unsigned char*>(jpeg->data()),
+      static_cast<unsigned>(jpeg->length()),
+      pOrientation)
+      != 0)
+    {
+      return false;
+    }
+    // find the first non-null byte
+    for (auto i = 0; i < 4; ++i) {
+      if (*pOrientation != 0) {
+        success = true;
+        break;
+      }
+      ++pOrientation;
+    }
+    // check that the byte has the expected value
+    success = (*pOrientation == static_cast<unsigned char>(expectedOrientation));
+    // replace the Orientation byte inside the blob
+    if (success) {
+      *pOrientation = 1;
+    }
+    assert(success);
+  }  
+  return success;
+}
+
+
+/*******************************************************************
 * load( const QString & fileName )
 * ---------
 * Charge une image via le bom de fichier fourni
@@ -113,10 +159,17 @@ bool CMagick::save(  const QString & fileToWrite, const int quality )
 
     this->quality( (size_t)quality );
 
-    string filenameUtf8( fileToWrite.toUtf8().constData() );
+    const string filenameUtf8( fileToWrite.toUtf8().constData() );
     try{
         f_success = true;
-        this->write( filenameUtf8 );
+        Blob blob;
+        this->write(&blob);
+        // replace Exif orientation so that the browser do not try to rotate the image
+        const string exifAttrib = this->attribute("EXIF:Orientation");
+        int orientation = atoi(exifAttrib.c_str());
+        ReplaceExifOrientation(&blob, orientation);
+        this->read(blob);        
+        this->write(filenameUtf8);
     }
     catch( Magick::Error &error ){
         CLogger::getInstance().log( PtrMessage( new CError(QObject::tr("Caught a Magick error: "), error.what() ) ) );
@@ -677,10 +730,13 @@ double CPhoto::meanLightness(const QRect &rect)
 ********************************************************************/
 bool CPhoto::orientationExif( )
 {
-    bool f_success = true;
-    string exifAttrib = this->attribute( "EXIF:Orientation" );
-    int orientation = atoi( exifAttrib.c_str() );
+    bool f_success = true;   
 
+    // READING orientation via ImageMagick
+    string exifAttrib = this->attribute("EXIF:Orientation");
+    int orientation = atoi( exifAttrib.c_str() );    
+
+    // Modifying the image according to its orientation
     try{
         switch( orientation )
         {
@@ -714,11 +770,13 @@ bool CPhoto::orientationExif( )
             f_success = false;
             break;
         }
+
     }
     catch( Magick::Error &error ){
         m_errors << QString( error.what() );
         f_success= false;
     }
+
 
     return f_success;
 }
