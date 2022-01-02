@@ -385,7 +385,7 @@
         <translation type="obsolete">Votre thème a été modifié.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="525"/>
+        <location filename="../../ui/mainwin.cpp" line="526"/>
         <source>Open a project</source>
         <translation>Ouvrir un projet</translation>
     </message>
@@ -410,7 +410,7 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete">Veuillez indiquer l&apos;emplacement des photos du projet.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="662"/>
+        <location filename="../../ui/mainwin.cpp" line="663"/>
         <source>Save a project</source>
         <translation>Enregistrer un projet</translation>
     </message>
@@ -443,8 +443,8 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete"> Certaines photos sont introuvables dans ce répertoire.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="642"/>
-        <location filename="../../ui/mainwin.cpp" line="680"/>
+        <location filename="../../ui/mainwin.cpp" line="643"/>
+        <location filename="../../ui/mainwin.cpp" line="681"/>
         <source>The session could not be saved.</source>
         <translation>La session n&apos;a pas pu être sauvée.</translation>
     </message>
@@ -453,28 +453,28 @@ Some photos cannot be found in this folder.</source>
         <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;Ce logiciel est un &lt;b&gt;FREEWARE&lt;/b&gt;. Vous pouvez le copier et l&apos;utiliser sans condition, mais vous n&apos;êtes pas autorisé à le modifier. Il est fourni en l&apos;état et nous déclinons toute responsabilité en cas de dommage causé à votre ordinateur ou à vos logiciels.&lt;br&gt;Veuillez lire le fichier &quot;ReadMe.txt&quot; pour de plus amples détails.&lt;br&gt;&lt;br&gt;Téléchargez la dernière version &lt;a href=&quot;http://ezwebgallery.pixinn.net/&quot;&gt;ici&lt;/a&gt;.&lt;br&gt;Suivez les nouveautés sur &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;Vous pouvez nous joindre à cette adresse: ezwebgallery@pixinn.net</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="827"/>
+        <location filename="../../ui/mainwin.cpp" line="838"/>
         <source>Please select an input directory containing your pictures.</source>
         <translation>Choisissez le répertoire d&apos;entrée contenant vos photos.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="871"/>
+        <location filename="../../ui/mainwin.cpp" line="882"/>
         <source>Please select the output directory.</source>
         <translation>Choisissez le répertoire de sortie où sera générée la gallerie.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="908"/>
+        <location filename="../../ui/mainwin.cpp" line="919"/>
         <source>Some configuration fields were not properly set.</source>
         <translation>Certains champs de configuration n&apos;ont pas été remplis correctement.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="932"/>
+        <location filename="../../ui/mainwin.cpp" line="943"/>
         <source>Your skin is not valid.                                                                                </source>
         <comment>Please leave 60 blank space !</comment>
         <translation>Votre thème n&apos;est pas valide.                                                                                </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="940"/>
+        <location filename="../../ui/mainwin.cpp" line="951"/>
         <source>Building photo list.</source>
         <translation>Construction de la liste de photos.</translation>
     </message>
@@ -501,12 +501,12 @@ Les légendes ont automatiquement été réassociées à une photo, mais cela a 
         </translation>
     </message>
     <message>
-        <source>&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;This program is a &lt;b&gt;FREEWARE&lt;/b&gt;. You can copy it and use it for any purpose but you are not allowed to modify it. It is provided &quot;as-is&quot; and cannot be held liable for any damage caused to your computer or your softwares.&lt;br&gt;Please read the provided &quot;ReadMe.txt&quot; file for further details.&lt;br&gt;&lt;br&gt;Download the latest version &lt;a href=&quot;http://ezwebgallery.enix.org/&quot;&gt;here&lt;/a&gt;.&lt;br&gt;Follow the news on &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;You can reach us at this address: dev@ezwebgallery.org</source>
-        <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;Ce logiciel est un&lt;b&gt;FREEWARE&lt;/b&gt;.Vous pouvez le copier et l&apos;utiliser sans restriction, mais vous n&apos;êtes pas autorisé à le modifier. Il est fourni en l&apos;état et nous déclinons toute responsabilité en cas de dommage causé à votre ordinateur ou à vos logiciels.&lt;br&gt;Veuillez lire le fichier &quot;ReadMe.txt&quot; pour de plus amples informations.&lt;br&gt;&lt;br&gt;Téléchargez la dernière version &lt;a href=&quot;http://ezwebgallery.enix.org/&quot;&gt;ici&lt;/a&gt;.&lt;br&gt;Suivez les nouveautés sur &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;Vous pouvez nous joindre à cette adresse : dev@ezwebgallery.org</translation>
+        <source>&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;This program is a &lt;b&gt;FREEWARE&lt;/b&gt;. You can copy it and use it for any purpose but you are not allowed to modify it. It is provided &quot;as-is&quot; and cannot be held liable for any damage caused to your computer or your softwares.&lt;br&gt;Please read the provided &quot;ReadMe.txt&quot; file for further details.&lt;br&gt;&lt;br&gt;Download the latest version &lt;a href=&quot;http://ezwebgallery.enix.org/&quot;&gt;here&lt;/a&gt;.&lt;br&gt;Follow the news on &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;You can reach us at this address: christophe@xtof.info</source>
+        <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;Ce logiciel est un&lt;b&gt;FREEWARE&lt;/b&gt;.Vous pouvez le copier et l&apos;utiliser sans restriction, mais vous n&apos;êtes pas autorisé à le modifier. Il est fourni en l&apos;état et nous déclinons toute responsabilité en cas de dommage causé à votre ordinateur ou à vos logiciels.&lt;br&gt;Veuillez lire le fichier &quot;ReadMe.txt&quot; pour de plus amples informations.&lt;br&gt;&lt;br&gt;Téléchargez la dernière version &lt;a href=&quot;http://ezwebgallery.enix.org/&quot;&gt;ici&lt;/a&gt;.&lt;br&gt;Suivez les nouveautés sur &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;Vous pouvez nous joindre à cette adresse : christophe@xtof.info</translation>
     </message>
     <message>
-        <source>&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;This program is a &lt;b&gt;FREEWARE&lt;/b&gt;. You can copy it and use it for any purpose but you are not allowed to modify it. It is provided &quot;as-is&quot; and cannot be held liable for any damage caused to your computer or your softwares.&lt;br&gt;Please read the provided &quot;ReadMe.txt&quot; file for further details.&lt;br&gt;&lt;br&gt;Download the latest version &lt;a href=&quot;http://ezwebgallery.org/&quot;&gt;here&lt;/a&gt;.&lt;br&gt;Follow the news on &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;You can reach us at this address: dev@ezwebgallery.org</source>
-        <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;Ce logiciel est un&lt;b&gt;FREEWARE&lt;/b&gt;.Vous pouvez le copier et l&apos;utiliser sans restriction, mais vous n&apos;êtes pas autorisé à le modifier. Il est fourni en l&apos;état et nous déclinons toute responsabilité en cas de dommage causé à votre ordinateur ou à vos logiciels.&lt;br&gt;Veuillez lire le fichier &quot;ReadMe.txt&quot; pour de plus amples informations.&lt;br&gt;&lt;br&gt;Téléchargez la dernière version &lt;a href=&quot;http://ezwebgallery.org/&quot;&gt;ici&lt;/a&gt;.&lt;br&gt;Suivez les nouveautés sur &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;Vous pouvez nous joindre à cette adresse : dev@ezwebgallery.org</translation>
+        <source>&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;This program is a &lt;b&gt;FREEWARE&lt;/b&gt;. You can copy it and use it for any purpose but you are not allowed to modify it. It is provided &quot;as-is&quot; and cannot be held liable for any damage caused to your computer or your softwares.&lt;br&gt;Please read the provided &quot;ReadMe.txt&quot; file for further details.&lt;br&gt;&lt;br&gt;Download the latest version &lt;a href=&quot;http://ezwebgallery.org/&quot;&gt;here&lt;/a&gt;.&lt;br&gt;Follow the news on &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;You can reach us at this address: christophe@xtof.info</source>
+        <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;Ce logiciel est un&lt;b&gt;FREEWARE&lt;/b&gt;.Vous pouvez le copier et l&apos;utiliser sans restriction, mais vous n&apos;êtes pas autorisé à le modifier. Il est fourni en l&apos;état et nous déclinons toute responsabilité en cas de dommage causé à votre ordinateur ou à vos logiciels.&lt;br&gt;Veuillez lire le fichier &quot;ReadMe.txt&quot; pour de plus amples informations.&lt;br&gt;&lt;br&gt;Téléchargez la dernière version &lt;a href=&quot;http://ezwebgallery.org/&quot;&gt;ici&lt;/a&gt;.&lt;br&gt;Suivez les nouveautés sur &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;Vous pouvez nous joindre à cette adresse : christophe@xtof.info</translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.cpp" line="279"/>
@@ -514,8 +514,8 @@ Les légendes ont automatiquement été réassociées à une photo, mais cela a 
         <translation>Liste des TAGs</translation>
     </message>
     <message>
-        <source>&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;This program is a &lt;b&gt;FREEWARE&lt;/b&gt;. You can copy it and use it for any purpose but you are not allowed to modify it. It is provided &quot;as-is&quot; and cannot be held liable for any damage caused to your computer or your softwares.&lt;br&gt;Please read the provided &quot;ReadMe.txt&quot; file for further details.&lt;br&gt;&lt;br&gt;Download the latest version &lt;a href=&quot;http://www.ezwebgallery.org/&quot;&gt;here&lt;/a&gt;.&lt;br&gt;Follow the news on &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;You can reach us at this address: dev@ezwebgallery.org</source>
-        <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;Ce logiciel est un&lt;b&gt;FREEWARE&lt;/b&gt;.Vous pouvez le copier et l&apos;utiliser sans restriction, mais vous n&apos;êtes pas autorisé à le modifier. Il est fourni en l&apos;état et nous déclinons toute responsabilité en cas de dommage causé à votre ordinateur ou à vos logiciels.&lt;br&gt;Veuillez lire le fichier &quot;ReadMe.txt&quot; pour de plus amples informations.&lt;br&gt;&lt;br&gt;Téléchargez la dernière version &lt;a href=&quot;http://www.ezwebgallery.org/&quot;&gt;ici&lt;/a&gt;.&lt;br&gt;Suivez les nouveautés sur &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;Vous pouvez nous joindre à cette adresse : dev@ezwebgallery.org</translation>
+        <source>&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;This program is a &lt;b&gt;FREEWARE&lt;/b&gt;. You can copy it and use it for any purpose but you are not allowed to modify it. It is provided &quot;as-is&quot; and cannot be held liable for any damage caused to your computer or your softwares.&lt;br&gt;Please read the provided &quot;ReadMe.txt&quot; file for further details.&lt;br&gt;&lt;br&gt;Download the latest version &lt;a href=&quot;http://www.ezwebgallery.org/&quot;&gt;here&lt;/a&gt;.&lt;br&gt;Follow the news on &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;You can reach us at this address: christophe@xtof.info</source>
+        <translation type="obsolete">&lt;b&gt;EZWebGallery&lt;/b&gt;, copyright 2010 &lt;a href=&quot;http://www.pixinn.net/&quot;&gt;Christophe Meneboeuf&lt;/a&gt;.&lt;br&gt;&lt;br&gt;Ce logiciel est un&lt;b&gt;FREEWARE&lt;/b&gt;.Vous pouvez le copier et l&apos;utiliser sans restriction, mais vous n&apos;êtes pas autorisé à le modifier. Il est fourni en l&apos;état et nous déclinons toute responsabilité en cas de dommage causé à votre ordinateur ou à vos logiciels.&lt;br&gt;Veuillez lire le fichier &quot;ReadMe.txt&quot; pour de plus amples informations.&lt;br&gt;&lt;br&gt;Téléchargez la dernière version &lt;a href=&quot;http://www.ezwebgallery.org/&quot;&gt;ici&lt;/a&gt;.&lt;br&gt;Suivez les nouveautés sur &lt;a href=&quot;http://www.twitter.com/pixinn/&quot;&gt;Twitter&lt;/a&gt;.&lt;br&gt;Vous pouvez nous joindre à cette adresse : christophe@xtof.info</translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.cpp" line="274"/>
@@ -560,91 +560,95 @@ Some photos cannot be found. They will be removed from the project.
         <translation type="obsolete">Chargement du thème par défault.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="602"/>
+        <location filename="../../ui/mainwin.cpp" line="603"/>
         <source>Skin loaded: </source>
         <translation>Thème chargé : </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="757"/>
+        <location filename="../../ui/mainwin.cpp" line="758"/>
         <source>About EZWebGallery - build date: </source>
         <translation>A propos d&apos;EZWebGallery - date de compilation : </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="966"/>
+        <source>About EasyExif</source>
+        <translation type="vanished">A propos d&apos;EasyExif</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwin.cpp" line="977"/>
         <source>No photo to process!</source>
         <translation>Pas de photo à traiter !</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="990"/>
+        <location filename="../../ui/mainwin.cpp" line="1001"/>
         <source>Displaying thumbnail: </source>
         <translation>Affichage de la vignette : </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1020"/>
+        <location filename="../../ui/mainwin.cpp" line="1031"/>
         <source>Clearing thumbnails</source>
         <translation>Effacement des vignettes</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1120"/>
+        <location filename="../../ui/mainwin.cpp" line="1131"/>
         <source>Skin Path: </source>
         <translation>Fichier thème : </translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1137"/>
+        <location filename="../../ui/mainwin.cpp" line="1148"/>
         <source>The input directory does not exist.</source>
         <comment>Check before gallery generation</comment>
         <translation>Le répertoire d&apos;entrée n&apos;éxiste pas.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1141"/>
+        <location filename="../../ui/mainwin.cpp" line="1152"/>
         <source>You have to define a title for your gallery.</source>
         <comment>Check before gallery generation</comment>
         <translation>Vous devez donner un titre à votre galerie.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1145"/>
+        <location filename="../../ui/mainwin.cpp" line="1156"/>
         <source>The output directory does not exist.</source>
         <comment>Check before gallery generation</comment>
         <translation>Le répertoire de destination n&apos;existe pas.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1206"/>
+        <location filename="../../ui/mainwin.cpp" line="1217"/>
         <source>Do you want to save your changes?</source>
         <translation>Voulez vous enregistrer les changements?</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1212"/>
+        <location filename="../../ui/mainwin.cpp" line="1223"/>
         <source>Your project has been modified.</source>
         <translation>Votre projet a été modifié.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1226"/>
+        <location filename="../../ui/mainwin.cpp" line="1237"/>
         <source>Your project and your skin have been modified.</source>
         <translation>Votre projet et votre thème ont été modifiés.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1252"/>
+        <location filename="../../ui/mainwin.cpp" line="1263"/>
         <source>You are opening a project made with a version of EZWebGallery more recent than this one. Some parameters may get lost.</source>
         <translation>Vous essayer d&apos;ouvrir un projet réalisé avec une version d&apos;EZWebGallery plus récente. Certains paramètres pourraient être perdus.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1337"/>
+        <location filename="../../ui/mainwin.cpp" line="1348"/>
         <source>this directory does not exist.</source>
         <translation>ce répertoire n&apos;éxiste pas.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2263"/>
-        <location filename="../../ui/mainwin.cpp" line="1156"/>
+        <location filename="../../ui/mainwin.ui" line="2264"/>
+        <location filename="../../ui/mainwin.cpp" line="1167"/>
         <source>&amp;Generate</source>
         <translation>&amp;Produire</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1162"/>
+        <location filename="../../ui/mainwin.cpp" line="1173"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Annuler</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="859"/>
+        <location filename="../../ui/mainwin.cpp" line="870"/>
         <source>Invalid directory.</source>
         <translation>Répertoire non-valide.</translation>
     </message>
@@ -668,15 +672,15 @@ Some photos cannot be found. They will be removed from the project.
         <translation type="obsolete">Le répertoire de sortie n&apos;existe pas.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1338"/>
+        <location filename="../../ui/mainwin.cpp" line="1349"/>
         <source>Do you want to create it ?</source>
         <translation>Voulez-vous le créer ?</translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.cpp" line="196"/>
-        <location filename="../../ui/mainwin.cpp" line="609"/>
-        <location filename="../../ui/mainwin.cpp" line="931"/>
-        <location filename="../../ui/mainwin.cpp" line="1351"/>
+        <location filename="../../ui/mainwin.cpp" line="610"/>
+        <location filename="../../ui/mainwin.cpp" line="942"/>
+        <location filename="../../ui/mainwin.cpp" line="1362"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
@@ -689,12 +693,12 @@ Some photos cannot be found. They will be removed from the project.
         <translation type="obsolete">Le répertoire d&apos;entrée ne contient pas de photo !</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="974"/>
+        <location filename="../../ui/mainwin.cpp" line="985"/>
         <source>Canceling...</source>
         <translation>Annulation en cours...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.cpp" line="1003"/>
+        <location filename="../../ui/mainwin.cpp" line="1014"/>
         <source>No preview available.</source>
         <translation>Pas de vignette disponible.</translation>
     </message>
@@ -837,7 +841,7 @@ Some photos cannot be found. They will be removed from the project.
     </message>
     <message>
         <location filename="../../ui/mainwin.ui" line="516"/>
-        <location filename="../../ui/mainwin.ui" line="2388"/>
+        <location filename="../../ui/mainwin.ui" line="2390"/>
         <source>&amp;Open</source>
         <translation>&amp;Ouvrir</translation>
     </message>
@@ -892,6 +896,11 @@ Some photos cannot be found. They will be removed from the project.
         <location filename="../../ui/mainwin.ui" line="110"/>
         <source>Basic options:</source>
         <translation>Options de base:</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwin.ui" line="322"/>
+        <source>Short description :</source>
+        <translation>Description succinte</translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.ui" line="404"/>
@@ -1086,85 +1095,91 @@ p, li { white-space: pre-wrap; }
         <translation>Texte placé à la fin de toutes les légendes.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2219"/>
+        <location filename="../../ui/mainwin.ui" line="2220"/>
         <source>Make the displayed photo the thumbnail representing your gallery. For instance it will appear as an icon if you share it on Facebook.</source>
         <translation>Désignez la photo affichée comme vignette représentant votre galerie. Elle apparaîtra, par exemple, comme icône si votre galerie est partagée sur Facebook.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2260"/>
+        <location filename="../../ui/mainwin.ui" line="2261"/>
         <source>Launch the gallery generation !</source>
         <translation>Lancer la production de la galerie !</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2313"/>
+        <location filename="../../ui/mainwin.ui" line="2314"/>
         <source>Tools</source>
         <translation>Outils</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2320"/>
+        <location filename="../../ui/mainwin.ui" line="2321"/>
         <source>Preferences</source>
         <translation>Préférences</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2348"/>
+        <location filename="../../ui/mainwin.ui" line="2350"/>
         <source>toolBar</source>
         <translation>Barre d&apos;outils</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2397"/>
+        <location filename="../../ui/mainwin.ui" line="2399"/>
         <source>&amp;Save</source>
         <translation>&amp;Enregistrer</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2406"/>
-        <location filename="../../ui/mainwin.ui" line="2409"/>
+        <location filename="../../ui/mainwin.ui" line="2408"/>
+        <location filename="../../ui/mainwin.ui" line="2411"/>
         <source>Display Log Window</source>
         <translation>Afficher la fenêtre de log</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2436"/>
+        <location filename="../../ui/mainwin.ui" line="2438"/>
         <source>Save As</source>
         <translation>Enregistrer sous</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2445"/>
+        <location filename="../../ui/mainwin.ui" line="2447"/>
         <source>&amp;New</source>
         <translation>&amp;Nouveau</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2448"/>
+        <location filename="../../ui/mainwin.ui" line="2450"/>
         <source>New session</source>
         <translation>Nouvelle session</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2484"/>
+        <location filename="../../ui/mainwin.ui" line="2486"/>
         <source>Display Shorcuts</source>
         <translation>Afficher les raccourcis</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2508"/>
+        <location filename="../../ui/mainwin.ui" line="2510"/>
         <source>_OpenGalleryFolder</source>
         <translation>_OpenGalleryFolder</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2511"/>
+        <location filename="../../ui/mainwin.ui" line="2513"/>
         <source>Open the folder of the produced gallery</source>
         <translation>Ouvrir le répertoire contenant la galerie produite</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2520"/>
+        <location filename="../../ui/mainwin.ui" line="2522"/>
         <source>_Preview</source>
         <translation>_Preview</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2523"/>
+        <location filename="../../ui/mainwin.ui" line="2525"/>
         <source>Preview the gallery</source>
         <translation>Ouvrir un aperçu de la galerie</translation>
     </message>
     <message>
+        <location filename="../../ui/mainwin.ui" line="2530"/>
+        <location filename="../../ui/mainwin.cpp" line="779"/>
+        <source>About easyexif</source>
+        <translation>A propos d&apos;easyexif</translation>
+    </message>
+    <message>
         <location filename="../../ui/mainwin.ui" line="1665"/>
         <location filename="../../ui/mainwin.ui" line="1902"/>
-        <location filename="../../ui/mainwin.ui" line="2487"/>
+        <location filename="../../ui/mainwin.ui" line="2489"/>
         <source>Display shortcuts you can use to write captions and watermark.</source>
         <translation>Afficher les raccourcis que vous pouvez utiliser pour vos légende et votre filigrane.</translation>
     </message>
@@ -1177,12 +1192,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Affiche les tags que vous pouvez utiliser pour écrire vos légendes et le filigrane.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2496"/>
+        <location filename="../../ui/mainwin.ui" line="2498"/>
         <source>&amp;Configure</source>
         <translation>&amp;Configuration</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2499"/>
+        <location filename="../../ui/mainwin.ui" line="2501"/>
         <source>Configure EZWebGallery</source>
         <translation>Configurez EZWebGallery</translation>
     </message>
@@ -1224,9 +1239,8 @@ p, li { white-space: pre-wrap; }
         <translation>Choisissez le répertoire de sortie où la galerie sera placée.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="322"/>
         <source>Short descritption :</source>
-        <translation>Brève description :</translation>
+        <translation type="vanished">Brève description :</translation>
     </message>
     <message>
         <location filename="../../ui/mainwin.ui" line="182"/>
@@ -1616,19 +1630,19 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Légende de la photo affichée.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2194"/>
+        <location filename="../../ui/mainwin.ui" line="2195"/>
         <source>Update the content of the input directory.
 Use it if photos were added or removed.</source>
         <translation>Raffraichi le contenu du répertoire d&apos;entrée.
 Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2198"/>
+        <location filename="../../ui/mainwin.ui" line="2199"/>
         <source>Update</source>
         <translation>Rafraichir</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2475"/>
+        <location filename="../../ui/mainwin.ui" line="2477"/>
         <source>Online manual</source>
         <translation>Manuel en ligne</translation>
     </message>
@@ -1647,12 +1661,12 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
         <translation>Photo suivante</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2222"/>
+        <location filename="../../ui/mainwin.ui" line="2223"/>
         <source>Gallery thumbnail</source>
         <translation>Vignette représentant la galerie</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2150"/>
+        <location filename="../../ui/mainwin.ui" line="2151"/>
         <source>Photos in the input directory :</source>
         <translation>Photos du répertoire d&apos;entrée :</translation>
     </message>
@@ -1662,12 +1676,12 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
         <translation>Position du filigrane sur la photo.</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2301"/>
+        <location filename="../../ui/mainwin.ui" line="2302"/>
         <source>&amp;Files</source>
         <translation>&amp;Fichiers</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2326"/>
+        <location filename="../../ui/mainwin.ui" line="2327"/>
         <source>&amp;Help</source>
         <translation>&amp;Aide</translation>
     </message>
@@ -1684,23 +1698,23 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
         <translation type="obsolete">Anglais</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2418"/>
+        <location filename="../../ui/mainwin.ui" line="2420"/>
         <source>About</source>
         <translation>A propos</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2427"/>
+        <location filename="../../ui/mainwin.ui" line="2429"/>
         <source>About Qt</source>
         <translation>A propos de Qt</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2457"/>
+        <location filename="../../ui/mainwin.ui" line="2459"/>
         <source>Quit</source>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwin.ui" line="2466"/>
-        <location filename="../../ui/mainwin.cpp" line="768"/>
+        <location filename="../../ui/mainwin.ui" line="2468"/>
+        <location filename="../../ui/mainwin.cpp" line="769"/>
         <source>About ImageMagick</source>
         <translation>A propos d&apos;ImageMagick</translation>
     </message>
@@ -1893,100 +1907,100 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
         <translation type="obsolete">Erreur inconnue.</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="79"/>
-        <location filename="../../CPhoto.cpp" line="122"/>
+        <location filename="../../CPhoto.cpp" line="82"/>
+        <location filename="../../CPhoto.cpp" line="175"/>
         <source>Caught a Magick error: </source>
         <translation>Une erreur provenant de Magick est survenue : </translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="84"/>
-        <location filename="../../CPhoto.cpp" line="127"/>
+        <location filename="../../CPhoto.cpp" line="87"/>
+        <location filename="../../CPhoto.cpp" line="180"/>
         <source>Caught a Magick warning: </source>
         <translation>Un avertissement provenant de Magick est survenu :</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="88"/>
-        <location filename="../../CPhoto.cpp" line="131"/>
+        <location filename="../../CPhoto.cpp" line="91"/>
+        <location filename="../../CPhoto.cpp" line="184"/>
         <source>Caught a C++ STD exception: </source>
         <translation>Une exception C++ a été levée :</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="95"/>
+        <location filename="../../CPhoto.cpp" line="98"/>
         <source>File doesn&apos;t exist</source>
         <translation>Le fichier n&apos;éxiste pas</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="175"/>
+        <location filename="../../CPhoto.cpp" line="228"/>
         <source>Watermark not initialized.</source>
         <translation>Filigrane non initialisé.</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="627"/>
+        <location filename="../../CPhoto.cpp" line="680"/>
         <source>Wrong rectangle dimension.</source>
         <translation>Mauvaise dimension pour lerectangle.</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="818"/>
+        <location filename="../../CPhoto.cpp" line="876"/>
         <source>Not Defined</source>
         <translation>Indéfini</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="821"/>
+        <location filename="../../CPhoto.cpp" line="879"/>
         <source>Manual</source>
         <translation>Manuel</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="824"/>
+        <location filename="../../CPhoto.cpp" line="882"/>
         <source>Program</source>
         <translation>Programme</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="827"/>
+        <location filename="../../CPhoto.cpp" line="885"/>
         <source>Aperture priority</source>
         <translation>Priorité à l&apos;ouverture</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="830"/>
+        <location filename="../../CPhoto.cpp" line="888"/>
         <source>Shutter speed priority</source>
         <translation>Priorité à la vitesse</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="833"/>
+        <location filename="../../CPhoto.cpp" line="891"/>
         <source>Creative</source>
         <translation>Créatif</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="836"/>
+        <location filename="../../CPhoto.cpp" line="894"/>
         <source>Action</source>
         <translation>Action</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="839"/>
+        <location filename="../../CPhoto.cpp" line="897"/>
         <source>Portrait</source>
         <translation>Portrait</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="842"/>
+        <location filename="../../CPhoto.cpp" line="900"/>
         <source>Landscape</source>
         <translation>Paysage</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="845"/>
+        <location filename="../../CPhoto.cpp" line="903"/>
         <source>Bulb</source>
         <translation>Bulb</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="848"/>
+        <location filename="../../CPhoto.cpp" line="906"/>
         <source>Undefined</source>
         <translation>Indéfini</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="856"/>
+        <location filename="../../CPhoto.cpp" line="914"/>
         <source>Fired</source>
         <translation>Déclenché</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="859"/>
+        <location filename="../../CPhoto.cpp" line="917"/>
         <source>Not fired</source>
         <translation>Non déclenché</translation>
     </message>
@@ -1995,7 +2009,7 @@ Appuyez sur ce bouton si des photos ont été ajoutées ou retirées.</translati
         <translation type="obsolete">Impossible d&apos;ouvrir l&apos;image pour le filigrane.</translation>
     </message>
     <message>
-        <location filename="../../CPhoto.cpp" line="176"/>
+        <location filename="../../CPhoto.cpp" line="229"/>
         <source>Watermark string is cleared.</source>
         <translation>Le texte pour le filigrane est vide.</translation>
     </message>

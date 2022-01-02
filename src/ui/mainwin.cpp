@@ -1,6 +1,6 @@
 ﻿/* 
  *  EZWebGallery:
- *  Copyright (C) 2011 Christophe Meneboeuf <dev@ezwebgallery.org>
+ *  Copyright (C) 2011-2022 Christophe Meneboeuf <christophe@xtof.info>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -776,7 +776,7 @@ void MainWin::aboutEasyExif()
   fileToRead.open(QIODevice::ReadOnly | QIODevice::Text);
   QTextStream textStream(&fileToRead);
   textStream.setCodec("UTF-8");
-  QMessageBox::about(this, tr("About EasyExif"), 
+  QMessageBox::about(this, tr("About easyexif"), 
                       textStream.readAll());
 }
 
