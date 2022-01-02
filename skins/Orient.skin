@@ -70,7 +70,7 @@
     </StyleSheet>
     <Ressources>
         <File id="IndexPage_BckgTexture">Arabic_Background.jpg</File>
-        <File id="Mosaic_BckgTexture">Parchemin+Calligraphy.jpg</File>
+        <File id="Mosaic_BckgTexture">Parchemin_Calligraphy.jpg</File>
         <File id="PhotoButtonNext">Arabic_Arrow_Right.png</File>
         <File id="PhotoButtonPrevious">Arabic_Arrow_Left.png</File>
         <File id="PhotoFraming_Texture">Parchemin.jpg</File>
