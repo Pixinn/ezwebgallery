@@ -231,7 +231,7 @@ QString CTaggedString::render( int preview ) const
         rendered = rendered.replace( tag, m_tags.value( tag ) );
     }
     //Fichier
-    rendered = rendered.replace( TAGfileBaseName, m_fileInfo.baseName() );
+    rendered = rendered.replace( TAGfileBaseName, m_fileInfo.completeBaseName() );
     rendered = rendered.replace( TAGfileName, m_fileInfo.fileName() );    
     //Misc
     rendered = rendered.replace( TAGphotoNumber, QString::number( m_id ) );
